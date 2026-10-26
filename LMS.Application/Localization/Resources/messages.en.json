@@ -1,0 +1,27 @@
+{
+  "ExceptionMessages": {
+    "Validation": "One or more validation errors occurred.",
+    "InvalidModelState": "The provided model state is invalid.",
+    "NotFound": "The requested resource was not found.",
+    "BadRequest": "The request is invalid.",
+    "Unauthorized": "You are not authorized to perform this action.",
+    "Forbidden": "You do not have permission to access this resource.",
+    "Conflict": "A conflict occurred with the current state of the resource.",
+    "InternalServerError": "An internal server error occurred on the server.",
+    "UnknownException": "An unexpected error occurred. Please try again later.",
+    "TooManyRequests": "Too many requests have been sent. Please try again later.",
+    "PayloadTooLarge": "The request payload is too large.",
+    "UnprocessableEntity": "The request contains semantic errors and cannot be processed.",
+    "ServiceUnavailable": "The service is temporarily unavailable. Please try again later.",
+    "NotAcceptable": "The requested resource is only capable of producing content not acceptable according to the Accept headers sent in the request.",
+    "Gone": "The requested resource is no longer available.",
+    "MethodNotAllowed": "The specified method is not allowed for this resource.",
+    "UnsupportedMediaType": "The request contains an unsupported media type.",
+    "RequestTimeout": "The request timed out. Please try again later.",
+    "EmailAuthenticationFailed": "Email service authentication failed. Please verify SMTP credentials.",
+    "EmailServerRejected": "The mail server rejected the delivery request.",
+    "NetworkConnectionFailed": "Failed to connect to the external network service.",
+    "GoogleAuthNotConfigured": "Google sign-in is not configured on the server.",
+    "GoogleAuthValidationUnavailable": "Google sign-in is temporarily unavailable. Please try again."
+  }
+}

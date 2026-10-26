@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="LMS.API/LMS.API.csproj" Id="6e43ff05-7545-45bc-b259-cd3018c84e22" />
+  <Project Path="LMS.Application/LMS.Application.csproj" Id="0dbd2709-d688-46d0-aeac-8f288ecf9438" />
+  <Project Path="LMS.Domain/LMS.Domain.csproj" Id="d02b513d-1e28-4122-a213-1b27b42b33b8" />
+  <Project Path="LMS.Infrastructure/LMS.Infrastructure.csproj" Id="e2d1fc6a-d74e-4f8a-b2a6-17b23471deff" />
+  <Project Path="LMS.Persistence/LMS.Persistence.csproj" Id="1849147c-1c35-4a20-9b48-55c532b28703" />
+</Solution>
