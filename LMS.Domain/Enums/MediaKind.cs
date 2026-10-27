@@ -7,4 +7,5 @@ namespace LMS.Domain.Enums
         Audio = 2,
         Document = 3
     }
+
 }
