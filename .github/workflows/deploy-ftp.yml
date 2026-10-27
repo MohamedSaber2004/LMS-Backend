@@ -169,6 +169,7 @@ jobs:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           # The mirror skips appsettings*.json so the host keeps its own values, which
           # also means a key committed in the repo never reaches /wwwroot and the app
@@ -183,15 +184,20 @@ jobs:
           const fs = require('fs');
           const read = (p) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };
 
-          const repoSecret = ((read('publish/appsettings.Test.json') || {}).JwtSettings || {}).Secret || '';
+          const repoSecret = (process.env.JWT_SECRET || '').trim() ||
+            (((read('publish/appsettings.Test.json') || {}).JwtSettings || {}).Secret || '').trim();
+
           if (!repoSecret) {
-            console.error('::error::publish/appsettings.Test.json has no JwtSettings.Secret, so there is nothing to write to the live config.');
+            console.error('::error::publish/appsettings.Test.json has no JwtSettings.Secret and JWT_SECRET is not set, so there is nothing to write to the live config.');
             process.exit(1);
           }
 
           const live = read('live.json');
           if (!live) {
-            fs.copyFileSync('publish/appsettings.Test.json', 'patched.json');
+            const config = read('publish/appsettings.Test.json') || {};
+            config.JwtSettings = config.JwtSettings || {};
+            config.JwtSettings.Secret = repoSecret;
+            fs.writeFileSync('patched.json', JSON.stringify(config, null, 2) + '\n');
             console.log('upload-published');
           } else if (live.JwtSettings && live.JwtSettings.Secret) {
             console.log('skip');
@@ -216,6 +222,17 @@ jobs:
               exit 1
               ;;
           esac
+
+          # Also ensure base appsettings.json exists on the live host
+          if [ -f publish/appsettings.json ]; then
+            base_url="$FTP_PROTOCOL://$FTP_HOST/wwwroot/appsettings.json"
+            curl -sS --fail --user "$login" -o live_base.json "$base_url" || true
+            if [ ! -s live_base.json ]; then
+              curl -sS --fail --user "$login" -T publish/appsettings.json "$base_url" || true
+              echo "/wwwroot/appsettings.json uploaded (initial)."
+            fi
+            rm -f live_base.json
+          fi
 
       - name: Verify the deployment
         env:
