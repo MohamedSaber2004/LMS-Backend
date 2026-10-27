@@ -107,11 +107,18 @@ jobs:
           <html><head><title>Maintenance</title></head>
           <body><h1>The site is being updated.</h1><p>Please try again in a minute.</p></body></html>
           HTML
+          # The IIS application root on this host is /wwwroot, so the marker only
+          # releases the locked DLLs when it is written there; the Home copy is a
+          # best-effort fallback for a second application at the site root.
           curl -sS --fail \
             --user "${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}" \
             -T app_offline.htm \
-            "${{ steps.ftp.outputs.protocol }}://${{ secrets.FTP_HOST }}/app_offline.htm"
-          sleep 20
+            "${{ steps.ftp.outputs.protocol }}://${{ secrets.FTP_HOST }}/wwwroot/app_offline.htm"
+          curl -sS \
+            --user "${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}" \
+            -T app_offline.htm \
+            "${{ steps.ftp.outputs.protocol }}://${{ secrets.FTP_HOST }}/app_offline.htm" || true
+          sleep 30
 
       - name: Clean mirror to /wwwroot
         env:
@@ -150,6 +157,7 @@ jobs:
             -x '(^|/)appsettings[^/]*\.json' \
             -x '(^|/)app_offline\.htm' \
             -x '(^|/)\.well-known' \
+            -x '(^|/)Logs(/|$)' \
             -x '(^|/)(wwwroot/)?(Images|Videos|Audios|Documents)(/|$)' \
             publish/ /wwwroot/
           quit
@@ -189,15 +197,17 @@ jobs:
           remove_marker() {
             # Each attempt is allowed to fail: the marker may already be gone, and
             # the runner shell aborts on the first non-zero exit code otherwise.
-            if [ "$FTP_PROTOCOL" = "sftp" ]; then
-              curl -sS --user "$FTP_LOGIN" --quote "rm app_offline.htm" "$base" >/dev/null 2>&1 || true
-            else
-              curl -sS --user "$FTP_LOGIN" --quote "DELE app_offline.htm" "$base" >/dev/null 2>&1 || true
-              curl -sS --user "$FTP_LOGIN" --quote "DELE /app_offline.htm" "$base" >/dev/null 2>&1 || true
-            fi
+            for marker in wwwroot/app_offline.htm app_offline.htm; do
+              if [ "$FTP_PROTOCOL" = "sftp" ]; then
+                curl -sS --user "$FTP_LOGIN" --quote "rm $marker" "$base" >/dev/null 2>&1 || true
+              else
+                curl -sS --user "$FTP_LOGIN" --quote "DELE $marker" "$base" >/dev/null 2>&1 || true
+              fi
+            done
           }
 
           marker_present() {
+            curl -sS --user "$FTP_LOGIN" --list-only "${base}wwwroot/" 2>/dev/null | grep -qi "app_offline.htm" ||
             curl -sS --user "$FTP_LOGIN" --list-only "$base" 2>/dev/null | grep -qi "app_offline.htm"
           }
 
