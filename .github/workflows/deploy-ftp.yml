@@ -122,11 +122,17 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PORT: ${{ steps.ftp.outputs.port }}
         run: |
+          # Guard: an empty $PUBLISH_DIR would turn the source into "/" and mirror
+          # the runner's filesystem root to the server.
+          if [ -z "${PUBLISH_DIR:-}" ] || [ ! -d "$PUBLISH_DIR" ] || [ -z "$(ls -A "$PUBLISH_DIR")" ]; then
+            echo "::error::Publish directory '$PUBLISH_DIR' is missing or empty; refusing to mirror."
+            exit 1
+          fi
+
           lftp \
-            --host="$FTP_PROTOCOL://$FTP_HOST" \
-            --port="$FTP_PORT" \
-            --user="$FTP_USER" \
-            --password="$FTP_PASSWORD" \
+            -u "$FTP_USER,$FTP_PASSWORD" \
+            -p "$FTP_PORT" \
+            "$FTP_PROTOCOL://$FTP_HOST" \
             <<LFTP
           set net:timeout 60
           set net:max-retries 3
@@ -145,6 +151,7 @@ jobs:
             --exclude-regex '(^|/)app_offline\.htm' \
             --exclude-regex '(^|/)\.well-known' \
             $PUBLISH_DIR/ /
+          quit
           LFTP
 
       - name: Verify the deployment
@@ -154,7 +161,10 @@ jobs:
           FTP_LOGIN: ${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}
         run: |
           base="$FTP_PROTOCOL://$FTP_HOST/"
-          listing=$(curl -sS --user "$FTP_LOGIN" --list-only "$base")
+          if ! listing=$(curl -sS --fail --user "$FTP_LOGIN" --list-only "$base"); then
+            echo "::error::Could not list $base to verify the deployment."
+            exit 1
+          fi
           missing=0
           for required in LMS.API.dll LMS.Application.dll LMS.Infrastructure.dll web.config wwwroot; do
             if echo "$listing" | grep -qw -- "$required"; then
@@ -176,11 +186,13 @@ jobs:
           base="$FTP_PROTOCOL://$FTP_HOST/"
 
           remove_marker() {
+            # Each attempt is allowed to fail: the marker may already be gone, and
+            # the runner shell aborts on the first non-zero exit code otherwise.
             if [ "$FTP_PROTOCOL" = "sftp" ]; then
-              curl -sS --user "$FTP_LOGIN" --quote "rm app_offline.htm" "$base" >/dev/null 2>&1
+              curl -sS --user "$FTP_LOGIN" --quote "rm app_offline.htm" "$base" >/dev/null 2>&1 || true
             else
-              curl -sS --user "$FTP_LOGIN" --quote "DELE app_offline.htm" "$base" >/dev/null 2>&1
-              curl -sS --user "$FTP_LOGIN" --quote "DELE /app_offline.htm" "$base" >/dev/null 2>&1
+              curl -sS --user "$FTP_LOGIN" --quote "DELE app_offline.htm" "$base" >/dev/null 2>&1 || true
+              curl -sS --user "$FTP_LOGIN" --quote "DELE /app_offline.htm" "$base" >/dev/null 2>&1 || true
             fi
           }
 
