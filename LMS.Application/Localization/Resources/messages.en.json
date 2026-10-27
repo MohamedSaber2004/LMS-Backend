@@ -23,5 +23,26 @@
     "NetworkConnectionFailed": "Failed to connect to the external network service.",
     "GoogleAuthNotConfigured": "Google sign-in is not configured on the server.",
     "GoogleAuthValidationUnavailable": "Google sign-in is temporarily unavailable. Please try again."
+  },
+  "Attachments": {
+    "FileEmpty": "The uploaded file is empty.",
+    "FileNotFound": "The requested file was not found.",
+    "UploadFailed": "Failed to upload the file.",
+    "InvalidFormat": "Invalid file format.",
+    "InvalidImageFormat": "Invalid image format.",
+    "InvalidVideoFormat": "Invalid video format.",
+    "InvalidAudioFormat": "Invalid audio format.",
+    "InvalidFileFormat": "Invalid file format.",
+    "NoMediaProvided": "No media files were provided.",
+    "ProtectedFile": "This file is a built-in placeholder and cannot be replaced or removed.",
+    "FileRequired": "Select a file to upload.",
+    "StoredNameRequired": "The stored file name is required.",
+    "InvalidChunkParameters": "Chunk index and total chunk count must both be provided, and the index must be lower than the total.",
+    "UnsupportedMediaKind": "The requested media kind is not supported.",
+    "InvalidPlace": "The requested storage place is not configured."
+  },
+  "ActionResults": {
+    "Updated": "The attachment was updated successfully.",
+    "Downloaded": "The attachment is ready for download."
   }
 }

@@ -1,7 +1,10 @@
-﻿using LMS.Application.Common.Behaviours;
+﻿using FluentValidation;
+using LMS.Application.Common.Behaviours;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
-using LMS.Application.Common.services;
+using LMS.Application.Common.Services;
+using LMS.Application.Features.Attachment.Commands.DownloadAttachment;
+using LMS.Application.Features.Attachment.Commands.UploadAttachment;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +27,10 @@ namespace LMS.Application
             services.Configure<IdentityOptions>(configuration.GetSection(nameof(IdentityOptions)));
             services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
             services.Configure<GoogleAuthSettings>(configuration.GetSection(nameof(GoogleAuthSettings)));
+            services.Configure<UploadPathsOptions>(configuration.GetSection(UploadPathsOptions.SectionName));
+            services.Configure<VideoCompressionOptions>(configuration.GetSection(VideoCompressionOptions.SectionName));
+
+            UploadPaths.Configure(configuration);
 
             services.AddMediatR(typeof(DependencyInjection).Assembly);
 
@@ -32,7 +39,8 @@ namespace LMS.Application
 
             services.AddSingleton<ILocalizationProvider, JsonLocalizationProvider>();
 
-            UploadPaths.Configure(configuration);
+            services.AddTransient<IValidator<UploadAttachmentCommand>, UploadAttachmentCommandValidator>();
+            services.AddTransient<IValidator<DownloadAttachmentCommand>, DownloadAttachmentCommandValidator>();
 
             return services;
         }

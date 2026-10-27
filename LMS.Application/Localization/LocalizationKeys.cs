@@ -28,5 +28,30 @@
             public const string GoogleAuthNotConfigured = "ExceptionMessages.GoogleAuthNotConfigured";
             public const string GoogleAuthValidationUnavailable = "ExceptionMessages.GoogleAuthValidationUnavailable";
         }
+
+        public static class Attachments
+        {
+            public const string FileEmpty = "Attachments.FileEmpty";
+            public const string FileNotFound = "Attachments.FileNotFound";
+            public const string UploadFailed = "Attachments.UploadFailed";
+            public const string InvalidFormat = "Attachments.InvalidFormat";
+            public const string InvalidImageFormat = "Attachments.InvalidImageFormat";
+            public const string InvalidVideoFormat = "Attachments.InvalidVideoFormat";
+            public const string InvalidAudioFormat = "Attachments.InvalidAudioFormat";
+            public const string InvalidFileFormat = "Attachments.InvalidFileFormat";
+            public const string NoMediaProvided = "Attachments.NoMediaProvided";
+            public const string ProtectedFile = "Attachments.ProtectedFile";
+            public const string FileRequired = "Attachments.FileRequired";
+            public const string StoredNameRequired = "Attachments.StoredNameRequired";
+            public const string InvalidChunkParameters = "Attachments.InvalidChunkParameters";
+            public const string UnsupportedMediaKind = "Attachments.UnsupportedMediaKind";
+            public const string InvalidPlace = "Attachments.InvalidPlace";
+        }
+
+        public static class ActionResults
+        {
+            public const string Updated = "ActionResults.Updated";
+            public const string Downloaded = "ActionResults.Downloaded";
+        }
     }
 }

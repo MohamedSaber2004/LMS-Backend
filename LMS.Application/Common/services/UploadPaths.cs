@@ -1,7 +1,12 @@
 ﻿using LMS.Application.Common.Options;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LMS.Application.Common.services
+namespace LMS.Application.Common.Services
 {
     public class UploadPaths
     {
@@ -13,7 +18,7 @@ namespace LMS.Application.Common.services
         }
 
         public static string Images => Options?.Images ?? string.Empty;
-        public static string Videos => Options?.Videos  ?? string.Empty;
+        public static string Videos => Options?.Videos ?? string.Empty;
         public static string Audios => Options?.Audios ?? string.Empty;
         public static string Documents => Options?.Documents ?? string.Empty;
 
