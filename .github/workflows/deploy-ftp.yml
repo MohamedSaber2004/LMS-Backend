@@ -23,7 +23,6 @@ concurrency:
 env:
   DOTNET_VERSION: 8.0.x
   PROJECT_PATH: LMS.API/LMS.API.csproj
-  PUBLISH_DIR: publish
 
 jobs:
   build:
@@ -56,13 +55,13 @@ jobs:
         run: dotnet build "$PROJECT_PATH" -c Release --no-restore
 
       - name: Publish
-        run: dotnet publish "$PROJECT_PATH" -c Release --no-build -o "$PUBLISH_DIR"
+        run: dotnet publish "$PROJECT_PATH" -c Release --no-build -o publish
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: lms-api
-          path: ${{ env.PUBLISH_DIR }}
+          path: publish
           if-no-files-found: error
           retention-days: 7
 
@@ -79,7 +78,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lms-api
-          path: ${{ env.PUBLISH_DIR }}
+          path: publish
 
       - name: Install lftp
         run: |
@@ -114,7 +113,7 @@ jobs:
             "${{ steps.ftp.outputs.protocol }}://${{ secrets.FTP_HOST }}/app_offline.htm"
           sleep 20
 
-      - name: Clean mirror to the server
+      - name: Clean mirror to /wwwroot
         env:
           FTP_PROTOCOL: ${{ steps.ftp.outputs.protocol }}
           FTP_HOST: ${{ secrets.FTP_HOST }}
@@ -122,10 +121,10 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PORT: ${{ steps.ftp.outputs.port }}
         run: |
-          # Guard: an empty $PUBLISH_DIR would turn the source into "/" and mirror
-          # the runner's filesystem root to the server.
-          if [ -z "${PUBLISH_DIR:-}" ] || [ ! -d "$PUBLISH_DIR" ] || [ -z "$(ls -A "$PUBLISH_DIR")" ]; then
-            echo "::error::Publish directory '$PUBLISH_DIR' is missing or empty; refusing to mirror."
+          # Guard: an empty or missing publish folder would make lftp mirror the
+          # runner's working directory instead of the build output.
+          if [ ! -d publish ] || [ -z "$(ls -A publish)" ]; then
+            echo "::error::The downloaded artifact folder 'publish' is missing or empty; refusing to mirror."
             exit 1
           fi
 
@@ -140,17 +139,17 @@ jobs:
           set net:reconnect-interval-max 60
           set xfer:clobber on
           set ftp:passive-mode on
-          set ftp:ssl-allow auto
 
           mirror \
             --reverse \
             --delete \
             --verbose=3 \
             --parallel=4 \
-            --exclude-regex '(^|/)appsettings[^/]*\.json' \
-            --exclude-regex '(^|/)app_offline\.htm' \
-            --exclude-regex '(^|/)\.well-known' \
-            $PUBLISH_DIR/ /
+            -x '(^|/)appsettings[^/]*\.json' \
+            -x '(^|/)app_offline\.htm' \
+            -x '(^|/)\.well-known' \
+            -x '(^|/)(wwwroot/)?(Images|Videos|Audios|Documents)(/|$)' \
+            publish/ /wwwroot/
           quit
           LFTP
 
@@ -160,13 +159,13 @@ jobs:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_LOGIN: ${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}
         run: |
-          base="$FTP_PROTOCOL://$FTP_HOST/"
-          if ! listing=$(curl -sS --fail --user "$FTP_LOGIN" --list-only "$base"); then
-            echo "::error::Could not list $base to verify the deployment."
+          target="$FTP_PROTOCOL://$FTP_HOST/wwwroot/"
+          if ! listing=$(curl -sS --fail --user "$FTP_LOGIN" --list-only "$target"); then
+            echo "::error::Could not list $target to verify the deployment."
             exit 1
           fi
           missing=0
-          for required in LMS.API.dll LMS.Application.dll LMS.Infrastructure.dll web.config wwwroot; do
+          for required in LMS.API.dll LMS.Application.dll LMS.Infrastructure.dll web.config; do
             if echo "$listing" | grep -qw -- "$required"; then
               echo "OK   $required"
             else
@@ -174,7 +173,7 @@ jobs:
               missing=1
             fi
           done
-          [ "$missing" -eq 0 ] || { echo "::error::Published output is incomplete on the server."; exit 1; }
+          [ "$missing" -eq 0 ] || { echo "::error::Published output is incomplete in /wwwroot."; exit 1; }
 
       - name: Bring the site back online
         if: always()
