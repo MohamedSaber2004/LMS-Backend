@@ -139,6 +139,7 @@ jobs:
           set net:reconnect-interval-max 60
           set xfer:clobber on
           set ftp:passive-mode on
+          set ssl:verify-certificate no
 
           mirror \
             --reverse \
