@@ -140,6 +140,7 @@ jobs:
           set xfer:clobber on
           set ftp:passive-mode on
           set ssl:verify-certificate no
+          set mirror:set-permissions off
 
           mirror \
             --reverse \
