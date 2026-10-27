@@ -1,4 +1,5 @@
 ﻿using LMS.Application.Common.Models;
+using LMS.Application.Features.Attachment.DTOs;
 using LMS.Domain.Enums;
 using MediatR;
 

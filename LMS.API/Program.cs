@@ -101,11 +101,14 @@ namespace LMS.API
                 .ReadFrom.Services(services));
 
             builder.Services.AddApplication(builder.Configuration);
-            builder.Services.AddInfrastructure();
-            builder.Services.AddPersistence();
+            builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddPersistence(builder.Configuration);
 
-            var netTrackerConn = builder.Configuration.GetConnectionString("LMSConnectionString")
-                ?? builder.Configuration.GetConnectionString("DefaultConnection");
+            var netTrackerConn = builder.Configuration.GetConnectionString("LMSConnectionString");
+            if (string.IsNullOrWhiteSpace(netTrackerConn))
+            {
+                netTrackerConn = builder.Configuration.GetConnectionString("DefaultConnection");
+            }
 
             var isNetTrackerEnabled = builder.Configuration.GetValue<bool?>("NetTracker:Enabled") ?? true;
             var hasNetTracker = isNetTrackerEnabled && !string.IsNullOrWhiteSpace(netTrackerConn);

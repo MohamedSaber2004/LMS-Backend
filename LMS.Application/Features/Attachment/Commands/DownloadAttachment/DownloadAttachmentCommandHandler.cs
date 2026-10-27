@@ -1,6 +1,7 @@
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Common.Services;
+using LMS.Application.Features.Attachment.DTOs;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.AspNetCore.Http;

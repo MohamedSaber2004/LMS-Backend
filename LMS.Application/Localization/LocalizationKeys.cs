@@ -27,6 +27,10 @@
             public const string NetworkConnectionFailed = "ExceptionMessages.NetworkConnectionFailed";
             public const string GoogleAuthNotConfigured = "ExceptionMessages.GoogleAuthNotConfigured";
             public const string GoogleAuthValidationUnavailable = "ExceptionMessages.GoogleAuthValidationUnavailable";
+            public const string TokenExpired = "ExceptionMessages.TokenExpired";
+            public const string TokenRevoked = "ExceptionMessages.TokenRevoked";
+            public const string TokenMissingClaims = "ExceptionMessages.TokenMissingClaims";
+            public const string TokenInvalid = "ExceptionMessages.TokenInvalid";
         }
 
         public static class Attachments

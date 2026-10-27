@@ -1,4 +1,4 @@
-namespace LMS.Application.Features.Attachment.Commands.DownloadAttachment
+namespace LMS.Application.Features.Attachment.DTOs
 {
     public class AttachmentDownloadDto
     {

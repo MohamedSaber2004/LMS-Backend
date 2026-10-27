@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using LMS.API.Filters;
 using LMS.API.Routes.V1;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Attachment.Commands.DownloadAttachment;
@@ -11,6 +12,7 @@ namespace LMS.API.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Attachments.Base)]
+    [RoleAuthorize]
     public class AttachmentsController : BaseController
     {
         /// <summary>

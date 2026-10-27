@@ -22,7 +22,11 @@
     "EmailServerRejected": "The mail server rejected the delivery request.",
     "NetworkConnectionFailed": "Failed to connect to the external network service.",
     "GoogleAuthNotConfigured": "Google sign-in is not configured on the server.",
-    "GoogleAuthValidationUnavailable": "Google sign-in is temporarily unavailable. Please try again."
+    "GoogleAuthValidationUnavailable": "Google sign-in is temporarily unavailable. Please try again.",
+    "TokenExpired": "Your session has expired. Please sign in again.",
+    "TokenRevoked": "Your session is no longer valid. Please sign in again.",
+    "TokenMissingClaims": "Your session could not be identified. Please sign in again.",
+    "TokenInvalid": "Your session could not be verified. Please sign in again."
   },
   "Attachments": {
     "FileEmpty": "The uploaded file is empty.",
