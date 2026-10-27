@@ -48,7 +48,7 @@ namespace LMS.Infrastructure.Services.Authentication
                 claims.Add(new Claim(JwtRegisteredClaimNames.Aud, audience));
             }
 
-            var secret = _settings.Secret ?? string.Empty;
+            var secret = _settings.Secret;
             var issuer = _settings.Issuer;
             var expiryDays = _settings.ExpiryInDays;
 

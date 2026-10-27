@@ -69,6 +69,16 @@ namespace LMS.Infrastructure
                 .AddDefaultTokenProviders();
 
             var jwtSettings = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>() ?? new JwtSettings();
+            var secret = jwtSettings.Secret ?? string.Empty;
+
+            // A missing or short key otherwise surfaces at startup as the opaque IDX10703
+            // "key length is zero", so name the config key instead.
+            if (Encoding.UTF8.GetByteCount(secret) < 32)
+            {
+                throw new InvalidOperationException(
+                    "JwtSettings:Secret is missing or shorter than 32 bytes in the appsettings.*.json of the application root ("
+                    + AppContext.BaseDirectory + ").");
+            }
 
             var audiences = !string.IsNullOrWhiteSpace(jwtSettings.Audience)
                 ? jwtSettings.Audience.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
@@ -77,7 +87,7 @@ namespace LMS.Infrastructure
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
                 ValidateIssuer = !string.IsNullOrWhiteSpace(jwtSettings.Issuer),
                 ValidIssuer = jwtSettings.Issuer,
                 ValidateAudience = audiences.Length > 0,

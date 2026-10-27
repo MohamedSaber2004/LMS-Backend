@@ -163,6 +163,60 @@ jobs:
           quit
           LFTP
 
+      - name: Ensure the live JWT signing key
+        env:
+          FTP_PROTOCOL: ${{ steps.ftp.outputs.protocol }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # The mirror skips appsettings*.json so the host keeps its own values, which
+          # also means a key committed in the repo never reaches /wwwroot and the app
+          # dies on startup with IDX10703 (zero-length SymmetricSecurityKey).
+          # web.config pins ASPNETCORE_ENVIRONMENT=Test, so Test is the live file.
+          file=appsettings.Test.json
+          live_url="$FTP_PROTOCOL://$FTP_HOST/wwwroot/$file"
+          login="$FTP_USER:$FTP_PASSWORD"
+          curl -sS --fail --user "$login" -o live.json "$live_url" || true
+
+          cat > ensure-jwt-key.cjs <<'NODE'
+          const fs = require('fs');
+          const read = (p) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };
+
+          const repoSecret = ((read('publish/appsettings.Test.json') || {}).JwtSettings || {}).Secret || '';
+          if (!repoSecret) {
+            console.error('::error::publish/appsettings.Test.json has no JwtSettings.Secret, so there is nothing to write to the live config.');
+            process.exit(1);
+          }
+
+          const live = read('live.json');
+          if (!live) {
+            fs.copyFileSync('publish/appsettings.Test.json', 'patched.json');
+            console.log('upload-published');
+          } else if (live.JwtSettings && live.JwtSettings.Secret) {
+            console.log('skip');
+          } else {
+            live.JwtSettings = live.JwtSettings || {};
+            live.JwtSettings.Secret = repoSecret;
+            fs.writeFileSync('patched.json', JSON.stringify(live, null, 2) + '\n');
+            console.log('patched');
+          }
+          NODE
+
+          action=$(node ensure-jwt-key.cjs)
+
+          case "$action" in
+            skip) echo "Live config already has a signing key; leaving /wwwroot/$file untouched." ;;
+            patched|upload-published)
+              curl -sS --fail --user "$login" -T patched.json "$live_url"
+              echo "/wwwroot/$file updated ($action)."
+              ;;
+            *)
+              echo "::error::Unexpected result '$action' from ensure-jwt-key.cjs; the live config was not touched."
+              exit 1
+              ;;
+          esac
+
       - name: Verify the deployment
         env:
           FTP_PROTOCOL: ${{ steps.ftp.outputs.protocol }}
