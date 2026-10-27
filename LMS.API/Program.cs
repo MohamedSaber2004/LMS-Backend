@@ -33,6 +33,38 @@ namespace LMS.API
     {
         public static async Task Main(string[] args)
         {
+            try
+            {
+                await RunApp(args);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "LMS API failed to start.");
+                TryWriteStartupError(ex);
+                throw;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
+
+        private static void TryWriteStartupError(Exception ex)
+        {
+            try
+            {
+                var logsPath = Path.Combine(AppContext.BaseDirectory, "Logs");
+                Directory.CreateDirectory(logsPath);
+                File.AppendAllText(Path.Combine(logsPath, "startup-error.txt"),
+                    $"{DateTime.UtcNow:O} {ex}\n\n");
+            }
+            catch
+            {
+            }
+        }
+
+        private static async Task RunApp(string[] args)
+        {
             var builder = WebApplication.CreateBuilder(args);
 
             var env = builder.Environment;
@@ -439,22 +471,10 @@ namespace LMS.API
                 }
             }
 
-            try
-            {
-                Log.Information("=== LMS API Started === Environment: {Environment}, BaseDir: {BaseDir}, ContentRoot: {ContentRoot}",
-                    app.Environment.EnvironmentName, AppContext.BaseDirectory, app.Environment.ContentRootPath);
+            Log.Information("=== LMS API Started === Environment: {Environment}, BaseDir: {BaseDir}, ContentRoot: {ContentRoot}",
+                app.Environment.EnvironmentName, AppContext.BaseDirectory, app.Environment.ContentRootPath);
 
-                await app.RunAsync();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "LMS API terminated unexpectedly during runtime.");
-                throw;
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            await app.RunAsync();
         }
     }
 
