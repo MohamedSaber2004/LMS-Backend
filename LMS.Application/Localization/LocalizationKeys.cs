@@ -1,4 +1,4 @@
-﻿namespace LMS.Application.Localization
+namespace LMS.Application.Localization
 {
     public static class LocalizationKeys
     {
@@ -56,6 +56,30 @@
         {
             public const string Updated = "ActionResults.Updated";
             public const string Downloaded = "ActionResults.Downloaded";
+        }
+
+        public static class Authentication
+        {
+            public const string InvalidCredentials = "Authentication.InvalidCredentials";
+            public const string AccountDeactivated = "Authentication.AccountDeactivated";
+            public const string AccountLocked = "Authentication.AccountLocked";
+            public const string EmailNotConfirmed = "Authentication.EmailNotConfirmed";
+            public const string EmailRequired = "Authentication.EmailRequired";
+            public const string InvalidEmailFormat = "Authentication.InvalidEmailFormat";
+            public const string PasswordRequired = "Authentication.PasswordRequired";
+            public const string LoginSuccess = "Authentication.LoginSuccess";
+            public const string OtpSentSuccess = "Authentication.OtpSentSuccess";
+            public const string OtpResentSuccess = "Authentication.OtpResentSuccess";
+            public const string OtpRateLimited = "Authentication.OtpRateLimited";
+            public const string UserNotFound = "Authentication.UserNotFound";
+            public const string PasswordResetEmailSubject = "Authentication.PasswordResetEmailSubject";
+            public const string PasswordResetEmailBody = "Authentication.PasswordResetEmailBody";
+            public const string ResendOtpEmailSubject = "Authentication.ResendOtpEmailSubject";
+            public const string ResendOtpEmailBody = "Authentication.ResendOtpEmailBody";
+            public const string DefaultUserName = "Authentication.DefaultUserName";
+            public const string OtpEmailGreeting = "Authentication.OtpEmailGreeting";
+            public const string OtpEmailExpiryNotice = "Authentication.OtpEmailExpiryNotice";
+            public const string OtpEmailFooter = "Authentication.OtpEmailFooter";
         }
     }
 }

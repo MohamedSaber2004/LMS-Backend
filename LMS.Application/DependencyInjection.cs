@@ -1,10 +1,15 @@
-﻿using FluentValidation;
+using FluentValidation;
 using LMS.Application.Common.Behaviours;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
 using LMS.Application.Common.Services;
 using LMS.Application.Features.Attachment.Commands.DownloadAttachment;
+using LMS.Application.Features.Attachment.Commands.UpdateAttachment;
 using LMS.Application.Features.Attachment.Commands.UploadAttachment;
+using LMS.Application.Features.Attachment.Commands.UploadMultipleAttachments;
+using LMS.Application.Features.Authentication.Commands.ForgetPassword;
+using LMS.Application.Features.Authentication.Commands.Login;
+using LMS.Application.Features.Authentication.Commands.ResendOtp;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +46,11 @@ namespace LMS.Application
 
             services.AddTransient<IValidator<UploadAttachmentCommand>, UploadAttachmentCommandValidator>();
             services.AddTransient<IValidator<DownloadAttachmentCommand>, DownloadAttachmentCommandValidator>();
+            services.AddTransient<IValidator<UploadMultipleAttachmentsCommand>, UploadMultipleAttachmentsCommandValidator>();
+            services.AddTransient<IValidator<UpdateAttachmentCommand>, UpdateAttachmentCommandValidator>();
+            services.AddTransient<IValidator<LoginCommand>, LoginCommandValidator>();
+            services.AddTransient<IValidator<ForgetPasswordCommand>, ForgetPasswordCommandValidator>();
+            services.AddTransient<IValidator<ResendOtpCommand>, ResendOtpCommandValidator>();
 
             return services;
         }

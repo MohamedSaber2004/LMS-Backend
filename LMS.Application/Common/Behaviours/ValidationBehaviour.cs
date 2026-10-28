@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+using FluentValidation;
+using LMS.Application.Common.Exceptions;
+using LMS.Application.Features.Authentication.Commands.Login;
 using MediatR;
 
 namespace LMS.Application.Common.Behaviours
@@ -23,7 +25,12 @@ namespace LMS.Application.Common.Behaviours
                 var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
                 if (failures.Count != 0)
-                    throw new ValidationException(failures);
+                {
+                    if (request is LoginCommand)
+                        throw new UnAuthorizedException();
+
+                    throw new FluentValidation.ValidationException(failures);
+                }
             }
             return await next();
         }

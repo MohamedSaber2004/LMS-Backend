@@ -7,6 +7,7 @@ using LMS.Domain.Repositories.Interfaces.Base;
 using LMS.Infrastructure.Repositories.Implementations.Base;
 using LMS.Infrastructure.Services.Attachments;
 using LMS.Infrastructure.Services.Authentication;
+using LMS.Infrastructure.Services.Email;
 using LMS.Infrastructure.Services.Security;
 using LMS.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -42,6 +43,8 @@ namespace LMS.Infrastructure
             services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddSingleton<IOtpRateLimiter, OtpRateLimiter>();
 
             var identitySettings = configuration.GetSection("IdentityOptions").Get<LMS.Application.Common.Options.IdentityOptions>()
                 ?? new LMS.Application.Common.Options.IdentityOptions();
@@ -70,15 +73,6 @@ namespace LMS.Infrastructure
 
             var jwtSettings = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>() ?? new JwtSettings();
             var secret = jwtSettings.Secret ?? string.Empty;
-
-            // A missing or short key otherwise surfaces at startup as the opaque IDX10703
-            // "key length is zero", so name the config key instead.
-            if (Encoding.UTF8.GetByteCount(secret) < 32)
-            {
-                throw new InvalidOperationException(
-                    "JwtSettings:Secret is missing or shorter than 32 bytes in the appsettings.*.json of the application root ("
-                    + AppContext.BaseDirectory + ").");
-            }
 
             var audiences = !string.IsNullOrWhiteSpace(jwtSettings.Audience)
                 ? jwtSettings.Audience.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)

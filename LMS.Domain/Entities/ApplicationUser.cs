@@ -28,5 +28,19 @@ namespace LMS.Domain.Entities
         public virtual Country? Country { get; set; }
 
         public virtual ICollection<UserRefreshToken> RefreshTokens { get; private set; } = new List<UserRefreshToken>();
+
+        public void SetVerificationCode(string code, DateTime expiry)
+        {
+            VerificationCode = code;
+            VerificationCodeExpiry = expiry;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void ClearVerificationCode()
+        {
+            VerificationCode = null;
+            VerificationCodeExpiry = null;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

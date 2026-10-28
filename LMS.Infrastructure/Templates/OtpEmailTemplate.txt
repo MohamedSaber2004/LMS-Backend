@@ -1,0 +1,11 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;">
+    <h2 style="color: #1e293b; margin-bottom: 16px;">{{Title}}</h2>
+    <p style="color: #475569; font-size: 16px; line-height: 1.5;">{{Greeting}}</p>
+    <p style="color: #475569; font-size: 16px; line-height: 1.5;">{{Message}}</p>
+    <div style="margin: 24px 0; text-align: center;">
+        <span style="display: inline-block; font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #0284c7; background: #f0f9ff; padding: 12px 24px; border-radius: 6px; border: 1px dashed #0284c7;">{{OtpCode}}</span>
+    </div>
+    <p style="color: #64748b; font-size: 14px; line-height: 1.5;">{{ExpiryNotice}}</p>
+    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;" />
+    <p style="color: #94a3b8; font-size: 12px; margin: 0;">{{Footer}}</p>
+</div>
