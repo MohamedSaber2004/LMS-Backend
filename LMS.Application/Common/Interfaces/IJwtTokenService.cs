@@ -7,5 +7,7 @@ namespace LMS.Application.Common.Interfaces
         string GenerateAccessToken(ApplicationUser user, IList<string> roles);
 
         string GenerateRefreshToken(ApplicationUser user);
+
+        Guid? ValidateRefreshToken(string token);
     }
 }

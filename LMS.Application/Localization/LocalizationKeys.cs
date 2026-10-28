@@ -71,6 +71,10 @@ namespace LMS.Application.Localization
             public const string OtpSentSuccess = "Authentication.OtpSentSuccess";
             public const string OtpResentSuccess = "Authentication.OtpResentSuccess";
             public const string OtpRateLimited = "Authentication.OtpRateLimited";
+            public const string OtpRequired = "Authentication.OtpRequired";
+            public const string InvalidOtpFormat = "Authentication.InvalidOtpFormat";
+            public const string OtpInvalidOrExpired = "Authentication.OtpInvalidOrExpired";
+            public const string OtpVerifiedSuccess = "Authentication.OtpVerifiedSuccess";
             public const string UserNotFound = "Authentication.UserNotFound";
             public const string PasswordResetEmailSubject = "Authentication.PasswordResetEmailSubject";
             public const string PasswordResetEmailBody = "Authentication.PasswordResetEmailBody";
@@ -80,6 +84,26 @@ namespace LMS.Application.Localization
             public const string OtpEmailGreeting = "Authentication.OtpEmailGreeting";
             public const string OtpEmailExpiryNotice = "Authentication.OtpEmailExpiryNotice";
             public const string OtpEmailFooter = "Authentication.OtpEmailFooter";
+            public const string CurrentPasswordRequired = "Authentication.CurrentPasswordRequired";
+            public const string CurrentPasswordIncorrect = "Authentication.CurrentPasswordIncorrect";
+            public const string NewPasswordRequired = "Authentication.NewPasswordRequired";
+            public const string NewPasswordMismatch = "Authentication.NewPasswordMismatch";
+            public const string NewPasswordSameAsCurrent = "Authentication.NewPasswordSameAsCurrent";
+            public const string PasswordTooShort = "Authentication.PasswordTooShort";
+            public const string PasswordRequirementsNotMet = "Authentication.PasswordRequirementsNotMet";
+            public const string ChangePasswordSuccess = "Authentication.ChangePasswordSuccess";
+            public const string PasswordResetSuccess = "Authentication.PasswordResetSuccess";
+            public const string RefreshTokenRequired = "Authentication.RefreshTokenRequired";
+            public const string RefreshTokenSuccess = "Authentication.RefreshTokenSuccess";
+            public const string LogoutSuccess = "Authentication.LogoutSuccess";
+            public const string AccountDeletedSuccess = "Authentication.AccountDeletedSuccess";
+            public const string FullNameRequired = "Authentication.FullNameRequired";
+            public const string FullNameTooLong = "Authentication.FullNameTooLong";
+            public const string ProfilePictureUrlTooLong = "Authentication.ProfilePictureUrlTooLong";
+            public const string InvalidLanguage = "Authentication.InvalidLanguage";
+            public const string CountryNotFound = "Authentication.CountryNotFound";
+            public const string ProfileUpdatedSuccess = "Authentication.ProfileUpdatedSuccess";
+            public const string ProfileRetrievedSuccess = "Authentication.ProfileRetrievedSuccess";
         }
     }
 }

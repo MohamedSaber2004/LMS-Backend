@@ -19,6 +19,14 @@ namespace LMS.API.Routes.V1
             public const string Login = "login";
             public const string ForgotPassword = "forgot-password";
             public const string ResendOtp = "resend-otp";
+            public const string VerifyOtp = "verify-otp";
+            public const string ResetPassword = "reset-password";
+            public const string ChangePassword = "change-password";
+            public const string RefreshToken = "refresh-token";
+            public const string Logout = "logout";
+            public const string DeleteAccount = "delete-account";
+            public const string UpdateUserInformation = "update-user-information";
+            public const string GetUserProfile = "profile";
         }
     }
 }

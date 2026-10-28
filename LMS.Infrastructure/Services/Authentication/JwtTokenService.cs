@@ -104,5 +104,40 @@ namespace LMS.Infrastructure.Services.Authentication
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public Guid? ValidateRefreshToken(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return null;
+
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var principal = handler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Secret)),
+                    ValidateIssuer = !string.IsNullOrWhiteSpace(_settings.Issuer),
+                    ValidIssuer = _settings.Issuer,
+                    ValidateAudience = GetAudiences().Length > 0,
+                    ValidAudiences = GetAudiences(),
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    ClockSkew = TimeSpan.Zero
+                }, out _);
+
+                if (principal.FindFirst("TokenType")?.Value != "RefreshToken")
+                    return null;
+
+                var subject = principal.FindFirst(JwtRegisteredClaimNames.Sub)?.Value
+                    ?? principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                return Guid.TryParse(subject, out var userId) ? userId : null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

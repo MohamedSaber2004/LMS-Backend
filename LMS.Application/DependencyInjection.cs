@@ -7,9 +7,17 @@ using LMS.Application.Features.Attachment.Commands.DownloadAttachment;
 using LMS.Application.Features.Attachment.Commands.UpdateAttachment;
 using LMS.Application.Features.Attachment.Commands.UploadAttachment;
 using LMS.Application.Features.Attachment.Commands.UploadMultipleAttachments;
+using LMS.Application.Features.Authentication.Commands.ChangetPassword;
+using LMS.Application.Features.Authentication.Commands.DeleteAccount;
 using LMS.Application.Features.Authentication.Commands.ForgetPassword;
 using LMS.Application.Features.Authentication.Commands.Login;
+using LMS.Application.Features.Authentication.Commands.Logout;
+using LMS.Application.Features.Authentication.Commands.RefreshToken;
 using LMS.Application.Features.Authentication.Commands.ResendOtp;
+using LMS.Application.Features.Authentication.Commands.ResetPassword;
+using LMS.Application.Features.Authentication.Commands.UpdateUserInformation;
+using LMS.Application.Features.Authentication.Commands.VerifyOtp;
+using LMS.Application.Features.Authentication.Queries.GetUserProfile;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +59,14 @@ namespace LMS.Application
             services.AddTransient<IValidator<LoginCommand>, LoginCommandValidator>();
             services.AddTransient<IValidator<ForgetPasswordCommand>, ForgetPasswordCommandValidator>();
             services.AddTransient<IValidator<ResendOtpCommand>, ResendOtpCommandValidator>();
+            services.AddTransient<IValidator<ChangePasswordCommand>, ChangePasswordCommandValidator>();
+            services.AddTransient<IValidator<DeleteAccountCommand>, DeleteAccountCommandValidator>();
+            services.AddTransient<IValidator<LogoutCommand>, LogoutCommandValidator>();
+            services.AddTransient<IValidator<RefreshTokenCommand>, RefreshTokenCommandValidator>();
+            services.AddTransient<IValidator<ResetPasswordCommand>, ResetPasswordCommandValidator>();
+            services.AddTransient<IValidator<UpdateUserInformationCommand>, UpdateUserInformationCommandValidator>();
+            services.AddTransient<IValidator<VerifyOtpCommand>, VerifyOtpCommandValidator>();
+            services.AddTransient<IValidator<GetUserProfileQuery>, GetUserProfileQueryValidator>();
 
             return services;
         }

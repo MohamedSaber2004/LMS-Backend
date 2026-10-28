@@ -42,5 +42,37 @@ namespace LMS.Domain.Entities
             VerificationCodeExpiry = null;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void SetFullName(string fullName)
+        {
+            FullName = fullName;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SetProfilePictureUrl(string? profilePictureUrl)
+        {
+            ProfilePictureUrl = profilePictureUrl;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SetLanguage(Language language)
+        {
+            Language = language;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void IncrementTokenVersion()
+        {
+            TokenVersion++;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void MarkAsDeleted()
+        {
+            IsDeleted = true;
+            IsActive = false;
+            DeletedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
