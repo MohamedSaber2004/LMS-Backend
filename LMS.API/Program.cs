@@ -10,8 +10,10 @@ using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Common.Options;
 using LMS.Application.Localization;
+using LMS.Domain.Entities;
 using LMS.Infrastructure;
 using LMS.Persistence;
+using LMS.Persistence.Seeding.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -468,6 +470,23 @@ namespace LMS.API
                             Log.Warning(ex, "Failed to verify or create NetTracker tables.");
                         }
                     }
+                }
+            }
+
+            if (args.Contains("--seed"))
+            {
+                using var scope = app.Services.CreateScope();
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var dbContext = services.GetRequiredService<LmsDbContext>();
+                    var userManager = services.GetService<UserManager<ApplicationUser>>();
+                    var roleManager = services.GetService<RoleManager<IdentityRole<Guid>>>();
+                    await BaseSeeder.SeedAllAsync(dbContext, userManager, roleManager);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while seeding the database.");
                 }
             }
 

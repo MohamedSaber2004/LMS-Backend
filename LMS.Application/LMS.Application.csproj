@@ -31,4 +31,14 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Countries\Commands\" />
+    <Folder Include="Features\Countries\DTOs\" />
+    <Folder Include="Features\Countries\Queries\" />
+    <Folder Include="Features\Users\" />
+    <Folder Include="Features\VerificationCenter\Commands\" />
+    <Folder Include="Features\VerificationCenter\DTOs\" />
+    <Folder Include="Features\VerificationCenter\Queries\" />
+  </ItemGroup>
+
 </Project>

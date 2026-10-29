@@ -1,6 +1,6 @@
-﻿using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using LMS.Application.Common.Helpers;
 
 namespace LMS.Application.Common.Converters
 {
@@ -10,15 +10,14 @@ namespace LMS.Application.Common.Converters
         {
             if (reader.TokenType == JsonTokenType.String && reader.TryGetDateTime(out var date))
             {
-                return date.Kind == DateTimeKind.Utc ? date : DateTime.SpecifyKind(date.ToUniversalTime(), DateTimeKind.Utc);
+                return DateTimeHelper.EnsureUtc(date);
             }
-            return DateTime.SpecifyKind(reader.GetDateTime().ToUniversalTime(), DateTimeKind.Utc);
+            return DateTimeHelper.EnsureUtc(reader.GetDateTime());
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            var utc = value.Kind == DateTimeKind.Utc ? value : DateTime.SpecifyKind(value.ToUniversalTime(), DateTimeKind.Utc);
-            writer.WriteStringValue(utc.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture));
+            writer.WriteStringValue(DateTimeHelper.FormatUtc(value));
         }
     }
 
@@ -32,9 +31,9 @@ namespace LMS.Application.Common.Converters
 
             if (reader.TokenType == JsonTokenType.String && reader.TryGetDateTime(out var date))
             {
-                return date.Kind == DateTimeKind.Utc ? date : DateTime.SpecifyKind(date.ToUniversalTime(), DateTimeKind.Utc);
+                return DateTimeHelper.EnsureUtc(date);
             }
-            return DateTime.SpecifyKind(reader.GetDateTime().ToUniversalTime(), DateTimeKind.Utc);
+            return DateTimeHelper.EnsureUtc(reader.GetDateTime());
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
@@ -45,8 +44,7 @@ namespace LMS.Application.Common.Converters
                 return;
             }
 
-            var utc = value.Value.Kind == DateTimeKind.Utc ? value.Value : DateTime.SpecifyKind(value.Value.ToUniversalTime(), DateTimeKind.Utc);
-            writer.WriteStringValue(utc.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture));
+            writer.WriteStringValue(DateTimeHelper.FormatUtc(value.Value));
         }
     }
 }
