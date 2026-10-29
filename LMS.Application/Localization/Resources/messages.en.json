@@ -143,5 +143,21 @@
     "CountriesRetrieved": "Countries retrieved successfully.",
     "PageNumberInvalid": "Page number must be greater than zero.",
     "PageSizeInvalid": "Page size must be between 1 and {0}."
+  },
+  "Users": {
+    "UserIdRequired": "User identifier is required.",
+    "UserNotFound": "User was not found.",
+    "InvalidRole": "The selected role is invalid.",
+    "CannotDeleteSelf": "You cannot delete your own account.",
+    "SearchTooLong": "Search term cannot exceed {0} characters.",
+    "NoFieldsToUpdate": "At least one field must be provided for update.",
+    "UserCreatedSuccess": "User created successfully.",
+    "UserUpdatedSuccess": "User updated successfully.",
+    "UserDeletedSuccess": "User deleted successfully.",
+    "UserRetrieved": "User retrieved successfully.",
+    "UsersRetrieved": "Users retrieved successfully.",
+    "PasswordChangedSuccess": "User password changed successfully.",
+    "PageNumberInvalid": "Page number must be greater than zero.",
+    "PageSizeInvalid": "Page size must be between 1 and {0}."
   }
 }

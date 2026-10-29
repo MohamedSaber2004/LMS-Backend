@@ -47,5 +47,15 @@ namespace LMS.API.Routes.V1
             public const string GetById = "{id:guid}";
             public const string Update = "update";
         }
+
+        public static class Users
+        {
+            public const string Base = BaseRoutes.Base + "/users";
+
+            public const string GetAllPagginated = "pagginated";
+            public const string GetById = "{id:guid}";
+            public const string Update = "update";
+            public const string ChangePassword = "{id:guid}/change-password";
+        }
     }
 }

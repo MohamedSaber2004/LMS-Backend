@@ -28,6 +28,12 @@ using LMS.Application.Features.Countries.Commands.UpdateCountry;
 using LMS.Application.Features.Countries.Queries.GetAllCountries;
 using LMS.Application.Features.Countries.Queries.GetAllCountriesPagginated;
 using LMS.Application.Features.Countries.Queries.GetCountryById;
+using LMS.Application.Features.Users.Commands.AddUser;
+using LMS.Application.Features.Users.Commands.ChangeUserPassword;
+using LMS.Application.Features.Users.Commands.DeleteUser;
+using LMS.Application.Features.Users.Commands.UpdateUser;
+using LMS.Application.Features.Users.Queries.GetUserById;
+using LMS.Application.Features.Users.Queries.GetUsersPagginated;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -87,6 +93,12 @@ namespace LMS.Application
             services.AddTransient<IValidator<GetAllCountriesQuery>, GetAllCountriesQueryValidator>();
             services.AddTransient<IValidator<GetAllCountriesPagginatedQuery>, GetAllCountriesPagginatedQueryValidator>();
             services.AddTransient<IValidator<GetCountryByIdQuery>, GetCountryByIdQueryValidator>();
+            services.AddTransient<IValidator<AddUserCommand>, AddUserCommandValidator>();
+            services.AddTransient<IValidator<UpdateUserCommand>, UpdateUserCommandValidator>();
+            services.AddTransient<IValidator<DeleteUserCommand>, DeleteUserCommandValidator>();
+            services.AddTransient<IValidator<ChangeUserPasswordCommand>, ChangeUserPasswordCommandValidator>();
+            services.AddTransient<IValidator<GetUserByIdQuery>, GetUserByIdQueryValidator>();
+            services.AddTransient<IValidator<GetUsersPagginatedQuery>, GetUsersPagginatedQueryValidator>();
 
             return services;
         }

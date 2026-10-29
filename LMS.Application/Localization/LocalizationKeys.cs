@@ -159,5 +159,23 @@ namespace LMS.Application.Localization
             public const string PageNumberInvalid = "Countries.PageNumberInvalid";
             public const string PageSizeInvalid = "Countries.PageSizeInvalid";
         }
+
+        public static class Users
+        {
+            public const string UserIdRequired = "Users.UserIdRequired";
+            public const string UserNotFound = "Users.UserNotFound";
+            public const string InvalidRole = "Users.InvalidRole";
+            public const string CannotDeleteSelf = "Users.CannotDeleteSelf";
+            public const string SearchTooLong = "Users.SearchTooLong";
+            public const string NoFieldsToUpdate = "Users.NoFieldsToUpdate";
+            public const string UserCreatedSuccess = "Users.UserCreatedSuccess";
+            public const string UserUpdatedSuccess = "Users.UserUpdatedSuccess";
+            public const string UserDeletedSuccess = "Users.UserDeletedSuccess";
+            public const string UserRetrieved = "Users.UserRetrieved";
+            public const string UsersRetrieved = "Users.UsersRetrieved";
+            public const string PasswordChangedSuccess = "Users.PasswordChangedSuccess";
+            public const string PageNumberInvalid = "Users.PageNumberInvalid";
+            public const string PageSizeInvalid = "Users.PageSizeInvalid";
+        }
     }
 }

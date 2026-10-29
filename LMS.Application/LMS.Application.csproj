@@ -33,13 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Countries\DTOs\" />
-    <Folder Include="Features\Users\Commands\AddUser\" />
-    <Folder Include="Features\Users\Commands\ChangePassword\" />
-    <Folder Include="Features\Users\Commands\DeleteUser\" />
-    <Folder Include="Features\Users\Commands\UpdateUser\" />
     <Folder Include="Features\Users\DTOs\" />
-    <Folder Include="Features\Users\Queries\GetUserById\" />
-    <Folder Include="Features\Users\Queries\GetUsersPagginated\" />
   </ItemGroup>
 
 </Project>

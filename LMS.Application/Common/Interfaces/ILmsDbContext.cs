@@ -1,4 +1,5 @@
 ﻿using LMS.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMS.Application.Common.Interfaces
@@ -10,6 +11,8 @@ namespace LMS.Application.Common.Interfaces
         DbSet<UserRefreshToken> UserRefreshTokens { get; }
         DbSet<InstructorApplication> InstructorApplications { get; }
         DbSet<InstructorCertificate> InstructorCertificates { get; }
+        DbSet<IdentityRole<Guid>> Roles { get; }
+        DbSet<IdentityUserRole<Guid>> UserRoles { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
