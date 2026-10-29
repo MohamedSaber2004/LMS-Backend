@@ -8,6 +8,8 @@ namespace LMS.Application.Common.Interfaces
         DbSet<Country> Countries { get; }
         DbSet<ApplicationUser> ApplicationUsers { get; }
         DbSet<UserRefreshToken> UserRefreshTokens { get; }
+        DbSet<InstructorApplication> InstructorApplications { get; }
+        DbSet<InstructorCertificate> InstructorCertificates { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

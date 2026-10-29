@@ -12,10 +12,6 @@ namespace LMS.Persistence.Configurations
 
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.CountryArName)
-                .HasMaxLength(150)
-                .IsRequired();
-
             builder.Property(c => c.CountryEnName)
                 .HasMaxLength(150)
                 .IsRequired();

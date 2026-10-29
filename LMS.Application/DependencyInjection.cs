@@ -13,11 +13,21 @@ using LMS.Application.Features.Authentication.Commands.ForgetPassword;
 using LMS.Application.Features.Authentication.Commands.Login;
 using LMS.Application.Features.Authentication.Commands.Logout;
 using LMS.Application.Features.Authentication.Commands.RefreshToken;
+using LMS.Application.Features.Authentication.Commands.Register;
+using LMS.Application.Features.Authentication.Commands.RejectInstructorApplication;
 using LMS.Application.Features.Authentication.Commands.ResendOtp;
 using LMS.Application.Features.Authentication.Commands.ResetPassword;
 using LMS.Application.Features.Authentication.Commands.UpdateUserInformation;
 using LMS.Application.Features.Authentication.Commands.VerifyOtp;
+using LMS.Application.Features.Authentication.Commands.ApproveInstructorApplication;
+using LMS.Application.Features.Authentication.Queries.GetInstructorApplications;
 using LMS.Application.Features.Authentication.Queries.GetUserProfile;
+using LMS.Application.Features.Countries.Commands.AddCountry;
+using LMS.Application.Features.Countries.Commands.DeleteCountry;
+using LMS.Application.Features.Countries.Commands.UpdateCountry;
+using LMS.Application.Features.Countries.Queries.GetAllCountries;
+using LMS.Application.Features.Countries.Queries.GetAllCountriesPagginated;
+using LMS.Application.Features.Countries.Queries.GetCountryById;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -57,6 +67,10 @@ namespace LMS.Application
             services.AddTransient<IValidator<UploadMultipleAttachmentsCommand>, UploadMultipleAttachmentsCommandValidator>();
             services.AddTransient<IValidator<UpdateAttachmentCommand>, UpdateAttachmentCommandValidator>();
             services.AddTransient<IValidator<LoginCommand>, LoginCommandValidator>();
+            services.AddTransient<IValidator<RegisterCommand>, RegisterCommandValidator>();
+            services.AddTransient<IValidator<ApproveInstructorApplicationCommand>, ApproveInstructorApplicationCommandValidator>();
+            services.AddTransient<IValidator<RejectInstructorApplicationCommand>, RejectInstructorApplicationCommandValidator>();
+            services.AddTransient<IValidator<GetInstructorApplicationsQuery>, GetInstructorApplicationsQueryValidator>();
             services.AddTransient<IValidator<ForgetPasswordCommand>, ForgetPasswordCommandValidator>();
             services.AddTransient<IValidator<ResendOtpCommand>, ResendOtpCommandValidator>();
             services.AddTransient<IValidator<ChangePasswordCommand>, ChangePasswordCommandValidator>();
@@ -67,6 +81,12 @@ namespace LMS.Application
             services.AddTransient<IValidator<UpdateUserInformationCommand>, UpdateUserInformationCommandValidator>();
             services.AddTransient<IValidator<VerifyOtpCommand>, VerifyOtpCommandValidator>();
             services.AddTransient<IValidator<GetUserProfileQuery>, GetUserProfileQueryValidator>();
+            services.AddTransient<IValidator<AddCountryCommand>, AddCountryCommandValidator>();
+            services.AddTransient<IValidator<UpdateCountryCommand>, UpdateCountryCommandValidator>();
+            services.AddTransient<IValidator<DeleteCountryCommand>, DeleteCountryCommandValidator>();
+            services.AddTransient<IValidator<GetAllCountriesQuery>, GetAllCountriesQueryValidator>();
+            services.AddTransient<IValidator<GetAllCountriesPagginatedQuery>, GetAllCountriesPagginatedQueryValidator>();
+            services.AddTransient<IValidator<GetCountryByIdQuery>, GetCountryByIdQueryValidator>();
 
             return services;
         }

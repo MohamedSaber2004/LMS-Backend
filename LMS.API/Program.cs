@@ -39,6 +39,10 @@ namespace LMS.API
             {
                 await RunApp(args);
             }
+            catch (HostAbortedException) when (EF.IsDesignTime)
+            {
+                // EF Core design-time tools (e.g. Update-Database) abort the host after building it.
+            }
             catch (Exception ex)
             {
                 Log.Fatal(ex, "LMS API failed to start.");

@@ -5,7 +5,6 @@ using LMS.Application.Common.Models;
 using LMS.Application.Features.Authentication.DTOs;
 using LMS.Application.Localization;
 using LMS.Domain.Entities;
-using LMS.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,20 +17,17 @@ namespace LMS.Application.Features.Authentication.Queries.GetUserProfile
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
-        private readonly ICurrentLanguageService _currentLanguageService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public GetUserProfileQueryHandler(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
             ICurrentUserService currentUserService,
-            ICurrentLanguageService currentLanguageService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _context = context;
             _currentUserService = currentUserService;
-            _currentLanguageService = currentLanguageService;
             _localizer = localizer;
         }
 
@@ -45,11 +41,7 @@ namespace LMS.Application.Features.Authentication.Queries.GetUserProfile
                 ? await _context.Countries.FirstOrDefaultAsync(c => c.Id == user.CountryId.Value, cancellationToken)
                 : null;
 
-            var countryName = country is null
-                ? null
-                : _currentLanguageService.Language == Language.Ar
-                    ? country.CountryArName
-                    : country.CountryEnName;
+            var countryName = country?.CountryEnName;
 
             var profile = new UserProfileDto(
                 user.Id,

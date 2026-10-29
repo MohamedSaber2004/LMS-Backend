@@ -17,6 +17,8 @@ namespace LMS.Persistence
         public DbSet<Country> Countries { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+        public DbSet<InstructorApplication> InstructorApplications { get; set; }
+        public DbSet<InstructorCertificate> InstructorCertificates { get; set; }
 
         public LmsDbContext(
             ICurrentUserService currentUserService,
@@ -85,7 +87,6 @@ namespace LMS.Persistence
                     case EntityState.Added:
                         user.CreatedAt = DateTime.UtcNow;
                         user.CreatedBy = userId;
-                        user.IsActive = true;
                         break;
                     case EntityState.Modified:
                         user.UpdatedAt = DateTime.UtcNow;

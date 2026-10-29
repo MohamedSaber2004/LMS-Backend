@@ -7,6 +7,7 @@ using LMS.Application.Features.Authentication.Commands.ForgetPassword;
 using LMS.Application.Features.Authentication.Commands.Login;
 using LMS.Application.Features.Authentication.Commands.Logout;
 using LMS.Application.Features.Authentication.Commands.RefreshToken;
+using LMS.Application.Features.Authentication.Commands.Register;
 using LMS.Application.Features.Authentication.Commands.ResendOtp;
 using LMS.Application.Features.Authentication.Commands.ResetPassword;
 using LMS.Application.Features.Authentication.Commands.UpdateUserInformation;
@@ -33,6 +34,27 @@ namespace LMS.API.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Register a learner or submit an instructor application for admin approval.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        [Route(ApiRoutes.Authentication.Register)]
+        [Consumes("multipart/form-data")]
+        [DisableRequestSizeLimit]
+        [RequestFormLimits(MultipartBodyLengthLimit = 4294967295L)]
+        [ProducesResponseType(typeof(ApiResponse<RegisterResponseDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<RegisterResponseDto>), StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Register([FromForm] RegisterCommand command, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(command, cancellationToken);
             return FromResult(result);

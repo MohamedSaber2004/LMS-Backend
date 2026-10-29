@@ -17,6 +17,7 @@ namespace LMS.API.Routes.V1
             public const string Base = BaseRoutes.Base + "/authentication";
 
             public const string Login = "login";
+            public const string Register = "register";
             public const string ForgotPassword = "forgot-password";
             public const string ResendOtp = "resend-otp";
             public const string VerifyOtp = "verify-otp";
@@ -27,6 +28,24 @@ namespace LMS.API.Routes.V1
             public const string DeleteAccount = "delete-account";
             public const string UpdateUserInformation = "update-user-information";
             public const string GetUserProfile = "profile";
+        }
+
+        public static class InstructorApplications
+        {
+            public const string Base = BaseRoutes.Base + "/instructor-applications";
+
+            public const string GetAll = "";
+            public const string Approve = "approve";
+            public const string Reject = "reject";
+        }
+
+        public static class Countries
+        {
+            public const string Base = BaseRoutes.Base + "/countries";
+
+            public const string GetAllPagginated = "pagginated";
+            public const string GetById = "{id:guid}";
+            public const string Update = "update";
         }
     }
 }

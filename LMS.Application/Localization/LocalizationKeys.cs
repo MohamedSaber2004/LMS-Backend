@@ -104,6 +104,60 @@ namespace LMS.Application.Localization
             public const string CountryNotFound = "Authentication.CountryNotFound";
             public const string ProfileUpdatedSuccess = "Authentication.ProfileUpdatedSuccess";
             public const string ProfileRetrievedSuccess = "Authentication.ProfileRetrievedSuccess";
+
+            public const string ConfirmPasswordRequired = "Authentication.ConfirmPasswordRequired";
+            public const string PasswordsDoNotMatch = "Authentication.PasswordsDoNotMatch";
+            public const string PhoneNumberRequired = "Authentication.PhoneNumberRequired";
+            public const string InvalidPhoneNumber = "Authentication.InvalidPhoneNumber";
+            public const string CountryRequired = "Authentication.CountryRequired";
+            public const string InvalidRegistrationRole = "Authentication.InvalidRegistrationRole";
+            public const string EmailAlreadyRegistered = "Authentication.EmailAlreadyRegistered";
+            public const string RegistrationSuccess = "Authentication.RegistrationSuccess";
+            public const string InstructorRegistrationPending = "Authentication.InstructorRegistrationPending";
+
+            public const string SpecializationRequired = "Authentication.SpecializationRequired";
+            public const string SpecializationTooLong = "Authentication.SpecializationTooLong";
+            public const string BioRequired = "Authentication.BioRequired";
+            public const string BioTooLong = "Authentication.BioTooLong";
+            public const string YearsOfExperienceRequired = "Authentication.YearsOfExperienceRequired";
+            public const string InvalidYearsOfExperience = "Authentication.InvalidYearsOfExperience";
+            public const string LinkedInUrlTooLong = "Authentication.LinkedInUrlTooLong";
+            public const string InvalidLinkedInUrl = "Authentication.InvalidLinkedInUrl";
+            public const string CertificatesRequired = "Authentication.CertificatesRequired";
+            public const string InvalidCertificateFile = "Authentication.InvalidCertificateFile";
+
+            public const string ApplicationIdRequired = "Authentication.ApplicationIdRequired";
+            public const string InstructorApplicationNotFound = "Authentication.InstructorApplicationNotFound";
+            public const string InstructorApplicationAlreadyReviewed = "Authentication.InstructorApplicationAlreadyReviewed";
+            public const string InstructorApprovedSuccess = "Authentication.InstructorApprovedSuccess";
+            public const string InstructorRejectedSuccess = "Authentication.InstructorRejectedSuccess";
+            public const string RejectionReasonRequired = "Authentication.RejectionReasonRequired";
+            public const string RejectionReasonTooLong = "Authentication.RejectionReasonTooLong";
+            public const string ReviewNotesTooLong = "Authentication.ReviewNotesTooLong";
+            public const string InvalidApplicationStatus = "Authentication.InvalidApplicationStatus";
+            public const string PageNumberInvalid = "Authentication.PageNumberInvalid";
+            public const string PageSizeInvalid = "Authentication.PageSizeInvalid";
+            public const string InstructorApplicationsRetrieved = "Authentication.InstructorApplicationsRetrieved";
+        }
+
+        public static class Countries
+        {
+            public const string CountryEnNameRequired = "Countries.CountryEnNameRequired";
+            public const string CountryEnNameTooLong = "Countries.CountryEnNameTooLong";
+            public const string CodeRequired = "Countries.CodeRequired";
+            public const string CodeTooLong = "Countries.CodeTooLong";
+            public const string CountryCodeAlreadyExists = "Countries.CountryCodeAlreadyExists";
+            public const string CountryNameAlreadyExists = "Countries.CountryNameAlreadyExists";
+            public const string CountryIdRequired = "Countries.CountryIdRequired";
+            public const string CountryNotFound = "Countries.CountryNotFound";
+            public const string CannotDeleteCountryInUse = "Countries.CannotDeleteCountryInUse";
+            public const string CountryCreatedSuccess = "Countries.CountryCreatedSuccess";
+            public const string CountryUpdatedSuccess = "Countries.CountryUpdatedSuccess";
+            public const string CountryDeletedSuccess = "Countries.CountryDeletedSuccess";
+            public const string CountryRetrieved = "Countries.CountryRetrieved";
+            public const string CountriesRetrieved = "Countries.CountriesRetrieved";
+            public const string PageNumberInvalid = "Countries.PageNumberInvalid";
+            public const string PageSizeInvalid = "Countries.PageSizeInvalid";
         }
     }
 }
