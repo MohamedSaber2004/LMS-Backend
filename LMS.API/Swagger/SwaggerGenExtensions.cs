@@ -21,7 +21,7 @@ namespace LMS.API.Swagger
                 Name = "Authorization",
                 Type = SecuritySchemeType.ApiKey,
                 In = ParameterLocation.Header,
-                Description = "Enter the word 'Bearer' followed by a space and your JWT. Example: Bearer eyJhbGciOiJIUzI1NiIs..."
+                Description = "Enter the word 'Bearer' followed by a space and your JWT. Example: Bearer <access-token-from-login>"
             });
 
             options.OperationFilter<AuthorizeCheckOperationFilter>();

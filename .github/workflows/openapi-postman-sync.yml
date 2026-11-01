@@ -1,0 +1,135 @@
+name: OpenAPI / Postman Sync
+
+# Keeps the team Postman collection in step with the API, with no manual import anywhere:
+# the document is produced from the API built in this job, the collection is produced from the
+# document, both are committed, and the collection is published to Postman through the Postman
+# API. The collection in the team workspace is updated in place, so monitors, mock servers and
+# published documentation that use it keep working.
+#
+# The document is generated from the source tree rather than downloaded from the deployed site,
+# so the collection describes the commit that is being built and never lags a deploy behind.
+# The API is started with the http launch profile; nothing reads or writes the database during
+# boot (seeding only runs with the --seed argument), so the document is produced without any
+# secret being available to the job.
+#
+# Required repository secrets:
+#   POSTMAN_API_KEY        Postman > Settings > API keys
+#   POSTMAN_COLLECTION_ID  UID of the collection to update
+# Optional repository variable:
+#   SITE_URL               host baked into the collection, default https://lms-api.runasp.net
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'LMS.API/**'
+      - 'LMS.Application/**'
+      - 'LMS.Domain/**'
+      - 'LMS.Infrastructure/**'
+      - 'LMS.Persistence/**'
+      - 'openapi/**'
+      - 'postman/**'
+      - 'scripts/**'
+      - '.github/workflows/openapi-postman-sync.yml'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'LMS.API/**'
+      - 'LMS.Application/**'
+      - 'LMS.Domain/**'
+      - 'LMS.Infrastructure/**'
+      - 'LMS.Persistence/**'
+      - 'openapi/**'
+      - 'postman/**'
+      - 'scripts/**'
+      - '.github/workflows/openapi-postman-sync.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: openapi-postman-sync-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync OpenAPI document and Postman collection
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # The API is built here and then started on the loopback interface only, just long enough
+      # to serve /swagger/v1/swagger.json. The script stops it again in its finally block.
+      - name: Generate the OpenAPI document from the API built here
+        shell: pwsh
+        run: ./scripts/Update-OpenApi.ps1 -Launch -TimeoutSeconds 240
+
+      - name: Rebuild the Postman collection from the document
+        shell: pwsh
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://lms-api.runasp.net' }}
+        run: ./scripts/Update-PostmanCollection.ps1 -BaseUrl $env:SITE_URL
+
+      - name: Verify the collection covers every operation in the document
+        shell: pwsh
+        run: ./scripts/Verify-PostmanCollection.ps1
+
+      # On a pull request this only reports the drift, it never fails the build: nobody has to
+      # regenerate anything by hand, because the push run below rewrites both artifacts as soon
+      # as the pull request lands on the default branch.
+      - name: Report drift on a pull request
+        if: github.event_name == 'pull_request'
+        shell: pwsh
+        run: |
+          $changed = @(git status --porcelain -- openapi postman)
+          if ($changed.Count -gt 0) {
+            $changed | ForEach-Object { Write-Host "::warning::stale artifact: $($_)" }
+            Write-Host "openapi\ or postman\ does not match the API yet. Merging is enough: the push run of this workflow regenerates and commits both."
+          } else {
+            Write-Host "openapi\ and postman\ match the API in this pull request."
+          }
+
+      # openapi/v1.json and postman/ are committed on purpose: they are the reviewed history of
+      # the API surface. '[skip ci]' keeps this commit from starting another run.
+      - name: Commit the refreshed artifacts
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --quiet -- openapi postman && [ -z "$(git status --porcelain -- openapi postman)" ]; then
+            echo 'The API surface did not change; nothing to commit.'
+            exit 0
+          fi
+          git add openapi postman
+          git commit -m 'chore(api): sync OpenAPI document and Postman collection [skip ci]'
+          git push origin "HEAD:${{ github.ref_name }}"
+
+      # The collection is replaced in place, so the UID stays the same and everything pointing at
+      # it keeps working. Skipped on pull requests: a fork's pull request has no access to the
+      # secrets, and the default-branch run publishes the merged result anyway.
+      - name: Publish the collection to Postman
+        if: github.event_name != 'pull_request'
+        shell: pwsh
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+          POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
+        run: ./scripts/Publish-PostmanCollection.ps1
+
+      # Reads the collection back out of Postman and compares it with the document this run
+      # generated, so the job fails if the published collection is not the generated one.
+      - name: Verify Postman matches the API
+        if: github.event_name != 'pull_request'
+        shell: pwsh
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+          POSTMAN_COLLECTION_ID: ${{ secrets.POSTMAN_COLLECTION_ID }}
+        run: ./scripts/Verify-PostmanCollection.ps1 -FromPostman
