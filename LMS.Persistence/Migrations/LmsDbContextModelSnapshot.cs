@@ -228,6 +228,15 @@ namespace LMS.Persistence.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -281,6 +290,8 @@ namespace LMS.Persistence.Migrations
 
                     b.HasIndex("UserId")
                         .IsUnique();
+
+                    b.HasIndex("Status", "HourlyRate");
 
                     b.ToTable("InstructorApplications", (string)null);
                 });
@@ -344,6 +355,200 @@ namespace LMS.Persistence.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("InstructorCertificates", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.OnboardingAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("NumericValue")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<Guid?>("OnboardingOptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OnboardingQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("OnboardingOptionId");
+
+                    b.HasIndex("OnboardingQuestionId");
+
+                    b.HasIndex("UserId", "OnboardingQuestionId");
+
+                    b.ToTable("OnboardingAnswers", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.OnboardingOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("OnboardingQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("OnboardingQuestionId");
+
+                    b.ToTable("OnboardingOptions", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.OnboardingQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("MaxValue")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal?>("MinValue")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Step")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("OnboardingQuestions", (string)null);
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.UserRefreshToken", b =>
@@ -574,6 +779,43 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("InstructorApplication");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.OnboardingAnswer", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.OnboardingOption", "OnboardingOption")
+                        .WithMany()
+                        .HasForeignKey("OnboardingOptionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LMS.Domain.Entities.OnboardingQuestion", "OnboardingQuestion")
+                        .WithMany()
+                        .HasForeignKey("OnboardingQuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OnboardingOption");
+
+                    b.Navigation("OnboardingQuestion");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.OnboardingOption", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.OnboardingQuestion", "OnboardingQuestion")
+                        .WithMany("Options")
+                        .HasForeignKey("OnboardingQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OnboardingQuestion");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.UserRefreshToken", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.ApplicationUser", "User")
@@ -649,6 +891,11 @@ namespace LMS.Persistence.Migrations
             modelBuilder.Entity("LMS.Domain.Entities.InstructorApplication", b =>
                 {
                     b.Navigation("Certificates");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.OnboardingQuestion", b =>
+                {
+                    b.Navigation("Options");
                 });
 #pragma warning restore 612, 618
         }

@@ -332,6 +332,9 @@ namespace LMS.API
             builder.Services.AddSwaggerGen(options =>
             {
                 options.AddAcceptLanguageHeader().IncludeApiXmlComments().AddJwtBearerSecurity().AddApiResponseExamples();
+                options.SupportNonNullableReferenceTypes();
+                options.SchemaFilter<RequiredFieldsSchemaFilter>();
+                options.DocumentFilter<RequiredFieldsDocumentFilter>();
                 options.DocumentFilter<RemoveApiVersionParameterDocumentFilter>();
             });
 

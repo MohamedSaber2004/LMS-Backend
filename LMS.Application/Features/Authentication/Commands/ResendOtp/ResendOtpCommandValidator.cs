@@ -40,7 +40,7 @@ namespace LMS.Application.Features.Authentication.Commands.ResendOtp
                     }
 
                     var user = await userManager.FindByEmailAsync(command.Email.Trim());
-                    if (user == null || user.IsDeleted || !user.IsActive)
+                    if (user == null || user.IsDeleted)
                     {
                         context.AddFailure(nameof(command.Email), localizer[LocalizationKeys.Authentication.UserNotFound].Value);
                         return;

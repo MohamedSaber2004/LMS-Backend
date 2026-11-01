@@ -11,7 +11,9 @@ namespace LMS.Domain.Entities
         public string Specialization { get; private set; } = null!;
         public string Bio { get; private set; } = null!;
         public int YearsOfExperience { get; private set; }
+        public string Education { get; private set; } = null!;
         public string? LinkedInUrl { get; private set; }
+        public decimal HourlyRate { get; private set; }
 
         public InstructorApplicationStatus Status { get; private set; } = InstructorApplicationStatus.Pending;
         public Guid? ReviewedByUserId { get; private set; }
@@ -25,6 +27,7 @@ namespace LMS.Domain.Entities
             string specialization,
             string bio,
             int yearsOfExperience,
+            string education,
             string? linkedInUrl)
         {
             return new InstructorApplication
@@ -33,6 +36,7 @@ namespace LMS.Domain.Entities
                 Specialization = specialization,
                 Bio = bio,
                 YearsOfExperience = yearsOfExperience,
+                Education = education,
                 LinkedInUrl = linkedInUrl
             };
         }
@@ -42,9 +46,10 @@ namespace LMS.Domain.Entities
             Certificates.Add(certificate);
         }
 
-        public void Approve(Guid reviewedByUserId, string? reviewNotes)
+        public void Approve(Guid reviewedByUserId, decimal hourlyRate, string? reviewNotes)
         {
             Status = InstructorApplicationStatus.Approved;
+            HourlyRate = hourlyRate;
             ReviewedByUserId = reviewedByUserId;
             ReviewedAt = DateTime.UtcNow;
             ReviewNotes = reviewNotes;

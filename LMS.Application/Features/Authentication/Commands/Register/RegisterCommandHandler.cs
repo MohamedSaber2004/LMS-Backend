@@ -1,5 +1,7 @@
+using System.Security.Cryptography;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
+using LMS.Application.Common.Options;
 using LMS.Application.Features.Authentication.DTOs;
 using LMS.Application.Localization;
 using LMS.Domain.Entities;
@@ -8,27 +10,38 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Application.Features.Authentication.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<RegisterResponseDto>>
     {
         private const int CertificateFilePlace = (int)MediaKind.Document;
+        private const int IntroVideoFilePlace = (int)MediaKind.Video;
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILmsDbContext _context;
         private readonly IFileValidator _fileValidator;
+        private readonly IVideoValidator _videoValidator;
+        private readonly IEmailService _emailService;
+        private readonly EmailSettings _emailSettings;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public RegisterCommandHandler(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
             IFileValidator fileValidator,
+            IVideoValidator videoValidator,
+            IEmailService emailService,
+            IOptions<EmailSettings> emailOptions,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _context = context;
             _fileValidator = fileValidator;
+            _videoValidator = videoValidator;
+            _emailService = emailService;
+            _emailSettings = emailOptions?.Value ?? new EmailSettings();
             _localizer = localizer;
         }
 
@@ -41,6 +54,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             if (isInstructor)
             {
                 uploadedFiles.AddRange(await UploadCertificatesAsync(request.Certificates));
+                uploadedFiles.AddRange(await UploadIntroVideoAsync(request.IntroVideo));
             }
 
             var user = new ApplicationUser
@@ -49,6 +63,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                 Email = email,
                 PhoneNumber = request.PhoneNumber.Trim(),
                 CountryId = request.CountryId,
+                EmailConfirmed = false,
                 IsActive = !isInstructor
             };
             user.SetFullName(request.FullName.Trim());
@@ -91,6 +106,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                     request.Specialization!.Trim(),
                     request.Bio!.Trim(),
                     request.YearsOfExperience!.Value,
+                    request.Education!.Trim(),
                     NormalizeOptional(request.LinkedInUrl));
 
                 foreach (var file in uploadedFiles)
@@ -112,6 +128,8 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                 throw;
             }
 
+            await SendVerificationEmailAsync(user, cancellationToken);
+
             var instructorResponse = new RegisterResponseDto(
                 user.Id,
                 user.Email!,
@@ -126,7 +144,32 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                 StatusCodes.Status202Accepted);
         }
 
-        private async Task<List<UploadedFile>> UploadCertificatesAsync(List<IFormFile>? files)
+        private async Task SendVerificationEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
+        {
+            var code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString();
+            var expiryMinutes = _emailSettings.VerificationCodeExpiryMinutes > 0
+                ? _emailSettings.VerificationCodeExpiryMinutes
+                : 10;
+
+            user.SetVerificationCode(code, DateTime.UtcNow.AddMinutes(expiryMinutes));
+            await _userManager.UpdateAsync(user);
+
+            var subject = _localizer[LocalizationKeys.Authentication.RegistrationCodeEmailSubject].Value;
+            var message = _localizer[LocalizationKeys.Authentication.RegistrationCodeEmailBody].Value;
+            var defaultUserName = _localizer[LocalizationKeys.Authentication.DefaultUserName].Value;
+            var userName = !string.IsNullOrWhiteSpace(user.FullName) ? user.FullName : defaultUserName;
+
+            await _emailService.SendOtpEmailAsync(
+                user.Email!,
+                userName,
+                subject,
+                message,
+                code,
+                expiryMinutes,
+                cancellationToken);
+        }
+
+        private async Task<List<UploadedFile>> UploadCertificatesAsync(List<IFormFile> files)
         {
             var uploadedFiles = new List<UploadedFile>();
 
@@ -147,8 +190,34 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                 uploadedFiles.Add(new UploadedFile(
                     result,
                     Path.GetFileName(file.FileName),
-                    InstructorCertificateType.Certificate));
+                    InstructorCertificateType.Certificate,
+                    CertificateFilePlace));
             }
+
+            return uploadedFiles;
+        }
+
+        private async Task<List<UploadedFile>> UploadIntroVideoAsync(IFormFile? introVideo)
+        {
+            var uploadedFiles = new List<UploadedFile>();
+
+            if (introVideo is null || introVideo.Length == 0)
+            {
+                return uploadedFiles;
+            }
+
+            var (uploaded, result) = await _videoValidator.UploadVideo(introVideo, IntroVideoFilePlace);
+            if (!uploaded)
+            {
+                await CleanupFilesAsync(uploadedFiles);
+                throw new InvalidOperationException(result);
+            }
+
+            uploadedFiles.Add(new UploadedFile(
+                result,
+                Path.GetFileName(introVideo.FileName),
+                InstructorCertificateType.IntroVideo,
+                IntroVideoFilePlace));
 
             return uploadedFiles;
         }
@@ -157,7 +226,14 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         {
             foreach (var file in files)
             {
-                await _fileValidator.DeleteFile(file.Path, CertificateFilePlace);
+                if (file.Place == IntroVideoFilePlace)
+                {
+                    await _videoValidator.DeleteVideo(file.Path, file.Place);
+                }
+                else
+                {
+                    await _fileValidator.DeleteFile(file.Path, file.Place);
+                }
             }
         }
 
@@ -190,6 +266,6 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             return string.IsNullOrWhiteSpace(value) ? null : value.Trim();
         }
 
-        private sealed record UploadedFile(string Path, string OriginalFileName, InstructorCertificateType Type);
+        private sealed record UploadedFile(string Path, string OriginalFileName, InstructorCertificateType Type, int Place);
     }
 }

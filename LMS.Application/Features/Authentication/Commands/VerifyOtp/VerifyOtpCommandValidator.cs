@@ -42,7 +42,7 @@ namespace LMS.Application.Features.Authentication.Commands.VerifyOtp
                     }
 
                     var user = await userManager.FindByEmailAsync(command.Email.Trim());
-                    if (user is null || user.IsDeleted || !user.IsActive)
+                    if (user is null || user.IsDeleted)
                     {
                         context.AddFailure(
                             nameof(command.Email),

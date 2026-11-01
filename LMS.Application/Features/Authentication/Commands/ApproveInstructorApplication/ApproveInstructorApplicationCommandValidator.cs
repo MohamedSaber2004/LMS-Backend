@@ -10,6 +10,7 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
     public class ApproveInstructorApplicationCommandValidator : AbstractValidator<ApproveInstructorApplicationCommand>
     {
         private const int ReviewNotesMaxLength = 1000;
+        private const decimal MaxHourlyRate = 10000m;
 
         public ApproveInstructorApplicationCommandValidator(
             ILmsDbContext context,
@@ -18,6 +19,12 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
             RuleFor(x => x.ApplicationId)
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Authentication.ApplicationIdRequired].Value);
+
+            RuleFor(x => x.HourlyRate)
+                .GreaterThan(0m)
+                .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateRequired].Value)
+                .LessThanOrEqualTo(MaxHourlyRate)
+                .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateTooLarge, MaxHourlyRate].Value);
 
             RuleFor(x => x.ReviewNotes)
                 .MaximumLength(ReviewNotesMaxLength)

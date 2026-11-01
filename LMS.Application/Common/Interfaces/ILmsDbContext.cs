@@ -11,6 +11,9 @@ namespace LMS.Application.Common.Interfaces
         DbSet<UserRefreshToken> UserRefreshTokens { get; }
         DbSet<InstructorApplication> InstructorApplications { get; }
         DbSet<InstructorCertificate> InstructorCertificates { get; }
+        DbSet<OnboardingQuestion> OnboardingQuestions { get; }
+        DbSet<OnboardingOption> OnboardingOptions { get; }
+        DbSet<OnboardingAnswer> OnboardingAnswers { get; }
         DbSet<IdentityRole<Guid>> Roles { get; }
         DbSet<IdentityUserRole<Guid>> UserRoles { get; }
 

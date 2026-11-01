@@ -19,6 +19,9 @@ namespace LMS.Persistence
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<InstructorApplication> InstructorApplications { get; set; }
         public DbSet<InstructorCertificate> InstructorCertificates { get; set; }
+        public DbSet<OnboardingQuestion> OnboardingQuestions { get; set; }
+        public DbSet<OnboardingOption> OnboardingOptions { get; set; }
+        public DbSet<OnboardingAnswer> OnboardingAnswers { get; set; }
 
         public LmsDbContext(
             ICurrentUserService currentUserService,

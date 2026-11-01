@@ -39,9 +39,23 @@ namespace LMS.API.Routes.V1
             public const string Reject = "reject";
         }
 
-        public static class Countries
+        public static class Onboarding
         {
-            public const string Base = BaseRoutes.Base + "/countries";
+            public const string Base = BaseRoutes.Base + "/onboarding";
+
+            public const string Questions = "questions";
+            public const string Answers = "answers";
+            public const string MyAnswers = "my-answers";
+            public const string Instructors = "instructors";
+
+            public const string AdminQuestions = "admin/questions";
+            public const string AdminQuestionById = "admin/questions/{id:guid}";
+            public const string AdminQuestionOptions = "admin/questions/{id:guid}/options";
+            public const string AdminOptionById = "admin/options/{id:guid}";
+        }
+
+        public static class Countries
+        {            public const string Base = BaseRoutes.Base + "/countries";
 
             public const string GetAllPagginated = "pagginated";
             public const string GetById = "{id:guid}";

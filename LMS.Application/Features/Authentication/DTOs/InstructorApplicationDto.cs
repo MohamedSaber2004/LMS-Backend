@@ -17,7 +17,9 @@ namespace LMS.Application.Features.Authentication.DTOs
             string specialization,
             string bio,
             int yearsOfExperience,
+            string education,
             string? linkedInUrl,
+            decimal hourlyRate,
             InstructorApplicationStatus status,
             DateTime submittedAt,
             Guid? reviewedByUserId,
@@ -35,7 +37,9 @@ namespace LMS.Application.Features.Authentication.DTOs
             Specialization = specialization;
             Bio = bio;
             YearsOfExperience = yearsOfExperience;
+            Education = education;
             LinkedInUrl = linkedInUrl;
+            HourlyRate = hourlyRate;
             Status = status;
             SubmittedAt = submittedAt;
             ReviewedByUserId = reviewedByUserId;
@@ -54,7 +58,9 @@ namespace LMS.Application.Features.Authentication.DTOs
         public string Specialization { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
         public int YearsOfExperience { get; set; }
+        public string Education { get; set; } = string.Empty;
         public string? LinkedInUrl { get; set; }
+        public decimal HourlyRate { get; set; }
         public InstructorApplicationStatus Status { get; set; }
         public DateTime SubmittedAt { get; set; }
         public Guid? ReviewedByUserId { get; set; }

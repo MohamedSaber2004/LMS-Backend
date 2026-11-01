@@ -20,8 +20,15 @@ namespace LMS.Persistence.Configurations
                 .HasMaxLength(2000)
                 .IsRequired();
 
+            builder.Property(application => application.Education)
+                .HasMaxLength(500)
+                .IsRequired();
+
             builder.Property(application => application.LinkedInUrl)
                 .HasMaxLength(500);
+
+            builder.Property(application => application.HourlyRate)
+                .HasPrecision(10, 2);
 
             builder.Property(application => application.ReviewNotes)
                 .HasMaxLength(1000);
@@ -37,6 +44,7 @@ namespace LMS.Persistence.Configurations
                 .IsRowVersion();
 
             builder.HasIndex(application => application.Status);
+            builder.HasIndex(application => new { application.Status, application.HourlyRate });
             builder.HasIndex(application => application.UserId)
                 .IsUnique();
             builder.HasIndex(application => application.IsDeleted);

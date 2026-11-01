@@ -125,6 +125,13 @@ namespace LMS.Application.Localization
             public const string InvalidLinkedInUrl = "Authentication.InvalidLinkedInUrl";
             public const string CertificatesRequired = "Authentication.CertificatesRequired";
             public const string InvalidCertificateFile = "Authentication.InvalidCertificateFile";
+            public const string EducationRequired = "Authentication.EducationRequired";
+            public const string EducationTooLong = "Authentication.EducationTooLong";
+            public const string BioTooShort = "Authentication.BioTooShort";
+            public const string InvalidIntroVideoFile = "Authentication.InvalidIntroVideoFile";
+            public const string RegistrationCodeEmailSubject = "Authentication.RegistrationCodeEmailSubject";
+            public const string RegistrationCodeEmailBody = "Authentication.RegistrationCodeEmailBody";
+            public const string InstructorEmailVerifiedPending = "Authentication.InstructorEmailVerifiedPending";
 
             public const string ApplicationIdRequired = "Authentication.ApplicationIdRequired";
             public const string InstructorApplicationNotFound = "Authentication.InstructorApplicationNotFound";
@@ -138,11 +145,56 @@ namespace LMS.Application.Localization
             public const string PageNumberInvalid = "Authentication.PageNumberInvalid";
             public const string PageSizeInvalid = "Authentication.PageSizeInvalid";
             public const string InstructorApplicationsRetrieved = "Authentication.InstructorApplicationsRetrieved";
+            public const string HourlyRateRequired = "Authentication.HourlyRateRequired";
+            public const string HourlyRateTooLarge = "Authentication.HourlyRateTooLarge";
+        }
+
+        public static class Onboarding
+        {
+            public const string QuestionKeyRequired = "Onboarding.QuestionKeyRequired";
+            public const string QuestionKeyTooLong = "Onboarding.QuestionKeyTooLong";
+            public const string QuestionKeyInvalidFormat = "Onboarding.QuestionKeyInvalidFormat";
+            public const string QuestionKeyAlreadyExists = "Onboarding.QuestionKeyAlreadyExists";
+            public const string TitleRequired = "Onboarding.TitleRequired";
+            public const string TitleTooLong = "Onboarding.TitleTooLong";
+            public const string InvalidQuestionType = "Onboarding.InvalidQuestionType";
+            public const string SliderBoundsRequired = "Onboarding.SliderBoundsRequired";
+            public const string InvalidSliderBounds = "Onboarding.InvalidSliderBounds";
+            public const string OptionsRequired = "Onboarding.OptionsRequired";
+            public const string SliderNoOptionsAllowed = "Onboarding.SliderNoOptionsAllowed";
+            public const string OptionLabelRequired = "Onboarding.OptionLabelRequired";
+            public const string OptionLabelTooLong = "Onboarding.OptionLabelTooLong";
+            public const string OptionValueRequired = "Onboarding.OptionValueRequired";
+            public const string OptionValueTooLong = "Onboarding.OptionValueTooLong";
+            public const string DuplicateOptionValue = "Onboarding.DuplicateOptionValue";
+            public const string QuestionNotFound = "Onboarding.QuestionNotFound";
+            public const string QuestionNotActive = "Onboarding.QuestionNotActive";
+            public const string OptionNotFound = "Onboarding.OptionNotFound";
+            public const string AnswersRequired = "Onboarding.AnswersRequired";
+            public const string DuplicateAnswerQuestion = "Onboarding.DuplicateAnswerQuestion";
+            public const string AnswerOptionNotFromQuestion = "Onboarding.AnswerOptionNotFromQuestion";
+            public const string SingleOptionRequired = "Onboarding.SingleOptionRequired";
+            public const string AtLeastOneOptionRequired = "Onboarding.AtLeastOneOptionRequired";
+            public const string NumericValueRequired = "Onboarding.NumericValueRequired";
+            public const string NumericValueOutOfRange = "Onboarding.NumericValueOutOfRange";
+            public const string QuestionsRetrieved = "Onboarding.QuestionsRetrieved";
+            public const string QuestionCreatedSuccess = "Onboarding.QuestionCreatedSuccess";
+            public const string QuestionUpdatedSuccess = "Onboarding.QuestionUpdatedSuccess";
+            public const string QuestionDeletedSuccess = "Onboarding.QuestionDeletedSuccess";
+            public const string OptionCreatedSuccess = "Onboarding.OptionCreatedSuccess";
+            public const string OptionUpdatedSuccess = "Onboarding.OptionUpdatedSuccess";
+            public const string OptionDeletedSuccess = "Onboarding.OptionDeletedSuccess";
+            public const string AnswersSubmittedSuccess = "Onboarding.AnswersSubmittedSuccess";
+            public const string AnswersRetrieved = "Onboarding.AnswersRetrieved";
+            public const string InstructorsRetrieved = "Onboarding.InstructorsRetrieved";
+            public const string PriceRangeInvalid = "Onboarding.PriceRangeInvalid";
+            public const string PageNumberInvalid = "Onboarding.PageNumberInvalid";
+            public const string PageSizeInvalid = "Onboarding.PageSizeInvalid";
+            public const string SpecializationTooLong = "Onboarding.SpecializationTooLong";
         }
 
         public static class Countries
-        {
-            public const string CountryEnNameRequired = "Countries.CountryEnNameRequired";
+        {            public const string CountryEnNameRequired = "Countries.CountryEnNameRequired";
             public const string CountryEnNameTooLong = "Countries.CountryEnNameTooLong";
             public const string CodeRequired = "Countries.CodeRequired";
             public const string CodeTooLong = "Countries.CodeTooLong";

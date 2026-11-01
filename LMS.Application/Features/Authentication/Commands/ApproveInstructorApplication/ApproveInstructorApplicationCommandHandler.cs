@@ -83,7 +83,7 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
                 }
             }
 
-            application.Approve(adminUserId, NormalizeOptional(request.ReviewNotes));
+            application.Approve(adminUserId, request.HourlyRate, NormalizeOptional(request.ReviewNotes));
             await _context.SaveChangesAsync(cancellationToken);
 
             var message = _localizer[LocalizationKeys.Authentication.InstructorApprovedSuccess].Value;

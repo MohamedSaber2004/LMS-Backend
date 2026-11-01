@@ -94,7 +94,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Verify a password reset verification code.
+        /// Verify a verification code (shared by password reset and instructor registration email confirmation).
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>

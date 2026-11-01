@@ -23,7 +23,10 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         private const int PhoneNumberMaxDigits = 15;
         private const int SpecializationMaxLength = 150;
         private const int BioMaxLength = 2000;
+        private const int BioMinLength = 30;
+        private const int EducationMaxLength = 500;
         private const int LinkedInUrlMaxLength = 500;
+        private const long MaxIntroVideoBytes = 100L * 1024 * 1024;
         private const int MinYearsOfExperience = 0;
         private const int MaxYearsOfExperience = 60;
 
@@ -32,6 +35,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILmsDbContext _context;
         private readonly IFileValidator _fileValidator;
+        private readonly IVideoValidator _videoValidator;
         private readonly IStringLocalizer<Messages> _localizer;
         private readonly int _passwordMinLength;
 
@@ -39,12 +43,14 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
             IFileValidator fileValidator,
+            IVideoValidator videoValidator,
             IOptions<AppIdentityOptions> identityOptions,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _context = context;
             _fileValidator = fileValidator;
+            _videoValidator = videoValidator;
             _localizer = localizer;
             _passwordMinLength = identityOptions?.Value?.RequiredLength > 0
                 ? identityOptions.Value.RequiredLength
@@ -156,6 +162,8 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                 RuleFor(x => x.Bio)
                     .NotEmpty()
                     .WithMessage(localizer[LocalizationKeys.Authentication.BioRequired].Value)
+                    .MinimumLength(BioMinLength)
+                    .WithMessage(localizer[LocalizationKeys.Authentication.BioTooShort, BioMinLength].Value)
                     .MaximumLength(BioMaxLength)
                     .WithMessage(localizer[LocalizationKeys.Authentication.BioTooLong, BioMaxLength].Value);
 
@@ -170,6 +178,12 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                         MinYearsOfExperience,
                         MaxYearsOfExperience].Value);
 
+                RuleFor(x => x.Education)
+                    .NotEmpty()
+                    .WithMessage(localizer[LocalizationKeys.Authentication.EducationRequired].Value)
+                    .MaximumLength(EducationMaxLength)
+                    .WithMessage(localizer[LocalizationKeys.Authentication.EducationTooLong, EducationMaxLength].Value);
+
                 RuleFor(x => x.LinkedInUrl)
                     .MaximumLength(LinkedInUrlMaxLength)
                     .WithMessage(localizer[LocalizationKeys.Authentication.LinkedInUrlTooLong, LinkedInUrlMaxLength].Value)
@@ -179,7 +193,25 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
                 RuleFor(x => x.Certificates)
                     .Custom(ValidateCertificates);
+
+                RuleFor(x => x.IntroVideo)
+                    .Custom(ValidateIntroVideo);
             });
+        }
+
+        private void ValidateIntroVideo(IFormFile? file, CustomContext context)
+        {
+            if (file is null || file.Length == 0)
+            {
+                return;
+            }
+
+            if (file.Length > MaxIntroVideoBytes || !_videoValidator.IsValidVideo(file))
+            {
+                context.AddFailure(
+                    nameof(RegisterCommand.IntroVideo),
+                    _localizer[LocalizationKeys.Authentication.InvalidIntroVideoFile].Value);
+            }
         }
 
         private void ValidateCertificates(List<IFormFile>? files, CustomContext context)
