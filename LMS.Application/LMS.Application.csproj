@@ -34,6 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Availability\Commands\AddAviabilityForInstructor\" />
+    <Folder Include="Features\Availability\Commands\DeleteAviabilityForInstructor\" />
+    <Folder Include="Features\Availability\Commands\EditAviabilityForInstructor\" />
+    <Folder Include="Features\Availability\DTOs\" />
+    <Folder Include="Features\Availability\Queries\GetTeacherAvialabilityPagginated\" />
     <Folder Include="Features\Countries\DTOs\" />
     <Folder Include="Features\Users\DTOs\" />
   </ItemGroup>
