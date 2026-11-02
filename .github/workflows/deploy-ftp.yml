@@ -163,62 +163,104 @@ jobs:
           quit
           LFTP
 
-      - name: Ensure the live JWT signing key
+      - name: Ensure the live config has the JWT key and email settings
         env:
           FTP_PROTOCOL: ${{ steps.ftp.outputs.protocol }}
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_NAME: ${{ secrets.EMAIL_NAME }}
         run: |
           # The mirror skips appsettings*.json so the host keeps its own values, which
           # also means a key committed in the repo never reaches /wwwroot and the app
-          # dies on startup with IDX10703 (zero-length SymmetricSecurityKey).
+          # dies on startup with IDX10703 (zero-length SymmetricSecurityKey), while an
+          # empty EmailSettings silently blocks instructor registration and every OTP.
           # web.config pins ASPNETCORE_ENVIRONMENT=Test, so Test is the live file.
           file=appsettings.Test.json
           live_url="$FTP_PROTOCOL://$FTP_HOST/wwwroot/$file"
           login="$FTP_USER:$FTP_PASSWORD"
           curl -sS --fail --user "$login" -o live.json "$live_url" || true
 
-          cat > ensure-jwt-key.cjs <<'NODE'
+          cat > ensure-live-config.cjs <<'NODE'
           const fs = require('fs');
           const read = (p) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };
 
+          const published = read('publish/appsettings.Test.json') || {};
           const repoSecret = (process.env.JWT_SECRET || '').trim() ||
-            (((read('publish/appsettings.Test.json') || {}).JwtSettings || {}).Secret || '').trim();
+            (((published.JwtSettings || {}).Secret) || '').trim();
 
           if (!repoSecret) {
             console.error('::error::publish/appsettings.Test.json has no JwtSettings.Secret and JWT_SECRET is not set, so there is nothing to write to the live config.');
             process.exit(1);
           }
 
+          const blank = (value) => value === undefined || value === null ||
+            (typeof value === 'string' && !value.trim()) ||
+            (typeof value === 'number' && value <= 0);
           const live = read('live.json');
-          if (!live) {
-            const config = read('publish/appsettings.Test.json') || {};
-            config.JwtSettings = config.JwtSettings || {};
-            config.JwtSettings.Secret = repoSecret;
-            fs.writeFileSync('patched.json', JSON.stringify(config, null, 2) + '\n');
-            console.log('upload-published');
-          } else if (live.JwtSettings && live.JwtSettings.Secret) {
+          const target = live || published;
+          const changes = [];
+
+          target.JwtSettings = target.JwtSettings || {};
+          if (blank(target.JwtSettings.Secret)) {
+            target.JwtSettings.Secret = repoSecret;
+            changes.push('JwtSettings.Secret');
+          }
+
+          const isEmailConfigured = (s) => !!s && !blank(s.Host) && Number(s.Port) > 0 &&
+            !blank(s.Username) && !blank(s.Password) && !blank(s.Email || s.Username);
+
+          if (!isEmailConfigured(target.EmailSettings)) {
+            // Keep any value the host already carries; only fill the blanks from the
+            // published config, then let secrets override both.
+            const merged = { ...(published.EmailSettings || {}) };
+            for (const [key, value] of Object.entries(target.EmailSettings || {})) {
+              if (!blank(value)) merged[key] = value;
+            }
+            const overrides = {
+              Host: process.env.EMAIL_HOST,
+              Port: process.env.EMAIL_PORT,
+              Username: process.env.EMAIL_USERNAME,
+              Password: process.env.EMAIL_PASSWORD,
+              Email: process.env.EMAIL_FROM,
+              Name: process.env.EMAIL_NAME
+            };
+            for (const [key, value] of Object.entries(overrides)) {
+              if (!blank(value)) merged[key] = key === 'Port' ? Number(String(value).trim()) : String(value).trim();
+            }
+            target.EmailSettings = merged;
+            changes.push('EmailSettings');
+
+            if (!isEmailConfigured(merged)) {
+              console.error('::warning::EmailSettings is still incomplete on /wwwroot, so instructor registration and OTP emails will fail. Publish the EMAIL_* secrets or an appsettings.Test.json with SMTP credentials.');
+            }
+          }
+
+          if (changes.length === 0 && live) {
             console.log('skip');
           } else {
-            live.JwtSettings = live.JwtSettings || {};
-            live.JwtSettings.Secret = repoSecret;
-            fs.writeFileSync('patched.json', JSON.stringify(live, null, 2) + '\n');
-            console.log('patched');
+            fs.writeFileSync('patched.json', JSON.stringify(target, null, 2) + '\n');
+            console.log((live ? 'patched' : 'upload-published') +
+              (changes.length ? ':' + changes.join(',') : ':nothing-to-patch'));
           }
           NODE
 
-          action=$(node ensure-jwt-key.cjs)
+          action=$(node ensure-live-config.cjs)
 
           case "$action" in
-            skip) echo "Live config already has a signing key; leaving /wwwroot/$file untouched." ;;
-            patched|upload-published)
+            skip) echo "Live config already has a signing key and usable email settings; leaving /wwwroot/$file untouched." ;;
+            patched*|upload-published*)
               curl -sS --fail --user "$login" -T patched.json "$live_url"
               echo "/wwwroot/$file updated ($action)."
               ;;
             *)
-              echo "::error::Unexpected result '$action' from ensure-jwt-key.cjs; the live config was not touched."
+              echo "::error::Unexpected result '$action' from ensure-live-config.cjs; the live config was not touched."
               exit 1
               ;;
           esac
