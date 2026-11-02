@@ -53,6 +53,7 @@ namespace LMS.API
             {
                 Log.CloseAndFlush();
             }
+
         }
 
         private static void TryWriteStartupError(Exception ex)
