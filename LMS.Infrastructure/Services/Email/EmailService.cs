@@ -1,3 +1,4 @@
+using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
 using LMS.Application.Localization;
@@ -23,13 +24,19 @@ namespace LMS.Infrastructure.Services.Email
             _localizationProvider = localizationProvider;
         }
 
+        public bool IsConfigured => _emailSettings.IsConfigured;
+
         public async Task SendEmailAsync(string to, string subject, string body, CancellationToken cancellationToken = default)
         {
+            if (!_emailSettings.IsConfigured)
+            {
+                throw new ServiceUnavailableException(LocalizationKeys.ExceptionMessages.EmailServiceNotConfigured);
+            }
+
             var message = new MimeMessage();
             var fromName = !string.IsNullOrWhiteSpace(_emailSettings.Name) ? _emailSettings.Name : "LMS Team";
-            var fromAddress = !string.IsNullOrWhiteSpace(_emailSettings.Email) ? _emailSettings.Email : _emailSettings.Username;
 
-            message.From.Add(new MailboxAddress(fromName, fromAddress));
+            message.From.Add(new MailboxAddress(fromName, _emailSettings.SenderAddress));
             message.To.Add(new MailboxAddress(to, to));
             message.Subject = subject;
 
@@ -49,10 +56,7 @@ namespace LMS.Infrastructure.Services.Email
 
             await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, secureSocketOptions, cancellationToken);
 
-            if (!string.IsNullOrWhiteSpace(_emailSettings.Username) && !string.IsNullOrWhiteSpace(_emailSettings.Password))
-            {
-                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password, cancellationToken);
-            }
+            await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password, cancellationToken);
 
             await client.SendAsync(message, cancellationToken);
             await client.DisconnectAsync(true, cancellationToken);

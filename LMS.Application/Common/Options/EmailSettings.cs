@@ -1,4 +1,4 @@
-﻿namespace LMS.Application.Common.Options
+namespace LMS.Application.Common.Options
 {
     public class EmailSettings
     {
@@ -9,5 +9,13 @@
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public int VerificationCodeExpiryMinutes { get; set; } = 10;
+
+        public string SenderAddress => !string.IsNullOrWhiteSpace(Email) ? Email : Username;
+
+        public bool IsConfigured => !string.IsNullOrWhiteSpace(Host)
+            && Port > 0
+            && !string.IsNullOrWhiteSpace(SenderAddress)
+            && !string.IsNullOrWhiteSpace(Username)
+            && !string.IsNullOrWhiteSpace(Password);
     }
 }

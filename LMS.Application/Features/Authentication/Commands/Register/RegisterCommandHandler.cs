@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Common.Options;
@@ -61,7 +62,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             {
                 UserName = email,
                 Email = email,
-                PhoneNumber = request.PhoneNumber.Trim(),
+                PhoneNumber = PhoneNumberValidationHelper.NormalizeE164(request.PhoneNumber),
                 CountryId = request.CountryId,
                 EmailConfirmed = false,
                 IsActive = !isInstructor
@@ -142,7 +143,17 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                 throw;
             }
 
-            await SendVerificationEmailAsync(user, cancellationToken);
+            try
+            {
+                await SendVerificationEmailAsync(user, cancellationToken);
+            }
+            catch
+            {
+                // The application would exist without a delivered code, leaving the applicant stuck.
+                await DeleteUserAsync(user);
+                await CleanupFilesAsync(uploadedFiles);
+                throw;
+            }
 
             var instructorResponse = new RegisterResponseDto(
                 user.Id,

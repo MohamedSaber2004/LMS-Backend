@@ -216,6 +216,11 @@ namespace LMS.API.Middlewares
                     statusCode = StatusCodes.Status400BadRequest;
                     message = Localize(LocalizationKeys.ExceptionMessages.BadRequest);
                     errorsDict["General"] = new[] { message };
+                    _logger.LogError(
+                        argEx,
+                        "ArgumentException while processing {Method} {Path}",
+                        context.Request.Method,
+                        context.Request.Path);
                     break;
 
                 case DomainException domainEx:

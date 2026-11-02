@@ -24,6 +24,7 @@ namespace LMS.Application.Localization
             public const string RequestTimeout = "ExceptionMessages.RequestTimeout";
             public const string EmailAuthenticationFailed = "ExceptionMessages.EmailAuthenticationFailed";
             public const string EmailServerRejected = "ExceptionMessages.EmailServerRejected";
+            public const string EmailServiceNotConfigured = "ExceptionMessages.EmailServiceNotConfigured";
             public const string NetworkConnectionFailed = "ExceptionMessages.NetworkConnectionFailed";
             public const string GoogleAuthNotConfigured = "ExceptionMessages.GoogleAuthNotConfigured";
             public const string GoogleAuthValidationUnavailable = "ExceptionMessages.GoogleAuthValidationUnavailable";
@@ -109,6 +110,8 @@ namespace LMS.Application.Localization
             public const string PasswordsDoNotMatch = "Authentication.PasswordsDoNotMatch";
             public const string PhoneNumberRequired = "Authentication.PhoneNumberRequired";
             public const string InvalidPhoneNumber = "Authentication.InvalidPhoneNumber";
+            public const string PhoneNumberMustBeInternational = "Authentication.PhoneNumberMustBeInternational";
+            public const string PhoneNumberCountryMismatch = "Authentication.PhoneNumberCountryMismatch";
             public const string CountryRequired = "Authentication.CountryRequired";
             public const string InvalidRegistrationRole = "Authentication.InvalidRegistrationRole";
             public const string EmailAlreadyRegistered = "Authentication.EmailAlreadyRegistered";

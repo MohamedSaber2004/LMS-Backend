@@ -18,9 +18,6 @@ namespace LMS.Application.Features.Authentication.Commands.Register
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
         private const int FullNameMaxLength = 200;
-        private const int PhoneNumberMaxLength = 30;
-        private const int PhoneNumberMinDigits = 6;
-        private const int PhoneNumberMaxDigits = 15;
         private const int SpecializationMaxLength = 150;
         private const int BioMaxLength = 2000;
         private const int BioMinLength = 30;
@@ -36,6 +33,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         private readonly ILmsDbContext _context;
         private readonly IFileValidator _fileValidator;
         private readonly IVideoValidator _videoValidator;
+        private readonly IEmailService _emailService;
         private readonly IStringLocalizer<Messages> _localizer;
         private readonly int _passwordMinLength;
 
@@ -44,6 +42,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             ILmsDbContext context,
             IFileValidator fileValidator,
             IVideoValidator videoValidator,
+            IEmailService emailService,
             IOptions<AppIdentityOptions> identityOptions,
             IStringLocalizer<Messages> localizer)
         {
@@ -51,6 +50,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             _context = context;
             _fileValidator = fileValidator;
             _videoValidator = videoValidator;
+            _emailService = emailService;
             _localizer = localizer;
             _passwordMinLength = identityOptions?.Value?.RequiredLength > 0
                 ? identityOptions.Value.RequiredLength
@@ -83,10 +83,8 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Authentication.PhoneNumberRequired].Value)
-                .MaximumLength(PhoneNumberMaxLength)
-                .WithMessage(localizer[LocalizationKeys.Authentication.InvalidPhoneNumber].Value)
-                .Must(phone => string.IsNullOrWhiteSpace(phone) || BeValidPhoneNumber(phone))
-                .WithMessage(localizer[LocalizationKeys.Authentication.InvalidPhoneNumber].Value);
+                .Must(PhoneNumberValidationHelper.IsValidE164)
+                .WithMessage(localizer[LocalizationKeys.Authentication.PhoneNumberMustBeInternational].Value);
 
             RuleFor(x => x.CountryId)
                 .NotEmpty()
@@ -117,13 +115,23 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
                     if (command.CountryId != Guid.Empty)
                     {
-                        var countryExists = await _context.Countries
-                            .AnyAsync(country => country.Id == command.CountryId, cancellationToken);
-                        if (!countryExists)
+                        var dialCode = await _context.Countries
+                            .Where(country => country.Id == command.CountryId)
+                            .Select(country => country.Code)
+                            .FirstOrDefaultAsync(cancellationToken);
+
+                        if (dialCode is null)
                         {
                             context.AddFailure(
                                 nameof(RegisterCommand.CountryId),
                                 _localizer[LocalizationKeys.Authentication.CountryNotFound].Value);
+                        }
+                        else if (PhoneNumberValidationHelper.IsValidE164(command.PhoneNumber)
+                                 && !PhoneNumberValidationHelper.MatchesCountryDialCode(command.PhoneNumber, dialCode))
+                        {
+                            context.AddFailure(
+                                nameof(RegisterCommand.PhoneNumber),
+                                _localizer[LocalizationKeys.Authentication.PhoneNumberCountryMismatch].Value);
                         }
                     }
 
@@ -153,6 +161,15 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
             When(x => x.Role == UserType.Instructor, () =>
             {
+                RuleFor(x => x)
+                    .Custom((_, context) =>
+                    {
+                        if (!_emailService.IsConfigured)
+                        {
+                            context.AddFailure(_localizer[LocalizationKeys.ExceptionMessages.EmailServiceNotConfigured].Value);
+                        }
+                    });
+
                 RuleFor(x => x.Specialization)
                     .NotEmpty()
                     .WithMessage(localizer[LocalizationKeys.Authentication.SpecializationRequired].Value)
@@ -230,40 +247,6 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                     nameof(RegisterCommand.Certificates),
                     _localizer[LocalizationKeys.Authentication.InvalidCertificateFile].Value);
             }
-        }
-
-        private static bool BeValidPhoneNumber(string phone)
-        {
-            var value = phone.Trim();
-
-            if (value.Length > PhoneNumberMaxLength)
-            {
-                return false;
-            }
-
-            var plusIndex = value.IndexOf('+');
-            if (plusIndex > 0 || (plusIndex == 0 && value.IndexOf('+', 1) >= 0))
-            {
-                return false;
-            }
-
-            foreach (var character in value)
-            {
-                if (!char.IsDigit(character)
-                    && !char.IsWhiteSpace(character)
-                    && character != '+'
-                    && character != '-'
-                    && character != '('
-                    && character != ')'
-                    && character != '.'
-                    && character != '/')
-                {
-                    return false;
-                }
-            }
-
-            var digitCount = value.Count(char.IsDigit);
-            return digitCount >= PhoneNumberMinDigits && digitCount <= PhoneNumberMaxDigits;
         }
 
         private static bool BeValidUrl(string? url)

@@ -168,6 +168,27 @@ namespace LMS.API
                     options.AllowRemoteDashboardAccess = true;
                     options.LogResponseBody = true;
                     options.MaxBodySize = 8192;
+                    options.LogSensitiveData = false;
+                    options.SensitivePatterns ??= new List<string>();
+                    var sensitivePatterns = new[]
+                    {
+                        "password",
+                        "confirmpassword",
+                        "token",
+                        "refreshtoken",
+                        "accesstoken",
+                        "otp",
+                        "secret",
+                        "authorization",
+                    };
+
+                    foreach (var pattern in sensitivePatterns)
+                    {
+                        if (!options.SensitivePatterns.Contains(pattern, StringComparer.OrdinalIgnoreCase))
+                        {
+                            options.SensitivePatterns.Add(pattern);
+                        }
+                    }
                     options.ExcludePaths ??= new List<string>();
                     var exclusions = new[]
                     {
