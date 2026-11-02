@@ -99,8 +99,6 @@
     "PasswordsDoNotMatch": "The password and its confirmation do not match.",
     "PhoneNumberRequired": "Phone number is required.",
     "InvalidPhoneNumber": "The phone number format is invalid.",
-    "PhoneNumberMustBeInternational": "Enter the phone number in international format with its country code, for example +201001234567.",
-    "PhoneNumberCountryMismatch": "The phone number does not match the dial code of the selected country.",
     "CountryRequired": "Country is required.",
     "InvalidRegistrationRole": "Only learner and instructor accounts can be registered.",
     "EmailAlreadyRegistered": "An account with this email address already exists.",

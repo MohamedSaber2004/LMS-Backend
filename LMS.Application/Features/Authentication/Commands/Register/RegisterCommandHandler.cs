@@ -62,7 +62,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             {
                 UserName = email,
                 Email = email,
-                PhoneNumber = PhoneNumberValidationHelper.NormalizeE164(request.PhoneNumber),
+                PhoneNumber = PhoneNumberValidationHelper.Normalize(request.PhoneNumber),
                 CountryId = request.CountryId,
                 EmailConfirmed = false,
                 IsActive = !isInstructor
@@ -149,7 +149,6 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             }
             catch
             {
-                // The application would exist without a delivered code, leaving the applicant stuck.
                 await DeleteUserAsync(user);
                 await CleanupFilesAsync(uploadedFiles);
                 throw;

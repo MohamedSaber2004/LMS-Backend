@@ -110,8 +110,6 @@ namespace LMS.Application.Localization
             public const string PasswordsDoNotMatch = "Authentication.PasswordsDoNotMatch";
             public const string PhoneNumberRequired = "Authentication.PhoneNumberRequired";
             public const string InvalidPhoneNumber = "Authentication.InvalidPhoneNumber";
-            public const string PhoneNumberMustBeInternational = "Authentication.PhoneNumberMustBeInternational";
-            public const string PhoneNumberCountryMismatch = "Authentication.PhoneNumberCountryMismatch";
             public const string CountryRequired = "Authentication.CountryRequired";
             public const string InvalidRegistrationRole = "Authentication.InvalidRegistrationRole";
             public const string EmailAlreadyRegistered = "Authentication.EmailAlreadyRegistered";

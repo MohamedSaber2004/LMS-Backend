@@ -83,8 +83,8 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Authentication.PhoneNumberRequired].Value)
-                .Must(PhoneNumberValidationHelper.IsValidE164)
-                .WithMessage(localizer[LocalizationKeys.Authentication.PhoneNumberMustBeInternational].Value);
+                .Must(PhoneNumberValidationHelper.IsValid)
+                .WithMessage(localizer[LocalizationKeys.Authentication.InvalidPhoneNumber].Value);
 
             RuleFor(x => x.CountryId)
                 .NotEmpty()
@@ -115,23 +115,14 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
                     if (command.CountryId != Guid.Empty)
                     {
-                        var dialCode = await _context.Countries
-                            .Where(country => country.Id == command.CountryId)
-                            .Select(country => country.Code)
-                            .FirstOrDefaultAsync(cancellationToken);
+                        var countryExists = await _context.Countries
+                            .AnyAsync(country => country.Id == command.CountryId, cancellationToken);
 
-                        if (dialCode is null)
+                        if (!countryExists)
                         {
                             context.AddFailure(
                                 nameof(RegisterCommand.CountryId),
                                 _localizer[LocalizationKeys.Authentication.CountryNotFound].Value);
-                        }
-                        else if (PhoneNumberValidationHelper.IsValidE164(command.PhoneNumber)
-                                 && !PhoneNumberValidationHelper.MatchesCountryDialCode(command.PhoneNumber, dialCode))
-                        {
-                            context.AddFailure(
-                                nameof(RegisterCommand.PhoneNumber),
-                                _localizer[LocalizationKeys.Authentication.PhoneNumberCountryMismatch].Value);
                         }
                     }
 
