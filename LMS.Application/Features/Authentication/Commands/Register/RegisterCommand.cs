@@ -30,6 +30,8 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
         public int? YearsOfExperience { get; set; }
 
+        public decimal? HourlyRate { get; set; }
+
         public string? Education { get; set; }
 
         public string? LinkedInUrl { get; set; }

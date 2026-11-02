@@ -26,6 +26,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         private const long MaxIntroVideoBytes = 100L * 1024 * 1024;
         private const int MinYearsOfExperience = 0;
         private const int MaxYearsOfExperience = 60;
+        private const decimal MaxHourlyRate = 10000m;
 
         private static readonly EmailAddressAttribute EmailValidator = new();
 
@@ -185,6 +186,14 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                         LocalizationKeys.Authentication.InvalidYearsOfExperience,
                         MinYearsOfExperience,
                         MaxYearsOfExperience].Value);
+
+                RuleFor(x => x.HourlyRate)
+                    .NotNull()
+                    .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateRequired].Value)
+                    .Must(rate => rate is null || rate.Value > 0m)
+                    .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateRequired].Value)
+                    .Must(rate => rate is null || rate.Value <= MaxHourlyRate)
+                    .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateTooLarge, MaxHourlyRate].Value);
 
                 RuleFor(x => x.Education)
                     .NotEmpty()

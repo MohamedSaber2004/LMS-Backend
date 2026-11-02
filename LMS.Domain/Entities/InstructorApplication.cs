@@ -14,18 +14,18 @@ namespace LMS.Domain.Entities
         public DateTime? ReviewedAt { get; private set; }
         public string? ReviewNotes { get; private set; }
 
-        public static InstructorApplication Create(Guid instructorId)
+        public static InstructorApplication Create(Guid instructorId, decimal hourlyRate)
         {
             return new InstructorApplication
             {
-                InstructorId = instructorId
+                InstructorId = instructorId,
+                HourlyRate = hourlyRate
             };
         }
 
-        public void Approve(Guid reviewedByUserId, decimal hourlyRate, string? reviewNotes)
+        public void Approve(Guid reviewedByUserId, string? reviewNotes)
         {
             Status = InstructorApplicationStatus.Approved;
-            HourlyRate = hourlyRate;
             ReviewedByUserId = reviewedByUserId;
             ReviewedAt = DateTime.UtcNow;
             ReviewNotes = reviewNotes;

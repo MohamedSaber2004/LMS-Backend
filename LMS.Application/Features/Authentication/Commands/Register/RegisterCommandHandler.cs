@@ -130,7 +130,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                         file.Type));
                 }
 
-                application = InstructorApplication.Create(instructor.Id);
+                application = InstructorApplication.Create(instructor.Id, request.HourlyRate!.Value);
 
                 await _context.Instructors.AddAsync(instructor, cancellationToken);
                 await _context.InstructorApplications.AddAsync(application, cancellationToken);
