@@ -185,7 +185,24 @@ jobs:
           file=appsettings.Test.json
           live_url="$FTP_PROTOCOL://$FTP_HOST/wwwroot/$file"
           login="$FTP_USER:$FTP_PASSWORD"
-          curl -sS --fail --user "$login" -o live.json "$live_url" || true
+          if curl -sS --fail --user "$login" -o live.json "$live_url"; then
+            echo "Downloaded the live /wwwroot/$file."
+          else
+            # Uploading the published copy is only safe when the host really has no
+            # config file: it would otherwise drop host-only values such as the live
+            # connection string. A failed listing is treated as unknown, not absent.
+            rm -f live.json
+            listing=$(curl -sS --user "$login" --list-only "$FTP_PROTOCOL://$FTP_HOST/wwwroot/" || true)
+            if [ -z "$listing" ]; then
+              echo "::error::Could not list /wwwroot over FTP, so the state of $file is unknown; refusing to touch the live config."
+              exit 1
+            fi
+            if echo "$listing" | grep -qw -- "$file"; then
+              echo "::error::/wwwroot/$file exists but could not be downloaded; refusing to overwrite the live config."
+              exit 1
+            fi
+            echo "No /wwwroot/$file on the host; the published config will be uploaded."
+          fi
 
           cat > ensure-live-config.cjs <<'NODE'
           const fs = require('fs');
