@@ -17,6 +17,8 @@ namespace LMS.Persistence
         public DbSet<Country> Countries { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+        public DbSet<Learner> Learners { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
         public DbSet<InstructorApplication> InstructorApplications { get; set; }
         public DbSet<InstructorCertificate> InstructorCertificates { get; set; }
         public DbSet<OnboardingQuestion> OnboardingQuestions { get; set; }

@@ -29,9 +29,11 @@ namespace LMS.Application.Features.Authentication.Queries.GetInstructorApplicati
         {
             var query = _context.InstructorApplications
                 .AsNoTracking()
-                .Include(application => application.User)
-                    .ThenInclude(user => user.Country)
-                .Include(application => application.Certificates)
+                .Include(application => application.Instructor)
+                    .ThenInclude(instructor => instructor.User)
+                        .ThenInclude(user => user.Country)
+                .Include(application => application.Instructor)
+                    .ThenInclude(instructor => instructor.Certificates)
                 .AsQueryable();
 
             if (request.Status.HasValue)
@@ -71,9 +73,11 @@ namespace LMS.Application.Features.Authentication.Queries.GetInstructorApplicati
 
         private InstructorApplicationDto MapToDto(InstructorApplication application)
         {
-            var countryName = application.User.Country?.CountryEnName;
+            var instructor = application.Instructor;
+            var user = instructor.User;
+            var countryName = user.Country?.CountryEnName;
 
-            var certificates = application.Certificates
+            var certificates = instructor.Certificates
                 .Select(certificate => new InstructorCertificateDto(
                     certificate.Id,
                     certificate.FilePath,
@@ -83,17 +87,17 @@ namespace LMS.Application.Features.Authentication.Queries.GetInstructorApplicati
 
             return new InstructorApplicationDto(
                 application.Id,
-                application.UserId,
-                application.User.FullName,
-                application.User.Email ?? string.Empty,
-                application.User.PhoneNumber ?? string.Empty,
-                application.User.CountryId,
+                instructor.UserId,
+                user.FullName,
+                user.Email ?? string.Empty,
+                user.PhoneNumber ?? string.Empty,
+                user.CountryId,
                 countryName,
-                application.Specialization,
-                application.Bio,
-                application.YearsOfExperience,
-                application.Education,
-                application.LinkedInUrl,
+                instructor.Specialization,
+                instructor.Bio,
+                instructor.YearsOfExperience,
+                instructor.Education,
+                instructor.LinkedInUrl,
                 application.HourlyRate,
                 application.Status,
                 application.CreatedAt,

@@ -28,34 +28,36 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
             GetInstructorsForLearnerQuery request,
             CancellationToken cancellationToken)
         {
-            var query = _context.InstructorApplications
+            var query = _context.Instructors
                 .AsNoTracking()
-                .Include(application => application.User)
+                .Include(instructor => instructor.Application)
+                .Include(instructor => instructor.User)
                     .ThenInclude(user => user.Country)
-                .Include(application => application.Certificates)
-                .Where(application => application.Status == InstructorApplicationStatus.Approved
-                    && application.User.IsActive
-                    && !application.User.IsDeleted);
+                .Include(instructor => instructor.Certificates)
+                .Where(instructor => instructor.Application != null
+                    && instructor.Application.Status == InstructorApplicationStatus.Approved
+                    && instructor.User.IsActive
+                    && !instructor.User.IsDeleted);
 
             if (request.MaxPrice.HasValue)
             {
-                query = query.Where(application => application.HourlyRate <= request.MaxPrice.Value);
+                query = query.Where(instructor => instructor.Application!.HourlyRate <= request.MaxPrice.Value);
             }
 
             if (request.MinPrice.HasValue)
             {
-                query = query.Where(application => application.HourlyRate >= request.MinPrice.Value);
+                query = query.Where(instructor => instructor.Application!.HourlyRate >= request.MinPrice.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(request.Specialization))
             {
                 var specialization = request.Specialization.Trim();
-                query = query.Where(application => application.Specialization.Contains(specialization));
+                query = query.Where(instructor => instructor.Specialization.Contains(specialization));
             }
 
             if (request.CountryId.HasValue)
             {
-                query = query.Where(application => application.User.CountryId == request.CountryId.Value);
+                query = query.Where(instructor => instructor.User.CountryId == request.CountryId.Value);
             }
 
             var totalCount = await query.CountAsync(cancellationToken);
@@ -67,14 +69,14 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 ? PagginatedResult<InstructorCardDto>.DefaultPageSize
                 : Math.Min(request.PageSize, PagginatedResult<InstructorCardDto>.MaxPageSize);
 
-            var applications = await query
-                .OrderBy(application => application.HourlyRate)
-                .ThenByDescending(application => application.ReviewedAt)
+            var instructors = await query
+                .OrderBy(instructor => instructor.Application!.HourlyRate)
+                .ThenByDescending(instructor => instructor.Application!.ReviewedAt)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);
 
-            var items = applications
+            var items = instructors
                 .Select(MapToCard)
                 .ToArray();
 
@@ -85,33 +87,33 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 _localizer[LocalizationKeys.Onboarding.InstructorsRetrieved].Value);
         }
 
-        private static InstructorCardDto MapToCard(InstructorApplication application)
+        private static InstructorCardDto MapToCard(Instructor instructor)
         {
-            var certificates = application.Certificates
+            var certificates = instructor.Certificates
                 .Where(certificate => certificate.Type != InstructorCertificateType.IntroVideo)
                 .Select(certificate => certificate.FilePath)
                 .ToArray();
 
-            var introVideo = application.Certificates
+            var introVideo = instructor.Certificates
                 .Where(certificate => certificate.Type == InstructorCertificateType.IntroVideo)
                 .OrderByDescending(certificate => certificate.CreatedAt)
                 .Select(certificate => certificate.FilePath)
                 .FirstOrDefault();
 
             return new InstructorCardDto(
-                application.Id,
-                application.UserId,
-                application.User.FullName,
-                application.Specialization,
-                application.Bio,
-                application.YearsOfExperience,
-                application.Education,
-                application.LinkedInUrl,
-                application.HourlyRate,
-                application.User.Country?.CountryEnName,
+                instructor.Id,
+                instructor.UserId,
+                instructor.User.FullName,
+                instructor.Specialization,
+                instructor.Bio,
+                instructor.YearsOfExperience,
+                instructor.Education,
+                instructor.LinkedInUrl,
+                instructor.Application?.HourlyRate ?? 0m,
+                instructor.User.Country?.CountryEnName,
                 introVideo,
                 certificates,
-                application.ReviewedAt ?? application.CreatedAt);
+                instructor.Application?.ReviewedAt ?? instructor.CreatedAt);
         }
     }
 }

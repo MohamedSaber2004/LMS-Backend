@@ -44,7 +44,8 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
             }
 
             var application = await _context.InstructorApplications
-                .Include(item => item.User)
+                .Include(item => item.Instructor)
+                    .ThenInclude(instructor => instructor.User)
                 .FirstOrDefaultAsync(item => item.Id == request.ApplicationId, cancellationToken)
                 ?? throw new NotFoundException(
                     LocalizationKeys.Authentication.InstructorApplicationNotFound);
@@ -55,8 +56,7 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
                     LocalizationKeys.Authentication.InstructorApplicationAlreadyReviewed);
             }
 
-            var user = application.User
-                ?? await _userManager.FindByIdAsync(application.UserId.ToString());
+            var user = application.Instructor?.User;
 
             if (user is null || user.IsDeleted)
             {

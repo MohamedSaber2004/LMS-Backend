@@ -12,21 +12,6 @@ namespace LMS.Persistence.Configurations
 
             builder.HasKey(application => application.Id);
 
-            builder.Property(application => application.Specialization)
-                .HasMaxLength(150)
-                .IsRequired();
-
-            builder.Property(application => application.Bio)
-                .HasMaxLength(2000)
-                .IsRequired();
-
-            builder.Property(application => application.Education)
-                .HasMaxLength(500)
-                .IsRequired();
-
-            builder.Property(application => application.LinkedInUrl)
-                .HasMaxLength(500);
-
             builder.Property(application => application.HourlyRate)
                 .HasPrecision(10, 2);
 
@@ -45,18 +30,13 @@ namespace LMS.Persistence.Configurations
 
             builder.HasIndex(application => application.Status);
             builder.HasIndex(application => new { application.Status, application.HourlyRate });
-            builder.HasIndex(application => application.UserId)
+            builder.HasIndex(application => application.InstructorId)
                 .IsUnique();
             builder.HasIndex(application => application.IsDeleted);
 
-            builder.HasOne(application => application.User)
-                .WithMany()
-                .HasForeignKey(application => application.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(application => application.Certificates)
-                .WithOne(certificate => certificate.InstructorApplication)
-                .HasForeignKey(certificate => certificate.InstructorApplicationId)
+            builder.HasOne(application => application.Instructor)
+                .WithOne(instructor => instructor.Application)
+                .HasForeignKey<InstructorApplication>(application => application.InstructorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasQueryFilter(application => !application.IsDeleted);

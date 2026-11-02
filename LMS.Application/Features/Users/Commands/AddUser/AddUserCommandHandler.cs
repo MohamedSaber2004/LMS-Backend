@@ -56,6 +56,12 @@ namespace LMS.Application.Features.Users.Commands.AddUser
                 return BuildIdentityFailure(roleResult);
             }
 
+            if (request.Role == UserType.Learner)
+            {
+                await _context.Learners.AddAsync(Learner.Create(user.Id), cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+
             var countryName = await _context.Countries
                 .AsNoTracking()
                 .Where(country => country.Id == user.CountryId)

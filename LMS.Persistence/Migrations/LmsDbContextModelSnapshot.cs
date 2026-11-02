@@ -204,7 +204,7 @@ namespace LMS.Persistence.Migrations
                     b.ToTable("Countries", (string)null);
                 });
 
-            modelBuilder.Entity("LMS.Domain.Entities.InstructorApplication", b =>
+            modelBuilder.Entity("LMS.Domain.Entities.Instructor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,10 +233,6 @@ namespace LMS.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<decimal>("HourlyRate")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -247,23 +243,10 @@ namespace LMS.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("ReviewNotes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<DateTime?>("ReviewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("ReviewedByUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Specialization")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -286,10 +269,76 @@ namespace LMS.Persistence.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("Status");
-
                     b.HasIndex("UserId")
                         .IsUnique();
+
+                    b.ToTable("Instructors", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.InstructorApplication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<Guid>("InstructorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReviewNotes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ReviewedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstructorId")
+                        .IsUnique();
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Status");
 
                     b.HasIndex("Status", "HourlyRate");
 
@@ -320,7 +369,7 @@ namespace LMS.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid>("InstructorApplicationId")
+                    b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -350,11 +399,60 @@ namespace LMS.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstructorApplicationId");
+                    b.HasIndex("InstructorId");
 
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("InstructorCertificates", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.Learner", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Learners", (string)null);
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.OnboardingAnswer", b =>
@@ -757,7 +855,7 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("LMS.Domain.Entities.InstructorApplication", b =>
+            modelBuilder.Entity("LMS.Domain.Entities.Instructor", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.ApplicationUser", "User")
                         .WithMany()
@@ -768,15 +866,37 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LMS.Domain.Entities.InstructorCertificate", b =>
+            modelBuilder.Entity("LMS.Domain.Entities.InstructorApplication", b =>
                 {
-                    b.HasOne("LMS.Domain.Entities.InstructorApplication", "InstructorApplication")
-                        .WithMany("Certificates")
-                        .HasForeignKey("InstructorApplicationId")
+                    b.HasOne("LMS.Domain.Entities.Instructor", "Instructor")
+                        .WithOne("Application")
+                        .HasForeignKey("LMS.Domain.Entities.InstructorApplication", "InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("InstructorApplication");
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.InstructorCertificate", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.Instructor", "Instructor")
+                        .WithMany("Certificates")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.Learner", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.OnboardingAnswer", b =>
@@ -888,8 +1008,10 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("LMS.Domain.Entities.InstructorApplication", b =>
+            modelBuilder.Entity("LMS.Domain.Entities.Instructor", b =>
                 {
+                    b.Navigation("Application");
+
                     b.Navigation("Certificates");
                 });
 

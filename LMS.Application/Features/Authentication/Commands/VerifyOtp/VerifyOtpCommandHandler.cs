@@ -53,7 +53,7 @@ namespace LMS.Application.Features.Authentication.Commands.VerifyOtp
 
             var hasPendingInstructorApplication = wasEmailUnverified
                 && await _context.InstructorApplications.AnyAsync(
-                    application => application.UserId == user.Id
+                    application => application.Instructor.UserId == user.Id
                         && application.Status == InstructorApplicationStatus.Pending,
                     cancellationToken);
 

@@ -30,7 +30,7 @@ namespace LMS.Persistence.Configurations
             builder.Property(certificate => certificate.Version)
                 .IsRowVersion();
 
-            builder.HasIndex(certificate => certificate.InstructorApplicationId);
+            builder.HasIndex(certificate => certificate.InstructorId);
             builder.HasIndex(certificate => certificate.IsDeleted);
 
             builder.HasQueryFilter(certificate => !certificate.IsDeleted);

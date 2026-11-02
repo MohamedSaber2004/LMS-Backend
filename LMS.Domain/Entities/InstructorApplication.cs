@@ -5,45 +5,21 @@ namespace LMS.Domain.Entities
 {
     public class InstructorApplication : BaseEntity<Guid>
     {
-        public Guid UserId { get; private set; }
-        public virtual ApplicationUser User { get; private set; } = null!;
-
-        public string Specialization { get; private set; } = null!;
-        public string Bio { get; private set; } = null!;
-        public int YearsOfExperience { get; private set; }
-        public string Education { get; private set; } = null!;
-        public string? LinkedInUrl { get; private set; }
-        public decimal HourlyRate { get; private set; }
+        public Guid InstructorId { get; private set; }
+        public virtual Instructor Instructor { get; private set; } = null!;
 
         public InstructorApplicationStatus Status { get; private set; } = InstructorApplicationStatus.Pending;
+        public decimal HourlyRate { get; private set; }
         public Guid? ReviewedByUserId { get; private set; }
         public DateTime? ReviewedAt { get; private set; }
         public string? ReviewNotes { get; private set; }
 
-        public virtual ICollection<InstructorCertificate> Certificates { get; private set; } = new List<InstructorCertificate>();
-
-        public static InstructorApplication Create(
-            Guid userId,
-            string specialization,
-            string bio,
-            int yearsOfExperience,
-            string education,
-            string? linkedInUrl)
+        public static InstructorApplication Create(Guid instructorId)
         {
             return new InstructorApplication
             {
-                UserId = userId,
-                Specialization = specialization,
-                Bio = bio,
-                YearsOfExperience = yearsOfExperience,
-                Education = education,
-                LinkedInUrl = linkedInUrl
+                InstructorId = instructorId
             };
-        }
-
-        public void AddCertificate(InstructorCertificate certificate)
-        {
-            Certificates.Add(certificate);
         }
 
         public void Approve(Guid reviewedByUserId, decimal hourlyRate, string? reviewNotes)

@@ -85,6 +85,17 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                     return BuildIdentityFailure(roleResult);
                 }
 
+                try
+                {
+                    await _context.Learners.AddAsync(Learner.Create(user.Id), cancellationToken);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+                catch
+                {
+                    await DeleteUserAsync(user);
+                    throw;
+                }
+
                 var learnerResponse = new RegisterResponseDto(
                     user.Id,
                     user.Email!,
@@ -101,7 +112,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             InstructorApplication application;
             try
             {
-                application = InstructorApplication.Create(
+                var instructor = Instructor.Create(
                     user.Id,
                     request.Specialization!.Trim(),
                     request.Bio!.Trim(),
@@ -111,13 +122,16 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
                 foreach (var file in uploadedFiles)
                 {
-                    application.AddCertificate(InstructorCertificate.Create(
-                        application.Id,
+                    instructor.AddCertificate(InstructorCertificate.Create(
+                        instructor.Id,
                         file.Path,
                         file.OriginalFileName,
                         file.Type));
                 }
 
+                application = InstructorApplication.Create(instructor.Id);
+
+                await _context.Instructors.AddAsync(instructor, cancellationToken);
                 await _context.InstructorApplications.AddAsync(application, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
             }
