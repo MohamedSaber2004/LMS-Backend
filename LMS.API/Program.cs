@@ -41,7 +41,6 @@ namespace LMS.API
             }
             catch (HostAbortedException) when (EF.IsDesignTime)
             {
-                // EF Core design-time tools (e.g. Update-Database) abort the host after building it.
             }
             catch (Exception ex)
             {
@@ -167,6 +166,7 @@ namespace LMS.API
                     options.Enabled = true;
                     options.EnableDashboardUI = true;
                     options.AllowRemoteDashboardAccess = true;
+                    options.LogResponseBody = true;
                     options.MaxBodySize = 8192;
                     options.ExcludePaths ??= new List<string>();
                     var exclusions = new[]
