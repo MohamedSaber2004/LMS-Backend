@@ -254,6 +254,7 @@ namespace LMS.API.Middlewares
                     statusCode = StatusCodes.Status500InternalServerError;
                     message = Localize(LocalizationKeys.ExceptionMessages.InternalServerError);
                     errorsDict["General"] = new[] { message };
+                    _logger.LogError(exception, "Unhandled exception while processing {Method} {Path}", context.Request.Method, context.Request.Path);
                     break;
             }
 

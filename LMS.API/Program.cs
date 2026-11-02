@@ -389,9 +389,9 @@ namespace LMS.API
                     subApp => subApp.UseNetTracker(app.Configuration));
             }
 
-            app.UseCustomExceptionHandler();
-
             app.UseRequestLocalization();
+
+            app.UseCustomExceptionHandler();
 
             app.UseRouting();
 
