@@ -8,6 +8,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 {
     public class RegisterCommand : IRequest<Result<RegisterResponseDto>>
     {
+
         public RegisterCommand() { }
 
         public string FullName { get; set; } = string.Empty;
