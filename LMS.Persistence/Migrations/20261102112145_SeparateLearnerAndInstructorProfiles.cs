@@ -99,8 +99,6 @@ namespace LMS.Persistence.Migrations
                 column: "UserId",
                 unique: true);
 
-            // Teacher profile data moves out of the review record. The new profile row keeps the
-            // application id so certificates and applications can be re-pointed without a lookup.
             migrationBuilder.Sql(
                 """
                 INSERT INTO Instructors
@@ -111,7 +109,6 @@ namespace LMS.Persistence.Migrations
                 FROM InstructorApplications;
                 """);
 
-            // Student accounts get their own profile row.
             migrationBuilder.Sql(
                 """
                 INSERT INTO Learners (Id, UserId, CreatedAt, CreatedBy, IsDeleted, IsActive)
@@ -137,7 +134,6 @@ namespace LMS.Persistence.Migrations
                 UPDATE InstructorApplications SET InstructorId = Id;
                 """);
 
-            // InstructorCertificates.InstructorApplicationId already matches the profile id copied above.
             migrationBuilder.RenameColumn(
                 name: "InstructorApplicationId",
                 table: "InstructorCertificates",
@@ -246,8 +242,6 @@ namespace LMS.Persistence.Migrations
                 INNER JOIN Instructors instructor ON instructor.Id = application.InstructorId;
                 """);
 
-            // Applications and certificates are keyed by the profile id, which only this migration
-            // generated; accounts created after it have no application id to fall back on.
             migrationBuilder.Sql(
                 """
                 UPDATE certificate
