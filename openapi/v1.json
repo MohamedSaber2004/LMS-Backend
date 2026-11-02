@@ -867,6 +867,10 @@
                     "type": "integer",
                     "format": "int32"
                   },
+                  "HourlyRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
                   "Education": {
                     "type": "string"
                   },
@@ -915,6 +919,9 @@
                   "style": "form"
                 },
                 "YearsOfExperience": {
+                  "style": "form"
+                },
+                "HourlyRate": {
                   "style": "form"
                 },
                 "Education": {
@@ -6525,18 +6532,13 @@
       },
       "ApproveInstructorApplicationCommand": {
         "required": [
-          "applicationId",
-          "hourlyRate"
+          "applicationId"
         ],
         "type": "object",
         "properties": {
           "applicationId": {
             "type": "string",
             "format": "uuid"
-          },
-          "hourlyRate": {
-            "type": "number",
-            "format": "double"
           },
           "reviewNotes": {
             "type": "string",
