@@ -1600,6 +1600,12 @@
                   "description": "optional"
                 },
                 {
+                  "key": "HourlyRate",
+                  "value": "0",
+                  "type": "text",
+                  "description": "optional"
+                },
+                {
                   "key": "Education",
                   "value": "string",
                   "type": "text",
@@ -1712,6 +1718,12 @@
                     },
                     {
                       "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
                       "value": "0",
                       "type": "text",
                       "description": "optional"
@@ -1844,6 +1856,12 @@
                       "description": "optional"
                     },
                     {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
                       "key": "Education",
                       "value": "string",
                       "type": "text",
@@ -1966,6 +1984,12 @@
                     },
                     {
                       "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
                       "value": "0",
                       "type": "text",
                       "description": "optional"
@@ -2098,6 +2122,12 @@
                       "description": "optional"
                     },
                     {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
                       "key": "Education",
                       "value": "string",
                       "type": "text",
@@ -2225,6 +2255,12 @@
                       "description": "optional"
                     },
                     {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
                       "key": "Education",
                       "value": "string",
                       "type": "text",
@@ -2347,6 +2383,12 @@
                     },
                     {
                       "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
                       "value": "0",
                       "type": "text",
                       "description": "optional"
@@ -7229,7 +7271,7 @@
             "description": "POST /api/v1/instructor-applications/approve",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+              "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -7271,7 +7313,7 @@
                 "description": "POST /api/v1/instructor-applications/approve",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7323,7 +7365,7 @@
                 "description": "POST /api/v1/instructor-applications/approve",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7375,7 +7417,7 @@
                 "description": "POST /api/v1/instructor-applications/approve",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7427,7 +7469,7 @@
                 "description": "POST /api/v1/instructor-applications/approve",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7479,7 +7521,7 @@
                 "description": "POST /api/v1/instructor-applications/approve",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7531,7 +7573,7 @@
                 "description": "POST /api/v1/instructor-applications/approve",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"hourlyRate\": 0,\n  \"reviewNotes\": \"string\"\n}",
+                  "raw": "{\n  \"applicationId\": \"00000000-0000-0000-0000-000000000000\",\n  \"reviewNotes\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
