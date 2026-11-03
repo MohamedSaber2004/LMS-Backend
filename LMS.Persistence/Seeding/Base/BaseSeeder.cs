@@ -11,6 +11,7 @@ namespace LMS.Persistence.Seeding.Base
             await CountrySeeder.SeedCountriesAsync(context);
             await UserSeeder.SeedUsersAndRolesAsync(userManager, roleManager);
             await OnboardingSeeder.SeedOnboardingAsync(context);
+            await HelpCenterSeeder.SeedHelpCenterAsync(context);
         }
     }
 }
