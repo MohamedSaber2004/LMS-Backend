@@ -11213,6 +11213,11 @@
           "role": {
             "$ref": "#/components/schemas/UserType"
           },
+          "instructorId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
           "isActive": {
             "type": "boolean"
           },
