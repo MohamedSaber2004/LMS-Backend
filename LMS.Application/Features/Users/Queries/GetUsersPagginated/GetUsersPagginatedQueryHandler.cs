@@ -81,6 +81,7 @@ namespace LMS.Application.Features.Users.Queries.GetUsersPagginated
                 .ToListAsync(cancellationToken);
 
             await PopulateRolesAsync(users, cancellationToken);
+            await PopulateInstructorIdsAsync(users, cancellationToken);
 
             var result = PagginatedResult<UserDto>.Create(
                 users,
@@ -122,6 +123,41 @@ namespace LMS.Application.Features.Users.Queries.GetUsersPagginated
                     && Enum.TryParse<UserType>(roleName, ignoreCase: true, out var role))
                 {
                     user.Role = role;
+                }
+            }
+        }
+
+        private async Task PopulateInstructorIdsAsync(
+            IReadOnlyCollection<UserDto> users,
+            CancellationToken cancellationToken)
+        {
+            var instructorUserIds = users
+                .Where(user => user.Role == UserType.Instructor)
+                .Select(user => user.Id)
+                .ToList();
+
+            if (instructorUserIds.Count == 0)
+            {
+                return;
+            }
+
+            var instructorProfiles = await _context.Instructors
+                .AsNoTracking()
+                .Where(instructor => instructorUserIds.Contains(instructor.UserId))
+                .Select(instructor => new { instructor.UserId, instructor.Id })
+                .ToListAsync(cancellationToken);
+
+            var instructorIdLookup = instructorProfiles
+                .GroupBy(instructor => instructor.UserId)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.Select(instructor => instructor.Id).FirstOrDefault());
+
+            foreach (var user in users)
+            {
+                if (instructorIdLookup.TryGetValue(user.Id, out var instructorId))
+                {
+                    user.InstructorId = instructorId;
                 }
             }
         }

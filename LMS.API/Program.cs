@@ -13,6 +13,7 @@ using LMS.Application.Localization;
 using LMS.Domain.Entities;
 using LMS.Infrastructure;
 using LMS.Persistence;
+using LMS.Persistence.Seeding;
 using LMS.Persistence.Seeding.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -516,6 +517,23 @@ namespace LMS.API
                 catch (Exception ex)
                 {
                     Log.Error(ex, "An error occurred while seeding the database.");
+                }
+            }
+
+            // Runs the help-center rows on their own so a one-off seed does not also touch
+            // roles, accounts or onboarding content on the shared database.
+            if (args.Contains("--seed-help-center"))
+            {
+                using var scope = app.Services.CreateScope();
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                    await HelpCenterSeeder.SeedHelpCenterAsync(dbContext);
+                    Log.Information("Help center seeding finished.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while seeding the help center.");
                 }
             }
 

@@ -11,6 +11,8 @@ namespace LMS.Application.Features.Users.DTOs
         public Guid? CountryId { get; set; }
         public string? CountryName { get; set; }
         public UserType? Role { get; set; }
+
+        public Guid? InstructorId { get; set; }
         public bool IsActive { get; set; }
         public string? ProfilePictureUrl { get; set; }
         public DateTime CreatedAt { get; set; }
