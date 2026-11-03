@@ -19,7 +19,6 @@ namespace LMS.API.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route(ApiRoutes.HelpCenter.Base)]
-    [Authorize]
     [RoleAuthorize(UserType.Admin)]
     public class HelpCenterAdminController : BaseController
     {
