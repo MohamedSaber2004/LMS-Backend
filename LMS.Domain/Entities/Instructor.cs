@@ -17,6 +17,8 @@ namespace LMS.Domain.Entities
 
         public virtual ICollection<InstructorCertificate> Certificates { get; private set; } = new List<InstructorCertificate>();
 
+        public virtual ICollection<InstructorAvailabilitySlot> AvailabilitySlots { get; private set; } = new List<InstructorAvailabilitySlot>();
+
         public static Instructor Create(
             Guid userId,
             string specialization,
@@ -39,6 +41,11 @@ namespace LMS.Domain.Entities
         public void AddCertificate(InstructorCertificate certificate)
         {
             Certificates.Add(certificate);
+        }
+
+        public void AddAvailabilitySlot(InstructorAvailabilitySlot slot)
+        {
+            AvailabilitySlots.Add(slot);
         }
     }
 }

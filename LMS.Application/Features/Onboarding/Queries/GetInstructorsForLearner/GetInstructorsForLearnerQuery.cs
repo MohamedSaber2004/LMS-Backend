@@ -12,6 +12,17 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
         public decimal? MaxPrice { get; set; }
         public string? Specialization { get; set; }
         public Guid? CountryId { get; set; }
+
+        /// <summary>
+        /// Recurring availability filter. Times are instructor-local and match a single slot
+        /// that covers the requested window.
+        /// </summary>
+        public DayOfWeek? Day { get; set; }
+
+        public TimeSpan? After { get; set; }
+
+        public TimeSpan? Before { get; set; }
+
         public int PageNumber { get; set; } = PagginatedResult<InstructorCardDto>.DefaultPageNumber;
         public int PageSize { get; set; } = PagginatedResult<InstructorCardDto>.DefaultPageSize;
     }

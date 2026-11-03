@@ -60,6 +60,21 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 query = query.Where(instructor => instructor.User.CountryId == request.CountryId.Value);
             }
 
+            if (request.Day.HasValue)
+            {
+                var day = request.Day.Value;
+
+                // Absent bounds widen the window to the whole day: every slot starts before the end of
+                // the day and ends after midnight, so one predicate covers all four cases.
+                var after = request.After ?? new TimeSpan(23, 59, 59, 999);
+                var before = request.Before ?? TimeSpan.Zero;
+
+                query = query.Where(instructor => instructor.AvailabilitySlots.Any(slot =>
+                    slot.Day == day
+                    && slot.StartTime <= after
+                    && slot.EndTime >= before));
+            }
+
             var totalCount = await query.CountAsync(cancellationToken);
 
             var pageNumber = request.PageNumber < 1

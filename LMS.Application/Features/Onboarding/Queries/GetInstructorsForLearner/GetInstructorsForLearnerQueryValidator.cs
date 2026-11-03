@@ -35,6 +35,18 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
             RuleFor(x => x.Specialization)
                 .MaximumLength(150)
                 .WithMessage(localizer[LocalizationKeys.Onboarding.SpecializationTooLong, 150].Value);
+
+            RuleFor(x => x.Day)
+                .Must(day => day is null || Enum.IsDefined(day.Value))
+                .WithMessage(localizer[LocalizationKeys.Availability.DayInvalid].Value);
+
+            RuleFor(x => x)
+                .Must(x => x.Day.HasValue || (x.After is null && x.Before is null))
+                .WithMessage(localizer[LocalizationKeys.Availability.DayRequiredForTimeFilter].Value);
+
+            RuleFor(x => x.Before)
+                .Must((x, before) => before is null || x.After is null || before > x.After)
+                .WithMessage(localizer[LocalizationKeys.Availability.FilterTimeRangeInvalid].Value);
         }
     }
 }

@@ -54,9 +54,18 @@ namespace LMS.API.Routes.V1
             public const string AdminOptionById = "admin/options/{id:guid}";
         }
 
+        public static class InstructorAvailability
+        {
+            public const string Base = BaseRoutes.Base + "/instructor-availability";
+
+            public const string GetAllPagginated = "pagginated";
+            public const string ForInstructor = "instructors/{instructorId:guid}";
+            public const string Slots = "instructors/{instructorId:guid}/weekly-slots";
+            public const string SlotById = "weekly-slots/{id:guid}";
+        }
+
         public static class Countries
         {            public const string Base = BaseRoutes.Base + "/countries";
-
             public const string GetAllPagginated = "pagginated";
             public const string GetById = "{id:guid}";
             public const string Update = "update";

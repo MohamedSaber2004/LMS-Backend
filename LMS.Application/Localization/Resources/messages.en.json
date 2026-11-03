@@ -178,6 +178,25 @@
     "PageSizeInvalid": "Page size must be between 1 and {0}.",
     "SpecializationTooLong": "Specialization filter cannot exceed {0} characters."
   },
+  "Availability": {
+    "InstructorIdRequired": "Instructor identifier is required.",
+    "SlotIdRequired": "Availability slot identifier is required.",
+    "SlotNotFound": "Availability slot was not found.",
+    "InstructorNotFound": "Instructor was not found.",
+    "InstructorNotApproved": "Availability can only be managed for an approved instructor.",
+    "DayInvalid": "The day of week must be between Sunday (0) and Saturday (6).",
+    "DayRequiredForTimeFilter": "A day of week is required when filtering by time.",
+    "FilterTimeRangeInvalid": "The availability time range must end after it starts.",
+    "EndTimeAfterStartTime": "The end time must be later than the start time.",
+    "OverlappingSlot": "This window overlaps another availability slot for the same day.",
+    "SlotCreatedSuccess": "Availability slot created successfully.",
+    "SlotUpdatedSuccess": "Availability slot updated successfully.",
+    "SlotDeletedSuccess": "Availability slot deleted successfully.",
+    "SlotsRetrieved": "Availability slots retrieved successfully.",
+    "AvailabilityRetrieved": "Instructor availability retrieved successfully.",
+    "PageNumberInvalid": "Page number must be greater than zero.",
+    "PageSizeInvalid": "Page size must be between 1 and {0}."
+  },
   "Countries": {
     "CountryEnNameRequired": "Country English name is required.",
     "CountryEnNameTooLong": "Country English name cannot exceed {0} characters.",

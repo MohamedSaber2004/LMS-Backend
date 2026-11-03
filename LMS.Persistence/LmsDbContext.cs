@@ -21,6 +21,7 @@ namespace LMS.Persistence
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<InstructorApplication> InstructorApplications { get; set; }
         public DbSet<InstructorCertificate> InstructorCertificates { get; set; }
+        public DbSet<InstructorAvailabilitySlot> InstructorAvailabilitySlots { get; set; }
         public DbSet<OnboardingQuestion> OnboardingQuestions { get; set; }
         public DbSet<OnboardingOption> OnboardingOptions { get; set; }
         public DbSet<OnboardingAnswer> OnboardingAnswers { get; set; }

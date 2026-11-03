@@ -194,6 +194,27 @@ namespace LMS.Application.Localization
             public const string SpecializationTooLong = "Onboarding.SpecializationTooLong";
         }
 
+        public static class Availability
+        {
+            public const string InstructorIdRequired = "Availability.InstructorIdRequired";
+            public const string SlotIdRequired = "Availability.SlotIdRequired";
+            public const string SlotNotFound = "Availability.SlotNotFound";
+            public const string InstructorNotFound = "Availability.InstructorNotFound";
+            public const string InstructorNotApproved = "Availability.InstructorNotApproved";
+            public const string DayInvalid = "Availability.DayInvalid";
+            public const string DayRequiredForTimeFilter = "Availability.DayRequiredForTimeFilter";
+            public const string FilterTimeRangeInvalid = "Availability.FilterTimeRangeInvalid";
+            public const string EndTimeAfterStartTime = "Availability.EndTimeAfterStartTime";
+            public const string OverlappingSlot = "Availability.OverlappingSlot";
+            public const string SlotCreatedSuccess = "Availability.SlotCreatedSuccess";
+            public const string SlotUpdatedSuccess = "Availability.SlotUpdatedSuccess";
+            public const string SlotDeletedSuccess = "Availability.SlotDeletedSuccess";
+            public const string SlotsRetrieved = "Availability.SlotsRetrieved";
+            public const string AvailabilityRetrieved = "Availability.AvailabilityRetrieved";
+            public const string PageNumberInvalid = "Availability.PageNumberInvalid";
+            public const string PageSizeInvalid = "Availability.PageSizeInvalid";
+        }
+
         public static class Countries
         {            public const string CountryEnNameRequired = "Countries.CountryEnNameRequired";
             public const string CountryEnNameTooLong = "Countries.CountryEnNameTooLong";

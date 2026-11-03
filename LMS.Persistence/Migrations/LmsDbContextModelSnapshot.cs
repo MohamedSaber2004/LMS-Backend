@@ -345,6 +345,65 @@ namespace LMS.Persistence.Migrations
                     b.ToTable("InstructorApplications", (string)null);
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.InstructorAvailabilitySlot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("InstructorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstructorId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("InstructorId", "Day", "StartTime");
+
+                    b.ToTable("InstructorAvailabilitySlots", (string)null);
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.InstructorCertificate", b =>
                 {
                     b.Property<Guid>("Id")
@@ -877,6 +936,17 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Instructor");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.InstructorAvailabilitySlot", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.Instructor", "Instructor")
+                        .WithMany("AvailabilitySlots")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instructor");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.InstructorCertificate", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.Instructor", "Instructor")
@@ -1011,6 +1081,8 @@ namespace LMS.Persistence.Migrations
             modelBuilder.Entity("LMS.Domain.Entities.Instructor", b =>
                 {
                     b.Navigation("Application");
+
+                    b.Navigation("AvailabilitySlots");
 
                     b.Navigation("Certificates");
                 });
