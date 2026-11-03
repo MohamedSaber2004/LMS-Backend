@@ -7953,6 +7953,1815 @@
       ]
     },
     {
+      "name": "InstructorAvailability",
+      "description": "",
+      "item": [
+        {
+          "name": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-availability",
+                "instructors",
+                "{{instructorId}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "instructorId",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+                "body": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "GET /api/v1/instructor-availability/instructors/{instructorId}",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "InstructorAvailabilityAdmin",
+      "description": "",
+      "item": [
+        {
+          "name": "GET /api/v1/instructor-availability/pagginated",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-availability/pagginated",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-availability",
+                "pagginated"
+              ],
+              "query": [
+                {
+                  "key": "InstructorId",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                },
+                {
+                  "key": "Day",
+                  "value": "0",
+                  "description": ""
+                },
+                {
+                  "key": "PageNumber",
+                  "value": "0",
+                  "description": ""
+                },
+                {
+                  "key": "PageSize",
+                  "value": "0",
+                  "description": ""
+                }
+              ],
+              "variable": []
+            },
+            "description": "GET /api/v1/instructor-availability/pagginated",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/pagginated",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "pagginated"
+                  ],
+                  "query": [
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-availability/pagginated",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/pagginated",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "pagginated"
+                  ],
+                  "query": [
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-availability/pagginated",
+                "body": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/pagginated",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "pagginated"
+                  ],
+                  "query": [
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-availability/pagginated",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/pagginated",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "pagginated"
+                  ],
+                  "query": [
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-availability/pagginated",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/pagginated",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "pagginated"
+                  ],
+                  "query": [
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-availability/pagginated",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-availability",
+                "instructors",
+                "{{instructorId}}",
+                "weekly-slots"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "instructorId",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}",
+                    "weekly-slots"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}",
+                    "weekly-slots"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}",
+                    "weekly-slots"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}",
+                    "weekly-slots"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "200 Success - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}",
+                    "weekly-slots"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Success",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/instructors/{{instructorId}}/weekly-slots",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "instructors",
+                    "{{instructorId}}",
+                    "weekly-slots"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "instructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "POST /api/v1/instructor-availability/instructors/{instructorId}/weekly-slots",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-availability",
+                "weekly-slots",
+                "{{id}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"day\": 0,\n  \"startTime\": \"string\",\n  \"endTime\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-availability",
+                "weekly-slots",
+                "{{id}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-availability/weekly-slots/{{id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-availability",
+                    "weekly-slots",
+                    "{{id}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "DELETE /api/v1/instructor-availability/weekly-slots/{id}",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Onboarding",
       "description": "",
       "item": [
@@ -8756,6 +10565,21 @@
                   "description": ""
                 },
                 {
+                  "key": "Day",
+                  "value": "0",
+                  "description": "Recurring availability filter. Times are instructor-local and match a single slot\r\nthat covers the requested window."
+                },
+                {
+                  "key": "After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Before",
+                  "value": "string",
+                  "description": ""
+                },
+                {
                   "key": "PageNumber",
                   "value": "0",
                   "description": ""
@@ -8813,6 +10637,21 @@
                     {
                       "key": "CountryId",
                       "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": "Recurring availability filter. Times are instructor-local and match a single slot\r\nthat covers the requested window."
+                    },
+                    {
+                      "key": "After",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "Before",
+                      "value": "string",
                       "description": ""
                     },
                     {
@@ -8886,6 +10725,21 @@
                       "description": ""
                     },
                     {
+                      "key": "Day",
+                      "value": "0",
+                      "description": "Recurring availability filter. Times are instructor-local and match a single slot\r\nthat covers the requested window."
+                    },
+                    {
+                      "key": "After",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "Before",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
                       "key": "PageNumber",
                       "value": "0",
                       "description": ""
@@ -8953,6 +10807,21 @@
                     {
                       "key": "CountryId",
                       "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": "Recurring availability filter. Times are instructor-local and match a single slot\r\nthat covers the requested window."
+                    },
+                    {
+                      "key": "After",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "Before",
+                      "value": "string",
                       "description": ""
                     },
                     {
@@ -9026,6 +10895,21 @@
                       "description": ""
                     },
                     {
+                      "key": "Day",
+                      "value": "0",
+                      "description": "Recurring availability filter. Times are instructor-local and match a single slot\r\nthat covers the requested window."
+                    },
+                    {
+                      "key": "After",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "Before",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
                       "key": "PageNumber",
                       "value": "0",
                       "description": ""
@@ -9093,6 +10977,21 @@
                     {
                       "key": "CountryId",
                       "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
+                      "key": "Day",
+                      "value": "0",
+                      "description": "Recurring availability filter. Times are instructor-local and match a single slot\r\nthat covers the requested window."
+                    },
+                    {
+                      "key": "After",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "Before",
+                      "value": "string",
                       "description": ""
                     },
                     {
