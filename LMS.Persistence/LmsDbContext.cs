@@ -25,6 +25,8 @@ namespace LMS.Persistence
         public DbSet<OnboardingQuestion> OnboardingQuestions { get; set; }
         public DbSet<OnboardingOption> OnboardingOptions { get; set; }
         public DbSet<OnboardingAnswer> OnboardingAnswers { get; set; }
+        public DbSet<HelpCategory> HelpCategories { get; set; }
+        public DbSet<HelpArticle> HelpArticles { get; set; }
 
         public LmsDbContext(
             ICurrentUserService currentUserService,

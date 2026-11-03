@@ -215,6 +215,35 @@ namespace LMS.Application.Localization
             public const string PageSizeInvalid = "Availability.PageSizeInvalid";
         }
 
+        public static class HelpCenter
+        {
+            public const string CategoryIdRequired = "HelpCenter.CategoryIdRequired";
+            public const string CategoryNotFound = "HelpCenter.CategoryNotFound";
+            public const string CategoryNameRequired = "HelpCenter.CategoryNameRequired";
+            public const string CategoryNameTooLong = "HelpCenter.CategoryNameTooLong";
+            public const string CategoryNameAlreadyExists = "HelpCenter.CategoryNameAlreadyExists";
+            public const string CategoryInUse = "HelpCenter.CategoryInUse";
+            public const string ArticleIdRequired = "HelpCenter.ArticleIdRequired";
+            public const string ArticleNotFound = "HelpCenter.ArticleNotFound";
+            public const string QuestionRequired = "HelpCenter.QuestionRequired";
+            public const string QuestionTooLong = "HelpCenter.QuestionTooLong";
+            public const string AnswerRequired = "HelpCenter.AnswerRequired";
+            public const string AnswerTooLong = "HelpCenter.AnswerTooLong";
+            public const string OrderMustBeNonNegative = "HelpCenter.OrderMustBeNonNegative";
+            public const string SearchTooLong = "HelpCenter.SearchTooLong";
+            public const string PageNumberInvalid = "HelpCenter.PageNumberInvalid";
+            public const string PageSizeInvalid = "HelpCenter.PageSizeInvalid";
+            public const string CategoryCreatedSuccess = "HelpCenter.CategoryCreatedSuccess";
+            public const string CategoryUpdatedSuccess = "HelpCenter.CategoryUpdatedSuccess";
+            public const string CategoryDeletedSuccess = "HelpCenter.CategoryDeletedSuccess";
+            public const string CategoriesRetrieved = "HelpCenter.CategoriesRetrieved";
+            public const string ArticleCreatedSuccess = "HelpCenter.ArticleCreatedSuccess";
+            public const string ArticleUpdatedSuccess = "HelpCenter.ArticleUpdatedSuccess";
+            public const string ArticleDeletedSuccess = "HelpCenter.ArticleDeletedSuccess";
+            public const string ArticlesRetrieved = "HelpCenter.ArticlesRetrieved";
+            public const string ArticleRetrieved = "HelpCenter.ArticleRetrieved";
+        }
+
         public static class Countries
         {            public const string CountryEnNameRequired = "Countries.CountryEnNameRequired";
             public const string CountryEnNameTooLong = "Countries.CountryEnNameTooLong";

@@ -64,6 +64,20 @@ namespace LMS.API.Routes.V1
             public const string SlotById = "weekly-slots/{id:guid}";
         }
 
+        public static class HelpCenter
+        {
+            public const string Base = BaseRoutes.Base + "/help-center";
+
+            public const string Categories = "categories";
+            public const string Articles = "articles";
+            public const string ArticleById = "articles/{id:guid}";
+
+            public const string AdminCategories = "admin/categories";
+            public const string AdminCategoryById = "admin/categories/{id:guid}";
+            public const string AdminArticles = "admin/articles";
+            public const string AdminArticleById = "admin/articles/{id:guid}";
+        }
+
         public static class Countries
         {            public const string Base = BaseRoutes.Base + "/countries";
             public const string GetAllPagginated = "pagginated";

@@ -8,15 +8,13 @@ using LMS.Application.Features.Availability.Commands.Admin.EditAvailabilitySlot;
 using LMS.Application.Features.Availability.DTOs;
 using LMS.Application.Features.Availability.Queries.GetInstructorAvailabilityPagginated;
 using LMS.Domain.Enums;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorAvailability.Base)]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize(UserType.Admin,UserType.Instructor)]
     public class InstructorAvailabilityAdminController : BaseController
     {
         /// <summary>

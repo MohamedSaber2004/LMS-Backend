@@ -17,6 +17,8 @@ namespace LMS.Application.Common.Interfaces
         DbSet<OnboardingQuestion> OnboardingQuestions { get; }
         DbSet<OnboardingOption> OnboardingOptions { get; }
         DbSet<OnboardingAnswer> OnboardingAnswers { get; }
+        DbSet<HelpCategory> HelpCategories { get; }
+        DbSet<HelpArticle> HelpArticles { get; }
         DbSet<IdentityRole<Guid>> Roles { get; }
         DbSet<IdentityUserRole<Guid>> UserRoles { get; }
 
