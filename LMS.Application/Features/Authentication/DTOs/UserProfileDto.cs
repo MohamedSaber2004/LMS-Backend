@@ -34,6 +34,7 @@ namespace LMS.Application.Features.Authentication.DTOs
         public string? ProfilePictureUrl { get; set; }
         public Guid? CountryId { get; set; }
         public string? CountryName { get; set; }
+        public string? TimezoneId { get; set; }
         public Language Language { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();
         public Guid? InstructorId { get; set; }

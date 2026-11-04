@@ -1,5 +1,6 @@
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Authentication.DTOs;
@@ -43,6 +44,9 @@ namespace LMS.Application.Features.Authentication.Queries.GetUserProfile
 
             var countryName = country?.CountryEnName;
 
+            var timezoneId = await CountryTimezoneResolver.ResolveAsync(
+                _context, user.CountryId, user.PhoneNumber, cancellationToken);
+
             var instructorId = await _context.Instructors
                 .Where(instructor => instructor.UserId == user.Id)
                 .Select(instructor => (Guid?)instructor.Id)
@@ -59,6 +63,7 @@ namespace LMS.Application.Features.Authentication.Queries.GetUserProfile
                 roles,
                 user.CreatedAt)
             {
+                TimezoneId = timezoneId,
                 InstructorId = instructorId
             };
 
