@@ -6090,6 +6090,295 @@
         ]
       }
     },
+    "/api/v1/instructor-profile": {
+      "get": {
+        "tags": [
+          "InstructorProfile"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstructorProfileDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "InstructorProfile"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInstructorProfileCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInstructorProfileCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInstructorProfileCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstructorProfileDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -6239,6 +6528,330 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/instructor-applications/my-status": {
+      "get": {
+        "tags": [
+          "MyInstructorApplication"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyInstructorApplicationDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/instructor-applications/resubmit": {
+      "post": {
+        "tags": [
+          "MyInstructorApplication"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Specialization",
+                  "Bio",
+                  "Certificates"
+                ],
+                "type": "object",
+                "properties": {
+                  "Specialization": {
+                    "type": "string"
+                  },
+                  "Bio": {
+                    "type": "string"
+                  },
+                  "YearsOfExperience": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Education": {
+                    "type": "string"
+                  },
+                  "LinkedInUrl": {
+                    "type": "string"
+                  },
+                  "HourlyRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Certificates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Specialization": {
+                  "style": "form"
+                },
+                "Bio": {
+                  "style": "form"
+                },
+                "YearsOfExperience": {
+                  "style": "form"
+                },
+                "Education": {
+                  "style": "form"
+                },
+                "LinkedInUrl": {
+                  "style": "form"
+                },
+                "HourlyRate": {
+                  "style": "form"
+                },
+                "Certificates": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
     "/api/v1/onboarding/questions": {
@@ -10303,6 +10916,112 @@
         "type": "integer",
         "format": "int32"
       },
+      "InstructorProfileDto": {
+        "required": [
+          "instructorId",
+          "userId",
+          "specialization",
+          "bio",
+          "yearsOfExperience",
+          "education",
+          "hourlyRate",
+          "isActive",
+          "certificates",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "instructorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "specialization": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "yearsOfExperience": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "education": {
+            "type": "string"
+          },
+          "linkedInUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "hourlyRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "applicationStatus": {
+            "$ref": "#/components/schemas/InstructorApplicationStatus"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "certificates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstructorCertificateDto"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InstructorProfileDtoApiResponse": {
+        "required": [
+          "success",
+          "errors",
+          "statusCode"
+        ],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "data": {
+            "$ref": "#/components/schemas/InstructorProfileDto"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "Language": {
         "enum": [
           1,
@@ -10346,6 +11065,96 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "MyInstructorApplicationDto": {
+        "required": [
+          "applicationId",
+          "hourlyRate",
+          "isActive",
+          "emailConfirmed",
+          "submittedAt",
+          "certificatesCount",
+          "hasIntroVideo"
+        ],
+        "type": "object",
+        "properties": {
+          "applicationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/InstructorApplicationStatus"
+          },
+          "hourlyRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reviewNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "certificatesCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasIntroVideo": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MyInstructorApplicationDtoApiResponse": {
+        "required": [
+          "success",
+          "errors",
+          "statusCode"
+        ],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "data": {
+            "$ref": "#/components/schemas/MyInstructorApplicationDto"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       },
       "OnboardingAnswerDto": {
         "required": [
@@ -11041,6 +11850,40 @@
           },
           "isActive": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateInstructorProfileCommand": {
+        "required": [
+          "specialization",
+          "bio"
+        ],
+        "type": "object",
+        "properties": {
+          "specialization": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "yearsOfExperience": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "education": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedInUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "hourlyRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false

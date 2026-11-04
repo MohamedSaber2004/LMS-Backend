@@ -13333,6 +13333,1467 @@
       ]
     },
     {
+      "name": "InstructorProfile",
+      "description": "",
+      "item": [
+        {
+          "name": "GET /api/v1/instructor-profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-profile"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "GET /api/v1/instructor-profile",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-profile",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-profile",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-profile",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-profile",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-profile",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-profile",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/v1/instructor-profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-profile"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "PUT /api/v1/instructor-profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "PUT /api/v1/instructor-profile",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "PUT /api/v1/instructor-profile",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "PUT /api/v1/instructor-profile",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "PUT /api/v1/instructor-profile",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "PUT /api/v1/instructor-profile",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-profile"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "PUT /api/v1/instructor-profile",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MyInstructorApplication",
+      "description": "",
+      "item": [
+        {
+          "name": "GET /api/v1/instructor-applications/my-status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-applications",
+                "my-status"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "GET /api/v1/instructor-applications/my-status",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "my-status"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-applications/my-status",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "my-status"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-applications/my-status",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "my-status"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-applications/my-status",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "my-status"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-applications/my-status",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [],
+              "body": "",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "my-status"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-applications/my-status",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/my-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "my-status"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "GET /api/v1/instructor-applications/my-status",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/v1/instructor-applications/resubmit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "instructor-applications",
+                "resubmit"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "POST /api/v1/instructor-applications/resubmit",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "Specialization",
+                  "value": "string",
+                  "type": "text",
+                  "description": "required"
+                },
+                {
+                  "key": "Bio",
+                  "value": "string",
+                  "type": "text",
+                  "description": "required"
+                },
+                {
+                  "key": "YearsOfExperience",
+                  "value": "0",
+                  "type": "text",
+                  "description": "optional"
+                },
+                {
+                  "key": "Education",
+                  "value": "string",
+                  "type": "text",
+                  "description": "optional"
+                },
+                {
+                  "key": "LinkedInUrl",
+                  "value": "string",
+                  "type": "text",
+                  "description": "optional"
+                },
+                {
+                  "key": "HourlyRate",
+                  "value": "0",
+                  "type": "text",
+                  "description": "optional"
+                },
+                {
+                  "key": "Certificates",
+                  "type": "file",
+                  "src": [],
+                  "description": "required"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "resubmit"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "POST /api/v1/instructor-applications/resubmit",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Specialization",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "Bio",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Education",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "LinkedInUrl",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Certificates",
+                      "type": "file",
+                      "src": [],
+                      "description": "required"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "resubmit"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "POST /api/v1/instructor-applications/resubmit",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Specialization",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "Bio",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Education",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "LinkedInUrl",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Certificates",
+                      "type": "file",
+                      "src": [],
+                      "description": "required"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "resubmit"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "POST /api/v1/instructor-applications/resubmit",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Specialization",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "Bio",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Education",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "LinkedInUrl",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Certificates",
+                      "type": "file",
+                      "src": [],
+                      "description": "required"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "resubmit"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "POST /api/v1/instructor-applications/resubmit",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Specialization",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "Bio",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Education",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "LinkedInUrl",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Certificates",
+                      "type": "file",
+                      "src": [],
+                      "description": "required"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "resubmit"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "POST /api/v1/instructor-applications/resubmit",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Specialization",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "Bio",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Education",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "LinkedInUrl",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Certificates",
+                      "type": "file",
+                      "src": [],
+                      "description": "required"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [],
+              "body": "",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/instructor-applications/resubmit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "instructor-applications",
+                    "resubmit"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "POST /api/v1/instructor-applications/resubmit",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Specialization",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "Bio",
+                      "value": "string",
+                      "type": "text",
+                      "description": "required"
+                    },
+                    {
+                      "key": "YearsOfExperience",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Education",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "LinkedInUrl",
+                      "value": "string",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "HourlyRate",
+                      "value": "0",
+                      "type": "text",
+                      "description": "optional"
+                    },
+                    {
+                      "key": "Certificates",
+                      "type": "file",
+                      "src": [],
+                      "description": "required"
+                    }
+                  ]
+                }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Onboarding",
       "description": "",
       "item": [
