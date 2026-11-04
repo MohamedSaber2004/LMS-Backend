@@ -27,6 +27,7 @@ namespace LMS.Application.Features.InstructorProfile.Queries.GetInstructorProfil
             _localizer = localizer;
         }
 
+
         public async Task<Result<InstructorProfileDto>> Handle(
             GetInstructorProfileQuery request,
             CancellationToken cancellationToken)
