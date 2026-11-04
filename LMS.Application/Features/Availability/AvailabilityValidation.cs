@@ -9,10 +9,6 @@ namespace LMS.Application.Features.Availability
     {
         private static readonly TimeSpan DayEnd = TimeSpan.FromHours(24);
 
-        /// <summary>
-        /// Two windows on one day must keep at least the break the booking rules enforce, otherwise the
-        /// published pattern contains pairs that can never both be booked.
-        /// </summary>
         public static async Task<bool> HasNoOverlapAsync(
             ILmsDbContext context,
             Guid instructorId,
@@ -31,8 +27,6 @@ namespace LMS.Application.Features.Availability
             var pad = TimeSpan.FromMinutes(Math.Max(0, breakMinutes));
             var lower = startTime > pad ? startTime - pad : TimeSpan.Zero;
 
-            // A padded end that reaches midnight has no representable time literal, and none is needed:
-            // every other window on the day starts before it, so only the lower bound can conflict.
             var padsPastDayEnd = endTime + pad >= DayEnd;
 
             var candidates = context.InstructorAvailabilitySlots
@@ -101,9 +95,6 @@ namespace LMS.Application.Features.Availability
                 cancellationToken);
         }
 
-        /// <summary>
-        /// A single dated window cannot be closed while the instructor still has to teach inside it.
-        /// </summary>
         public static async Task<bool> HasNoLiveSessionsInWindowAsync(
             ILmsDbContext context,
             Guid instanceId,
@@ -120,10 +111,6 @@ namespace LMS.Application.Features.Availability
                 cancellationToken);
         }
 
-        /// <summary>
-        /// A dated day cannot be closed while the instructor still has to teach on it: the sessions on it
-        /// have to be rescheduled or called off first.
-        /// </summary>
         public static async Task<bool> HasNoLiveSessionsOnDayAsync(
             ILmsDbContext context,
             Guid instructorId,

@@ -110,6 +110,16 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                     StatusCodes.Status201Created);
             }
 
+            // The role row is what the admin user list reads, so an applicant carries it from registration.
+            // It grants nothing on its own: login refuses an account the admin has not activated yet.
+            var instructorRoleResult = await _userManager.AddToRoleAsync(user, nameof(UserType.Instructor));
+            if (!instructorRoleResult.Succeeded)
+            {
+                await DeleteUserAsync(user);
+                await CleanupFilesAsync(uploadedFiles);
+                return BuildIdentityFailure(instructorRoleResult);
+            }
+
             InstructorApplication application;
             try
             {

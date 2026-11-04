@@ -537,6 +537,50 @@ namespace LMS.API
                 }
             }
 
+            if (args.Contains("--seed-availability"))
+            {
+                using var scope = app.Services.CreateScope();
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                    var scheduling = scope.ServiceProvider.GetRequiredService<IOptions<SchedulingOptions>>().Value;
+                    var materializer = scope.ServiceProvider.GetRequiredService<IAvailabilityMaterializationService>();
+
+                    var windows = await InstructorAvailabilitySeeder.SeedAsync(
+                        dbContext, scheduling.MinimumBreakMinutes, CancellationToken.None);
+
+                    // The dated rows come from the service the endpoints use, so a seeded pattern becomes days
+                    // by the same rule as a pattern an instructor published themselves.
+                    var instances = await materializer.MaterializeAllAsync(CancellationToken.None);
+
+                    Log.Information(
+                        "Availability seeding finished: {Windows} weekly windows added, {Instances} dated windows written.",
+                        windows,
+                        instances);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while seeding instructor availability.");
+                }
+            }
+
+            if (args.Contains("--seed-sessions"))
+            {
+                using var scope = app.Services.CreateScope();
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                    var scheduling = scope.ServiceProvider.GetRequiredService<IOptions<SchedulingOptions>>().Value;
+                    var rows = await SessionSeeder.SeedAsync(dbContext, scheduling, CancellationToken.None);
+
+                    Log.Information("Session seeding finished: {Rows} sessions, bookings and reschedule asks written.", rows);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while seeding sessions.");
+                }
+            }
+
             app.RegisterSchedulingRecurringJobs();
 
 

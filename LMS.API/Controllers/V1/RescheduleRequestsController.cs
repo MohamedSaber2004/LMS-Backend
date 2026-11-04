@@ -11,12 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
-    /// <summary>
-    /// Answering a reschedule request. Only the side that did not raise it can approve or decline it.
-    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.RescheduleRequests.Base)]
-    [Authorize]
     [RoleAuthorize(UserType.Instructor, UserType.Learner)]
     public class RescheduleRequestsController : BaseController
     {

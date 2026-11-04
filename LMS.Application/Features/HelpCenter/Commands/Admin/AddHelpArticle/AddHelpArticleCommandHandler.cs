@@ -28,14 +28,11 @@ namespace LMS.Application.Features.HelpCenter.Commands.Admin.AddHelpArticle
             AddHelpArticleCommand request,
             CancellationToken cancellationToken)
         {
-            // The validator already proved the category exists; this read only fills the payload,
-            // because the Category navigation is not populated for a just-inserted row.
             var categoryName = await _context.HelpCategories
                 .Where(category => category.Id == request.CategoryId)
                 .Select(category => category.Name)
                 .FirstOrDefaultAsync(cancellationToken) ?? string.Empty;
 
-            // The answer keeps its raw text so the front end can render the author's line breaks.
             var article = HelpArticle.Create(
                 request.CategoryId,
                 request.Question.Trim(),
