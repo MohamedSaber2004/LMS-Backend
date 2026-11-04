@@ -2,21 +2,26 @@ using FluentValidation;
 using LMS.API.Services;
 using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
+using LMS.Application.Common.Options;
 using LMS.Application.Localization;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySlot
 {
     public class AddAvailabilitySlotCommandValidator : AbstractValidator<AddAvailabilitySlotCommand>
     {
         private readonly ILmsDbContext _context;
+        private readonly SchedulingOptions _scheduling;
 
         public AddAvailabilitySlotCommandValidator(
             ILmsDbContext context,
             ICurrentUserService currentUser,
+            IOptions<SchedulingOptions> options,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
+            _scheduling = options.Value;
 
             // Only an admin names the instructor whose slot this is. Any other caller is pinned to
             // their own instructor row by the handler, so a supplied id is not read from them.
@@ -52,6 +57,7 @@ namespace LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySl
                         command.StartTime,
                         command.EndTime,
                         excludedSlotId: null,
+                        _scheduling.MinimumBreakMinutes,
                         cancellationToken);
                 })
                 .WithMessage(localizer[LocalizationKeys.Availability.OverlappingSlot].Value)

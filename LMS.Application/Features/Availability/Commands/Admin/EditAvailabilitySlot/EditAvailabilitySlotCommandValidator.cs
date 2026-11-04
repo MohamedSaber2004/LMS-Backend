@@ -1,20 +1,25 @@
 using FluentValidation;
 using LMS.Application.Common.Interfaces;
+using LMS.Application.Common.Options;
 using LMS.Application.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Application.Features.Availability.Commands.Admin.EditAvailabilitySlot
 {
     public class EditAvailabilitySlotCommandValidator : AbstractValidator<EditAvailabilitySlotCommand>
     {
         private readonly ILmsDbContext _context;
+        private readonly SchedulingOptions _scheduling;
 
         public EditAvailabilitySlotCommandValidator(
             ILmsDbContext context,
+            IOptions<SchedulingOptions> options,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
+            _scheduling = options.Value;
 
             RuleFor(command => command.Id)
                 .NotEmpty()
@@ -50,6 +55,7 @@ namespace LMS.Application.Features.Availability.Commands.Admin.EditAvailabilityS
                         command.StartTime,
                         command.EndTime,
                         excludedSlotId: command.Id,
+                        _scheduling.MinimumBreakMinutes,
                         cancellationToken);
                 })
                 .WithMessage(localizer[LocalizationKeys.Availability.OverlappingSlot].Value)

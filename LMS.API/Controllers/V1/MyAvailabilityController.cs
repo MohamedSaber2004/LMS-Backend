@@ -6,6 +6,7 @@ using LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.Admin.DeleteAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.Admin.EditAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.SetAvailabilityDay;
+using LMS.Application.Features.Availability.Commands.SetAvailabilityWindow;
 using LMS.Application.Features.Availability.Commands.SetVacationMode;
 using LMS.Application.Features.Availability.DTOs;
 using LMS.Application.Features.Availability.Queries.GetMyAvailability;
@@ -157,6 +158,27 @@ namespace LMS.API.Controllers.V1
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> SetDay(
             [FromBody] SetAvailabilityDayCommand command,
+            CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Open or block one dated availability window of the signed-in instructor, leaving the rest of
+        /// that day untouched.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut(ApiRoutes.InstructorAvailability.MyCalendarWindow)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> SetWindow(
+            [FromBody] SetAvailabilityWindowCommand command,
             CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(command, cancellationToken);

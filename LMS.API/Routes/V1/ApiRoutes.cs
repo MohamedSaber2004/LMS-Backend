@@ -75,6 +75,7 @@ namespace LMS.API.Routes.V1
             public const string MyVacationMode = "my/vacation-mode";
             public const string MyCalendar = "my/calendar";
             public const string MyCalendarDay = "my/calendar/day";
+            public const string MyCalendarWindow = "my/calendar/window";
         }
 
         public static class Sessions

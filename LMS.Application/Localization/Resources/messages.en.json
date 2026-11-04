@@ -205,6 +205,7 @@
     "DateInPast": "The date must be today or later in the instructor's local time zone.",
     "NoWindowsOnDay": "There is no availability window on this date, so it cannot be opened or blocked.",
     "DayUpdatedSuccess": "Availability for the selected date updated successfully.",
+    "WindowUpdatedSuccess": "Availability window updated successfully.",
     "VacationModeUpdatedSuccess": "Vacation mode updated successfully.",
     "DateRangeRequired": "Both the start and the end date are required.",
     "DateRangeInvalid": "The calendar range must end on or after the date it starts.",

@@ -7,6 +7,12 @@ namespace LMS.Application.Features.Availability
 {
     internal static class AvailabilityValidation
     {
+        private static readonly TimeSpan DayEnd = TimeSpan.FromHours(24);
+
+        /// <summary>
+        /// Two windows on one day must keep at least the break the booking rules enforce, otherwise the
+        /// published pattern contains pairs that can never both be booked.
+        /// </summary>
         public static async Task<bool> HasNoOverlapAsync(
             ILmsDbContext context,
             Guid instructorId,
@@ -14,6 +20,7 @@ namespace LMS.Application.Features.Availability
             TimeSpan startTime,
             TimeSpan endTime,
             Guid? excludedSlotId,
+            int breakMinutes,
             CancellationToken cancellationToken)
         {
             if (instructorId == Guid.Empty || endTime <= startTime)
@@ -21,13 +28,26 @@ namespace LMS.Application.Features.Availability
                 return true;
             }
 
-            return !await context.InstructorAvailabilitySlots.AnyAsync(
-                slot => slot.InstructorId == instructorId
+            var pad = TimeSpan.FromMinutes(Math.Max(0, breakMinutes));
+            var lower = startTime > pad ? startTime - pad : TimeSpan.Zero;
+
+            // A padded end that reaches midnight has no representable time literal, and none is needed:
+            // every other window on the day starts before it, so only the lower bound can conflict.
+            var padsPastDayEnd = endTime + pad >= DayEnd;
+
+            var candidates = context.InstructorAvailabilitySlots
+                .Where(slot => slot.InstructorId == instructorId
                     && slot.Day == day
                     && slot.Id != excludedSlotId
-                    && slot.StartTime < endTime
-                    && slot.EndTime > startTime,
-                cancellationToken);
+                    && slot.EndTime > lower);
+
+            if (!padsPastDayEnd)
+            {
+                var upper = endTime + pad;
+                candidates = candidates.Where(slot => slot.StartTime < upper);
+            }
+
+            return !await candidates.AnyAsync(cancellationToken);
         }
 
         public static async Task<bool> InstructorExistsAsync(
@@ -76,6 +96,25 @@ namespace LMS.Application.Features.Availability
                     && session.EndsAtUtc > now
                     && context.AvailabilityInstances.Any(instance => instance.WeeklySlotId == slotId
                         && instance.InstructorId == session.InstructorId
+                        && instance.StartsAtUtc < session.EndsAtUtc
+                        && instance.EndsAtUtc > session.StartsAtUtc),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// A single dated window cannot be closed while the instructor still has to teach inside it.
+        /// </summary>
+        public static async Task<bool> HasNoLiveSessionsInWindowAsync(
+            ILmsDbContext context,
+            Guid instanceId,
+            CancellationToken cancellationToken)
+        {
+            var now = DateTime.UtcNow;
+
+            return !await context.Sessions.AnyAsync(
+                session => (session.Status == SessionStatus.Pending || session.Status == SessionStatus.Confirmed)
+                    && session.EndsAtUtc > now
+                    && context.AvailabilityInstances.Any(instance => instance.Id == instanceId
                         && instance.StartsAtUtc < session.EndsAtUtc
                         && instance.EndsAtUtc > session.StartsAtUtc),
                 cancellationToken);

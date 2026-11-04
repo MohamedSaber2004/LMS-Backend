@@ -32,6 +32,7 @@ using LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.Admin.DeleteAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.Admin.EditAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.SetAvailabilityDay;
+using LMS.Application.Features.Availability.Commands.SetAvailabilityWindow;
 using LMS.Application.Features.Availability.Queries.GetInstructorAvailabilityPagginated;
 using LMS.Application.Features.Availability.Queries.GetMyAvailabilityCalendar;
 using LMS.Application.Features.Sessions.Commands.ApproveReschedule;
@@ -133,6 +134,7 @@ namespace LMS.Application
             services.AddTransient<IValidator<DeleteAvailabilitySlotCommand>, DeleteAvailabilitySlotCommandValidator>();
             services.AddTransient<IValidator<GetInstructorAvailabilityPagginatedQuery>, GetInstructorAvailabilityPagginatedQueryValidator>();
             services.AddTransient<IValidator<SetAvailabilityDayCommand>, SetAvailabilityDayCommandValidator>();
+            services.AddTransient<IValidator<SetAvailabilityWindowCommand>, SetAvailabilityWindowCommandValidator>();
             services.AddTransient<IValidator<GetMyAvailabilityCalendarQuery>, GetMyAvailabilityCalendarQueryValidator>();
             services.AddTransient<IValidator<GetMySessionsQuery>, GetMySessionsQueryValidator>();
             services.AddTransient<IValidator<GetMyBookingsQuery>, GetMyBookingsQueryValidator>();

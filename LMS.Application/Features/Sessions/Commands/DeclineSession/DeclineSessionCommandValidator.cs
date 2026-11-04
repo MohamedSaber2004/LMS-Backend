@@ -48,6 +48,14 @@ namespace LMS.Application.Features.Sessions.Commands.DeclineSession
 
             await SessionGuards.EnsureTeacherAsync(_context, _currentUser, session, cancellationToken);
 
+            if (!SessionsValidation.IsLiveSession(session))
+            {
+                context.AddFailure(
+                    nameof(DeclineSessionCommand.Id),
+                    _localizer[LocalizationKeys.Sessions.SessionNotCancellable].Value);
+                return;
+            }
+
             if (session.Status != SessionStatus.Pending)
             {
                 context.AddFailure(

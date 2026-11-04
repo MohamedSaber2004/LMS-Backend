@@ -209,7 +209,9 @@ DayOfWeek:                0 = Sunday | 1 = Monday | 2 = Tuesday | 3 = Wednesday
 |---|---|
 | `The day of week must be between Sunday (0) and Saturday (6).` | `day` بره النطاق |
 | `The end time must be later than the start time.` | نافذة عكسية أو متساوية |
-| `This window overlaps another availability slot for the same day.` | فيه تداخل مع نافذة قائمة في نفس اليوم |
+| `This window overlaps another availability slot for the same day.` | تداخل **أو فاصل أقل من 15 دقيقة** مع نافذة قائمة في نفس اليوم |
+
+**⚠️ الفاصل ده جديد:** الرسالة نفسها بتطلع كمان لو النافذتين مش متداخلين بس بينهم **أقل من 15 دقيقة** — نفس الرقم اللي بيفرضه السيرّب وقت الحجز. يعني `09:00–10:00` و`10:00–11:00` **مرفوضين**، و`09:00–10:00` و`10:15–11:00` **مقبولين**. في نموذج الإضافة: اطبّع الفاصل الأدنى بين النوافذ لـ 15 دقيقة وإنت بتولّد الخيارات، والا هترفض طلبات صحيحة الشكل.
 
 **لو بعت `instructorId` بتاع مدرّب تاني → 403** (دي الحماية اللي اتعملت بعد ثغرة §2).
 
@@ -322,6 +324,38 @@ DayOfWeek:                0 = Sunday | 1 = Monday | 2 = Tuesday | 3 = Wednesday
 | `This day has sessions that are still scheduled. Reschedule or cancel them before blocking it.` | القفل (`open=false`) وفيه جلسات قائمة |
 
 **ملاحظة تشغيلية:** الأمر ده بيقلّب `isOpen` على الصفوف الموجودة، ما بيولّدش صفوف جديدة. فلو اليوم مش ظاهر في `GET /my/calendar`، قفله مستحيل من الأساس.
+
+---
+
+### 3.8 `PUT /my/calendar/window` — يقفل نافذة واحدة من اليوم
+
+**الوظيفة:** زي 3.7 بالظبط بس على **نافذة واحدة** بدل اليوم كله — «الساعات الصبح تمام، بالعادي بعد الظهر مش متفرّغ».
+
+**Body:**
+
+```json
+{ "id": "0f7c...", "open": false }
+```
+
+| الحقل | نوع | ملاحظات |
+|---|---|---|
+| `id` | guid | **الـ `id` بتاع النافذة من `GET /my/calendar`** (حقل `id` جوه `available` / `blocked`) |
+| `open` | bool | `false` = اقفل النافذة، `true` = افتحها |
+
+**Response:** `200` و`message = "Availability window updated successfully."`
+
+**أخطاء متوقعة:**
+
+| الرسالة | إمتى |
+|---|---|
+| `Availability slot identifier is required.` | `id` فاضي |
+| `Availability slot was not found.` (`404`) | الـ `id` غلط، أو **نافذة لمدرّب تاني** — نفس الرسالة فيالحالتين ومتفرّقش بينهم |
+| `The date must be today or later in the instructor's local time zone.` | النافذة يومها عدّى |
+| `This slot cannot be changed because one or more sessions are still scheduled on it. Reschedule or cancel them first.` | القفل (`open=false`) وفيه جلسة قائمة جوه النافذة |
+
+**⚠️ الفرق في الـ `id`:** `GET /my/calendar` بيرجع `id` للنافذة (`AvailabilityInstance`) و`id` تاني للجلسة المحجوزة (`Session`). قفل النافذة ياخد بتاع النافذة، و`POST /sessions` ياخد بتاع النافذة كمان — أما `/sessions/{id}` فهو بتاع الجلسة. متخلطش بينهم.
+
+**زرار «اقفل النافذة دي» يتعرضش** لو النافذة ظاهرة في `booked`.
 
 ---
 
@@ -600,7 +634,7 @@ function canAct(session, role) {
 | الأثر | الجلسة والـ bookings كلها تتحول Confirmed | الحجز يتحول Declined والمقعد يتحرر والجلسة تلغى |
 | الرسالة | `Session confirmed successfully.` | `Session declined successfully.` |
 
-**أخطاء:** `Only a pending session can be answered this way.` (لو اتقبل قبل كده أو اتلغى) و`Session was not found.` و403 لو مش مدرّب الجلسة.
+**أخطاء:** `Only a pending session can be answered this way.` (لو اتقبل قبل كده أو اتلغى) · `This session has already ended or was called off.` (الدرس عدّى والصف لسه `Pending` — الرد عليه بعد ما انتهى مرفوض) · `Session was not found.` و403 لو مش مدرّب الجلسة.
 
 ### 6.9 `POST /sessions/{id}/cancel` — إلغاء، للناحين من نفس الـ route
 
@@ -684,7 +718,7 @@ function canAct(session, role) {
 | الشاشة | الدور | الخطوات |
 |---|---|---|
 | إعداد التوفير | مدرّب | `GET /my` → `POST/PUT/DELETE /my/weekly-slots` → `PUT /my/vacation-mode` |
-| تقويم المدرّب | مدرّب | `GET /my/calendar?from&to` → `PUT /my/calendar/day` |
+| تقويم المدرّب | مدرّب | `GET /my/calendar?from&to` → `PUT /my/calendar/day` (يوم كامل) أو `PUT /my/calendar/window` (نافذة واحدة) |
 | ملف المدرّب | متعلّم | الكارت من `GET /onboarding/instructors` → `GET /sessions/bookable-slots?instructorId&from&to` للمواعيد الفعلية |
 | بحث المدرّبين | متعلّم | `GET /onboarding/instructors?day&after&before&minPrice...` |
 | wizard الحجز | متعلّم | `GET /sessions/bookable-slots?instructorId&from&to` → `POST /sessions` |
@@ -811,21 +845,22 @@ curl "${H[@]}" "$BASE/sessions/my-bookings?tab=0"
 | 5 | PUT | `/instructor-availability/my/vacation-mode` | Instructor | يوقف/يفتح استقبال الحجوزات |
 | 6 | GET | `/instructor-availability/my/calendar?from&to` | Instructor | الأيام المؤرخة: متاح/مقفول/محجوز |
 | 7 | PUT | `/instructor-availability/my/calendar/day` | Instructor | يقفل أو يفتح يوم كامل |
-| 8 | GET | `/instructor-availability/pagginated` | Admin | جدول كل نوافذ كل المدرّبين |
-| 9 | POST | `/instructor-availability/instructors/{instructorId}/weekly-slots` | Admin | يضيف نافذة لمدرّب |
-| 10 | PUT | `/instructor-availability/weekly-slots/{id}` | Admin | يعدّل نافذة لمدرّب |
-| 11 | DELETE | `/instructor-availability/weekly-slots/{id}` | Admin | يحذف نافذة لمدرّب |
-| 12 | GET | `/onboarding/instructors?day&after&before` | Learner | قائمة المدرّبين مفلترة بالوقت |
-| 13 | GET | `/sessions?tab&page&size` | Instructor | مواعيد التدريس |
-| 14 | GET | `/sessions/my-bookings?tab&page&size` | Learner | حجوزاتي |
-| 15 | GET | `/sessions/bookable-slots?instructorId&from&to` | Learner | النوافذ القابلة للحجز |
-| 16 | POST | `/sessions` | Learner | يحجز نافذة → Pending |
-| 17 | GET | `/sessions/{id}` | الطرفين | تفاصيل + roster (مدرّب) + طلبات النقل |
-| 18 | POST | `/sessions/{id}/confirm` | Instructor | يقبل الحجز |
-| 19 | POST | `/sessions/{id}/decline` | Instructor | يرفض الحجز |
-| 20 | POST | `/sessions/{id}/cancel` | الطرفين | يلغي الجلسة أو يتنازل عن المقعد |
-| 21 | POST | `/sessions/{id}/reschedule` | الطرفين | يقترح ميعاد جديد |
-| 22 | POST | `/reschedule-requests/{id}/approve` | الناحية التانية | ينفّل النقل |
-| 23 | POST | `/reschedule-requests/{id}/decline` | الناحية التانية | يرفض النقل |
+| 8 | PUT | `/instructor-availability/my/calendar/window` | Instructor | يقفل أو يفتح نافذة واحدة |
+| 9 | GET | `/instructor-availability/pagginated` | Admin | جدول كل نوافذ كل المدرّبين |
+| 10 | POST | `/instructor-availability/instructors/{instructorId}/weekly-slots` | Admin | يضيف نافذة لمدرّب |
+| 11 | PUT | `/instructor-availability/weekly-slots/{id}` | Admin | يعدّل نافذة لمدرّب |
+| 12 | DELETE | `/instructor-availability/weekly-slots/{id}` | Admin | يحذف نافذة لمدرّب |
+| 13 | GET | `/onboarding/instructors?day&after&before` | Learner | قائمة المدرّبين مفلترة بالوقت |
+| 14 | GET | `/sessions?tab&page&size` | Instructor | مواعيد التدريس |
+| 15 | GET | `/sessions/my-bookings?tab&page&size` | Learner | حجوزاتي |
+| 16 | GET | `/sessions/bookable-slots?instructorId&from&to` | Learner | النوافذ القابلة للحجز |
+| 17 | POST | `/sessions` | Learner | يحجز نافذة → Pending |
+| 18 | GET | `/sessions/{id}` | الطرفين | تفاصيل + roster (مدرّب) + طلبات النقل |
+| 19 | POST | `/sessions/{id}/confirm` | Instructor | يقبل الحجز |
+| 20 | POST | `/sessions/{id}/decline` | Instructor | يرفض الحجز |
+| 21 | POST | `/sessions/{id}/cancel` | الطرفين | يلغي الجلسة أو يتنازل عن المقعد |
+| 22 | POST | `/sessions/{id}/reschedule` | الطرفين | يقترح ميعاد جديد |
+| 23 | POST | `/reschedule-requests/{id}/approve` | الناحية التانية | ينفّل النقل |
+| 24 | POST | `/reschedule-requests/{id}/decline` | الناحية التانية | يرفض النقل |
 
 كل المسارات نسبية لـ `https://lms-api.runasp.net/api/v1/`.

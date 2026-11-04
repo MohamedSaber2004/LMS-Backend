@@ -222,6 +222,7 @@ namespace LMS.Application.Localization
             public const string DateInPast = "Availability.DateInPast";
             public const string NoWindowsOnDay = "Availability.NoWindowsOnDay";
             public const string DayUpdatedSuccess = "Availability.DayUpdatedSuccess";
+            public const string WindowUpdatedSuccess = "Availability.WindowUpdatedSuccess";
             public const string VacationModeUpdatedSuccess = "Availability.VacationModeUpdatedSuccess";
             public const string DateRangeRequired = "Availability.DateRangeRequired";
             public const string DateRangeInvalid = "Availability.DateRangeInvalid";
