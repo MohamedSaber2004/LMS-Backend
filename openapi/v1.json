@@ -15589,6 +15589,10 @@
             "type": "string",
             "nullable": true
           },
+          "timezoneId": {
+            "type": "string",
+            "nullable": true
+          },
           "language": {
             "$ref": "#/components/schemas/Language"
           },
