@@ -7421,6 +7421,153 @@
         ]
       }
     },
+    "/api/v1/instructor-availability/my/calendar/window": {
+      "put": {
+        "tags": [
+          "MyAvailability"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAvailabilityWindowCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAvailabilityWindowCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAvailabilityWindowCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/instructor-applications/my-status": {
       "get": {
         "tags": [
@@ -14859,6 +15006,23 @@
           "date": {
             "type": "string",
             "format": "date"
+          },
+          "open": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetAvailabilityWindowCommand": {
+        "required": [
+          "id",
+          "open"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
           },
           "open": {
             "type": "boolean"
