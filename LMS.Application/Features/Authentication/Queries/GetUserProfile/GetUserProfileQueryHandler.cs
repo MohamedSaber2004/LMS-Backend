@@ -43,6 +43,11 @@ namespace LMS.Application.Features.Authentication.Queries.GetUserProfile
 
             var countryName = country?.CountryEnName;
 
+            var instructorId = await _context.Instructors
+                .Where(instructor => instructor.UserId == user.Id)
+                .Select(instructor => (Guid?)instructor.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
             var profile = new UserProfileDto(
                 user.Id,
                 user.Email ?? string.Empty,
@@ -52,7 +57,10 @@ namespace LMS.Application.Features.Authentication.Queries.GetUserProfile
                 countryName,
                 user.Language,
                 roles,
-                user.CreatedAt);
+                user.CreatedAt)
+            {
+                InstructorId = instructorId
+            };
 
             return Result<UserProfileDto>.Success(
                 profile,

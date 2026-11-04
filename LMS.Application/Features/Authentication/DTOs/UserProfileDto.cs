@@ -36,6 +36,7 @@ namespace LMS.Application.Features.Authentication.DTOs
         public string? CountryName { get; set; }
         public Language Language { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();
+        public Guid? InstructorId { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
