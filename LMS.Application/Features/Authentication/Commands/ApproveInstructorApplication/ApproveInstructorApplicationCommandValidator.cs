@@ -34,7 +34,14 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
 
                     var application = await context.InstructorApplications
                         .AsNoTracking()
-                        .FirstOrDefaultAsync(item => item.Id == command.ApplicationId, cancellationToken);
+                        .Where(item => item.Id == command.ApplicationId)
+                        .Select(item => new
+                        {
+                            item.Status,
+                            // Nullable: a soft-deleted instructor is filtered out of the join.
+                            EmailConfirmed = (bool?)item.Instructor!.User.EmailConfirmed
+                        })
+                        .FirstOrDefaultAsync(cancellationToken);
 
                     if (application is null)
                     {
@@ -49,6 +56,16 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
                         validationContext.AddFailure(
                             nameof(command.ApplicationId),
                             localizer[LocalizationKeys.Authentication.InstructorApplicationAlreadyReviewed].Value);
+                        return;
+                    }
+
+                    // Approval force-marks the email as confirmed, so an unreachable address would be
+                    // blessed silently. The verification code is sent at registration but never gates it.
+                    if (application.EmailConfirmed != true)
+                    {
+                        validationContext.AddFailure(
+                            nameof(command.ApplicationId),
+                            localizer[LocalizationKeys.Authentication.InstructorEmailNotVerified].Value);
                     }
                 });
         }

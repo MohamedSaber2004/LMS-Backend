@@ -37,6 +37,13 @@ namespace LMS.API.Routes.V1
             public const string GetAll = "";
             public const string Approve = "approve";
             public const string Reject = "reject";
+            public const string MyStatus = "my-status";
+            public const string Resubmit = "resubmit";
+        }
+
+        public static class InstructorProfile
+        {
+            public const string Base = BaseRoutes.Base + "/instructor-profile";
         }
 
         public static class Onboarding

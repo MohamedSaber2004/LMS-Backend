@@ -40,5 +40,15 @@ namespace LMS.Domain.Entities
             ReviewNotes = reviewNotes;
             MarkAsUpdated(reviewedByUserId.ToString());
         }
+
+        public void Resubmit(Guid actorUserId, decimal hourlyRate)
+        {
+            Status = InstructorApplicationStatus.Pending;
+            HourlyRate = hourlyRate;
+            ReviewedByUserId = null;
+            ReviewedAt = null;
+            ReviewNotes = null;
+            MarkAsUpdated(actorUserId.ToString());
+        }
     }
 }

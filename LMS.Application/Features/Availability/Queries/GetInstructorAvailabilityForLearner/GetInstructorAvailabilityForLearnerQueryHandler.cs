@@ -57,7 +57,7 @@ namespace LMS.Application.Features.Availability.Queries.GetInstructorAvailabilit
                 CountryId = instructor.User.CountryId,
                 CountryCode = instructor.User.Country?.Code,
                 CountryName = instructor.User.Country?.CountryEnName,
-                HourlyRate = instructor.Application?.HourlyRate ?? 0m,
+                HourlyRate = instructor.HourlyRate,
                 WeeklySlots = weeklySlots
             };
 

@@ -134,7 +134,11 @@
     "PageSizeInvalid": "Page size must be between 1 and {0}.",
     "InstructorApplicationsRetrieved": "Instructor applications retrieved successfully.",
     "HourlyRateRequired": "An hourly rate greater than zero is required.",
-    "HourlyRateTooLarge": "Hourly rate cannot exceed {0}."
+    "HourlyRateTooLarge": "Hourly rate cannot exceed {0}.",
+    "InstructorApplicationNotResubmittable": "Only a rejected application can be resubmitted.",
+    "InstructorApplicationResubmitted": "Your application was resubmitted and is pending admin review.",
+    "MyInstructorApplicationRetrieved": "Your application status retrieved successfully.",
+    "InstructorEmailNotVerified": "This instructor has not verified their email address yet."
   },
   "Onboarding": {
     "QuestionKeyRequired": "Question key is required.",
@@ -257,5 +261,10 @@
     "PasswordChangedSuccess": "User password changed successfully.",
     "PageNumberInvalid": "Page number must be greater than zero.",
     "PageSizeInvalid": "Page size must be between 1 and {0}."
+  },
+  "InstructorProfile": {
+    "ProfileRetrieved": "Instructor profile retrieved successfully.",
+    "ProfileUpdated": "Instructor profile updated successfully.",
+    "EditNotAllowedBeforeApproval": "Only an approved instructor can edit this profile. Resubmit your application instead."
   }
 }

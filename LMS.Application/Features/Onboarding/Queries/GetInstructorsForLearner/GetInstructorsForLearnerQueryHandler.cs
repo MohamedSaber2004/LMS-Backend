@@ -41,12 +41,12 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
 
             if (request.MaxPrice.HasValue)
             {
-                query = query.Where(instructor => instructor.Application!.HourlyRate <= request.MaxPrice.Value);
+                query = query.Where(instructor => instructor.HourlyRate <= request.MaxPrice.Value);
             }
 
             if (request.MinPrice.HasValue)
             {
-                query = query.Where(instructor => instructor.Application!.HourlyRate >= request.MinPrice.Value);
+                query = query.Where(instructor => instructor.HourlyRate >= request.MinPrice.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(request.Specialization))
@@ -85,7 +85,7 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 : Math.Min(request.PageSize, PagginatedResult<InstructorCardDto>.MaxPageSize);
 
             var instructors = await query
-                .OrderBy(instructor => instructor.Application!.HourlyRate)
+                .OrderBy(instructor => instructor.HourlyRate)
                 .ThenByDescending(instructor => instructor.Application!.ReviewedAt)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -124,7 +124,7 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 instructor.YearsOfExperience,
                 instructor.Education,
                 instructor.LinkedInUrl,
-                instructor.Application?.HourlyRate ?? 0m,
+                instructor.HourlyRate,
                 instructor.User.Country?.CountryEnName,
                 introVideo,
                 certificates,

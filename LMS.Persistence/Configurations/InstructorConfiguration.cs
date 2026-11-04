@@ -27,6 +27,9 @@ namespace LMS.Persistence.Configurations
             builder.Property(instructor => instructor.LinkedInUrl)
                 .HasMaxLength(500);
 
+            builder.Property(instructor => instructor.HourlyRate)
+                .HasPrecision(10, 2);
+
             builder.Property(instructor => instructor.CreatedBy)
                 .IsRequired();
 

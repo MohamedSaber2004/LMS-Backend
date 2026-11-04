@@ -54,6 +54,8 @@ using LMS.Application.Features.Users.Commands.DeleteUser;
 using LMS.Application.Features.Users.Commands.UpdateUser;
 using LMS.Application.Features.Users.Queries.GetUserById;
 using LMS.Application.Features.Users.Queries.GetUsersPagginated;
+using LMS.Application.Features.Authentication.Commands.ResubmitInstructorApplication;
+using LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorProfile;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -139,6 +141,8 @@ namespace LMS.Application
             services.AddTransient<IValidator<ChangeUserPasswordCommand>, ChangeUserPasswordCommandValidator>();
             services.AddTransient<IValidator<GetUserByIdQuery>, GetUserByIdQueryValidator>();
             services.AddTransient<IValidator<GetUsersPagginatedQuery>, GetUsersPagginatedQueryValidator>();
+            services.AddTransient<IValidator<ResubmitInstructorApplicationCommand>, ResubmitInstructorApplicationCommandValidator>();
+            services.AddTransient<IValidator<UpdateInstructorProfileCommand>, UpdateInstructorProfileCommandValidator>();
 
             return services;
         }

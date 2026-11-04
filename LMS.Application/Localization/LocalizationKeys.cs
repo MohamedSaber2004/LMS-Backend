@@ -148,6 +148,10 @@ namespace LMS.Application.Localization
             public const string InstructorApplicationsRetrieved = "Authentication.InstructorApplicationsRetrieved";
             public const string HourlyRateRequired = "Authentication.HourlyRateRequired";
             public const string HourlyRateTooLarge = "Authentication.HourlyRateTooLarge";
+            public const string InstructorApplicationNotResubmittable = "Authentication.InstructorApplicationNotResubmittable";
+            public const string InstructorApplicationResubmitted = "Authentication.InstructorApplicationResubmitted";
+            public const string MyInstructorApplicationRetrieved = "Authentication.MyInstructorApplicationRetrieved";
+            public const string InstructorEmailNotVerified = "Authentication.InstructorEmailNotVerified";
         }
 
         public static class Onboarding
@@ -279,6 +283,13 @@ namespace LMS.Application.Localization
             public const string PasswordChangedSuccess = "Users.PasswordChangedSuccess";
             public const string PageNumberInvalid = "Users.PageNumberInvalid";
             public const string PageSizeInvalid = "Users.PageSizeInvalid";
+        }
+
+        public static class InstructorProfile
+        {
+            public const string ProfileRetrieved = "InstructorProfile.ProfileRetrieved";
+            public const string ProfileUpdated = "InstructorProfile.ProfileUpdated";
+            public const string EditNotAllowedBeforeApproval = "InstructorProfile.EditNotAllowedBeforeApproval";
         }
     }
 }

@@ -12,6 +12,7 @@ namespace LMS.Domain.Entities
         public int YearsOfExperience { get; private set; }
         public string Education { get; private set; } = null!;
         public string? LinkedInUrl { get; private set; }
+        public decimal HourlyRate { get; private set; }
 
         public virtual InstructorApplication? Application { get; private set; }
 
@@ -25,7 +26,8 @@ namespace LMS.Domain.Entities
             string bio,
             int yearsOfExperience,
             string education,
-            string? linkedInUrl)
+            string? linkedInUrl,
+            decimal hourlyRate)
         {
             return new Instructor
             {
@@ -34,8 +36,25 @@ namespace LMS.Domain.Entities
                 Bio = bio,
                 YearsOfExperience = yearsOfExperience,
                 Education = education,
-                LinkedInUrl = linkedInUrl
+                LinkedInUrl = linkedInUrl,
+                HourlyRate = hourlyRate
             };
+        }
+
+        public void UpdateProfile(
+            string specialization,
+            string bio,
+            int yearsOfExperience,
+            string education,
+            string? linkedInUrl,
+            decimal hourlyRate)
+        {
+            Specialization = specialization;
+            Bio = bio;
+            YearsOfExperience = yearsOfExperience;
+            Education = education;
+            LinkedInUrl = linkedInUrl;
+            HourlyRate = hourlyRate;
         }
 
         public void AddCertificate(InstructorCertificate certificate)

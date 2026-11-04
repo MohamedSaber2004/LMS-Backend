@@ -67,7 +67,7 @@ namespace LMS.Infrastructure.Repositories.Implementations.Base
             var entity = await _context.Set<T>().FindAsync(id);
             if (entity == null)
             {
-                throw new NotFoundException($"{typeof(T).Name} with ID {id} was not found.");
+                throw new NotFoundException(typeof(T).Name, id);
             }
             return entity;
         }

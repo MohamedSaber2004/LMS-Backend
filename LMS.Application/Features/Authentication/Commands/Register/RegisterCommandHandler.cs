@@ -119,7 +119,8 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                     request.Bio!.Trim(),
                     request.YearsOfExperience!.Value,
                     request.Education!.Trim(),
-                    NormalizeOptional(request.LinkedInUrl));
+                    NormalizeOptional(request.LinkedInUrl),
+                    request.HourlyRate!.Value);
 
                 foreach (var file in uploadedFiles)
                 {

@@ -4,12 +4,14 @@ namespace LMS.Application.Common.Helpers
 {
     public static class DateTimeHelper
     {
-        public const string OutputFormat = "yyyy-MM-dd HH:mm:ss";
+        public const string OutputFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-        public static DateTime EnsureUtc(DateTime value)
-            => value.Kind == DateTimeKind.Utc
-                ? value
-                : DateTime.SpecifyKind(value.ToUniversalTime(), DateTimeKind.Utc);
+        public static DateTime EnsureUtc(DateTime value) => value.Kind switch
+        {
+            DateTimeKind.Utc => value,
+            DateTimeKind.Unspecified => DateTime.SpecifyKind(value, DateTimeKind.Utc),
+            _ => value.ToUniversalTime()
+        };
 
         public static string FormatUtc(DateTime value)
             => EnsureUtc(value).ToString(OutputFormat, CultureInfo.InvariantCulture);
