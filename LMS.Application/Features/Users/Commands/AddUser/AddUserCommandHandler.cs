@@ -1,3 +1,4 @@
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Users.DTOs;
@@ -36,7 +37,7 @@ namespace LMS.Application.Features.Users.Commands.AddUser
             {
                 UserName = email,
                 Email = email,
-                PhoneNumber = request.PhoneNumber.Trim(),
+                PhoneNumber = PhoneNumberValidationHelper.Normalize(request.PhoneNumber),
                 CountryId = request.CountryId,
                 IsActive = request.IsActive
             };

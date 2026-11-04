@@ -14,11 +14,17 @@ namespace LMS.Domain.Entities
         public string? LinkedInUrl { get; private set; }
         public decimal HourlyRate { get; private set; }
 
+        public bool VacationMode { get; private set; }
+
         public virtual InstructorApplication? Application { get; private set; }
 
         public virtual ICollection<InstructorCertificate> Certificates { get; private set; } = new List<InstructorCertificate>();
 
         public virtual ICollection<InstructorAvailabilitySlot> AvailabilitySlots { get; private set; } = new List<InstructorAvailabilitySlot>();
+
+        public virtual ICollection<AvailabilityInstance> AvailabilityInstances { get; private set; } = new List<AvailabilityInstance>();
+
+        public virtual ICollection<Session> Sessions { get; private set; } = new List<Session>();
 
         public static Instructor Create(
             Guid userId,
@@ -55,6 +61,11 @@ namespace LMS.Domain.Entities
             Education = education;
             LinkedInUrl = linkedInUrl;
             HourlyRate = hourlyRate;
+        }
+
+        public void SetVacationMode(bool enabled)
+        {
+            VacationMode = enabled;
         }
 
         public void AddCertificate(InstructorCertificate certificate)

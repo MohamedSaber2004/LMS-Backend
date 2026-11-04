@@ -30,6 +30,10 @@ namespace LMS.Persistence.Configurations
             builder.Property(instructor => instructor.HourlyRate)
                 .HasPrecision(10, 2);
 
+            builder.Property(instructor => instructor.VacationMode)
+                .IsRequired()
+                .HasDefaultValue(false);
+
             builder.Property(instructor => instructor.CreatedBy)
                 .IsRequired();
 
@@ -38,6 +42,7 @@ namespace LMS.Persistence.Configurations
 
             builder.HasIndex(instructor => instructor.UserId)
                 .IsUnique();
+            builder.HasIndex(instructor => instructor.VacationMode);
             builder.HasIndex(instructor => instructor.IsDeleted);
 
             builder.HasOne(instructor => instructor.User)

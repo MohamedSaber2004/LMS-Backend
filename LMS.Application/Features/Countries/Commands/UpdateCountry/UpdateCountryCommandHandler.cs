@@ -34,6 +34,7 @@ namespace LMS.Application.Features.Countries.Commands.UpdateCountry
 
             country.CountryEnName = request.CountryEnName.Trim();
             country.Code = request.Code.Trim();
+            country.TimezoneId = request.TimezoneId?.Trim() ?? string.Empty;
             country.SetActiveState(request.IsActive, _currentUserService.UserId.ToString());
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -43,6 +44,7 @@ namespace LMS.Application.Features.Countries.Commands.UpdateCountry
                 Id = country.Id,
                 CountryEnName = country.CountryEnName,
                 Code = country.Code,
+                TimezoneId = country.TimezoneId,
                 IsActive = country.IsActive
             };
 

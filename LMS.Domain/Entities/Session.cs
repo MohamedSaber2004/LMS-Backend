@@ -1,0 +1,106 @@
+using LMS.Domain.Common;
+using LMS.Domain.Enums;
+
+namespace LMS.Domain.Entities
+{
+    public class Session : BaseEntity<Guid>
+    {
+        public Guid InstructorId { get; private set; }
+        public virtual Instructor Instructor { get; private set; } = null!;
+
+        public string? Title { get; private set; }
+
+        public SessionType Type { get; private set; }
+
+        public DateTime StartsAtUtc { get; private set; }
+
+        public DateTime EndsAtUtc { get; private set; }
+
+        public SessionStatus Status { get; private set; }
+
+        public decimal Price { get; private set; }
+
+        public int SeatCapacity { get; private set; }
+
+        public int SeatsBooked { get; private set; }
+
+        public Guid? CancelledByUserId { get; private set; }
+        public string? CancelReason { get; private set; }
+        public DateTime? CancelledAt { get; private set; }
+
+        public virtual ICollection<SessionBooking> Bookings { get; private set; } = new List<SessionBooking>();
+        public virtual ICollection<RescheduleRequest> RescheduleRequests { get; private set; } = new List<RescheduleRequest>();
+
+        public static Session Create(
+            Guid instructorId,
+            SessionType type,
+            DateTime startsAtUtc,
+            DateTime endsAtUtc,
+            decimal price,
+            string? title = null,
+            int seatCapacity = 1)
+        {
+            return new Session
+            {
+                InstructorId = instructorId,
+                Type = type,
+                StartsAtUtc = startsAtUtc,
+                EndsAtUtc = endsAtUtc,
+                Price = price,
+                Title = title,
+                SeatCapacity = type == SessionType.OneToOne ? 1 : seatCapacity,
+                Status = SessionStatus.Pending,
+                SeatsBooked = 0
+            };
+        }
+
+        public void Confirm()
+        {
+            Status = SessionStatus.Confirmed;
+        }
+
+        public void Complete()
+        {
+            Status = SessionStatus.Completed;
+        }
+
+        public void MarkNoShow()
+        {
+            Status = SessionStatus.NoShow;
+        }
+
+        public void Cancel(Guid? cancelledByUserId, string? reason)
+        {
+            Status = SessionStatus.Cancelled;
+            CancelledByUserId = cancelledByUserId;
+            CancelReason = reason;
+            CancelledAt = AppNow;
+        }
+
+        public void MoveTo(DateTime startsAtUtc, DateTime endsAtUtc)
+        {
+            StartsAtUtc = startsAtUtc;
+            EndsAtUtc = endsAtUtc;
+        }
+
+        public void ReserveSeat()
+        {
+            SeatsBooked++;
+        }
+
+        public void ReleaseSeat()
+        {
+            SeatsBooked = SeatsBooked > 0 ? SeatsBooked - 1 : 0;
+        }
+
+        public bool HasSeatAvailable()
+        {
+            return SeatsBooked < SeatCapacity;
+        }
+
+        public bool Overlaps(DateTime startsAtUtc, DateTime endsAtUtc)
+        {
+            return StartsAtUtc < endsAtUtc && EndsAtUtc > startsAtUtc;
+        }
+    }
+}

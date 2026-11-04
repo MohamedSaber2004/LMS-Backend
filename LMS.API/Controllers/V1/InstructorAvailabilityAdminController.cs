@@ -14,7 +14,7 @@ namespace LMS.API.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorAvailability.Base)]
-    [RoleAuthorize(UserType.Admin,UserType.Instructor)]
+    [RoleAuthorize(UserType.Admin)]
     public class InstructorAvailabilityAdminController : BaseController
     {
         /// <summary>

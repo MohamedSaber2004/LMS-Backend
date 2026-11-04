@@ -28,6 +28,11 @@ namespace LMS.Application.Features.Availability.Commands.Admin.EditAvailabilityS
                 .GreaterThan(command => command.StartTime)
                 .WithMessage(localizer[LocalizationKeys.Availability.EndTimeAfterStartTime].Value);
 
+            RuleFor(command => command.Id)
+                .MustAsync((slotId, cancellationToken) =>
+                    AvailabilityValidation.HasNoLiveSessionsAsync(_context, slotId, cancellationToken))
+                .WithMessage(localizer[LocalizationKeys.Availability.SlotHasSessions].Value);
+
             // The slot keeps its instructor, so the overlap check reads the owner from the stored row.
             // A missing row is reported as 404 by the handler.
             RuleFor(command => command)

@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.Validators;
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace LMS.Application.Features.Countries.Commands.UpdateCountry
     {
         private const int NameMaxLength = 150;
         private const int CodeMaxLength = 20;
+        private const int TimezoneIdMaxLength = TimezoneHelper.MaxLength;
 
         private readonly ILmsDbContext _context;
         private readonly IStringLocalizer<Messages> _localizer;
@@ -35,6 +37,13 @@ namespace LMS.Application.Features.Countries.Commands.UpdateCountry
                 .WithMessage(localizer[LocalizationKeys.Countries.CodeRequired].Value)
                 .MaximumLength(CodeMaxLength)
                 .WithMessage(localizer[LocalizationKeys.Countries.CodeTooLong, CodeMaxLength].Value);
+
+            RuleFor(x => x.TimezoneId)
+                .MaximumLength(TimezoneIdMaxLength)
+                .WithMessage(localizer[LocalizationKeys.Countries.TimezoneIdTooLong, TimezoneIdMaxLength].Value)
+                .Must(TimezoneHelper.IsValidIanaId)
+                .WithMessage(localizer[LocalizationKeys.Countries.TimezoneIdInvalid].Value)
+                .When(x => !string.IsNullOrWhiteSpace(x.TimezoneId));
 
             RuleFor(x => x)
                 .CustomAsync(ValidateAsync);

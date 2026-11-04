@@ -42,8 +42,8 @@ Status legend: ✅ done · 🟡 partial · 🔴 absent
 
 | # | Feature (screen) | Status | Implemented | Gap |
 |---|---|---|---|---|
-| 4 | Availability (`tavail`) | 🟡 30% | `InstructorAvailabilitySlot(Day, StartTime, EndTime)` — recurring weekly only; 4 endpoints on `InstructorAvailabilityAdminController` | No **vacation mode**. No **blocked days**. No **month view** / dated exceptions. No **conflict detection** against bookings. No **15-minute break** rule. No timezone anchoring. Writes are **not ownership-safe** (see §2) |
-| 5 | Sessions (`tsched`, `tsess`, `tresch`) | 🔴 0% | — | **There is no `Session` and no `Booking` entity anywhere in the domain.** Missing entirely: Upcoming/Completed/Cancelled tabs, session detail, cancel, reschedule, student-initiated reschedule requests with approve/decline, the **24 h teacher / 12 h student** edit window, double-booking prevention, group seat capacity (`4/6 seats`) |
+| 4 | Availability (`tavail`) | ✅ 90% | `InstructorAvailabilitySlot(Day, StartTime, EndTime)` stays the recurring definition; a Hangfire job expands it plus `Country.TimezoneId` into dated `AvailabilityInstances` rows that a booking can actually take. Instructor self-service `GET my`, `POST/PUT/DELETE my/weekly-slots[/{id}]`, `PUT my/vacation-mode`, `GET my/calendar?from&to`, `PUT my/calendar/day`. Zone is **derived, never typed**: profile country first, phone dial code as fallback. Conflict guard before editing/closing a slot or blocking a day. Admin controller is `[RoleAuthorize(Admin)]` only — the §2 defect is closed | `Hangfire:Enabled` is still `false` and the schema/timezone SQL is unapplied, so nothing is dated yet in the live environment. Group price-per-seat and the `tavail` slot-tap rule stay open |
+| 5 | Sessions (`tsched`, `tsess`, `tresch`) | 🟡 70% | `Session`, `SessionBooking`, `RescheduleRequest` + `SessionStatus`/`BookingStatus`/`SessionType`/`RescheduleRequestStatus`. `GET /sessions?tab=`, `GET /sessions/my-bookings?tab=`, `GET /sessions/bookable-slots`, `POST /sessions` (learner takes a dated row → `Pending`), `GET /sessions/{id}`, `POST /sessions/{id}/confirm` · `/decline` · `/cancel` · `/reschedule`, `POST /reschedule-requests/{id}/approve` · `/decline`. **24 h teacher / 12 h student** lock, double-booking and 15-minute-break checks on both sides, one-Pending-reschedule rule, duration-preserving approval with a full conflict re-check, and a 10-minute job that expires elapsed sessions | **No group-session creator** — `SeatCapacity`/`SeatsBooked` exist but nothing writes `Type = Group`. `NoShow` is never set (Phase 9). No refund/wallet effect (D1). Concurrent bookings of the same dated row are not serialized |
 | 6 | Live class (`tlive`, `tsum`) | 🔴 0% | — | No SignalR, no video provider, no join logs, no participant list, no attendance marking, no session summary. `appsettings.*.json` **actively denies** the permissions a live class needs (see §3) |
 
 ### 1.3 Teaching relationships
@@ -93,6 +93,8 @@ public async Task<IActionResult> AddSlot([FromRoute] Guid instructorId, ...)
 
 **Fix (Phase 0):** derive `InstructorId` from `ICurrentUserService` for instructor callers, and keep a separate admin-only route for acting on behalf of another instructor.
 
+> **Closed 2026-11-04.** `InstructorAvailabilityAdminController` is `[RoleAuthorize(UserType.Admin)]`, and self-service lives on `MyAvailabilityController` (`[Authorize] + [RoleAuthorize(UserType.Instructor)]`) where no route or body carries an instructor id. `ActorOwnership` (`LMS.Application/Common/Helpers/ActorOwnership.cs`) is now the single place that decides *write target* (`ResolveWriteTargetAsync`: an admin must name an instructor, anyone else is pinned to their own row), *read target* (`ResolveInstructorIdAsync` / `ResolveLearnerIdAsync`) and *cross-owner attempt* (`EnsureCanWriteForAsync` → `ForbiddenException` = 403, never a field error). Every session write re-resolves the caller against the session's own `InstructorId`/bookings in `SessionGuards`.
+
 ---
 
 ## 3. Environment blocker for the live-class phase
@@ -139,6 +141,7 @@ Repo conventions that apply to every phase:
 - Build with `-p:OutputPath=bin/verify` to avoid `MSB3027/3021` from the VS debugger locking `bin/Debug`.
 - **Every `DateTime` in the API is UTC** (user rule, 2026-11-04). Construct with `DateTime.UtcNow` only; `BaseEntity.AppNow` already does. Values are serialized by the globally registered `IsoUtcDateTimeConverter` → `2026-11-04T09:02:17Z`, matching the `format: "date-time"` (RFC 3339) the OpenAPI document already declares. Two traps to keep out: SQL Server `datetime2` comes back with `Kind = Unspecified`, and `ToUniversalTime()` on `Unspecified` assumes *local* — it shifted every stored timestamp by 2 h on this UTC+2 machine while looking correct on a UTC-pinned host; and a recurring weekly slot is `DayOfWeek` + `TimeSpan`, i.e. wall-clock, **not** an instant — it can only become a bookable `Session.StartsAt` once an instructor timezone exists (D2/D5).
   - **That converter only covers JSON bodies.** Verified 2026-11-04: no request in the API carries a `DateTime` today — every one in `LMS.Application/Features` is a response-DTO property or internal `DateTime.UtcNow` math, and `LMS.API/Controllers` has zero `DateTime` parameters. When Phase 1/2 adds `calendar?from&to` or `sessions?date=`, those bind through MVC's default binder — parsed in the **server's** local zone, never reaching `IsoUtcDateTimeConverter`. Decide the rule then: accept ISO 8601 with an explicit offset only, and normalize/assert `Kind` inside the validator like every other request rule.
+    - **Resolved 2026-11-04 by avoiding the problem.** Every query/route date in the scheduling surface is a `DateOnly` (`calendar?from&to`, `bookable-slots?from&to`, `my/calendar/day`) — a calendar date has no zone to lose, and the server's zone never enters the picture. The instants stay inside JSON bodies, where the converter does run: `RequestRescheduleCommand.FromUtc`/`ToUtc` are the only `DateTime` inputs added, and they are stored as UTC without re-conversion.
 - No invented columns: a field exists only if a prototype screen or an existing endpoint actually collects it.
 - UI eligibility pre-checks (e.g. the 12 h / 24 h lock) are computed in the frontend from data the GET already returns; the validator remains the real guard.
 
@@ -149,25 +152,25 @@ Repo conventions that apply to every phase:
 *Smallest phase, unblocks everything, and closes a live vulnerability. Start here.*
 
 **Entities / model**
-- [ ] `Instructor.Timezone` (string, IANA id) — *only if D5/D2 confirm the wizard's auto-detect claim*
+- [ ] ~~`Instructor.Timezone` (string, IANA id)~~ — **rejected 2026-11-04**: the zone is derived from `Country.TimezoneId` via the instructor's profile country, falling back to the dial code of their phone number. No column, no human input. See `LMS.Application/Common/Helpers/CountryTimezoneResolver.cs`
 - [ ] `Instructor.TeachingLanguages` / `Instructor.Dialects` as join entities (`InstructorLanguage`, `InstructorDialect`) — **not** CSV columns — *pending D5*
 - [ ] `InstructorApplication` gains a `Draft` status (extend `InstructorApplicationStatus`) — *deferred by the user 2026-11-04*
 - [x] `Instructor.HourlyRate` (live price) + `Instructor.UpdateProfile(...)`, and `InstructorApplication.Resubmit(actorUserId, hourlyRate)` which clears the stale review outcome
 
 **Endpoints**
-- [ ] `GET  /api/v1/instructor-availability/my`
-- [ ] `POST /api/v1/instructor-availability/my/weekly-slots`
-- [ ] `PUT  /api/v1/instructor-availability/my/weekly-slots/{id}`
-- [ ] `DELETE /api/v1/instructor-availability/my/weekly-slots/{id}`
+- [x] `GET  /api/v1/instructor-availability/my`
+- [x] `POST /api/v1/instructor-availability/my/weekly-slots`
+- [x] `PUT  /api/v1/instructor-availability/my/weekly-slots/{id}`
+- [x] `DELETE /api/v1/instructor-availability/my/weekly-slots/{id}`
 - [x] `GET  /api/v1/instructor-applications/my-status` → `{ Status, HourlyRate, ReviewNotes, ReviewedAt, IsActive, EmailConfirmed, CertificatesCount, HasIntroVideo, SubmittedAt }`
 - [x] `POST /api/v1/instructor-applications/resubmit` — allowed only from `Rejected`
 - [ ] `POST /api/v1/instructor-applications/draft` — save-and-continue-later
 - [x] `GET  /api/v1/instructor-profile` and `PUT /api/v1/instructor-profile` — ships with specialization, about, years, education, LinkedIn and the 1-to-1 rate; **group price-per-seat and trial-lesson flag still missing** (no column invented ahead of Phase 1)
-- [ ] Split the existing admin gate: `InstructorAvailabilityAdminController` keeps `[RoleAuthorize(Admin)]`; the new `my/*` routes are `[Authorize] + [RoleAuthorize(Instructor)]`
+- [x] Split the existing admin gate: `InstructorAvailabilityAdminController` keeps `[RoleAuthorize(Admin)]`; the new `my/*` routes are `[Authorize] + [RoleAuthorize(Instructor)]`
 - [x] The application self-service routes carry **`[Authorize]` with no role** — an applicant does not hold the `Instructor` role yet, so a role gate there would 403 the only users the feature exists for. Ownership is enforced by the caller's user id inside the query/validator
 
 **Validation / tests**
-- [ ] Ownership assertion in every slot handler; a cross-instructor request must return 403
+- [x] Ownership assertion in every slot handler; a cross-instructor request must return 403
 - [x] Validator: resubmit only from `Rejected` (`UpdateInstructorProfile` mirrors it: edits only from `Approved`, so the live rate cannot drift away from what the admin reviewed). Draft rule still pending the `Draft` status
 - [x] Validator: `HourlyRate > 0` and `<= 10000`, bio floor 30 characters — copied from the register rules. `GroupRate` has no field yet
 - [x] Validator: admin `approve` refuses an application whose email is not confirmed
@@ -181,38 +184,41 @@ Repo conventions that apply to every phase:
 *The keystone. Nine later phases are derived from this one.*
 
 **Entities**
-- [ ] `Session` — `InstructorId`, `LearnerId`, `StartsAt`, `EndsAt`, `Type` (`OneToOne` | `Group`), `Status` (`Pending` | `Confirmed` | `Completed` | `Cancelled` | `NoShow`), `Price`, `CancelledBy`, `CancelReason`, `SeatCapacity`, `SeatsBooked`
-- [ ] `RescheduleRequest` — `SessionId`, `RequestedBy` (role), `From`, `To`, `Status` (`Pending` | `Approved` | `Declined`)
-- [ ] `AvailabilityInstance` **or** `AvailabilityException` — the current table is *recurring weekly with no date*; a booking needs a dated instance. This is the schema bridge between Phases 0 and 1
+- [x] `Session` — `InstructorId`, `StartsAtUtc`, `EndsAtUtc`, `Type` (`OneToOne` | `Group`), `Status` (`Pending` | `Confirmed` | `Completed` | `Cancelled` | `NoShow`), `Price`, `CancelledByUserId`, `CancelReason`, `SeatCapacity`, `SeatsBooked`. The learner side is the separate `SessionBooking` row (`SessionId`, `LearnerId`, `Status`, unique `(SessionId, LearnerId)`), not a `Session.LearnerId` column — a group needs many
+- [x] `RescheduleRequest` — `SessionId`, `RequestedByUserId` + `RequestedByType`, `From`, `To`, `Status` (`Pending` | `Approved` | `Declined`), respond audit
+- [x] `AvailabilityInstance` — dated rows generated from the weekly pattern; `AvailabilityException` was cut. This is the schema bridge between Phases 0 and 1
 
 **Endpoints**
-- [ ] `GET  /api/v1/sessions?tab=upcoming|completed|cancelled`
-- [ ] `GET  /api/v1/sessions/{id}`
-- [ ] `POST /api/v1/sessions/{id}/cancel`
-- [ ] `POST /api/v1/sessions/{id}/reschedule` → creates a `RescheduleRequest`, never mutates the session directly
-- [ ] `POST /api/v1/reschedule-requests/{id}/approve` · `.../decline`
-- [ ] `POST /api/v1/sessions` (learner booking side) with capacity + conflict guards
+- [x] `GET  /api/v1/sessions?tab=upcoming|completed|cancelled` — the **teaching** list. The learner list is a second route, `GET /sessions/my-bookings?tab=`, because one route whose ownership rule changes with the caller's role is the bug in §2
+- [x] `GET  /api/v1/sessions/{id}`
+- [x] `POST /api/v1/sessions/{id}/cancel`
+- [x] `POST /api/v1/sessions/{id}/confirm` · `/decline` — added with the approved `Pending → instructor confirms` model
+- [x] `POST /api/v1/sessions/{id}/reschedule` → creates a `RescheduleRequest`, never mutates the session directly
+- [x] `POST /api/v1/reschedule-requests/{id}/approve` · `.../decline`
+- [x] `POST /api/v1/sessions` (learner booking side) with capacity + conflict guards — takes one `AvailabilityInstance`, so there is no duration to choose
+- [x] `GET /api/v1/sessions/bookable-slots?instructorId=&from=&to=` — the dated picker the booking side needs
 
 **Business rules to encode in validators**
-- [ ] **24 h teacher / 12 h student** cancel & reschedule lock, measured against `StartsAt`
-- [ ] No double-booking: same `InstructorId` + overlapping time + `Status = Confirmed`
-- [ ] Blocking an availability day that has a confirmed session → rejected with *"reschedule it first"*
-- [ ] Group `SeatsBooked <= SeatCapacity`, never over-subscribed
-- [ ] A reschedule request that is already `Pending` for the same session → rejected
+- [x] **24 h teacher / 12 h student** cancel & reschedule lock, measured against `StartsAt` — both numbers live in `SchedulingOptions`, not in the validators
+- [x] No double-booking: same `InstructorId` + overlapping time. Wider than the rule as written: `Pending` holds the time too, otherwise the slot a learner just requested stays sellable until the instructor answers
+- [x] Blocking an availability day that has a confirmed session → rejected with *"reschedule it first"* (same rule for editing or deleting the weekly slot behind it)
+- [ ] Group `SeatsBooked <= SeatCapacity`, never over-subscribed — the invariant is written (`HoldsSeat` counting, `ReserveSeat`/`ReleaseSeat`), but nothing can create a `Group` session yet, so it has no path to fail
+- [x] A reschedule request that is already `Pending` for the same session → rejected
+- [x] Approval preserves the duration and re-checks every conflict — the request validator rejects a proposed window of a different length, so approval cannot quietly resize the lesson
 - [ ] Cancelling credits the refund exactly once (idempotency guard) — *shape pending D1*
 
-- [ ] Migration + SQL hand-off
+- [x] Migration `20261104102902_AddSchedulingTables` + `docs/plans/2026-11-04-scheduling.sql` (and `2026-11-04-country-timezones.sql`, which is **not optional** — without a zone on the country rows nothing is ever materialized or bookable)
 
 ---
 
 ### Phase 2 — Availability v2
 
-- [ ] `VacationMode` toggle on `Instructor` — hides from new bookings, **confirmed sessions stay** and follow the 24 h rule
-- [ ] `BlockedDay` (dated) + week/month views
-- [ ] `GET /api/v1/instructor-availability/calendar?from&to`
-- [ ] Conflict check against `Session` before closing a slot
-- [ ] 15-minute break enforcement between sessions
-- [ ] Timezone resolution — decide explicitly whether the backend anchors or the frontend (existing scope decision #2 says frontend, from the country dial code)
+- [x] `VacationMode` toggle on `Instructor` — `PUT /instructor-availability/my/vacation-mode`. Hides from new bookings, **confirmed sessions stay** and follow the 24 h rule. Deliberately **not** on the instructor profile DTO
+- [x] `BlockedDay` (dated) — no separate table: `AvailabilityInstance.IsOpen = false`, which the materializer never silently re-opens. `PUT /instructor-availability/my/calendar/day`
+- [x] `GET /api/v1/instructor-availability/my/calendar?from&to` — week/month view (`Available` / `Blocked` / `Booked` per day, capped at 92 days)
+- [x] Conflict check against `Session` before closing a slot — and before blocking a day
+- [x] 15-minute break enforcement between sessions — for the instructor **and** for the learner, on booking and again on reschedule approval
+- [x] Timezone resolution — **the backend anchors**, because the frontend cannot be trusted to map dialling codes: `Country.TimezoneId` resolved from the profile country, falling back to the phone dial code. The learner payload now carries `TimezoneId` so wall-clock slots can still be turned into instants client-side
 
 ---
 

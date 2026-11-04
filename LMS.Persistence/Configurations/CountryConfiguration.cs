@@ -20,6 +20,9 @@ namespace LMS.Persistence.Configurations
                 .HasMaxLength(20)
                 .IsRequired();
 
+            builder.Property(country => country.TimezoneId)
+                .HasMaxLength(64);
+
             builder.HasIndex(c => c.Code);
 
             builder.Property(c => c.IsActive)

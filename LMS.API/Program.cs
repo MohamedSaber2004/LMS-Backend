@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using AspNetCoreRateLimit;
 using LMS.API.Middlewares;
+using LMS.API.Hangfire;
 using LMS.API.Services;
 using LMS.API.Swagger;
 using LMS.Application;
@@ -234,6 +235,7 @@ namespace LMS.API
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<ICurrentLanguageService, LMS.API.Services.CurrentLanguageService>();
+            builder.Services.AddSchedulingJobs(builder.Configuration);
 
             var corsConfig = builder.Configuration.GetSection("Security:Cors").Get<CorsOptions>();
             var policyName = !string.IsNullOrWhiteSpace(corsConfig?.PolicyName) ? corsConfig.PolicyName : "DefaultPolicy";
@@ -520,8 +522,6 @@ namespace LMS.API
                 }
             }
 
-            // Runs the help-center rows on their own so a one-off seed does not also touch
-            // roles, accounts or onboarding content on the shared database.
             if (args.Contains("--seed-help-center"))
             {
                 using var scope = app.Services.CreateScope();
@@ -537,8 +537,8 @@ namespace LMS.API
                 }
             }
 
-            Log.Information("=== LMS API Started === Environment: {Environment}, BaseDir: {BaseDir}, ContentRoot: {ContentRoot}",
-                app.Environment.EnvironmentName, AppContext.BaseDirectory, app.Environment.ContentRootPath);
+            app.RegisterSchedulingRecurringJobs();
+
 
             await app.RunAsync();
         }

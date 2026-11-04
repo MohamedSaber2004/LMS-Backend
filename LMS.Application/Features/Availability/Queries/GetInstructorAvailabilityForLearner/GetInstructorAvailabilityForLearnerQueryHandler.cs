@@ -1,4 +1,5 @@
 using LMS.Application.Common.Exceptions;
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Availability.DTOs;
@@ -57,6 +58,8 @@ namespace LMS.Application.Features.Availability.Queries.GetInstructorAvailabilit
                 CountryId = instructor.User.CountryId,
                 CountryCode = instructor.User.Country?.Code,
                 CountryName = instructor.User.Country?.CountryEnName,
+                TimezoneId = await CountryTimezoneResolver.ForInstructorAsync(
+                    _context, instructor.Id, cancellationToken),
                 HourlyRate = instructor.HourlyRate,
                 WeeklySlots = weeklySlots
             };

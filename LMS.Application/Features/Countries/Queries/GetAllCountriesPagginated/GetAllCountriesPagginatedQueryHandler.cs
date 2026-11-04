@@ -48,6 +48,7 @@ namespace LMS.Application.Features.Countries.Queries.GetAllCountriesPagginated
                     Id = country.Id,
                     CountryEnName = country.CountryEnName,
                     Code = country.Code,
+                    TimezoneId = country.TimezoneId,
                     IsActive = country.IsActive
                 })
                 .ToListAsync(cancellationToken);

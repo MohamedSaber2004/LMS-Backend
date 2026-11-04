@@ -25,7 +25,8 @@ namespace LMS.Application.Features.Countries.Commands.AddCountry
             var country = new Country
             {
                 CountryEnName = request.CountryEnName.Trim(),
-                Code = request.Code.Trim()
+                Code = request.Code.Trim(),
+                TimezoneId = request.TimezoneId?.Trim() ?? string.Empty
             };
 
             await _context.Countries.AddAsync(country, cancellationToken);
@@ -36,6 +37,7 @@ namespace LMS.Application.Features.Countries.Commands.AddCountry
                 Id = country.Id,
                 CountryEnName = country.CountryEnName,
                 Code = country.Code,
+                TimezoneId = country.TimezoneId,
                 IsActive = country.IsActive
             };
 

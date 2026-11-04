@@ -217,6 +217,63 @@ namespace LMS.Application.Localization
             public const string AvailabilityRetrieved = "Availability.AvailabilityRetrieved";
             public const string PageNumberInvalid = "Availability.PageNumberInvalid";
             public const string PageSizeInvalid = "Availability.PageSizeInvalid";
+            public const string SlotHasSessions = "Availability.SlotHasSessions";
+            public const string TimezoneUnresolved = "Availability.TimezoneUnresolved";
+            public const string DateInPast = "Availability.DateInPast";
+            public const string NoWindowsOnDay = "Availability.NoWindowsOnDay";
+            public const string DayUpdatedSuccess = "Availability.DayUpdatedSuccess";
+            public const string VacationModeUpdatedSuccess = "Availability.VacationModeUpdatedSuccess";
+            public const string DateRangeRequired = "Availability.DateRangeRequired";
+            public const string DateRangeInvalid = "Availability.DateRangeInvalid";
+            public const string DateRangeTooLarge = "Availability.DateRangeTooLarge";
+            public const string CalendarRetrieved = "Availability.CalendarRetrieved";
+            public const string DayHasSessions = "Availability.DayHasSessions";
+        }
+
+        public static class Sessions
+        {
+            public const string TabInvalid = "Sessions.TabInvalid";
+            public const string PageNumberInvalid = "Sessions.PageNumberInvalid";
+            public const string PageSizeInvalid = "Sessions.PageSizeInvalid";
+            public const string SessionIdRequired = "Sessions.SessionIdRequired";
+            public const string InstructorIdRequired = "Sessions.InstructorIdRequired";
+            public const string SlotIdRequired = "Sessions.SlotIdRequired";
+            public const string SlotNotFound = "Sessions.SlotNotFound";
+            public const string SlotNotOpen = "Sessions.SlotNotOpen";
+            public const string SlotElapsed = "Sessions.SlotElapsed";
+            public const string DateRangeRequired = "Sessions.DateRangeRequired";
+            public const string DateRangeInvalid = "Sessions.DateRangeInvalid";
+            public const string DateRangeTooLarge = "Sessions.DateRangeTooLarge";
+            public const string InstructorNotBookable = "Sessions.InstructorNotBookable";
+            public const string InstructorBusy = "Sessions.InstructorBusy";
+            public const string InstructorBreakTooShort = "Sessions.InstructorBreakTooShort";
+            public const string LearnerBusy = "Sessions.LearnerBusy";
+            public const string LearnerBreakTooShort = "Sessions.LearnerBreakTooShort";
+            public const string ReasonTooLong = "Sessions.ReasonTooLong";
+            public const string SessionNotFound = "Sessions.SessionNotFound";
+            public const string SessionNotPending = "Sessions.SessionNotPending";
+            public const string SessionNotCancellable = "Sessions.SessionNotCancellable";
+            public const string SessionNotReschedulable = "Sessions.SessionNotReschedulable";
+            public const string InstructorLockPassed = "Sessions.InstructorLockPassed";
+            public const string LearnerLockPassed = "Sessions.LearnerLockPassed";
+            public const string RescheduleIdRequired = "Sessions.RescheduleIdRequired";
+            public const string RescheduleNotFound = "Sessions.RescheduleNotFound";
+            public const string RescheduleNotPending = "Sessions.RescheduleNotPending";
+            public const string RescheduleWindowInvalid = "Sessions.RescheduleWindowInvalid";
+            public const string RescheduleAlreadyPending = "Sessions.RescheduleAlreadyPending";
+            public const string RescheduleDurationChanged = "Sessions.RescheduleDurationChanged";
+            public const string RescheduleConflicted = "Sessions.RescheduleConflicted";
+            public const string SlotsRetrieved = "Sessions.SlotsRetrieved";
+            public const string SessionsRetrieved = "Sessions.SessionsRetrieved";
+            public const string SessionRetrieved = "Sessions.SessionRetrieved";
+            public const string BookingsRetrieved = "Sessions.BookingsRetrieved";
+            public const string BookingCreatedSuccess = "Sessions.BookingCreatedSuccess";
+            public const string SessionConfirmedSuccess = "Sessions.SessionConfirmedSuccess";
+            public const string SessionDeclinedSuccess = "Sessions.SessionDeclinedSuccess";
+            public const string SessionCancelledSuccess = "Sessions.SessionCancelledSuccess";
+            public const string RescheduleRequestedSuccess = "Sessions.RescheduleRequestedSuccess";
+            public const string RescheduleApprovedSuccess = "Sessions.RescheduleApprovedSuccess";
+            public const string RescheduleDeclinedSuccess = "Sessions.RescheduleDeclinedSuccess";
         }
 
         public static class HelpCenter
@@ -253,6 +310,8 @@ namespace LMS.Application.Localization
             public const string CountryEnNameTooLong = "Countries.CountryEnNameTooLong";
             public const string CodeRequired = "Countries.CodeRequired";
             public const string CodeTooLong = "Countries.CodeTooLong";
+            public const string TimezoneIdTooLong = "Countries.TimezoneIdTooLong";
+            public const string TimezoneIdInvalid = "Countries.TimezoneIdInvalid";
             public const string CountryCodeAlreadyExists = "Countries.CountryCodeAlreadyExists";
             public const string CountryNameAlreadyExists = "Countries.CountryNameAlreadyExists";
             public const string CountryIdRequired = "Countries.CountryIdRequired";

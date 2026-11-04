@@ -1,0 +1,81 @@
+using FluentValidation;
+using FluentValidation.Validators;
+using LMS.API.Services;
+using LMS.Application.Common.Exceptions;
+using LMS.Application.Common.Helpers;
+using LMS.Application.Common.Interfaces;
+using LMS.Application.Common.Options;
+using LMS.Application.Localization;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
+
+namespace LMS.Application.Features.Sessions.Commands.CreateBooking
+{
+    public class CreateBookingCommandValidator : AbstractValidator<CreateBookingCommand>
+    {
+        private readonly ILmsDbContext _context;
+        private readonly ICurrentUserService _currentUser;
+        private readonly IStringLocalizer<Messages> _localizer;
+        private readonly SchedulingOptions _scheduling;
+
+        public CreateBookingCommandValidator(
+            ILmsDbContext context,
+            ICurrentUserService currentUser,
+            IOptions<SchedulingOptions> options,
+            IStringLocalizer<Messages> localizer)
+        {
+            _context = context;
+            _currentUser = currentUser;
+            _localizer = localizer;
+            _scheduling = options.Value;
+
+            RuleFor(command => command.InstructorId)
+                .NotEmpty()
+                .WithMessage(localizer[LocalizationKeys.Sessions.InstructorIdRequired].Value);
+
+            RuleFor(command => command.AvailabilityInstanceId)
+                .NotEmpty()
+                .WithMessage(localizer[LocalizationKeys.Sessions.SlotIdRequired].Value);
+
+            // One guard, one reason: the first thing that stops the booking is what the learner is told.
+            RuleFor(command => command)
+                .CustomAsync(ValidateAsync);
+        }
+
+        private async Task ValidateAsync(
+            CreateBookingCommand command,
+            CustomContext context,
+            CancellationToken cancellationToken)
+        {
+            var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
+                    _context, _currentUser.UserId, cancellationToken)
+                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+
+            var blocker = await SessionsValidation.FindBookingBlockerAsync(
+                _context,
+                command.InstructorId,
+                learnerId,
+                command.AvailabilityInstanceId,
+                _scheduling.MinimumBreakMinutes,
+                cancellationToken);
+
+            if (blocker != BookingBlocker.None)
+            {
+                context.AddFailure(
+                    nameof(CreateBookingCommand.AvailabilityInstanceId),
+                    _localizer[BlockerKey(blocker), _scheduling.MinimumBreakMinutes].Value);
+            }
+        }
+
+        private static string BlockerKey(BookingBlocker blocker) => blocker switch
+        {
+            BookingBlocker.InstructorNotBookable => LocalizationKeys.Sessions.InstructorNotBookable,
+            BookingBlocker.InstanceMissing => LocalizationKeys.Sessions.SlotNotOpen,
+            BookingBlocker.SlotElapsed => LocalizationKeys.Sessions.SlotElapsed,
+            BookingBlocker.InstructorConflict => LocalizationKeys.Sessions.InstructorBusy,
+            BookingBlocker.InstructorBreak => LocalizationKeys.Sessions.InstructorBreakTooShort,
+            BookingBlocker.LearnerConflict => LocalizationKeys.Sessions.LearnerBusy,
+            _ => LocalizationKeys.Sessions.LearnerBreakTooShort
+        };
+    }
+}

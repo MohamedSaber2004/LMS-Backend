@@ -30,6 +30,7 @@ namespace LMS.Application.Features.Countries.Queries.GetCountryById
                     Id = item.Id,
                     CountryEnName = item.CountryEnName,
                     Code = item.Code,
+                    TimezoneId = item.TimezoneId,
                     IsActive = item.IsActive
                 })
                 .FirstOrDefaultAsync(cancellationToken)

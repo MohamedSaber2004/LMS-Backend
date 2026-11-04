@@ -69,6 +69,35 @@ namespace LMS.API.Routes.V1
             public const string ForInstructor = "instructors/{instructorId:guid}";
             public const string Slots = "instructors/{instructorId:guid}/weekly-slots";
             public const string SlotById = "weekly-slots/{id:guid}";
+
+            public const string My = "my";
+            public const string MySlots = "my/weekly-slots";
+            public const string MySlotById = "my/weekly-slots/{id:guid}";
+            public const string MyVacationMode = "my/vacation-mode";
+            public const string MyCalendar = "my/calendar";
+            public const string MyCalendarDay = "my/calendar/day";
+        }
+
+        public static class Sessions
+        {
+            public const string Base = BaseRoutes.Base + "/sessions";
+
+            public const string GetAllPagginated = "";
+            public const string MyBookingsPagginated = "my-bookings";
+            public const string BookableSlots = "bookable-slots";
+            public const string GetById = "{id:guid}";
+            public const string Confirm = "{id:guid}/confirm";
+            public const string Decline = "{id:guid}/decline";
+            public const string Cancel = "{id:guid}/cancel";
+            public const string Reschedule = "{id:guid}/reschedule";
+        }
+
+        public static class RescheduleRequests
+        {
+            public const string Base = BaseRoutes.Base + "/reschedule-requests";
+
+            public const string Approve = "{id:guid}/approve";
+            public const string Decline = "{id:guid}/decline";
         }
 
         public static class HelpCenter

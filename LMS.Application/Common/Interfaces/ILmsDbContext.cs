@@ -14,6 +14,10 @@ namespace LMS.Application.Common.Interfaces
         DbSet<InstructorApplication> InstructorApplications { get; }
         DbSet<InstructorCertificate> InstructorCertificates { get; }
         DbSet<InstructorAvailabilitySlot> InstructorAvailabilitySlots { get; }
+        DbSet<AvailabilityInstance> AvailabilityInstances { get; }
+        DbSet<Session> Sessions { get; }
+        DbSet<SessionBooking> SessionBookings { get; }
+        DbSet<RescheduleRequest> RescheduleRequests { get; }
         DbSet<OnboardingQuestion> OnboardingQuestions { get; }
         DbSet<OnboardingOption> OnboardingOptions { get; }
         DbSet<OnboardingAnswer> OnboardingAnswers { get; }

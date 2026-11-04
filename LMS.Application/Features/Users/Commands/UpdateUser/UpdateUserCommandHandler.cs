@@ -1,5 +1,6 @@
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Extensions;
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Users.DTOs;
@@ -54,7 +55,7 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
 
             if (request.PhoneNumber is not null)
             {
-                user.PhoneNumber = request.PhoneNumber.Trim();
+                user.PhoneNumber = PhoneNumberValidationHelper.Normalize(request.PhoneNumber);
             }
 
             if (request.CountryId.HasValue)

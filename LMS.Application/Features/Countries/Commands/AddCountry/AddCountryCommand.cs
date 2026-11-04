@@ -8,5 +8,6 @@ namespace LMS.Application.Features.Countries.Commands.AddCountry
     {
         public string CountryEnName { get; set; } = string.Empty;
         public string Code { get; set; } = string.Empty;
+        public string? TimezoneId { get; set; }
     }
 }
