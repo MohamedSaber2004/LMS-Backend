@@ -15598,6 +15598,11 @@
               "type": "string"
             }
           },
+          "instructorId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
