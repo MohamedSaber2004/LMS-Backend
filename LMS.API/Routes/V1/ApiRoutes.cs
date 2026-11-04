@@ -66,7 +66,6 @@ namespace LMS.API.Routes.V1
             public const string Base = BaseRoutes.Base + "/instructor-availability";
 
             public const string GetAllPagginated = "pagginated";
-            public const string ForInstructor = "instructors/{instructorId:guid}";
             public const string Slots = "instructors/{instructorId:guid}/weekly-slots";
             public const string SlotById = "weekly-slots/{id:guid}";
 
