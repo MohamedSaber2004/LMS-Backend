@@ -17,6 +17,8 @@ namespace LMS.Domain.Entities
 
         public virtual ICollection<Lesson> Lessons { get; private set; } = new List<Lesson>();
 
+        public virtual ICollection<CourseInstructor> CourseInstructors { get; private set; } = new List<CourseInstructor>();
+
         public static Course Create(string title, string description, string? coverUrl, CourseLevel level, int order)
         {
             return new Course

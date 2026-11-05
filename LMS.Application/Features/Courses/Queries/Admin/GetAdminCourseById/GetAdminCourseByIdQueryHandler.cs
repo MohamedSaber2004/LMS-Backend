@@ -32,6 +32,7 @@ namespace LMS.Application.Features.Courses.Queries.Admin.GetAdminCourseById
                 .Include(item => item.Lessons)
                 .ThenInclude(lesson => lesson.QuizQuestions)
                 .ThenInclude(question => question.Options)
+                .IncludeAssignedInstructors()
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Courses.CourseNotFound);
 

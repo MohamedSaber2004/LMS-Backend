@@ -28,6 +28,7 @@ namespace LMS.Application.Common.Interfaces
         DbSet<QuizQuestion> QuizQuestions { get; }
         DbSet<QuizOption> QuizOptions { get; }
         DbSet<CourseEnrollment> CourseEnrollments { get; }
+        DbSet<CourseInstructor> CourseInstructors { get; }
         DbSet<LessonProgress> LessonProgress { get; }
         DbSet<QuizAttempt> QuizAttempts { get; }
         DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; }

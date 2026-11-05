@@ -37,6 +37,7 @@ namespace LMS.Application.Features.Courses.Commands.EnrollCourse
             var course = await _context.Courses
                 .AsNoTracking()
                 .Include(item => item.Lessons)
+                .IncludeAssignedInstructors()
                 .FirstOrDefaultAsync(
                     item => item.Id == request.CourseId && item.IsActive,
                     cancellationToken)

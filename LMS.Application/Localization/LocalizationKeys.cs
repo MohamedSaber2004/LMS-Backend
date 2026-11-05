@@ -325,6 +325,11 @@ namespace LMS.Application.Localization
             public const string CourseDeletedSuccess = "Courses.CourseDeletedSuccess";
             public const string CoursesRetrieved = "Courses.CoursesRetrieved";
             public const string CourseRetrieved = "Courses.CourseRetrieved";
+            public const string InstructorIdRequired = "Courses.InstructorIdRequired";
+            public const string DuplicateInstructors = "Courses.DuplicateInstructors";
+            public const string InstructorNotAssignable = "Courses.InstructorNotAssignable";
+            public const string InstructorsAssignedSuccess = "Courses.InstructorsAssignedSuccess";
+            public const string InstructorsRetrieved = "Courses.InstructorsRetrieved";
             public const string LessonIdRequired = "Courses.LessonIdRequired";
             public const string LessonNotFound = "Courses.LessonNotFound";
             public const string VideoSourceRequired = "Courses.VideoSourceRequired";

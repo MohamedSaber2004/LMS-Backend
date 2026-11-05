@@ -12,6 +12,7 @@ namespace LMS.Application.Features.Courses.DTOs
         public string? CoverUrl { get; set; }
         public CourseLevel Level { get; set; }
         public int LessonCount { get; set; }
+        public IReadOnlyCollection<InstructorRefDto> Instructors { get; set; } = Array.Empty<InstructorRefDto>();
         public int CompletedLessonCount { get; set; }
         public Guid? LastLessonId { get; set; }
         public string? LastLessonTitle { get; set; }

@@ -14,6 +14,8 @@ namespace LMS.Application.Features.Courses.Queries.GetActiveCoursesPagginated
 
         public CourseLevel? Level { get; set; }
 
+        public Guid? InstructorId { get; set; }
+
         public int PageNumber { get; set; } = PagginatedResult<CourseListItemDto>.DefaultPageNumber;
 
         public int PageSize { get; set; } = PagginatedResult<CourseListItemDto>.DefaultPageSize;

@@ -39,6 +39,7 @@ namespace LMS.Application.Features.Courses.Commands.Admin.UpdateCourse
         {
             var course = await _context.Courses
                 .Include(item => item.Lessons)
+                .IncludeAssignedInstructors()
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Courses.CourseNotFound);
 

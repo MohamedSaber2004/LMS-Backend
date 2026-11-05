@@ -14,6 +14,7 @@ namespace LMS.Application.Features.Courses
             Level = course.Level,
             Order = course.Order,
             LessonCount = lessonCount,
+            Instructors = ToInstructorRefs(course),
             IsActive = course.IsActive
         };
 
@@ -26,6 +27,7 @@ namespace LMS.Application.Features.Courses
             Level = course.Level,
             Order = course.Order,
             IsEnrolled = isEnrolled,
+            Instructors = ToInstructorRefs(course),
             Lessons = course.Lessons
                 .Where(lesson => lesson.IsActive)
                 .OrderBy(lesson => lesson.Order)
@@ -51,11 +53,23 @@ namespace LMS.Application.Features.Courses
             Level = course.Level,
             Order = course.Order,
             IsActive = course.IsActive,
+            Instructors = ToInstructorRefs(course),
             Lessons = course.Lessons
                 .OrderBy(lesson => lesson.Order)
                 .Select(ToAdminLessonDto)
                 .ToArray()
         };
+
+        private static InstructorRefDto[] ToInstructorRefs(Course course) => course.CourseInstructors
+            .OrderBy(courseInstructor => courseInstructor.CreatedAt)
+            .Select(courseInstructor => new InstructorRefDto
+            {
+                Id = courseInstructor.InstructorId,
+                UserId = courseInstructor.Instructor.UserId,
+                FullName = courseInstructor.Instructor.User.FullName,
+                Specialization = courseInstructor.Instructor.Specialization
+            })
+            .ToArray();
 
         public static LessonAdminDto ToAdminLessonDto(Lesson lesson) => new()
         {

@@ -5,6 +5,7 @@ using LMS.Application.Common.Models;
 using LMS.Application.Features.Courses.Commands.Admin.AddCourse;
 using LMS.Application.Features.Courses.Commands.Admin.AddLesson;
 using LMS.Application.Features.Courses.Commands.Admin.AddQuizQuestion;
+using LMS.Application.Features.Courses.Commands.Admin.AssignCourseInstructors;
 using LMS.Application.Features.Courses.Commands.Admin.DeleteCourse;
 using LMS.Application.Features.Courses.Commands.Admin.DeleteLesson;
 using LMS.Application.Features.Courses.Commands.Admin.DeleteQuizQuestion;
@@ -13,6 +14,7 @@ using LMS.Application.Features.Courses.Commands.Admin.UpdateLesson;
 using LMS.Application.Features.Courses.Commands.Admin.UpdateQuizQuestion;
 using LMS.Application.Features.Courses.DTOs;
 using LMS.Application.Features.Courses.Queries.Admin.GetAdminCourseById;
+using LMS.Application.Features.Courses.Queries.Admin.GetAssignableInstructors;
 using LMS.Application.Features.Courses.Queries.Admin.GetCoursesPagginated;
 using LMS.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -266,6 +268,50 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> DeleteQuizQuestion([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new DeleteQuizQuestionCommand { Id = id }, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Replace the instructors assigned to a course. Sending an empty list removes every
+        /// assignment; only approved, active instructors are accepted.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut(ApiRoutes.Courses.AdminCourseInstructors)]
+        [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<InstructorRefDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AssignCourseInstructors(
+            [FromRoute] Guid id,
+            [FromBody] AssignCourseInstructorsCommand command,
+            CancellationToken cancellationToken)
+        {
+            command.Id = id;
+            var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// List the instructors that can be assigned to a course, paginated and optionally
+        /// filtered by a keyword matched against name and specialization.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet(ApiRoutes.Courses.AdminAssignableInstructors)]
+        [ProducesResponseType(typeof(ApiResponse<PagginatedResult<InstructorRefDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> GetAssignableInstructors(
+            [FromQuery] GetAssignableInstructorsQuery query,
+            CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(query, cancellationToken);
             return FromResult(result);
         }
     }

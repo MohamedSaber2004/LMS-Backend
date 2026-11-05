@@ -58,7 +58,17 @@ namespace LMS.Application.Features.Courses.Queries.GetMyCoursesPagginated
                     enrollment.Course.Description,
                     enrollment.Course.CoverUrl,
                     enrollment.Course.Level,
-                    LessonCount = enrollment.Course.Lessons.Count(lesson => lesson.IsActive)
+                    LessonCount = enrollment.Course.Lessons.Count(lesson => lesson.IsActive),
+                    Instructors = enrollment.Course.CourseInstructors
+                        .OrderBy(courseInstructor => courseInstructor.CreatedAt)
+                        .Select(courseInstructor => new InstructorRefDto
+                        {
+                            Id = courseInstructor.InstructorId,
+                            UserId = courseInstructor.Instructor.UserId,
+                            FullName = courseInstructor.Instructor.User.FullName,
+                            Specialization = courseInstructor.Instructor.Specialization
+                        })
+                        .ToArray()
                 })
                 .ToListAsync(cancellationToken);
 
@@ -100,6 +110,7 @@ namespace LMS.Application.Features.Courses.Queries.GetMyCoursesPagginated
                     CoverUrl = enrollment.CoverUrl,
                     Level = enrollment.Level,
                     LessonCount = enrollment.LessonCount,
+                    Instructors = enrollment.Instructors,
                     CompletedLessonCount = rows.Count(row => row.IsCompleted),
                     LastLessonId = last?.LessonId,
                     LastLessonTitle = last?.LessonTitle,

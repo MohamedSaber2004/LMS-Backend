@@ -36,6 +36,7 @@ namespace LMS.Persistence
         public DbSet<QuizQuestion> QuizQuestions { get; set; }
         public DbSet<QuizOption> QuizOptions { get; set; }
         public DbSet<CourseEnrollment> CourseEnrollments { get; set; }
+        public DbSet<CourseInstructor> CourseInstructors { get; set; }
         public DbSet<LessonProgress> LessonProgress { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
         public DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; set; }

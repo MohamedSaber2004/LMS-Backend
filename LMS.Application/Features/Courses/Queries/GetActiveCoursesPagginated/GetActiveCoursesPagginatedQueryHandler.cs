@@ -44,6 +44,13 @@ namespace LMS.Application.Features.Courses.Queries.GetActiveCoursesPagginated
                 query = query.Where(course => course.Level == level);
             }
 
+            if (request.InstructorId.HasValue)
+            {
+                var instructorId = request.InstructorId.Value;
+                query = query.Where(course => course.CourseInstructors
+                    .Any(courseInstructor => courseInstructor.InstructorId == instructorId));
+            }
+
             var totalCount = await query.CountAsync(cancellationToken);
 
             var pageNumber = request.PageNumber < 1
@@ -67,7 +74,17 @@ namespace LMS.Application.Features.Courses.Queries.GetActiveCoursesPagginated
                     Level = course.Level,
                     Order = course.Order,
                     IsActive = course.IsActive,
-                    LessonCount = course.Lessons.Count(lesson => lesson.IsActive)
+                    LessonCount = course.Lessons.Count(lesson => lesson.IsActive),
+                    Instructors = course.CourseInstructors
+                        .OrderBy(courseInstructor => courseInstructor.CreatedAt)
+                        .Select(courseInstructor => new InstructorRefDto
+                        {
+                            Id = courseInstructor.InstructorId,
+                            UserId = courseInstructor.Instructor.UserId,
+                            FullName = courseInstructor.Instructor.User.FullName,
+                            Specialization = courseInstructor.Instructor.Specialization
+                        })
+                        .ToArray()
                 })
                 .ToListAsync(cancellationToken);
 

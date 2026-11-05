@@ -6,6 +6,8 @@
 **آخر تحديث:** 2026-11-05
 **Base URL:** `https://lms-api.runasp.net/api/v1/`
 
+> 📌 **إسناد المدرّسين (جديد):** اتضاف جدول ربط `CourseInstructors` (Many-to-Many) مع `PUT /courses/admin/courses/{id}/instructors` و`GET /courses/admin/instructors` و`instructors[]` في كل responses الكورسات — قسم 4.5. الـ migration بتاعته `20261105114012_AddCourseInstructors` **لسه ما اتطبقتش** على الداتابيز، فالقسم ده مشتقّ من الكود مش من call حي.
+
 > ⚠️ **حالة النشر:** الـ migrations `20261105090251_AddCoursesTables` و`20261105100738_AddCourseCoverUrl` **اتطبقت على الداتابيز** يوم 2026-11-05، لكن الكود **لسه ما اتنشرش** على `https://lms-api.runasp.net` — يعني الـ host ده هيرد **404** على `/api/v1/courses/*` لحد ما الـ deploy يحصل. الـ responses الموثّقة هنا اتاخدَت من نسخة محلية شغّالة على نفس الداتابيز.
 >
 > 📌 **فيه seed جاهز ومُنفّذ:** `--seed-courses` (قسم 7) أضاف **4 كورسات + 12 درس + 11 سؤال (44 اختيار)** على الداتابيز، منهم كورس واحد مسودّة (`isActive: false`). أي شاشة ديمو لاقيّة بيانات دلوقتي، والتأليف من endpoints الأدمن (قسم 4) ما زال المسار العادي للمحتوى الحقيقي. أي شاشة ديمو لاقيّة بيانات دلوقتي، والتأليف من endpoints الأدمن (قسم 4) ما زال المسار العادي للمحتوى الحقيقي.
@@ -69,12 +71,15 @@
 
 ```
 Course ──< Lesson ──< QuizQuestion ──< QuizOption (IsCorrect)
+Course >──< Instructor  (CourseInstructors: Many-to-Many، جدول ربط بس)
 Learner ──< CourseEnrollment >── Course
 Learner ──< LessonProgress >── Lesson     (LastWatchedSeconds, IsCompleted, CompletedAt)
 Learner ──< QuizAttempt >── Lesson ──< QuizAttemptAnswer (QuestionId, SelectedOptionId)
 ```
 
 - **enrollment** = البوابة. مفيش جدول اشتراك أو دفع في الشريحة دي.
+- **إسناد المدرّسين = نسبة عرض بس:** الكورس يقدر يتأسند له **أكتر من مدرّس** (`instructors[]`)، والمدرّس يقدر يبقى في أكتر من كورس. الإسناد **ما بيعطيش** المدرّس صلاحية تحرير الدروس أو الكويزات — التأليففضل للأدمن وحده.
+- **النشر ما بيشتارش مدرس:** `isActive: true` لي كورس من غير أي مدرّسين عادي، و`instructors[]` بترجع `[]` ففاضي.
 - **`Course.CoverUrl`** nullable: توكن صورة (`0_….jpg`) أو لينك خارجي أو `/static/…` من الـ seed أو `null`.
 - **درس واحد بيتحكم في القفل:** `lesson.isFreeDemo = true` → مفتوح للضيف؛ أي درس تاني → محتاج enrollment في الـ course بتاعه.
 - **الكويز ما بيقفلش حاجة:** الدرجة بتتحفظ وبس. مفيش "راسب" ومفيش محاولة ثانية ممنوعة.
@@ -88,11 +93,11 @@ Learner ──< QuizAttempt >── Lesson ──< QuizAttemptAnswer (QuestionId
 
 `[AllowAnonymous]` — كروت الشاشة الرئيسية.
 
-Query: `search` (≤100 حرف على العنوان والوصف)، `level`، `pageNumber`، `pageSize`.
+Query: `search` (≤100 حرف على العنوان والوصف)، `level`، `instructorId` (اختياري — يرجّع الكورسات المسنّد لها المدرّس ده)، `pageNumber`، `pageSize`.
 
 `data.items[]`:
 ```json
-{ "id": "guid", "title": "Egyptian Arabic 101", "description": "...", "coverUrl": "/static/courses/egyptian-arabic-101.svg", "level": 0, "order": 1, "lessonCount": 4, "isActive": true }
+{ "id": "guid", "title": "Egyptian Arabic 101", "description": "...", "coverUrl": "/static/courses/egyptian-arabic-101.svg", "level": 0, "order": 1, "lessonCount": 4, "instructors": [ { "id": "guid", "userId": "guid", "fullName": "Maria N.", "specialization": "Egyptian Arabic" } ], "isActive": true }
 ```
 الكورسات غير المنشورة، والكورسات اللي ملهاش دروس منشورة، **ما بيظهروش خالص** هنا.
 
@@ -107,6 +112,7 @@ Query: `search` (≤100 حرف على العنوان والوصف)، `level`، `
   "id": "guid", "title": "...", "description": "...", "coverUrl": "/static/courses/egyptian-arabic-101.svg",
   "level": 0, "order": 1,
   "isEnrolled": false,
+  "instructors": [ { "id": "guid", "userId": "guid", "fullName": "Maria N.", "specialization": "Egyptian Arabic" } ],
   "lessons": [
     { "id": "guid", "title": "Greetings", "order": 1, "isFreeDemo": true, "hasStudyBook": false }
   ]
@@ -153,6 +159,7 @@ Query: `pageNumber`, `pageSize`. الترتيب: الأحدث التحاقًا �
 {
   "courseId": "guid", "title": "...", "description": "...", "coverUrl": "/static/courses/arabic-for-work.svg", "level": 0,
   "lessonCount": 4, "completedLessonCount": 1,
+  "instructors": [ { "id": "guid", "userId": "guid", "fullName": "Maria N.", "specialization": "Egyptian Arabic" } ],
   "lastLessonId": "guid", "lastLessonTitle": "Numbers",
   "lastWatchedSeconds": 120, "lastLessonIsCompleted": false,
   "enrolledAtUtc": "2026-11-05T09:00:00Z"
@@ -303,6 +310,23 @@ POST /courses/admin/quiz-questions
 - حذف سؤال → **200** واختياراته بتتحذف معاه.
 - الحذف كله **ناعم** (soft delete): السجل بيفضل في الجداول والـ progress/attempts القديمة ما بتتمسحش.
 
+### 4.5 إسناد المدرّسين — `application/json`
+
+`PUT /courses/admin/courses/{id}/instructors` — body:
+```json
+{ "instructorIds": ["guid", "guid"] }
+```
+`data` = القائمة الجديدة كاملًا (`InstructorRefDto[]`)، و`message` = `Course instructors updated successfully.`
+
+- **استبدال كامل (replace-set):** أي مدرس مش في البعثة بيتشيل من الكورس. `[]` = شيل كل الإسناد. idempotent — نفس البعثة مرتين تعطى نفس النتيجة.
+- **مفيش دور ولا ترتيب:** الكل سواسية، و`instructors[]` بترجع بترتيب تاريخ الإسناد. مفيش حد أقصى.
+- أخطاء الـ **400**: `Course was not found.` (كورس مش موجود أو محذوف) · `Instructor identifier is required.` (guid فاضي `00000000-…` في البعثة) · `The same instructor cannot be selected more than once.` · `One or more selected instructors are not approved, active instructors.`
+- الرفض بيحصل **قبل** أي حفظ: بعثة فيها مدرّس واحد مرفوض = العملية كلها 400 والموجود ما بيتغيروش.
+- `GET /courses/admin/instructors?search=&pageNumber=&pageSize=` → مصدر الـ picker: المدرّسين **المعتمدين النشطين** بس. `search` بيدور على `fullName` أو `specialization` (≤100 حرف).
+- **شكل `InstructorRefDto`:** `{ "id": "guid", "userId": "guid", "fullName": "…", "specialization": "…" }` — `id` هو آي-دي سجل المدرّس (نفس اللي بيستقبله `instructor-availability` و`sessions`)، و`userId` هو آي-دي اليوزر. **متبدلش بينهم.**
+- الإسناد **مالوش أي أثر** على الـ enrollment أو قفل الدروس — للعرض والفلاتر بس. المدرّس نفسه ما بيستقدرش يحرّر محتوى كورساته عن طريق الـ API ده.
+- الفلاتر الجديدة: `GET /courses/pagginated?instructorId={guid}` و`GET /courses/admin/courses?instructorId={guid}`.
+
 ---
 
 ## 5. ترتيب التكامل المقترح (من prototype SOPHIA)
@@ -313,7 +337,7 @@ POST /courses/admin/quiz-questions
 4. أول درس ديمو في الكورس = `isFreeDemo: true` (الأدمن يعلّمه). الدرس ده وحده اللي الضيف يقدر يحل كويزه.
 5. مشغّل الفيديو → `PUT .../progress` كل ~15 ثانية، و`isCompleted: true` عند النهاية.
 6. الكويز → `POST .../quiz` → شاشة النتيجة (`score`/`totalQuestions`) وبعدها الدرس اللي بعده مباشرة مهما كانت الدرجة.
-7. "Find a live tutor for this course" → شاشة `/instructors` الموجودة؛ **مفيش ربط tutor بالكورس في الـ API** (مفيش field مخترع).
+7. "Find a live tutor for this course" → شاشة `/instructors`؛ كمان تقدر تفلتر مكتبة الكورسات بمدرّس بعينه: `GET /courses/pagginated?instructorId={guid}`. الإسناد نفسه بيتم من الأدمن (قسم 4.5) و**بيدي نسبة عرض بس** — المدرّس ما بيرفعش دروس.
 
 ---
 
@@ -330,6 +354,8 @@ POST /courses/admin/quiz-questions
 - ملفات الميديا بتترفع في `wwwroot/{Videos|Documents}`، والـ deploy بـ FTP **بياكل `wwwroot`** → ممكن تترفع الملفات وتختفي بعد النشر. الحل الدائم CDN/R2 برضه خارج الشريحة.
 - `progress`/`lastAttempt` في الـ content مش موجودة للضيف → ما تعتمدش عليها في حساب شريط تقدم الضيف.
 - التواريخ كلها UTC؛ ما تعملش إعادة تحويل (`Kind=Unspecified`).
+- **`instructors[]` جاية مع الكورسات كلها** (`/courses/pagginated`، `/courses/{id}`، `/courses/my`، وقائمتي الأدمن وتفاصيله) — متجيش من endpoint منفصل، فمتعملش call زيادة لعرض "taught by".
+- **الفهرس Unique على `(CourseId, InstructorId)` بس** — يعني نفس المدرّس مرة واحدة في الكورس، بس يقدر يتأسنَد تاني بعد ما يتشال (الحذف ناعم والفهرس بيستثني المحذوف). لو بعت نفس الـ guid مرتين في نفس الطلب → **400** مش dedupe صامت.
 - `Accept-Language: En` — مفيش نسخة عربية من رسائل Courses لحد دلوقتي.
 
 ---
@@ -339,6 +365,7 @@ POST /courses/admin/quiz-questions
 **الـ migrations (اتطبقت على الداتابيز يوم 2026-11-05):**
 - `20261105090251_AddCoursesTables` — جداول `Courses`, `Lessons`, `QuizQuestions`, `QuizOptions`, `CourseEnrollments`, `LessonProgress`, `QuizAttempts`, `QuizAttemptAnswers`.
 - `20261105100738_AddCourseCoverUrl` — عمود `Courses.CoverUrl` (`nvarchar(500)`, nullable).
+- `20261105114012_AddCourseInstructors` — **مُجهّزة ولسه ما اتطبقتش**: جدول `CourseInstructors` (`Id`, `CourseId`, `InstructorId` + أعمدة الأوديت) مع فهرس unique مشروط `(CourseId, InstructorId) WHERE IsDeleted = 0`. الإضافة additive بالظبط — مفيش أي سجل موجود بيتعدّل. لحد ما تتطبق، كل endpoints الإسناد و`instructors[]` هتفشل (الجدول مش موجود).
 
 **الـ seed:** `LMS.Persistence/Seeding/CoursesSeeder.cs` بيتشغّل من `Program.cs` لما الـ args تشمل `--seed-courses` (وبينده كمان من `BaseSeeder.SeedAllAsync` مع `--seed`)، **واتنفّذ فعليًا** على الداتابيز:
 

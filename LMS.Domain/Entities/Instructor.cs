@@ -26,6 +26,8 @@ namespace LMS.Domain.Entities
 
         public virtual ICollection<Session> Sessions { get; private set; } = new List<Session>();
 
+        public virtual ICollection<CourseInstructor> CourseInstructors { get; private set; } = new List<CourseInstructor>();
+
         public static Instructor Create(
             Guid userId,
             string specialization,

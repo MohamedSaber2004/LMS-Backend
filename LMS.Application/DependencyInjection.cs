@@ -62,6 +62,7 @@ using LMS.Application.Features.Courses.Commands.Admin.AddLesson;
 using LMS.Application.Features.Courses.Commands.Admin.UpdateLesson;
 using LMS.Application.Features.Courses.Commands.Admin.DeleteLesson;
 using LMS.Application.Features.Courses.Commands.Admin.AddQuizQuestion;
+using LMS.Application.Features.Courses.Commands.Admin.AssignCourseInstructors;
 using LMS.Application.Features.Courses.Commands.Admin.UpdateQuizQuestion;
 using LMS.Application.Features.Courses.Commands.Admin.DeleteQuizQuestion;
 using LMS.Application.Features.Courses.Commands.EnrollCourse;
@@ -69,6 +70,7 @@ using LMS.Application.Features.Courses.Commands.UpdateLessonProgress;
 using LMS.Application.Features.Courses.Commands.SubmitQuiz;
 using LMS.Application.Features.Courses.Queries.Admin.GetCoursesPagginated;
 using LMS.Application.Features.Courses.Queries.Admin.GetAdminCourseById;
+using LMS.Application.Features.Courses.Queries.Admin.GetAssignableInstructors;
 using LMS.Application.Features.Courses.Queries.GetActiveCoursesPagginated;
 using LMS.Application.Features.Courses.Queries.GetActiveCourseById;
 using LMS.Application.Features.Courses.Queries.GetLessonContent;
@@ -206,6 +208,8 @@ namespace LMS.Application
             services.AddTransient<IValidator<EnrollCourseCommand>, EnrollCourseCommandValidator>();
             services.AddTransient<IValidator<UpdateLessonProgressCommand>, UpdateLessonProgressCommandValidator>();
             services.AddTransient<IValidator<SubmitQuizCommand>, SubmitQuizCommandValidator>();
+            services.AddTransient<IValidator<AssignCourseInstructorsCommand>, AssignCourseInstructorsCommandValidator>();
+            services.AddTransient<IValidator<GetAssignableInstructorsQuery>, GetAssignableInstructorsQueryValidator>();
 
             return services;
         }
