@@ -6956,6 +6956,11 @@
                   "description": ""
                 },
                 {
+                  "key": "InstructorId",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                },
+                {
                   "key": "PageNumber",
                   "value": "0",
                   "description": ""
@@ -7003,6 +7008,11 @@
                     {
                       "key": "Level",
                       "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
                       "description": ""
                     },
                     {
@@ -7066,6 +7076,11 @@
                       "description": ""
                     },
                     {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
                       "key": "PageNumber",
                       "value": "0",
                       "description": ""
@@ -7126,6 +7141,11 @@
                       "description": ""
                     },
                     {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
                       "key": "PageNumber",
                       "value": "0",
                       "description": ""
@@ -7183,6 +7203,11 @@
                     {
                       "key": "Level",
                       "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
                       "description": ""
                     },
                     {
@@ -9333,6 +9358,11 @@
                   "description": ""
                 },
                 {
+                  "key": "InstructorId",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                },
+                {
                   "key": "PageNumber",
                   "value": "0",
                   "description": ""
@@ -9386,6 +9416,11 @@
                     {
                       "key": "IsActive",
                       "value": "false",
+                      "description": ""
+                    },
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
                       "description": ""
                     },
                     {
@@ -9455,6 +9490,11 @@
                       "description": ""
                     },
                     {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
                       "key": "PageNumber",
                       "value": "0",
                       "description": ""
@@ -9518,6 +9558,11 @@
                     {
                       "key": "IsActive",
                       "value": "false",
+                      "description": ""
+                    },
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
                       "description": ""
                     },
                     {
@@ -9587,6 +9632,11 @@
                       "description": ""
                     },
                     {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    },
+                    {
                       "key": "PageNumber",
                       "value": "0",
                       "description": ""
@@ -9650,6 +9700,11 @@
                     {
                       "key": "IsActive",
                       "value": "false",
+                      "description": ""
+                    },
+                    {
+                      "key": "InstructorId",
+                      "value": "00000000-0000-0000-0000-000000000000",
                       "description": ""
                     },
                     {
@@ -14325,6 +14380,753 @@
                   ]
                 },
                 "description": "DELETE /api/v1/courses/admin/quiz-questions/{id}",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "admin",
+                "courses",
+                "{{id}}",
+                "instructors"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "courses",
+                    "{{id}}",
+                    "instructors"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "courses",
+                    "{{id}}",
+                    "instructors"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "courses",
+                    "{{id}}",
+                    "instructors"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "courses",
+                    "{{id}}",
+                    "instructors"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "courses",
+                    "{{id}}",
+                    "instructors"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/courses/{{id}}/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "courses",
+                    "{{id}}",
+                    "instructors"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "PUT /api/v1/courses/admin/courses/{id}/instructors",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"instructorIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/v1/courses/admin/instructors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/courses/admin/instructors",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "courses",
+                "admin",
+                "instructors"
+              ],
+              "query": [
+                {
+                  "key": "Search",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "PageNumber",
+                  "value": "0",
+                  "description": ""
+                },
+                {
+                  "key": "PageSize",
+                  "value": "0",
+                  "description": ""
+                }
+              ],
+              "variable": []
+            },
+            "description": "GET /api/v1/courses/admin/instructors",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "instructors"
+                  ],
+                  "query": [
+                    {
+                      "key": "Search",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/courses/admin/instructors",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "instructors"
+                  ],
+                  "query": [
+                    {
+                      "key": "Search",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/courses/admin/instructors",
+                "body": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "instructors"
+                  ],
+                  "query": [
+                    {
+                      "key": "Search",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/courses/admin/instructors",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "instructors"
+                  ],
+                  "query": [
+                    {
+                      "key": "Search",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/courses/admin/instructors",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/courses/admin/instructors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "admin",
+                    "instructors"
+                  ],
+                  "query": [
+                    {
+                      "key": "Search",
+                      "value": "string",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "description": ""
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "description": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "description": "GET /api/v1/courses/admin/instructors",
                 "body": null
               },
               "status": "Server error",
