@@ -1,5 +1,6 @@
 using LMS.Application.Common.Models;
 using LMS.Application.Features.InstructorProfile.DTOs;
+using LMS.Domain.Enums;
 using MediatR;
 
 namespace LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorProfile
@@ -7,6 +8,14 @@ namespace LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorPr
     public class UpdateInstructorProfileCommand : IRequest<Result<InstructorProfileDto>>
     {
         public UpdateInstructorProfileCommand() { }
+
+        public string? FullName { get; set; }
+
+        public Guid? CountryId { get; set; }
+
+        public Language? Language { get; set; }
+
+        public string? ProfilePictureUrl { get; set; }
 
         public string Specialization { get; set; } = string.Empty;
 

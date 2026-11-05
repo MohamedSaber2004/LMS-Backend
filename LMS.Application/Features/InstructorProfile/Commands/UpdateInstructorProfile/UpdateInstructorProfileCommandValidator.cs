@@ -18,6 +18,8 @@ namespace LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorPr
         private const int MinYearsOfExperience = 0;
         private const int MaxYearsOfExperience = 60;
         private const decimal MaxHourlyRate = 10000m;
+        private const int FullNameMaxLength = 200;
+        private const int ProfilePictureUrlMaxLength = 500;
 
         public UpdateInstructorProfileCommandValidator(
             ILmsDbContext context,
@@ -68,6 +70,44 @@ namespace LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorPr
                 .WithMessage(localizer[
                     LocalizationKeys.Authentication.HourlyRateTooLarge,
                     MaxHourlyRate].Value);
+
+            RuleFor(x => x.FullName)
+                .Must(name => !string.IsNullOrWhiteSpace(name))
+                .WithMessage(localizer[LocalizationKeys.Authentication.FullNameRequired].Value)
+                .MaximumLength(FullNameMaxLength)
+                .WithMessage(localizer[
+                    LocalizationKeys.Authentication.FullNameTooLong,
+                    FullNameMaxLength].Value)
+                .When(x => x.FullName is not null);
+
+            RuleFor(x => x.Language)
+                .Must(language => !language.HasValue || Enum.IsDefined(typeof(Language), language.Value))
+                .WithMessage(localizer[LocalizationKeys.Authentication.InvalidLanguage].Value);
+
+            RuleFor(x => x.ProfilePictureUrl)
+                .MaximumLength(ProfilePictureUrlMaxLength)
+                .WithMessage(localizer[
+                    LocalizationKeys.Authentication.ProfilePictureUrlTooLong,
+                    ProfilePictureUrlMaxLength].Value)
+                .When(x => !string.IsNullOrWhiteSpace(x.ProfilePictureUrl));
+
+            RuleFor(x => x.CountryId)
+                .CustomAsync(async (countryId, validationContext, cancellationToken) =>
+                {
+                    if (countryId is null)
+                    {
+                        return;
+                    }
+
+                    var exists = await context.Countries
+                        .AnyAsync(country => country.Id == countryId.Value, cancellationToken);
+
+                    if (!exists)
+                    {
+                        validationContext.AddFailure(
+                            localizer[LocalizationKeys.Authentication.CountryNotFound].Value);
+                    }
+                });
 
             RuleFor(x => x.LinkedInUrl)
                 .MaximumLength(LinkedInUrlMaxLength)

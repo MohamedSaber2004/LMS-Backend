@@ -775,7 +775,7 @@ function canAct(session, role) {
 | 6 | 45 دولة لسه `timezoneId = null` (الدول متعددة المناطق: `+1`, `+7`, `+52`, `+55`, `+61`, `+62`...) | مدرّبين من دول هيرفضوا بـ `TimezoneUnresolved` — عرض رسالة واضحة مش خطأ تقني |
 | 7 | `title` بترجع `null` دايمًا | متعرضش الحقل |
 | 8 | المنصة إنجليزي فقط حاليًا | كل الرسائل راجعة إنجليزي من السيرفر؛ متترجمهاش انت، بس متكتبهاش hardcoded كمان — خدّها من `message` |
-| 9 | وضع الإجازة **مش** في instructor profile | اقرأه من `GET /my` أو calendar، متدوّرش عليه في `/instructor-profile` |
+| 9 | `vacationMode` بقى جوه رد `GET/PUT /instructor-profile` (للقراءة بس) | التعديل لسه من `PUT /my/vacation-mode` — متبعتش `vacationMode` في body بتاع `/instructor-profile` |
 | 10 | `Completed` و`NoShow` بيحددهم الـ jobs مش الـ API | متعملش زرار "علّم كمكتملة" — مفيش endpoint ليه |
 
 ---

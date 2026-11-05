@@ -67,22 +67,9 @@ namespace LMS.Application.Features.Authentication.Commands.UpdateUserInformation
             }
 
             var roles = await _userManager.GetRolesAsync(user);
-            var country = user.CountryId.HasValue
-                ? await _context.Countries.FirstOrDefaultAsync(c => c.Id == user.CountryId.Value, cancellationToken)
-                : null;
 
-            var countryName = country?.CountryEnName;
-
-            var profile = new UserProfileDto(
-                user.Id,
-                user.Email ?? string.Empty,
-                user.FullName,
-                user.ProfilePictureUrl,
-                user.CountryId,
-                countryName,
-                user.Language,
-                roles,
-                user.CreatedAt);
+            var profile = await UserProfileMapper.ToDtoAsync(
+                _context, user, roles, cancellationToken);
 
             return Result<UserProfileDto>.Success(
                 profile,

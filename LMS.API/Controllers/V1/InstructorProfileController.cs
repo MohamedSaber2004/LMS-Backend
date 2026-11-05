@@ -18,7 +18,7 @@ namespace LMS.API.Controllers.V1
     public class InstructorProfileController : BaseController
     {
         /// <summary>
-        /// Read the calling instructor's own profile, including the live hourly rate.
+        /// Read the calling instructor's own profile: instructor fields plus the base identity profile.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -34,7 +34,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Update the instructor-managed profile fields and the live 1-to-1 rate.
+        /// Update the instructor-managed profile fields, optionally together with the base identity fields.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>

@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using LMS.API.Filters;
 using LMS.API.Routes.V1;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Authentication.Commands.ChangetPassword;
@@ -218,7 +219,7 @@ namespace LMS.API.Controllers.V1
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [Authorize]
+        [RoleAuthorize]
         [HttpGet]
         [Route(ApiRoutes.Authentication.GetUserProfile)]
         [ProducesResponseType(typeof(ApiResponse<UserProfileDto>), StatusCodes.Status200OK)]

@@ -29,7 +29,10 @@ namespace LMS.Application.Features.InstructorProfile
                 instructor.User.IsActive,
                 certificates,
                 instructor.CreatedAt,
-                instructor.UpdatedAt);
+                instructor.UpdatedAt)
+            {
+                VacationMode = instructor.VacationMode
+            };
         }
     }
 }

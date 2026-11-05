@@ -39,6 +39,8 @@ namespace LMS.Application.Features.InstructorProfile.DTOs
 
         public Guid InstructorId { get; set; }
         public Guid UserId { get; set; }
+        public UserProfileDto Profile { get; set; } = new();
+        public bool VacationMode { get; set; }
         public string Specialization { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
         public int YearsOfExperience { get; set; }
