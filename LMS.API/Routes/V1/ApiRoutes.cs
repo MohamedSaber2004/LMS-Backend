@@ -114,6 +114,26 @@ namespace LMS.API.Routes.V1
             public const string AdminArticleById = "admin/articles/{id:guid}";
         }
 
+        public static class Courses
+        {
+            public const string Base = BaseRoutes.Base + "/courses";
+
+            public const string Pagginated = "pagginated";
+            public const string CourseById = "{id:guid}";
+            public const string Enroll = "{id:guid}/enroll";
+            public const string MyCourses = "my";
+            public const string LessonContent = "lessons/{id:guid}/content";
+            public const string LessonProgress = "lessons/{id:guid}/progress";
+            public const string LessonQuiz = "lessons/{id:guid}/quiz";
+
+            public const string AdminCourses = "admin/courses";
+            public const string AdminCourseById = "admin/courses/{id:guid}";
+            public const string AdminLessons = "admin/lessons";
+            public const string AdminLessonById = "admin/lessons/{id:guid}";
+            public const string AdminQuizQuestions = "admin/quiz-questions";
+            public const string AdminQuizQuestionById = "admin/quiz-questions/{id:guid}";
+        }
+
         public static class Countries
         {            public const string Base = BaseRoutes.Base + "/countries";
             public const string GetAllPagginated = "pagginated";

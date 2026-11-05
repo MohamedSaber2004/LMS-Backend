@@ -7,10 +7,6 @@ namespace LMS.Application.Features.Sessions
 {
     internal static class SessionsValidation
     {
-        /// <summary>
-        /// Everything that can stop a learner from taking a dated availability window, checked in the
-        /// order a learner would want to be told about it.
-        /// </summary>
         public static async Task<BookingBlocker> FindBookingBlockerAsync(
             ILmsDbContext context,
             Guid instructorId,
@@ -70,10 +66,6 @@ namespace LMS.Application.Features.Sessions
             return BookingBlocker.None;
         }
 
-        /// <summary>
-        /// Only an approved, active instructor who is not on vacation can receive a new booking.
-        /// Confirmed sessions of a vacationing instructor are untouched.
-        /// </summary>
         public static async Task<bool> InstructorIsBookableAsync(
             ILmsDbContext context,
             Guid instructorId,
@@ -89,10 +81,6 @@ namespace LMS.Application.Features.Sessions
                     cancellationToken);
         }
 
-        /// <summary>
-        /// A session the instructor still has to teach overlaps the window. Pending counts too: the time
-        /// is held from the moment the learner books, not from the moment the instructor confirms.
-        /// </summary>
         public static Task<bool> HasInstructorOverlapAsync(
             ILmsDbContext context,
             Guid instructorId,
@@ -113,7 +101,6 @@ namespace LMS.Application.Features.Sessions
                 cancellationToken);
         }
 
-        /// <summary>Same check from the learner's side, across every instructor they booked with.</summary>
         public static Task<bool> HasLearnerOverlapAsync(
             ILmsDbContext context,
             Guid learnerId,
@@ -135,17 +122,10 @@ namespace LMS.Application.Features.Sessions
                 cancellationToken);
         }
 
-        /// <summary>
-        /// A session both sides can still act on: not finished, not already called off.
-        /// </summary>
         public static bool IsLiveSession(Session? session) => session is not null
             && (session.Status == SessionStatus.Pending || session.Status == SessionStatus.Confirmed)
             && session.EndsAtUtc > DateTime.UtcNow;
 
-        /// <summary>
-        /// A proposed window must still sit inside one of the instructor's open dated rows, otherwise the
-        /// session drifts off the schedule the instructor published.
-        /// </summary>
         public static Task<bool> WindowIsInsideAvailabilityAsync(
             ILmsDbContext context,
             Guid instructorId,
@@ -161,10 +141,6 @@ namespace LMS.Application.Features.Sessions
                 cancellationToken);
         }
 
-        /// <summary>
-        /// Re-checked when a reschedule is approved, not when it was asked for: the calendars of both
-        /// sides may have filled up in the meantime.
-        /// </summary>
         public static async Task<bool> NewWindowIsFreeAsync(
             ILmsDbContext context,
             Guid sessionId,
@@ -202,10 +178,6 @@ namespace LMS.Application.Features.Sessions
             return true;
         }
 
-        /// <summary>
-        /// The lock is measured against the start, so time still left before it must cover the actor's
-        /// whole window. Once it does not, that side has lost the right to move or cancel the session.
-        /// </summary>
         public static bool IsOutsideLock(DateTime startsAtUtc, int lockHours)
             => startsAtUtc - DateTime.UtcNow >= TimeSpan.FromHours(lockHours);
 

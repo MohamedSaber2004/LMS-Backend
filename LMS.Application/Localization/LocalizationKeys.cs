@@ -306,6 +306,63 @@ namespace LMS.Application.Localization
             public const string ArticleRetrieved = "HelpCenter.ArticleRetrieved";
         }
 
+        public static class Courses
+        {
+            public const string TitleRequired = "Courses.TitleRequired";
+            public const string TitleTooLong = "Courses.TitleTooLong";
+            public const string OrderMustBeNonNegative = "Courses.OrderMustBeNonNegative";
+            public const string PageNumberInvalid = "Courses.PageNumberInvalid";
+            public const string PageSizeInvalid = "Courses.PageSizeInvalid";
+            public const string SearchTooLong = "Courses.SearchTooLong";
+            public const string CourseIdRequired = "Courses.CourseIdRequired";
+            public const string CourseNotFound = "Courses.CourseNotFound";
+            public const string DescriptionRequired = "Courses.DescriptionRequired";
+            public const string DescriptionTooLong = "Courses.DescriptionTooLong";
+            public const string LevelInvalid = "Courses.LevelInvalid";
+            public const string CourseHasLessons = "Courses.CourseHasLessons";
+            public const string CourseCreatedSuccess = "Courses.CourseCreatedSuccess";
+            public const string CourseUpdatedSuccess = "Courses.CourseUpdatedSuccess";
+            public const string CourseDeletedSuccess = "Courses.CourseDeletedSuccess";
+            public const string CoursesRetrieved = "Courses.CoursesRetrieved";
+            public const string CourseRetrieved = "Courses.CourseRetrieved";
+            public const string LessonIdRequired = "Courses.LessonIdRequired";
+            public const string LessonNotFound = "Courses.LessonNotFound";
+            public const string VideoSourceRequired = "Courses.VideoSourceRequired";
+            public const string UrlTooLong = "Courses.UrlTooLong";
+            public const string FileTooLarge = "Courses.FileTooLarge";
+            public const string InvalidVideoFile = "Courses.InvalidVideoFile";
+            public const string InvalidStudyBookFile = "Courses.InvalidStudyBookFile";
+            public const string InvalidCoverFile = "Courses.InvalidCoverFile";
+            public const string LessonHasQuizQuestions = "Courses.LessonHasQuizQuestions";
+            public const string LessonLocked = "Courses.LessonLocked";
+            public const string LessonCreatedSuccess = "Courses.LessonCreatedSuccess";
+            public const string LessonUpdatedSuccess = "Courses.LessonUpdatedSuccess";
+            public const string LessonDeletedSuccess = "Courses.LessonDeletedSuccess";
+            public const string LessonRetrieved = "Courses.LessonRetrieved";
+            public const string QuestionIdRequired = "Courses.QuestionIdRequired";
+            public const string QuestionNotFound = "Courses.QuestionNotFound";
+            public const string QuestionTextRequired = "Courses.QuestionTextRequired";
+            public const string QuestionTooLong = "Courses.QuestionTooLong";
+            public const string OptionsRequired = "Courses.OptionsRequired";
+            public const string OptionsCountInvalid = "Courses.OptionsCountInvalid";
+            public const string OptionTextRequired = "Courses.OptionTextRequired";
+            public const string OptionTextTooLong = "Courses.OptionTextTooLong";
+            public const string ExactlyOneCorrectOptionRequired = "Courses.ExactlyOneCorrectOptionRequired";
+            public const string QuestionCreatedSuccess = "Courses.QuestionCreatedSuccess";
+            public const string QuestionUpdatedSuccess = "Courses.QuestionUpdatedSuccess";
+            public const string QuestionDeletedSuccess = "Courses.QuestionDeletedSuccess";
+            public const string AlreadyEnrolled = "Courses.AlreadyEnrolled";
+            public const string EnrolledSuccess = "Courses.EnrolledSuccess";
+            public const string MyCoursesRetrieved = "Courses.MyCoursesRetrieved";
+            public const string WatchSecondsMustBeNonNegative = "Courses.WatchSecondsMustBeNonNegative";
+            public const string ProgressUpdatedSuccess = "Courses.ProgressUpdatedSuccess";
+            public const string AnswersRequired = "Courses.AnswersRequired";
+            public const string AnswerQuestionInvalid = "Courses.AnswerQuestionInvalid";
+            public const string AnswerOptionInvalid = "Courses.AnswerOptionInvalid";
+            public const string DuplicateAnswerNotAllowed = "Courses.DuplicateAnswerNotAllowed";
+            public const string QuizSubmittedSuccess = "Courses.QuizSubmittedSuccess";
+        }
+
         public static class Countries
         {            public const string CountryEnNameRequired = "Countries.CountryEnNameRequired";
             public const string CountryEnNameTooLong = "Countries.CountryEnNameTooLong";

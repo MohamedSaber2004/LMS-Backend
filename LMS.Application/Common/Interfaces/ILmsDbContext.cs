@@ -23,6 +23,14 @@ namespace LMS.Application.Common.Interfaces
         DbSet<OnboardingAnswer> OnboardingAnswers { get; }
         DbSet<HelpCategory> HelpCategories { get; }
         DbSet<HelpArticle> HelpArticles { get; }
+        DbSet<Course> Courses { get; }
+        DbSet<Lesson> Lessons { get; }
+        DbSet<QuizQuestion> QuizQuestions { get; }
+        DbSet<QuizOption> QuizOptions { get; }
+        DbSet<CourseEnrollment> CourseEnrollments { get; }
+        DbSet<LessonProgress> LessonProgress { get; }
+        DbSet<QuizAttempt> QuizAttempts { get; }
+        DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; }
         DbSet<IdentityRole<Guid>> Roles { get; }
         DbSet<IdentityUserRole<Guid>> UserRoles { get; }
 

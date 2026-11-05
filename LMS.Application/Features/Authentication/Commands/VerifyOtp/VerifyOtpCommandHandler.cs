@@ -48,7 +48,6 @@ namespace LMS.Application.Features.Authentication.Commands.VerifyOtp
             }
 
             var wasEmailUnverified = !user.EmailConfirmed;
-            user.ClearVerificationCode();
             user.EmailConfirmed = true;
 
             var hasPendingInstructorApplication = wasEmailUnverified

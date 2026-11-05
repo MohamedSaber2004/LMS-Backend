@@ -564,6 +564,22 @@ namespace LMS.API
                 }
             }
 
+            if (args.Contains("--seed-courses"))
+            {
+                using var scope = app.Services.CreateScope();
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                    var report = await CoursesSeeder.SeedAsync(dbContext, CancellationToken.None);
+
+                    Log.Information("Courses seeding finished: {Report}", report);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while seeding courses.");
+                }
+            }
+
             if (args.Contains("--seed-sessions"))
             {
                 using var scope = app.Services.CreateScope();

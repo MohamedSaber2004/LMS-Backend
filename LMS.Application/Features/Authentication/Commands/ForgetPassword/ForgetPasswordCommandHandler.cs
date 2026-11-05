@@ -16,20 +16,17 @@ namespace LMS.Application.Features.Authentication.Commands.ForgetPassword
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailService _emailService;
-        private readonly IOtpRateLimiter _otpRateLimiter;
         private readonly EmailSettings _emailSettings;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public ForgetPasswordCommandHandler(
             UserManager<ApplicationUser> userManager,
             IEmailService emailService,
-            IOtpRateLimiter otpRateLimiter,
             IOptions<EmailSettings> emailOptions,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _emailService = emailService;
-            _otpRateLimiter = otpRateLimiter;
             _emailSettings = emailOptions?.Value ?? new EmailSettings();
             _localizer = localizer;
         }
@@ -52,8 +49,6 @@ namespace LMS.Application.Features.Authentication.Commands.ForgetPassword
                     StatusCodes.Status500InternalServerError,
                     errors);
             }
-
-            _otpRateLimiter.CheckAndRecord(user.Email!, TimeSpan.FromSeconds(30));
 
             var subject = _localizer[LocalizationKeys.Authentication.PasswordResetEmailSubject].Value;
             var message = _localizer[LocalizationKeys.Authentication.PasswordResetEmailBody].Value;

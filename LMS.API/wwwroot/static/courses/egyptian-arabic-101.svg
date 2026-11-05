@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Egyptian Arabic 101: First Conversations">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f5f5c"/>
+      <stop offset="1" stop-color="#0a3d44"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <g opacity="0.18" fill="#f6d76b">
+    <circle cx="660" cy="90" r="120"/>
+    <circle cx="720" cy="330" r="70"/>
+  </g>
+  <g fill="none" stroke="#f6d76b" stroke-width="4" opacity="0.55">
+    <path d="M60 350 h190 a24 24 0 0 0 24 -24 v-70 a24 24 0 0 0 -24 -24 h-190 z"/>
+    <path d="M300 330 h170 a24 24 0 0 1 24 -24 v-40"/>
+  </g>
+  <text x="60" y="120" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#ffffff">Egyptian Arabic 101</text>
+  <text x="60" y="172" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#f6d76b">First Conversations</text>
+  <text x="60" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#cfe9e5">Greetings, numbers, food, directions</text>
+  <g>
+    <rect x="60" y="380" width="118" height="34" rx="17" fill="#f6d76b"/>
+    <text x="119" y="403" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#0a3d44">BEGINNER</text>
+    <text x="200" y="403" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#9fd0cb">4 lessons</text>
+  </g>
+</svg>

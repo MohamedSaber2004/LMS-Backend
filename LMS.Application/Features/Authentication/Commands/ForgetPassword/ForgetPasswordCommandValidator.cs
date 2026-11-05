@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
+using LMS.Application.Common.Exceptions;
+using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
 using LMS.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +12,11 @@ namespace LMS.Application.Features.Authentication.Commands.ForgetPassword
     public class ForgetPasswordCommandValidator : AbstractValidator<ForgetPasswordCommand>
     {
         private static readonly EmailAddressAttribute EmailValidator = new();
+        private static readonly TimeSpan CodeRequestCooldown = TimeSpan.FromSeconds(30);
 
         public ForgetPasswordCommandValidator(
             UserManager<ApplicationUser> userManager,
+            IOtpRateLimiter otpRateLimiter,
             IStringLocalizer<Messages> localizer)
         {
             RuleFor(x => x.Email)
@@ -26,6 +30,15 @@ namespace LMS.Application.Features.Authentication.Commands.ForgetPassword
                 {
                     if (string.IsNullOrWhiteSpace(command.Email) || !EmailValidator.IsValid(command.Email))
                         return;
+
+                    var (isAllowed, remainingSeconds) = otpRateLimiter.CheckAndRecord(
+                        command.Email.Trim().ToLowerInvariant(),
+                        CodeRequestCooldown);
+
+                    if (!isAllowed)
+                    {
+                        throw new TooManyRequestsException(LocalizationKeys.Authentication.OtpRateLimited, remainingSeconds);
+                    }
 
                     var user = await userManager.FindByEmailAsync(command.Email.Trim());
                     if (user == null || user.IsDeleted || !user.IsActive)

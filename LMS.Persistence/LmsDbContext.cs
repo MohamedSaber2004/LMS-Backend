@@ -31,6 +31,14 @@ namespace LMS.Persistence
         public DbSet<OnboardingAnswer> OnboardingAnswers { get; set; }
         public DbSet<HelpCategory> HelpCategories { get; set; }
         public DbSet<HelpArticle> HelpArticles { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<QuizQuestion> QuizQuestions { get; set; }
+        public DbSet<QuizOption> QuizOptions { get; set; }
+        public DbSet<CourseEnrollment> CourseEnrollments { get; set; }
+        public DbSet<LessonProgress> LessonProgress { get; set; }
+        public DbSet<QuizAttempt> QuizAttempts { get; set; }
+        public DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; set; }
 
         public LmsDbContext(
             ICurrentUserService currentUserService,
