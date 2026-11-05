@@ -17344,6 +17344,7 @@
         "required": [
           "instructorId",
           "userId",
+          "vacationMode",
           "specialization",
           "bio",
           "yearsOfExperience",
@@ -17362,6 +17363,12 @@
           "userId": {
             "type": "string",
             "format": "uuid"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/UserProfileDto"
+          },
+          "vacationMode": {
+            "type": "boolean"
           },
           "specialization": {
             "type": "string"
@@ -19684,6 +19691,22 @@
         ],
         "type": "object",
         "properties": {
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language"
+          },
+          "profilePictureUrl": {
+            "type": "string",
+            "nullable": true
+          },
           "specialization": {
             "type": "string"
           },

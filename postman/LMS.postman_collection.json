@@ -21532,7 +21532,7 @@
             "description": "PUT /api/v1/instructor-profile",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+              "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -21573,7 +21573,7 @@
                 "description": "PUT /api/v1/instructor-profile",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -21624,7 +21624,7 @@
                 "description": "PUT /api/v1/instructor-profile",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -21675,7 +21675,7 @@
                 "description": "PUT /api/v1/instructor-profile",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -21726,7 +21726,7 @@
                 "description": "PUT /api/v1/instructor-profile",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -21777,7 +21777,7 @@
                 "description": "PUT /api/v1/instructor-profile",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -21828,7 +21828,7 @@
                 "description": "PUT /api/v1/instructor-profile",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
+                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
