@@ -60,10 +60,7 @@ namespace LMS.API.Hangfire
                 return;
             }
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseHangfireDashboard("/hangfire");
-            }
+            app.UseHangfireDashboard("/hangfire");
 
             var utc = TimeZoneInfo.Utc;
             var options = new RecurringJobOptions { TimeZone = utc };
