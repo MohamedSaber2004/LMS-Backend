@@ -14,6 +14,7 @@ namespace LMS.API.Hangfire
         {
             if (!configuration.GetValue<bool>(EnabledKey))
             {
+                services.AddScoped<LMS.Application.Common.Interfaces.IVacationJobScheduler, NoOpVacationJobScheduler>();
                 return services;
             }
 
@@ -28,6 +29,7 @@ namespace LMS.API.Hangfire
                 Log.Warning(
                     "{ConfigKey} is true but no connection string is configured; scheduling jobs are disabled.",
                     EnabledKey);
+                services.AddScoped<LMS.Application.Common.Interfaces.IVacationJobScheduler, NoOpVacationJobScheduler>();
                 return services;
             }
 
@@ -49,6 +51,7 @@ namespace LMS.API.Hangfire
             });
 
             services.AddTransient<SchedulingJobs>();
+            services.AddScoped<LMS.Application.Common.Interfaces.IVacationJobScheduler, HangfireVacationJobScheduler>();
 
             return services;
         }

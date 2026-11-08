@@ -94,7 +94,7 @@ flowchart TD
 | `GET` | `/api/v1/teacher/reschedule-requests?status=pending` | تم التنفيذ | قائمة الطلبات المعلقة بانتظار رد الطالب |
 | `POST` | `/api/v1/teacher/reschedule-requests/{id}/withdraw` | تم التنفيذ | سحب المدرس لطلبه قبل موافقة الطالب |
 | `GET` | `/api/v1/teacher/sessions/{id}/participants` | تم التنفيذ | جلب قائمة الطلاب المشاركين في الحصة (فردية أو جماعية) |
-| `POST` | `/api/v1/teacher/availability/vacation/check-conflicts` | تم التنفيذ | التحقق من وجود حصص متعارضة قبل اعتماد الإجازة |
+| `PUT` | `/api/v1/teacher/availability/vacation-mode` | تم التنفيذ | تفعيل/تعطيل وضع الإجازة مع إرجاع فلاج التعارضات وإطلاق Hangfire Job في الخلفية |
 
 ---
 

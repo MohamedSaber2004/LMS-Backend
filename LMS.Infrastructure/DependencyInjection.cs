@@ -50,6 +50,7 @@ namespace LMS.Infrastructure
 
             services.AddScoped<IAvailabilityMaterializationService, AvailabilityMaterializationService>();
             services.AddScoped<ISessionLifecycleService, SessionLifecycleService>();
+            services.AddScoped<IVacationBackgroundService, VacationBackgroundService>();
             services.AddScoped<IAgoraTokenService, AgoraTokenService>();
 
             var identitySettings = configuration.GetSection("IdentityOptions").Get<LMS.Application.Common.Options.IdentityOptions>()

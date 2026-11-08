@@ -123,7 +123,7 @@ namespace LMS.API.Routes.V1
             public static class Availability
             {
                 public const string Base = Teacher.Base + "/availability";
-                public const string CheckVacationConflicts = "vacation/check-conflicts";
+                public const string VacationMode = "vacation-mode";
             }
         }
 
