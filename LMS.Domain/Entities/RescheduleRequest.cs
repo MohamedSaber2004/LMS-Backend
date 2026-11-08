@@ -53,6 +53,13 @@ namespace LMS.Domain.Entities
             RespondedAt = AppNow;
         }
 
+        public void Withdraw(Guid actorUserId)
+        {
+            Status = RescheduleRequestStatus.Withdrawn;
+            RespondedByUserId = actorUserId;
+            RespondedAt = AppNow;
+        }
+
         public bool IsRequestedByInstructor()
         {
             return RequestedByType == UserType.Instructor;
