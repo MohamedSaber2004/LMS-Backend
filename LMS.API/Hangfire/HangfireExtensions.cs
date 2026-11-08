@@ -38,7 +38,7 @@ namespace LMS.API.Hangfire
                 .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
                 {
                     SchemaName = "HangFire",
-                    PrepareSchemaIfNecessary = false,
+                    PrepareSchemaIfNecessary = true,
                     CommandBatchMaxTimeout = TimeSpan.FromMinutes(5)
                 }));
 
@@ -58,6 +58,11 @@ namespace LMS.API.Hangfire
             if (!app.Configuration.GetValue<bool>(EnabledKey))
             {
                 return;
+            }
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseHangfireDashboard("/hangfire");
             }
 
             var utc = TimeZoneInfo.Utc;

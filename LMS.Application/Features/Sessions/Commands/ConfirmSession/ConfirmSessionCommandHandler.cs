@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using FluentValidation.Results;
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Application.Localization;
+using LMS.Domain.Entities;
 using LMS.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -17,21 +20,32 @@ namespace LMS.Application.Features.Sessions.Commands.ConfirmSession
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly IStringLocalizer<Messages> _localizer;
+        private readonly IAgoraTokenService _agoraTokenService;
 
         public ConfirmSessionCommandHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
-            IStringLocalizer<Messages> localizer)
+            IStringLocalizer<Messages> localizer,
+            IAgoraTokenService agoraTokenService)
         {
             _context = context;
             _currentUserService = currentUserService;
             _localizer = localizer;
+            _agoraTokenService = agoraTokenService;
         }
 
         public async Task<Result<SessionDto>> Handle(
             ConfirmSessionCommand request,
             CancellationToken cancellationToken)
         {
+            if (!_agoraTokenService.IsConfigured)
+            {
+                throw new ValidationException(new List<ValidationFailure>
+                {
+                    new("Agora", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
+                });
+            }
+
             var session = await _context.Sessions
                 .Include(item => item.Instructor)
                     .ThenInclude(instructor => instructor.User)
@@ -49,6 +63,14 @@ namespace LMS.Application.Features.Sessions.Commands.ConfirmSession
                          .Where(booking => booking.Status == BookingStatus.Pending))
             {
                 booking.Confirm();
+            }
+
+            var existingRoom = await _context.LiveRooms
+                .FirstOrDefaultAsync(r => r.SessionId == session.Id, cancellationToken);
+            if (existingRoom == null)
+            {
+                var room = LiveRoom.Create(session.Id, session.Instructor.UserId);
+                await _context.LiveRooms.AddAsync(room, cancellationToken);
             }
 
             await _context.SaveChangesAsync(cancellationToken);

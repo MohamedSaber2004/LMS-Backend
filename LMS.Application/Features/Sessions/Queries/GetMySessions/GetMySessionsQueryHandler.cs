@@ -41,6 +41,7 @@ namespace LMS.Application.Features.Sessions.Queries.GetMySessions
                     .AsNoTracking()
                     .Include(session => session.Instructor)
                         .ThenInclude(instructor => instructor.User)
+                    .Include(session => session.LiveRoom)
                     .Where(session => session.InstructorId == instructorId),
                 request.Tab);
 

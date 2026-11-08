@@ -27,7 +27,6 @@ namespace LMS.Application.Features.HelpCenter.Queries.GetActiveHelpArticleById
             GetActiveHelpArticleByIdQuery request,
             CancellationToken cancellationToken)
         {
-            // Unpublished rows answer 404 rather than 403 so hidden content cannot be enumerated.
             var article = await _context.HelpArticles
                 .AsNoTracking()
                 .Include(item => item.Category)

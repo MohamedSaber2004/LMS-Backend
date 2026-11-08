@@ -6,13 +6,14 @@ using LMS.Application.Features.Attachment.Commands.DownloadAttachment;
 using LMS.Application.Features.Attachment.Commands.UpdateAttachment;
 using LMS.Application.Features.Attachment.Commands.UploadAttachment;
 using LMS.Application.Features.Attachment.Commands.UploadMultipleAttachments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Attachments.Base)]
-    //[RoleAuthorize]
+    [Authorize]
     public class AttachmentsController : BaseController
     {
         /// <summary>

@@ -1023,6 +1023,146 @@ namespace LMS.Persistence.Migrations
                     b.ToTable("LessonProgress", (string)null);
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.LiveRoom", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ChannelName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("HostUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("StartedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelName");
+
+                    b.HasIndex("HostUserId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("SessionId")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("LiveRooms", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.LiveRoomParticipant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("AgoraUid")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("JoinedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LeftAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("RoomId", "UserId");
+
+                    b.ToTable("LiveRoomParticipants", (string)null);
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.OnboardingAnswer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2032,6 +2172,44 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Lesson");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.LiveRoom", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.ApplicationUser", "HostUser")
+                        .WithMany()
+                        .HasForeignKey("HostUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.Session", "Session")
+                        .WithOne("LiveRoom")
+                        .HasForeignKey("LMS.Domain.Entities.LiveRoom", "SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HostUser");
+
+                    b.Navigation("Session");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.LiveRoomParticipant", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.LiveRoom", "Room")
+                        .WithMany("Participants")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.OnboardingAnswer", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.OnboardingOption", "OnboardingOption")
@@ -2266,6 +2444,11 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("QuizQuestions");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.LiveRoom", b =>
+                {
+                    b.Navigation("Participants");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.OnboardingQuestion", b =>
                 {
                     b.Navigation("Options");
@@ -2284,6 +2467,8 @@ namespace LMS.Persistence.Migrations
             modelBuilder.Entity("LMS.Domain.Entities.Session", b =>
                 {
                     b.Navigation("Bookings");
+
+                    b.Navigation("LiveRoom");
 
                     b.Navigation("RescheduleRequests");
                 });

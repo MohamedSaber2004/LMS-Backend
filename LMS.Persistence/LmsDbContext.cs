@@ -1,4 +1,4 @@
-﻿using LMS.API.Services;
+using LMS.API.Services;
 using LMS.Application.Common.Interfaces;
 using LMS.Domain.Common;
 using LMS.Domain.Entities;
@@ -40,6 +40,8 @@ namespace LMS.Persistence
         public DbSet<LessonProgress> LessonProgress { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
         public DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; set; }
+        public DbSet<LiveRoom> LiveRooms { get; set; }
+        public DbSet<LiveRoomParticipant> LiveRoomParticipants { get; set; }
 
         public LmsDbContext(
             ICurrentUserService currentUserService,

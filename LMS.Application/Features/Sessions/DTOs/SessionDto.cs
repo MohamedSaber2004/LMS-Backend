@@ -30,9 +30,20 @@ namespace LMS.Application.Features.Sessions.DTOs
 
         public string? CancelReason { get; set; }
 
-        /// <summary>Populated only for a learner caller, so their own booking state travels with the session.</summary>
         public Guid? MyBookingId { get; set; }
 
         public BookingStatus? MyBookingStatus { get; set; }
+
+        public LiveSessionInfoDto? Live { get; set; }
+    }
+
+    public class LiveSessionInfoDto
+    {
+        public Guid RoomId { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public bool CanJoinNow { get; set; }
+        public DateTime JoinOpensAtUtc { get; set; }
+        public DateTime? StartedAtUtc { get; set; }
+        public DateTime? EndedAtUtc { get; set; }
     }
 }

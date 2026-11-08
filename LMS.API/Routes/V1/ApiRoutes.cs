@@ -152,5 +152,18 @@ namespace LMS.API.Routes.V1
             public const string Update = "update";
             public const string ChangePassword = "{id:guid}/change-password";
         }
+
+        public static class LiveClasses
+        {
+            public const string Base = BaseRoutes.Base + "/live-classes";
+
+            public const string Config = "config";
+            public const string Start = "{sessionId:guid}/start";
+            public const string Join = "{sessionId:guid}/join";
+            public const string Leave = "{sessionId:guid}/leave";
+            public const string End = "{sessionId:guid}/end";
+            public const string GetSession = "{sessionId:guid}";
+            public const string Token = "{sessionId:guid}/token";
+        }
     }
 }

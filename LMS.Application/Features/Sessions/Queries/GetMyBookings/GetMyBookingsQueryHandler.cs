@@ -42,6 +42,8 @@ namespace LMS.Application.Features.Sessions.Queries.GetMyBookings
                     .Include(booking => booking.Session)
                         .ThenInclude(session => session.Instructor)
                             .ThenInclude(instructor => instructor.User)
+                    .Include(booking => booking.Session)
+                        .ThenInclude(session => session.LiveRoom)
                     .Where(booking => booking.LearnerId == learnerId),
                 request.Tab);
 

@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using FluentValidation.Results;
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Application.Localization;
+using LMS.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -40,8 +43,16 @@ namespace LMS.Application.Features.Sessions.Commands.ApproveReschedule
 
             var session = reschedule.Session;
 
-            // This is the only place a proposed window becomes real, and it keeps the duration: the
-            // request was checked to carry the same length as the session it moves.
+            var liveRoom = await _context.LiveRooms
+                .FirstOrDefaultAsync(r => r.SessionId == session.Id, cancellationToken);
+            if (liveRoom != null && (liveRoom.Status == LiveRoomStatus.Live || liveRoom.Status == LiveRoomStatus.Ended))
+            {
+                throw new ValidationException(new List<ValidationFailure>
+                {
+                    new("LiveRoom", _localizer[LocalizationKeys.LiveClasses.CannotRescheduleStartedOrEnded].Value)
+                });
+            }
+
             session.MoveTo(reschedule.FromUtc, reschedule.ToUtc);
             reschedule.Approve(_currentUserService.UserId);
 

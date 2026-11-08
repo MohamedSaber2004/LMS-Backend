@@ -1,4 +1,4 @@
-﻿using LMS.Domain.Entities;
+using LMS.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +32,8 @@ namespace LMS.Application.Common.Interfaces
         DbSet<LessonProgress> LessonProgress { get; }
         DbSet<QuizAttempt> QuizAttempts { get; }
         DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; }
+        DbSet<LiveRoom> LiveRooms { get; }
+        DbSet<LiveRoomParticipant> LiveRoomParticipants { get; }
         DbSet<IdentityRole<Guid>> Roles { get; }
         DbSet<IdentityUserRole<Guid>> UserRoles { get; }
 

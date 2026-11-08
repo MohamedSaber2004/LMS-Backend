@@ -413,5 +413,31 @@ namespace LMS.Application.Localization
             public const string ProfileUpdated = "InstructorProfile.ProfileUpdated";
             public const string EditNotAllowedBeforeApproval = "InstructorProfile.EditNotAllowedBeforeApproval";
         }
+
+        public static class LiveClasses
+        {
+            public const string SessionIdRequired = "LiveClasses.SessionIdRequired";
+            public const string ServiceNotConfigured = "LiveClasses.ServiceNotConfigured";
+            public const string OnlyInstructorCanStart = "LiveClasses.OnlyInstructorCanStart";
+            public const string OnlyInstructorCanEnd = "LiveClasses.OnlyInstructorCanEnd";
+            public const string SessionMustBeConfirmed = "LiveClasses.SessionMustBeConfirmed";
+            public const string JoinWindowNotOpen = "LiveClasses.JoinWindowNotOpen";
+            public const string SessionWindowPassed = "LiveClasses.SessionWindowPassed";
+            public const string ClassAlreadyEnded = "LiveClasses.ClassAlreadyEnded";
+            public const string NotAuthorizedToJoin = "LiveClasses.NotAuthorizedToJoin";
+            public const string NotAuthorizedToView = "LiveClasses.NotAuthorizedToView";
+            public const string NotAuthorizedToRefreshToken = "LiveClasses.NotAuthorizedToRefreshToken";
+            public const string RoomNotActive = "LiveClasses.RoomNotActive";
+            public const string RoomNotFound = "LiveClasses.RoomNotFound";
+            public const string CannotCancelWhileLive = "LiveClasses.CannotCancelWhileLive";
+            public const string CannotRescheduleStartedOrEnded = "LiveClasses.CannotRescheduleStartedOrEnded";
+            public const string ClassStartedSuccess = "LiveClasses.ClassStartedSuccess";
+            public const string JoinedSuccess = "LiveClasses.JoinedSuccess";
+            public const string LeftSuccess = "LiveClasses.LeftSuccess";
+            public const string ClassEndedSuccess = "LiveClasses.ClassEndedSuccess";
+            public const string TokenRefreshedSuccess = "LiveClasses.TokenRefreshedSuccess";
+            public const string ConfigRetrieved = "LiveClasses.ConfigRetrieved";
+            public const string SessionDetailsRetrieved = "LiveClasses.SessionDetailsRetrieved";
+        }
     }
 }

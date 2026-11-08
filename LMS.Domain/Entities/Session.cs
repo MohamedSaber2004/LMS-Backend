@@ -30,6 +30,7 @@ namespace LMS.Domain.Entities
 
         public virtual ICollection<SessionBooking> Bookings { get; private set; } = new List<SessionBooking>();
         public virtual ICollection<RescheduleRequest> RescheduleRequests { get; private set; } = new List<RescheduleRequest>();
+        public virtual LiveRoom? LiveRoom { get; private set; }
 
         public static Session Create(
             Guid instructorId,

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using FluentValidation.Results;
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Helpers;
@@ -40,6 +42,16 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 .Include(item => item.Bookings)
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Sessions.SessionNotFound);
+
+            var liveRoom = await _context.LiveRooms
+                .FirstOrDefaultAsync(r => r.SessionId == session.Id, cancellationToken);
+            if (liveRoom != null && liveRoom.Status == LiveRoomStatus.Live)
+            {
+                throw new ValidationException(new List<ValidationFailure>
+                {
+                    new("LiveRoom", _localizer[LocalizationKeys.LiveClasses.CannotCancelWhileLive].Value)
+                });
+            }
 
             var actor = await SessionGuards.ResolveActorAsync(
                 _context, _currentUserService, session, cancellationToken);

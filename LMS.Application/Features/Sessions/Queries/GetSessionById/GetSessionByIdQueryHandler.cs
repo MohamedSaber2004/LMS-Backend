@@ -40,6 +40,7 @@ namespace LMS.Application.Features.Sessions.Queries.GetSessionById
                     .ThenInclude(booking => booking.Learner)
                         .ThenInclude(learner => learner.User)
                 .Include(item => item.RescheduleRequests)
+                .Include(item => item.LiveRoom)
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Sessions.SessionNotFound);
 

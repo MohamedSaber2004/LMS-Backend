@@ -384,5 +384,29 @@
     "ProfileRetrieved": "Instructor profile retrieved successfully.",
     "ProfileUpdated": "Instructor profile updated successfully.",
     "EditNotAllowedBeforeApproval": "Only an approved instructor can edit this profile. Resubmit your application instead."
+  },
+  "LiveClasses": {
+    "SessionIdRequired": "Session identifier is required.",
+    "ServiceNotConfigured": "Agora live streaming service is not configured.",
+    "OnlyInstructorCanStart": "Only the assigned instructor can start this live class.",
+    "OnlyInstructorCanEnd": "Only the host instructor can end this live class.",
+    "SessionMustBeConfirmed": "Session must be confirmed before accessing live class.",
+    "JoinWindowNotOpen": "Live class cannot be joined yet. It opens {0} UTC.",
+    "SessionWindowPassed": "The scheduled time window for this session has already passed.",
+    "ClassAlreadyEnded": "This live class has already ended.",
+    "NotAuthorizedToJoin": "You are not authorized to join this live class.",
+    "NotAuthorizedToView": "You are not authorized to view this live class session.",
+    "NotAuthorizedToRefreshToken": "You are not authorized to refresh token for this live class.",
+    "RoomNotActive": "Cannot refresh token for a non-active live class.",
+    "RoomNotFound": "No active live room found.",
+    "CannotCancelWhileLive": "Cannot cancel a session while its live class is in progress.",
+    "CannotRescheduleStartedOrEnded": "Cannot reschedule a session after its live class has started or ended.",
+    "ClassStartedSuccess": "Live class started successfully.",
+    "JoinedSuccess": "Joined live class successfully.",
+    "LeftSuccess": "Left live class successfully.",
+    "ClassEndedSuccess": "Live class ended successfully.",
+    "TokenRefreshedSuccess": "Token refreshed successfully.",
+    "ConfigRetrieved": "Agora configuration retrieved successfully.",
+    "SessionDetailsRetrieved": "Live class details retrieved successfully."
   }
 }

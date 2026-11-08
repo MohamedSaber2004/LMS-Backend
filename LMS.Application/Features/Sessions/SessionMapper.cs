@@ -1,5 +1,7 @@
+using System;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Domain.Entities;
+using LMS.Domain.Enums;
 
 namespace LMS.Application.Features.Sessions
 {
@@ -8,7 +10,8 @@ namespace LMS.Application.Features.Sessions
         public static SessionDto ToDto(
             Session session,
             string instructorFullName,
-            SessionBooking? myBooking = null) => new()
+            SessionBooking? myBooking = null,
+            int joinLeadMinutes = 15) => new()
         {
             Id = session.Id,
             InstructorId = session.InstructorId,
@@ -24,7 +27,19 @@ namespace LMS.Application.Features.Sessions
             CancelledAt = session.CancelledAt,
             CancelReason = session.CancelReason,
             MyBookingId = myBooking?.Id,
-            MyBookingStatus = myBooking?.Status
+            MyBookingStatus = myBooking?.Status,
+            Live = session.LiveRoom == null ? null : new LiveSessionInfoDto
+            {
+                RoomId = session.LiveRoom.Id,
+                Status = session.LiveRoom.Status.ToString(),
+                JoinOpensAtUtc = session.StartsAtUtc.AddMinutes(-joinLeadMinutes),
+                CanJoinNow = session.Status == SessionStatus.Confirmed &&
+                             session.LiveRoom.Status != LiveRoomStatus.Ended &&
+                             DateTime.UtcNow >= session.StartsAtUtc.AddMinutes(-joinLeadMinutes) &&
+                             DateTime.UtcNow <= session.EndsAtUtc.AddMinutes(30),
+                StartedAtUtc = session.LiveRoom.StartedAtUtc,
+                EndedAtUtc = session.LiveRoom.EndedAtUtc
+            }
         };
 
         public static SessionBookingDto ToBookingDto(SessionBooking booking, string learnerFullName) => new()
