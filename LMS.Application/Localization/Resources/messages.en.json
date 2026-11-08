@@ -211,7 +211,8 @@
     "DateRangeInvalid": "The calendar range must end on or after the date it starts.",
     "DateRangeTooLarge": "The calendar range cannot exceed {0} days.",
     "CalendarRetrieved": "Availability calendar retrieved successfully.",
-    "DayHasSessions": "This day has sessions that are still scheduled. Reschedule or cancel them before blocking it."
+    "DayHasSessions": "This day has sessions that are still scheduled. Reschedule or cancel them before blocking it.",
+    "VacationConflictsChecked": "Vacation conflicts checked successfully."
   },
   "Sessions": {
     "TabInvalid": "The session tab must be upcoming, completed or cancelled.",
@@ -255,7 +256,12 @@
     "SessionCancelledSuccess": "Cancellation completed successfully.",
     "RescheduleRequestedSuccess": "Reschedule request created successfully.",
     "RescheduleApprovedSuccess": "Reschedule request approved and the session moved.",
-    "RescheduleDeclinedSuccess": "Reschedule request declined and the session kept its time."
+    "RescheduleDeclinedSuccess": "Reschedule request declined and the session kept its time.",
+    "RescheduleWithdrawnSuccess": "Reschedule request withdrawn successfully.",
+    "RescheduleNotWithdrawable": "Only pending reschedule requests can be withdrawn.",
+    "RescheduleNotOwner": "You can only withdraw reschedule requests initiated by you.",
+    "RescheduleRequestsRetrieved": "Reschedule requests retrieved successfully.",
+    "ParticipantsRetrieved": "Session participants retrieved successfully."
   },
   "HelpCenter": {
     "CategoryIdRequired": "Category identifier is required.",

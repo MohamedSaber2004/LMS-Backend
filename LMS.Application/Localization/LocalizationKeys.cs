@@ -229,6 +229,7 @@ namespace LMS.Application.Localization
             public const string DateRangeTooLarge = "Availability.DateRangeTooLarge";
             public const string CalendarRetrieved = "Availability.CalendarRetrieved";
             public const string DayHasSessions = "Availability.DayHasSessions";
+            public const string VacationConflictsChecked = "Availability.VacationConflictsChecked";
         }
 
         public static class Sessions
@@ -264,6 +265,11 @@ namespace LMS.Application.Localization
             public const string RescheduleAlreadyPending = "Sessions.RescheduleAlreadyPending";
             public const string RescheduleDurationChanged = "Sessions.RescheduleDurationChanged";
             public const string RescheduleConflicted = "Sessions.RescheduleConflicted";
+            public const string RescheduleWithdrawnSuccess = "Sessions.RescheduleWithdrawnSuccess";
+            public const string RescheduleNotWithdrawable = "Sessions.RescheduleNotWithdrawable";
+            public const string RescheduleNotOwner = "Sessions.RescheduleNotOwner";
+            public const string RescheduleRequestsRetrieved = "Sessions.RescheduleRequestsRetrieved";
+            public const string ParticipantsRetrieved = "Sessions.ParticipantsRetrieved";
             public const string SlotsRetrieved = "Sessions.SlotsRetrieved";
             public const string SessionsRetrieved = "Sessions.SessionsRetrieved";
             public const string SessionRetrieved = "Sessions.SessionRetrieved";
