@@ -32,5 +32,15 @@ namespace LMS.API.Hangfire
                 _logger.LogInformation("Session lifecycle closed {Closed} elapsed session(s).", closed);
             }
         }
+
+        public async Task CleanupOrphanedLiveRoomsAsync()
+        {
+            var cleaned = await _sessionLifecycle.CleanupOrphanedLiveRoomsAsync(CancellationToken.None);
+
+            if (cleaned > 0)
+            {
+                _logger.LogInformation("Live class lifecycle cleaned {Cleaned} orphaned/ended live room(s).", cleaned);
+            }
+        }
     }
 }

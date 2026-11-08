@@ -76,6 +76,12 @@ namespace LMS.API.Hangfire
                 job => job.ExpireElapsedSessionsAsync(),
                 "*/10 * * * *",
                 options);
+
+            RecurringJob.AddOrUpdate<SchedulingJobs>(
+                "scheduling-cleanup-live-rooms",
+                job => job.CleanupOrphanedLiveRoomsAsync(),
+                "*/5 * * * *",
+                options);
         }
     }
 }

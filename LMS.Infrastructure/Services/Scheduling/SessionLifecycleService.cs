@@ -70,5 +70,47 @@ namespace LMS.Infrastructure.Services.Scheduling
             await _context.SaveChangesAsync(cancellationToken);
             return elapsed.Count;
         }
+
+        public async Task<int> CleanupOrphanedLiveRoomsAsync(CancellationToken cancellationToken = default)
+        {
+            var now = DateTime.UtcNow;
+
+            var orphanedRooms = await _context.LiveRooms
+                .Include(r => r.Session)
+                .Include(r => r.Participants)
+                .Where(r => (r.Status == LiveRoomStatus.Live || r.Status == LiveRoomStatus.NotStarted)
+                         && r.Session.EndsAtUtc <= now)
+                .Take(BatchSize)
+                .ToListAsync(cancellationToken);
+
+            if (orphanedRooms.Count == 0)
+            {
+                return 0;
+            }
+
+            foreach (var room in orphanedRooms)
+            {
+                if (room.Status == LiveRoomStatus.Live)
+                {
+                    room.End(now);
+
+                    var openParticipants = room.Participants
+                        .Where(p => p.LeftAtUtc == null)
+                        .ToList();
+
+                    foreach (var participant in openParticipants)
+                    {
+                        participant.Leave(now);
+                    }
+                }
+                else if (room.Status == LiveRoomStatus.NotStarted)
+                {
+                    room.MarkAbandoned(now);
+                }
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
+            return orphanedRooms.Count;
+        }
     }
 }
