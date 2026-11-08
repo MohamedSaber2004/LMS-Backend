@@ -35,6 +35,7 @@ namespace LMS.API.Routes.V1
             public const string Base = BaseRoutes.Base + "/instructor-applications";
 
             public const string GetAll = "";
+            public const string GetById = "{id:guid}";
             public const string Approve = "approve";
             public const string Reject = "reject";
             public const string MyStatus = "my-status";
@@ -98,6 +99,32 @@ namespace LMS.API.Routes.V1
 
             public const string Approve = "{id:guid}/approve";
             public const string Decline = "{id:guid}/decline";
+        }
+
+        public static class Teacher
+        {
+            public const string Base = BaseRoutes.Base + "/teacher";
+
+            public static class Sessions
+            {
+                public const string Base = Teacher.Base + "/sessions";
+                public const string Cancel = "{id:guid}/cancel";
+                public const string RescheduleRequests = "{id:guid}/reschedule-requests";
+                public const string Participants = "{id:guid}/participants";
+            }
+
+            public static class RescheduleRequests
+            {
+                public const string Base = Teacher.Base + "/reschedule-requests";
+                public const string GetAll = "";
+                public const string Withdraw = "{id:guid}/withdraw";
+            }
+
+            public static class Availability
+            {
+                public const string Base = Teacher.Base + "/availability";
+                public const string CheckVacationConflicts = "vacation/check-conflicts";
+            }
         }
 
         public static class HelpCenter
