@@ -49,6 +49,7 @@ namespace LMS.API
                 Log.Fatal(ex, "LMS API failed to start.");
                 TryWriteStartupError(ex);
                 throw;
+
             }
             finally
             {
