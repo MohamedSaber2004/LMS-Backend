@@ -26,6 +26,10 @@ namespace LMS.Persistence.Configurations
                 .HasConversion<int>()
                 .IsRequired();
 
+            builder.Property(course => course.Type)
+                .HasConversion<int>()
+                .IsRequired();
+
             builder.Property(course => course.Order)
                 .IsRequired();
 
@@ -36,6 +40,7 @@ namespace LMS.Persistence.Configurations
                 .IsRowVersion();
 
             builder.HasIndex(course => course.Level);
+            builder.HasIndex(course => course.Type);
             builder.HasIndex(course => course.Order);
             builder.HasIndex(course => course.IsDeleted);
 

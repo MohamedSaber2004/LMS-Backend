@@ -4,8 +4,11 @@ namespace LMS.Domain.Entities
 {
     public class QuizAttempt : BaseEntity<Guid>
     {
-        public Guid LessonId { get; private set; }
-        public virtual Lesson Lesson { get; private set; } = null!;
+        public Guid? LessonId { get; private set; }
+        public virtual Lesson? Lesson { get; private set; }
+
+        public Guid? CourseId { get; private set; }
+        public virtual Course? Course { get; private set; }
 
         public Guid LearnerId { get; private set; }
         public virtual Learner Learner { get; private set; } = null!;
@@ -21,6 +24,17 @@ namespace LMS.Domain.Entities
             return new QuizAttempt
             {
                 LessonId = lessonId,
+                LearnerId = learnerId,
+                Score = score,
+                TotalQuestions = totalQuestions
+            };
+        }
+
+        public static QuizAttempt CreateForCourse(Guid courseId, Guid learnerId, int score, int totalQuestions)
+        {
+            return new QuizAttempt
+            {
+                CourseId = courseId,
                 LearnerId = learnerId,
                 Score = score,
                 TotalQuestions = totalQuestions

@@ -17,6 +17,7 @@ namespace LMS.Application.Common.Interfaces
         DbSet<AvailabilityInstance> AvailabilityInstances { get; }
         DbSet<Session> Sessions { get; }
         DbSet<SessionBooking> SessionBookings { get; }
+        DbSet<SessionAttendance> SessionAttendances { get; }
         DbSet<RescheduleRequest> RescheduleRequests { get; }
         DbSet<OnboardingQuestion> OnboardingQuestions { get; }
         DbSet<OnboardingOption> OnboardingOptions { get; }

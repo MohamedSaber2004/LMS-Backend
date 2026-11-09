@@ -1,3 +1,4 @@
+using LMS.API.Services;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Onboarding.DTOs;
@@ -15,13 +16,16 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
     {
         private readonly ILmsDbContext _context;
         private readonly IStringLocalizer<Messages> _localizer;
+        private readonly ICurrentUserService _currentUserService;
 
         public GetInstructorsForLearnerQueryHandler(
             ILmsDbContext context,
-            IStringLocalizer<Messages> localizer)
+            IStringLocalizer<Messages> localizer,
+            ICurrentUserService currentUserService)
         {
             _context = context;
             _localizer = localizer;
+            _currentUserService = currentUserService;
         }
 
         public async Task<Result<PagginatedResult<InstructorCardDto>>> Handle(
@@ -42,6 +46,17 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
             if (request.MaxPrice.HasValue)
             {
                 query = query.Where(instructor => instructor.HourlyRate <= request.MaxPrice.Value);
+            }
+            else if (_currentUserService.UserId != Guid.Empty)
+            {
+                var learner = await _context.Learners
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(l => l.UserId == _currentUserService.UserId, cancellationToken);
+
+                if (learner?.HourlyRate.HasValue == true)
+                {
+                    query = query.Where(instructor => instructor.HourlyRate <= learner.HourlyRate.Value);
+                }
             }
 
             if (request.MinPrice.HasValue)
@@ -64,8 +79,6 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
             {
                 var day = request.Day.Value;
 
-                // Absent bounds widen the window to the whole day: every slot starts before the end of
-                // the day and ends after midnight, so one predicate covers all four cases.
                 var after = request.After ?? new TimeSpan(23, 59, 59, 999);
                 var before = request.Before ?? TimeSpan.Zero;
 

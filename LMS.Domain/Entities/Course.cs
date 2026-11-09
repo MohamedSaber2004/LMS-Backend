@@ -13,13 +13,27 @@ namespace LMS.Domain.Entities
 
         public CourseLevel Level { get; private set; }
 
+        public CourseType Type { get; private set; }
+
         public int Order { get; private set; }
 
         public virtual ICollection<Lesson> Lessons { get; private set; } = new List<Lesson>();
 
         public virtual ICollection<CourseInstructor> CourseInstructors { get; private set; } = new List<CourseInstructor>();
 
-        public static Course Create(string title, string description, string? coverUrl, CourseLevel level, int order)
+        public virtual ICollection<CourseEnrollment> Enrollments { get; private set; } = new List<CourseEnrollment>();
+
+        public virtual ICollection<QuizQuestion> FinalQuizQuestions { get; private set; } = new List<QuizQuestion>();
+
+        public virtual ICollection<QuizAttempt> QuizAttempts { get; private set; } = new List<QuizAttempt>();
+
+        public static Course Create(
+            string title,
+            string description,
+            string? coverUrl,
+            CourseLevel level,
+            int order,
+            CourseType type = CourseType.Live)
         {
             return new Course
             {
@@ -27,17 +41,25 @@ namespace LMS.Domain.Entities
                 Description = description,
                 CoverUrl = coverUrl,
                 Level = level,
-                Order = order
+                Order = order,
+                Type = type
             };
         }
 
-        public void Update(string title, string description, string? coverUrl, CourseLevel level, int order)
+        public void Update(
+            string title,
+            string description,
+            string? coverUrl,
+            CourseLevel level,
+            int order,
+            CourseType type = CourseType.Live)
         {
             Title = title;
             Description = description;
             CoverUrl = coverUrl;
             Level = level;
             Order = order;
+            Type = type;
         }
     }
 }

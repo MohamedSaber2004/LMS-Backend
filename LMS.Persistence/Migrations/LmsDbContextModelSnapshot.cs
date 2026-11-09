@@ -319,6 +319,9 @@ namespace LMS.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -337,6 +340,8 @@ namespace LMS.Persistence.Migrations
                     b.HasIndex("Level");
 
                     b.HasIndex("Order");
+
+                    b.HasIndex("Type");
 
                     b.ToTable("Courses", (string)null);
                 });
@@ -860,6 +865,10 @@ namespace LMS.Persistence.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("HourlyRate")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -945,7 +954,6 @@ namespace LMS.Persistence.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("VideoUrl")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -1363,6 +1371,9 @@ namespace LMS.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1385,7 +1396,7 @@ namespace LMS.Persistence.Migrations
                     b.Property<Guid>("LearnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LessonId")
+                    b.Property<Guid?>("LessonId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Score")
@@ -1410,6 +1421,8 @@ namespace LMS.Persistence.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("LearnerId");
+
+                    b.HasIndex("CourseId", "LearnerId");
 
                     b.HasIndex("LessonId", "LearnerId");
 
@@ -1537,6 +1550,9 @@ namespace LMS.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1556,7 +1572,7 @@ namespace LMS.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("LessonId")
+                    b.Property<Guid?>("LessonId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Order")
@@ -1580,9 +1596,13 @@ namespace LMS.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("LessonId");
+
+                    b.HasIndex("CourseId", "Order");
 
                     b.HasIndex("LessonId", "Order");
 
@@ -1703,6 +1723,9 @@ namespace LMS.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("LessonId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
@@ -1743,6 +1766,10 @@ namespace LMS.Persistence.Migrations
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("LessonId")
+                        .IsUnique()
+                        .HasFilter("[LessonId] IS NOT NULL");
+
                     b.HasIndex("Status");
 
                     b.HasIndex("InstructorId", "StartsAtUtc");
@@ -1750,6 +1777,78 @@ namespace LMS.Persistence.Migrations
                     b.HasIndex("StartsAtUtc", "EndsAtUtc");
 
                     b.ToTable("Sessions", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.SessionAttendance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("JoinedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("LearnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LeftAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("LearnerId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("SessionId", "LearnerId")
+                        .IsUnique();
+
+                    b.ToTable("SessionAttendances", (string)null);
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.SessionBooking", b =>
@@ -2041,7 +2140,7 @@ namespace LMS.Persistence.Migrations
             modelBuilder.Entity("LMS.Domain.Entities.CourseEnrollment", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Enrollments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2249,6 +2348,11 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Entities.QuizAttempt", b =>
                 {
+                    b.HasOne("LMS.Domain.Entities.Course", "Course")
+                        .WithMany("QuizAttempts")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LMS.Domain.Entities.Learner", "Learner")
                         .WithMany()
                         .HasForeignKey("LearnerId")
@@ -2258,8 +2362,9 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Entities.Lesson", "Lesson")
                         .WithMany()
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Course");
 
                     b.Navigation("Learner");
 
@@ -2290,11 +2395,17 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Entities.QuizQuestion", b =>
                 {
+                    b.HasOne("LMS.Domain.Entities.Course", "Course")
+                        .WithMany("FinalQuizQuestions")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LMS.Domain.Entities.Lesson", "Lesson")
                         .WithMany("QuizQuestions")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Course");
 
                     b.Navigation("Lesson");
                 });
@@ -2318,7 +2429,33 @@ namespace LMS.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LMS.Domain.Entities.Lesson", "Lesson")
+                        .WithOne("Session")
+                        .HasForeignKey("LMS.Domain.Entities.Session", "LessonId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Instructor");
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.SessionAttendance", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.Learner", "Learner")
+                        .WithMany("Attendances")
+                        .HasForeignKey("LearnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.Session", "Session")
+                        .WithMany("Attendances")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Learner");
+
+                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.SessionBooking", b =>
@@ -2416,7 +2553,13 @@ namespace LMS.Persistence.Migrations
                 {
                     b.Navigation("CourseInstructors");
 
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("FinalQuizQuestions");
+
                     b.Navigation("Lessons");
+
+                    b.Navigation("QuizAttempts");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.HelpCategory", b =>
@@ -2439,9 +2582,16 @@ namespace LMS.Persistence.Migrations
                     b.Navigation("Sessions");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.Learner", b =>
+                {
+                    b.Navigation("Attendances");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.Lesson", b =>
                 {
                     b.Navigation("QuizQuestions");
+
+                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.LiveRoom", b =>
@@ -2466,6 +2616,8 @@ namespace LMS.Persistence.Migrations
 
             modelBuilder.Entity("LMS.Domain.Entities.Session", b =>
                 {
+                    b.Navigation("Attendances");
+
                     b.Navigation("Bookings");
 
                     b.Navigation("LiveRoom");

@@ -12,6 +12,12 @@ namespace LMS.Persistence.Configurations
 
             builder.HasKey(attempt => attempt.Id);
 
+            builder.Property(attempt => attempt.LessonId)
+                .IsRequired(false);
+
+            builder.Property(attempt => attempt.CourseId)
+                .IsRequired(false);
+
             builder.Property(attempt => attempt.Score)
                 .IsRequired();
 
@@ -25,6 +31,7 @@ namespace LMS.Persistence.Configurations
                 .IsRowVersion();
 
             builder.HasIndex(attempt => new { attempt.LessonId, attempt.LearnerId });
+            builder.HasIndex(attempt => new { attempt.CourseId, attempt.LearnerId });
             builder.HasIndex(attempt => attempt.LearnerId);
             builder.HasIndex(attempt => attempt.IsDeleted);
 
@@ -32,6 +39,11 @@ namespace LMS.Persistence.Configurations
                 .WithMany()
                 .HasForeignKey(attempt => attempt.LessonId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(attempt => attempt.Course)
+                .WithMany(course => course.QuizAttempts)
+                .HasForeignKey(attempt => attempt.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(attempt => attempt.Learner)
                 .WithMany()

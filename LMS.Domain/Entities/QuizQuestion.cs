@@ -4,8 +4,11 @@ namespace LMS.Domain.Entities
 {
     public class QuizQuestion : BaseEntity<Guid>
     {
-        public Guid LessonId { get; private set; }
-        public virtual Lesson Lesson { get; private set; } = null!;
+        public Guid? LessonId { get; private set; }
+        public virtual Lesson? Lesson { get; private set; }
+
+        public Guid? CourseId { get; private set; }
+        public virtual Course? Course { get; private set; }
 
         public string Text { get; private set; } = string.Empty;
 
@@ -18,6 +21,16 @@ namespace LMS.Domain.Entities
             return new QuizQuestion
             {
                 LessonId = lessonId,
+                Text = text,
+                Order = order
+            };
+        }
+
+        public static QuizQuestion CreateForCourse(Guid courseId, string text, int order)
+        {
+            return new QuizQuestion
+            {
+                CourseId = courseId,
                 Text = text,
                 Order = order
             };

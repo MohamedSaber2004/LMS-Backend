@@ -46,7 +46,6 @@ namespace LMS.Application.Features.Sessions.Commands.RequestReschedule
 
             if (session is null)
             {
-                // A missing row is reported as 404 by the handler.
                 return;
             }
 

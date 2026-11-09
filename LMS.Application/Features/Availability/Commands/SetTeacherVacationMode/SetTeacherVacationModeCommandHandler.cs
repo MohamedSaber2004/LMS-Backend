@@ -81,3 +81,4 @@ namespace LMS.Application.Features.Availability.Commands.SetTeacherVacationMode
         }
     }
 }
+

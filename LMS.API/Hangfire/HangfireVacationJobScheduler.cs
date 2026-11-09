@@ -39,3 +39,4 @@ namespace LMS.API.Hangfire
         public void EnqueueVacationConflictProcessing(Guid instructorId) { }
     }
 }
+

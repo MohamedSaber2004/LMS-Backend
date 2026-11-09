@@ -18,3 +18,4 @@ namespace LMS.Application.Features.Sessions.DTOs
         public string? AttendanceNotes { get; set; }
     }
 }
+

@@ -12,6 +12,9 @@ namespace LMS.Persistence.Configurations
 
             builder.HasKey(learner => learner.Id);
 
+            builder.Property(learner => learner.HourlyRate)
+                .HasPrecision(10, 2);
+
             builder.Property(learner => learner.CreatedBy)
                 .IsRequired();
 

@@ -151,6 +151,15 @@ namespace LMS.Application.Features.Authentication.Commands.Register
                     }
                 });
 
+            When(x => x.Role == UserType.Learner && x.HourlyRate.HasValue, () =>
+            {
+                RuleFor(x => x.HourlyRate)
+                    .Must(rate => rate is null || rate.Value > 0m)
+                    .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateRequired].Value)
+                    .Must(rate => rate is null || rate.Value <= MaxHourlyRate)
+                    .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateTooLarge, MaxHourlyRate].Value);
+            });
+
             When(x => x.Role == UserType.Instructor, () =>
             {
                 RuleFor(x => x)

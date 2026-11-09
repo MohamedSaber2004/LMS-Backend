@@ -37,7 +37,6 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Sessions.SlotIdRequired].Value);
 
-            // One guard, one reason: the first thing that stops the booking is what the learner is told.
             RuleFor(command => command)
                 .CustomAsync(ValidateAsync);
         }

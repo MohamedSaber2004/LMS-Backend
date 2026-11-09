@@ -9,3 +9,4 @@ namespace LMS.Application.Features.Sessions.Queries.GetSessionParticipants
         public Guid SessionId { get; set; }
     }
 }
+

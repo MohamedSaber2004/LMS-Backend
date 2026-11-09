@@ -25,3 +25,4 @@ namespace LMS.Application.Features.Sessions.DTOs
         public string? ProfilePictureUrl { get; set; }
     }
 }
+

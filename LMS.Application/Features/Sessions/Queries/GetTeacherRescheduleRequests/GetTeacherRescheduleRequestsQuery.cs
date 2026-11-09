@@ -12,3 +12,4 @@ namespace LMS.Application.Features.Sessions.Queries.GetTeacherRescheduleRequests
         public int PageSize { get; set; } = 20;
     }
 }
+

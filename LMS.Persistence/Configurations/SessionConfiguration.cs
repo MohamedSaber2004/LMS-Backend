@@ -42,6 +42,9 @@ namespace LMS.Persistence.Configurations
                 .IsRowVersion();
 
             builder.HasIndex(session => session.InstructorId);
+            builder.HasIndex(session => session.LessonId)
+                .IsUnique()
+                .HasFilter("[LessonId] IS NOT NULL");
             builder.HasIndex(session => new { session.InstructorId, session.StartsAtUtc });
             builder.HasIndex(session => new { session.StartsAtUtc, session.EndsAtUtc });
             builder.HasIndex(session => session.Status);
@@ -51,6 +54,11 @@ namespace LMS.Persistence.Configurations
                 .WithMany(instructor => instructor.Sessions)
                 .HasForeignKey(session => session.InstructorId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(session => session.Lesson)
+                .WithOne(lesson => lesson.Session)
+                .HasForeignKey<Session>(session => session.LessonId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasQueryFilter(session => !session.IsDeleted);
         }

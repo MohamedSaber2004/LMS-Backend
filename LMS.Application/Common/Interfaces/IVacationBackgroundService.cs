@@ -5,3 +5,4 @@ namespace LMS.Application.Common.Interfaces
         Task ProcessVacationConflictsAsync(Guid instructorId, CancellationToken cancellationToken = default);
     }
 }
+

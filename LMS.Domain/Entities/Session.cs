@@ -8,6 +8,9 @@ namespace LMS.Domain.Entities
         public Guid InstructorId { get; private set; }
         public virtual Instructor Instructor { get; private set; } = null!;
 
+        public Guid? LessonId { get; private set; }
+        public virtual Lesson? Lesson { get; private set; }
+
         public string? Title { get; private set; }
 
         public SessionType Type { get; private set; }
@@ -29,6 +32,7 @@ namespace LMS.Domain.Entities
         public DateTime? CancelledAt { get; private set; }
 
         public virtual ICollection<SessionBooking> Bookings { get; private set; } = new List<SessionBooking>();
+        public virtual ICollection<SessionAttendance> Attendances { get; private set; } = new List<SessionAttendance>();
         public virtual ICollection<RescheduleRequest> RescheduleRequests { get; private set; } = new List<RescheduleRequest>();
         public virtual LiveRoom? LiveRoom { get; private set; }
 
@@ -39,11 +43,13 @@ namespace LMS.Domain.Entities
             DateTime endsAtUtc,
             decimal price,
             string? title = null,
-            int seatCapacity = 1)
+            int seatCapacity = 1,
+            Guid? lessonId = null)
         {
             return new Session
             {
                 InstructorId = instructorId,
+                LessonId = lessonId,
                 Type = type,
                 StartsAtUtc = startsAtUtc,
                 EndsAtUtc = endsAtUtc,
@@ -53,6 +59,16 @@ namespace LMS.Domain.Entities
                 Status = SessionStatus.Pending,
                 SeatsBooked = 0
             };
+        }
+
+        public void AssignLesson(Guid lessonId)
+        {
+            LessonId = lessonId;
+        }
+
+        public void DetachLesson()
+        {
+            LessonId = null;
         }
 
         public void Confirm()

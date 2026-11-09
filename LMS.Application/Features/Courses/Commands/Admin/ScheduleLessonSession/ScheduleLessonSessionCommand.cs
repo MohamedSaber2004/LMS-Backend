@@ -13,3 +13,4 @@ namespace LMS.Application.Features.Courses.Commands.Admin.ScheduleLessonSession
         public int SeatCapacity { get; set; } = 50;
     }
 }
+

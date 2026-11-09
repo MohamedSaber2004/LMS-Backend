@@ -24,7 +24,7 @@ namespace LMS.Persistence.Configurations
             builder.HasIndex(enrollment => enrollment.IsDeleted);
 
             builder.HasOne(enrollment => enrollment.Course)
-                .WithMany()
+                .WithMany(course => course.Enrollments)
                 .HasForeignKey(enrollment => enrollment.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
 

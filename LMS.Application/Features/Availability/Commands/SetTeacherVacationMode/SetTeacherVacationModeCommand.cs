@@ -9,3 +9,4 @@ namespace LMS.Application.Features.Availability.Commands.SetTeacherVacationMode
         public bool Enabled { get; set; }
     }
 }
+

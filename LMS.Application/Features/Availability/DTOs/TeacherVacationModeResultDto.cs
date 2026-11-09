@@ -8,3 +8,4 @@ namespace LMS.Application.Features.Availability.DTOs
         public string Message { get; set; } = string.Empty;
     }
 }
+

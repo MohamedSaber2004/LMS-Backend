@@ -5,3 +5,4 @@ namespace LMS.Application.Common.Interfaces
         void EnqueueVacationConflictProcessing(Guid instructorId);
     }
 }
+

@@ -17,8 +17,7 @@ namespace LMS.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(lesson => lesson.VideoUrl)
-                .HasMaxLength(500)
-                .IsRequired();
+                .HasMaxLength(500);
 
             builder.Property(lesson => lesson.StudyBookUrl)
                 .HasMaxLength(500);

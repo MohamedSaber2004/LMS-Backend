@@ -88,7 +88,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
 
                 try
                 {
-                    await _context.Learners.AddAsync(Learner.Create(user.Id), cancellationToken);
+                    await _context.Learners.AddAsync(Learner.Create(user.Id, request.HourlyRate), cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                 }
                 catch
