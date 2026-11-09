@@ -21,18 +21,18 @@ namespace LMS.Application.Features.LiveClasses.Commands.RefreshToken
     {
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IAgoraTokenService _agoraTokenService;
+        private readonly ILiveClassTokenService _liveClassTokenService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public RefreshTokenCommandHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
-            IAgoraTokenService agoraTokenService,
+            ILiveClassTokenService liveClassTokenService,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
             _currentUserService = currentUserService;
-            _agoraTokenService = agoraTokenService;
+            _liveClassTokenService = liveClassTokenService;
             _localizer = localizer;
         }
 
@@ -40,11 +40,11 @@ namespace LMS.Application.Features.LiveClasses.Commands.RefreshToken
             RefreshTokenCommand request,
             CancellationToken cancellationToken)
         {
-            if (!_agoraTokenService.IsConfigured)
+            if (!_liveClassTokenService.IsConfigured)
             {
                 throw new ValidationException(new List<ValidationFailure>
                 {
-                    new("Agora", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
+                    new("LiveStreaming", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
                 });
             }
 
@@ -76,14 +76,13 @@ namespace LMS.Application.Features.LiveClasses.Commands.RefreshToken
                 });
             }
 
-            uint agoraUid = _agoraTokenService.GenerateAgoraUid(currentUserId);
-            string token = _agoraTokenService.GenerateRtcToken(
+            uint participantUid = _liveClassTokenService.GenerateParticipantUid(currentUserId);
+            string token = _liveClassTokenService.GenerateAccessToken(
                 session.LiveRoom.ChannelName,
-                agoraUid,
-                isPublisher: true);
+                participantUid,
+                canPublish: true);
 
-            var now = DateTime.UtcNow;
-            var expiresAtUtc = now.AddMinutes(1440);
+            var expiresAtUtc = DateTime.UtcNow.AddMinutes(_liveClassTokenService.TokenLifetimeMinutes);
 
             var dto = new RefreshTokenDto
             {

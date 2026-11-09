@@ -1,10 +1,9 @@
 namespace LMS.Application.Features.LiveClasses.DTOs
 {
-    public class AgoraConfigDto
+    public class LiveClassConfigDto
     {
         public bool Enabled { get; set; }
-        public string AppId { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
         public int JoinLeadMinutes { get; set; }
     }
 }
-

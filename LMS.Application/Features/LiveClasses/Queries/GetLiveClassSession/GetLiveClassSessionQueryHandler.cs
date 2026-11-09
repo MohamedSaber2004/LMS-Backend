@@ -19,18 +19,18 @@ namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
     {
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IAgoraTokenService _agoraTokenService;
+        private readonly ILiveClassTokenService _liveClassTokenService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public GetLiveClassSessionQueryHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
-            IAgoraTokenService agoraTokenService,
+            ILiveClassTokenService liveClassTokenService,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
             _currentUserService = currentUserService;
-            _agoraTokenService = agoraTokenService;
+            _liveClassTokenService = liveClassTokenService;
             _localizer = localizer;
         }
 
@@ -63,7 +63,7 @@ namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
             }
 
             var now = DateTime.UtcNow;
-            int leadMinutes = _agoraTokenService.JoinLeadMinutes;
+            int leadMinutes = _liveClassTokenService.JoinLeadMinutes;
             var joinOpensAtUtc = session.StartsAtUtc.AddMinutes(-leadMinutes);
             var joinClosesAtUtc = session.EndsAtUtc.AddMinutes(30);
 
@@ -82,7 +82,7 @@ namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
                     UserId = p.UserId,
                     FullName = p.User.FullName,
                     Role = p.Role.ToString(),
-                    AgoraUid = p.AgoraUid,
+                    Uid = p.AgoraUid,
                     JoinedAtUtc = p.JoinedAtUtc,
                     IsOnline = p.LeftAtUtc == null
                 })
@@ -92,7 +92,8 @@ namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
             {
                 SessionId = session.Id,
                 RoomId = room?.Id,
-                ChannelName = room?.ChannelName ?? $"live-{session.Id:N}",
+                Url = _liveClassTokenService.Url,
+                RoomName = room?.ChannelName ?? $"live-{session.Id:N}",
                 Status = roomStatus.ToString(),
                 CanJoinNow = canJoinNow,
                 JoinOpensAtUtc = joinOpensAtUtc,

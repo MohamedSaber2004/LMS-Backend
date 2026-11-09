@@ -597,6 +597,68 @@ namespace LMS.API
                 }
             }
 
+            if (args.Contains("--purge-deleted-users"))
+            {
+                using var scope = app.Services.CreateScope();
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                    var deletionService = scope.ServiceProvider.GetRequiredService<IUserAccountDeletionService>();
+
+                    var softDeletedUserIds = await dbContext.ApplicationUsers.IgnoreQueryFilters()
+                        .Where(u => u.IsDeleted)
+                        .Select(u => u.Id)
+                        .ToListAsync();
+
+                    Log.Information("Found {Count} soft-deleted user(s) to purge.", softDeletedUserIds.Count);
+                    foreach (var userId in softDeletedUserIds)
+                    {
+                        await deletionService.HardDeleteUserAsync(userId);
+                        Log.Information("Successfully hard-deleted user {UserId}", userId);
+                    }
+                    Log.Information("Purge completed successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while purging soft-deleted users.");
+                }
+                return;
+            }
+
+            try
+            {
+                using var scope = app.Services.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                var deletionService = scope.ServiceProvider.GetRequiredService<IUserAccountDeletionService>();
+
+                var softDeletedUserIds = await dbContext.ApplicationUsers.IgnoreQueryFilters()
+                    .Where(u => u.IsDeleted)
+                    .Select(u => u.Id)
+                    .ToListAsync();
+
+                if (softDeletedUserIds.Count > 0)
+                {
+                    Log.Information("Purging {Count} existing soft-deleted user(s) from database...", softDeletedUserIds.Count);
+                    foreach (var userId in softDeletedUserIds)
+                    {
+                        try
+                        {
+                            await deletionService.HardDeleteUserAsync(userId);
+                            Log.Information("Purged soft-deleted user {UserId}", userId);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex, "Failed to purge soft-deleted user {UserId}", userId);
+                        }
+                    }
+                    Log.Information("Soft-deleted users purge completed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "Could not run startup soft-deleted users purge.");
+            }
+
             app.RegisterSchedulingRecurringJobs();
 
 

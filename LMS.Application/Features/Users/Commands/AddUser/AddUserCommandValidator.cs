@@ -90,7 +90,7 @@ namespace LMS.Application.Features.Users.Commands.AddUser
                 var existingUser = await _userManager.FindByEmailAsync(email!);
                 existingUser ??= await _userManager.FindByNameAsync(email!);
 
-                if (existingUser is not null)
+                if (existingUser is not null && !existingUser.IsDeleted)
                 {
                     context.AddFailure(
                         nameof(AddUserCommand.Email),

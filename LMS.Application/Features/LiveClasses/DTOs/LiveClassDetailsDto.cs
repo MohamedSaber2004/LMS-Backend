@@ -7,7 +7,8 @@ namespace LMS.Application.Features.LiveClasses.DTOs
     {
         public Guid SessionId { get; set; }
         public Guid? RoomId { get; set; }
-        public string ChannelName { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
+        public string RoomName { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public bool CanJoinNow { get; set; }
         public DateTime JoinOpensAtUtc { get; set; }
@@ -25,9 +26,8 @@ namespace LMS.Application.Features.LiveClasses.DTOs
         public Guid UserId { get; set; }
         public string FullName { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
-        public uint AgoraUid { get; set; }
+        public uint Uid { get; set; }
         public DateTime JoinedAtUtc { get; set; }
         public bool IsOnline { get; set; }
     }
 }
-

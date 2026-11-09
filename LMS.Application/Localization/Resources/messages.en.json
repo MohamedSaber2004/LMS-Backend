@@ -397,7 +397,7 @@
   },
   "LiveClasses": {
     "SessionIdRequired": "Session identifier is required.",
-    "ServiceNotConfigured": "Agora live streaming service is not configured.",
+    "ServiceNotConfigured": "The live class service is not configured.",
     "OnlyInstructorCanStart": "Only the assigned instructor can start this live class.",
     "OnlyInstructorCanEnd": "Only the host instructor can end this live class.",
     "SessionMustBeConfirmed": "Session must be confirmed before accessing live class.",
@@ -416,7 +416,7 @@
     "LeftSuccess": "Left live class successfully.",
     "ClassEndedSuccess": "Live class ended successfully.",
     "TokenRefreshedSuccess": "Token refreshed successfully.",
-    "ConfigRetrieved": "Agora configuration retrieved successfully.",
+    "ConfigRetrieved": "Live class configuration retrieved successfully.",
     "SessionDetailsRetrieved": "Live class details retrieved successfully."
   }
 }

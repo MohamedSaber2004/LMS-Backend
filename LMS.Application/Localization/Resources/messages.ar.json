@@ -397,7 +397,7 @@
   },
   "LiveClasses": {
     "SessionIdRequired": "معرف الحصة مطلوب.",
-    "ServiceNotConfigured": "خدمة البث الحي Agora غير مهيأة.",
+    "ServiceNotConfigured": "خدمة البث الحي غير مهيأة.",
     "OnlyInstructorCanStart": "يمكن للمدرس المعين فقط بدء هذه الحصة المباشرة.",
     "OnlyInstructorCanEnd": "يمكن لمدرس الحصة فقط إنهاء هذه الحصة المباشرة.",
     "SessionMustBeConfirmed": "يجب تأكيد الحصة أولاً قبل الدخول إلى البث المباشر.",
@@ -416,7 +416,7 @@
     "LeftSuccess": "تمت مغادرة الحصة المباشرة بنجاح.",
     "ClassEndedSuccess": "تم إنهاء الحصة المباشرة بنجاح.",
     "TokenRefreshedSuccess": "تم تجديد التوكن بنجاح.",
-    "ConfigRetrieved": "تم استرجاع إعدادات Agora بنجاح.",
+    "ConfigRetrieved": "تم استرجاع إعدادات البث الحي بنجاح.",
     "SessionDetailsRetrieved": "تم استرجاع تفاصيل الحصة المباشرة بنجاح."
   }
 }

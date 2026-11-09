@@ -3,7 +3,9 @@ namespace LMS.Application.Features.LiveClasses.DTOs
     public class LiveClassTokenDto
     {
         public Guid RoomId { get; set; }
-        public string ChannelName { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
+        public string RoomName { get; set; } = string.Empty;
+        public string Identity { get; set; } = string.Empty;
         public uint Uid { get; set; }
         public string Token { get; set; } = string.Empty;
         public DateTime ExpiresAtUtc { get; set; }
@@ -11,4 +13,3 @@ namespace LMS.Application.Features.LiveClasses.DTOs
         public bool IsHost { get; set; }
     }
 }
-

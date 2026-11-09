@@ -21,7 +21,7 @@
                │                               │
 ┌──────────────▼──────────────┐ ┌──────────────▼──────────────┐
 │     LMS.Domain Layer        │ │  LMS.Infrastructure Layer   │
-│ (Entities, Enums, Contracts)│ │  (JWT, Agora Token, Email,  │
+│ (Entities, Enums, Contracts)│ │ (JWT, LiveKit Token, Email, │
 └──────────────▲──────────────┘ │   File Validators, Hashing) │
                │                └──────────────┬──────────────┘
 ┌──────────────┴──────────────┐                │
@@ -64,7 +64,7 @@ graph TD
     Instructor -->|قبول الحجز Confirm| LiveRoom[إنشاء قاعة البث LiveRoom]
     Session --> LiveRoom
     
-    LiveRoom --> Agora[بث الفيديو الحي 1:1 Agora RTC]
+    LiveRoom --> LiveKit[بث الفيديو الحي 1:1 LiveKit RTC]
     
     Instructor --> Courses[إدارة الكورسات والدروس Courses]
     Learner -->|التحاق وتتبع التقدم| Courses
@@ -97,10 +97,10 @@ graph TD
    * قبل موعد الحصة بـ 15 دقيقة (أو أثناء وقتها)، يضغط المدرس على "بدء الحصة".
    * يستدعي المتصفح `POST /api/v1/live-classes/{sessionId}/start`.
    * يتحقق النظام أن المتصل هو مدرس الحصة وأن الموعد قد حان.
-   * يتم توليد Agora RTC Token مشفر بصلاحية `Publisher` ومعرف رقمي فريد مشتق من حسابه (`AgoraUid`).
+   * يتم توليد توكن وصول LiveKit (JWT موقّع بـ HMAC-SHA256) يمنح صلاحية `roomJoin` + `canPublish` وهوية `identity` مشتقة من حسابه.
    * تتغير حالة الغرفة إلى `Live` ويوثق توقيت البدء `StartedAtUtc`.
    * يسجل في جدول `LiveRoomParticipants` أن المدرس انضم كـ `Host`.
-   * يفتح المتصفح كاميرا وميكروفون المدرس ويتصل مباشرة بسحابة Agora RTC.
+   * يفتح المتصفح كاميرا وميكروفون المدرس ويتصل مباشرة بسحابة LiveKit Cloud.
 7. **إنهاء الحصة:**
    * بعد انتهاء الحصة يضغط المدرس على "إنهاء الحصة".
    * يتم استدعاء `POST /api/v1/live-classes/{sessionId}/end`.
@@ -132,11 +132,12 @@ graph TD
    * عند حلول نافذة الدخول (`canJoinNow = true`)، يظهر زر "انضمام الآن".
    * يستدعي متصفح المتعلم `POST /api/v1/live-classes/{sessionId}/join`.
    * يتحقق النظام أن هذا المتعلم يملك حجزاً مؤكداً في هذه الحصة.
-   * يصدر له توكن Agora خاص بـ `AgoraUid` المميز له.
+   * يصدر له توكن وصول خاص بـ `identity` المميز له (نفس الرقم المخزّن في عمود `AgoraUid` — الاسم باقٍ في قاعدة البيانات ولا علاقة له بالمزوّد).
    * يسجل في `LiveRoomParticipants` حضور المتعلم كـ `Attendee`.
-   * يبدأ الاتصال المرئي ثنائي الاتجاه (صوت وصورة 1:1) عبر Agora RTC.
+   * يبدأ الاتصال المرئي ثنائي الاتجاه (صوت وصورة 1:1) عبر LiveKit RTC.
 5. **تجديد التوكن أثناء الحصة (Keep-Alive):**
-   * قبل انقضاء صلاحية التوكن (أو عند إشعار SDK `token-privilege-will-expire`)، يطلب الفرونت `POST /api/v1/live-classes/{sessionId}/token` لتجديده بسلاسة دون انقطاع الصوت أو الفيديو.
+   * صلاحية التوكن الصادرة من السيرفر (`TokenLifetimeMinutes`) أطول من مدة الحصة الافتراضية، فلا يلزم تجديد أثناءها.
+   * عند الحاجة (حصة طويلة أو إعادة اتصال)، يستدعي الفرونت `POST /api/v1/live-classes/{sessionId}/token` ويستخدم التوكن الجديد عند أول اتصال لاحق — مكتبة `livekit-client` تجدّد التوكن داخلياً بعد ذلك ولا تحتاج منه شيئاً أثناء الجلسة.
 6. **مغادرة الحصة:**
    * عند إغلاق الطالب للمكالمة، يتم استدعاء `POST /api/v1/live-classes/{sessionId}/leave` لتوثيق وقت خروجه بدقة.
 
@@ -171,7 +172,7 @@ graph TD
 
 | المسار (Route) | الطريقة (Method) | الصلاحية (Role) | الوظيفة |
 |---|---|---|---|
-| `api/v1/live-classes/config` | `GET` | متاح للجميع (Anonymous) | إرجاع `appId` وحالة تفعيل Agora و `joinLeadMinutes` |
+| `api/v1/live-classes/config` | `GET` | متاح للجميع (Anonymous) | إرجاع `url` وحالة تهيئة المزوِّد `enabled` و `joinLeadMinutes` |
 | `api/v1/live-classes/{sessionId}/start` | `POST` | `Instructor` فقط | بدء الحصة وتغيير الحالة لـ `Live` وإصدار توكن المدرس |
 | `api/v1/live-classes/{sessionId}/join` | `POST` | `Instructor`, `Learner` | انضمام المتعلم أو المدرس للحصة وإصدار توكن RTC |
 | `api/v1/live-classes/{sessionId}/leave` | `POST` | `Instructor`, `Learner` | توثيق خروج المشارك وتحديث `LeftAtUtc` |
@@ -183,12 +184,12 @@ graph TD
 
 ## 5. دليل الربط في الفرونت إند (Frontend Integration Checklist)
 
-1. **تثبيت مكتبة Agora Web SDK:**
+1. **تثبيت مكتبة LiveKit Web SDK:**
    ```bash
-   npm install agora-rtc-sdk-ng
+   npm install livekit-client
    ```
 2. **عند تحميل تطبيق الفرونت:**
-   * استدعاء `GET /api/v1/live-classes/config` للحصول على الـ `appId`.
+   * استدعاء `GET /api/v1/live-classes/config` للحصول على الـ `url` والتأكد أن `enabled == true`.
 3. **في صفحة الحصة:**
    * استدعاء `GET /api/v1/live-classes/{sessionId}` لمعرفة حالة الغرفة وما إذا كان `canJoinNow == true`.
 4. **عند الضغط على "بدء الحصة" (للمدرس) أو "انضمام" (للطالب):**
@@ -198,48 +199,50 @@ graph TD
      ```json
      {
        "roomId": "guid",
-       "channelName": "live-3f8a4...",
+       "url": "wss://xxxx.livekit.cloud",
+       "roomName": "live-3f8a4...",
+       "identity": "194827103",
        "uid": 194827103,
-       "token": "007eJxTY...",
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
        "expiresAtUtc": "2026-11-09T11:00:00Z",
        "role": "Host",
        "isHost": true
      }
      ```
-5. **بدء مكالمة Agora في المتصفح:**
+5. **بدء مكالمة LiveKit في المتصفح:**
    ```javascript
-   const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-   
-   // الانضمام بنفس الـ uid الموجود في التوكن بالضبط
-   await client.join(appId, channelName, token, uid);
-   
-   // إنشاء مسارات الصوت والصورة المحلية ونشرها
-   const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-   const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-   await client.publish([localAudioTrack, localVideoTrack]);
-   
+   import { Room, RoomEvent, Track } from "livekit-client";
+
+   const room = new Room({ adaptiveStream: true, dynacast: true });
+
+   // الاتصال — التوكن هو الذي يحدد الغرفة والهوية، لا حاجة لتمرير أيهما
+   await room.connect(url, token);
+
+   // تشغيل الكاميرا والميكروفون المحليين ونشرهما
+   await room.localParticipant.setMicrophoneEnabled(true);
+   await room.localParticipant.setCameraEnabled(true);
+
    // الاستماع للطرف الآخر وعرضه
-   client.on("user-published", async (user, mediaType) => {
-     await client.subscribe(user, mediaType);
-     if (mediaType === "video") {
-       user.videoTrack.play("remote-video-container");
-     }
-     if (mediaType === "audio") {
-       user.audioTrack.play();
+   room.on(RoomEvent.TrackSubscribed, (track) => {
+     const el = track.attach();
+     if (track.kind === Track.Kind.Video) {
+       document.getElementById("remote-video-container").appendChild(el);
+     } else {
+       document.getElementById("audio-holder").appendChild(el);
      }
    });
-   
-   // التعامل مع اقتراب انتهاء التوكن
-   client.on("token-privilege-will-expire", async () => {
-     const res = await api.post(`/api/v1/live-classes/${sessionId}/token`);
-     await client.renewToken(res.data.token);
+   room.on(RoomEvent.TrackUnsubscribed, (track) => {
+     const removed = track.detach();
+     (Array.isArray(removed) ? removed : [removed]).forEach((e) => e?.remove());
    });
+
+   // لا يوجد حدث لتجديد التوكن في livekit-client 2.x:
+   // السيرفر يرسل توكناً مجدداً داخل قناة الإشارة والمكتبة تستخدمه تلقائياً عند إعادة الاتصال.
+   // التجديد اليدوي عبر /token يُستخدم فقط قبل انضمام جديد أو عند بناء اتصال من جديد.
    ```
 6. **عند الخروج:**
    ```javascript
-   localAudioTrack.close();
-   localVideoTrack.close();
-   await client.leave();
+   await room.disconnect();
    await api.post(`/api/v1/live-classes/${sessionId}/leave`);
    ```
 

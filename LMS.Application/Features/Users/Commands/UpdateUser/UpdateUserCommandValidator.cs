@@ -114,7 +114,7 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
                 var existingUser = await _userManager.FindByEmailAsync(email);
                 existingUser ??= await _userManager.FindByNameAsync(email);
 
-                if (existingUser is not null && existingUser.Id != command.Id)
+                if (existingUser is not null && existingUser.Id != command.Id && !existingUser.IsDeleted)
                 {
                     context.AddFailure(
                         nameof(UpdateUserCommand.Email),

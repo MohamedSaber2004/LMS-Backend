@@ -19,15 +19,18 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILmsDbContext _context;
+        private readonly IUserAccountDeletionService _accountDeletionService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public UpdateUserCommandHandler(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
+            IUserAccountDeletionService accountDeletionService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _context = context;
+            _accountDeletionService = accountDeletionService;
             _localizer = localizer;
         }
 
@@ -39,6 +42,16 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
             var email = request.Email?.Trim();
             var emailChanged = email is not null
                 && !string.Equals(user.Email, email, StringComparison.OrdinalIgnoreCase);
+
+            if (emailChanged && email is not null)
+            {
+                var existingSoftDeleted = await _userManager.FindByEmailAsync(email);
+                existingSoftDeleted ??= await _userManager.FindByNameAsync(email);
+                if (existingSoftDeleted is not null && existingSoftDeleted.Id != user.Id && existingSoftDeleted.IsDeleted)
+                {
+                    await _accountDeletionService.HardDeleteUserAsync(existingSoftDeleted.Id, cancellationToken);
+                }
+            }
             var wasActive = user.IsActive;
             var deactivated = wasActive && request.IsActive == false;
 

@@ -111,7 +111,7 @@ namespace LMS.Application
             services.Configure<IdentityOptions>(configuration.GetSection(nameof(IdentityOptions)));
             services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
             services.Configure<GoogleAuthSettings>(configuration.GetSection(nameof(GoogleAuthSettings)));
-            services.Configure<AgoraSettings>(configuration.GetSection(AgoraSettings.SectionName));
+            services.Configure<LiveKitSettings>(configuration.GetSection(LiveKitSettings.SectionName));
             services.Configure<UploadPathsOptions>(configuration.GetSection(UploadPathsOptions.SectionName));
             services.Configure<VideoCompressionOptions>(configuration.GetSection(VideoCompressionOptions.SectionName));
             services.Configure<SchedulingOptions>(configuration.GetSection(SchedulingOptions.SectionName));
@@ -217,6 +217,8 @@ namespace LMS.Application
             services.AddTransient<IValidator<LMS.Application.Features.LiveClasses.Commands.LeaveLiveClass.LeaveLiveClassCommand>, LMS.Application.Features.LiveClasses.Commands.LeaveLiveClass.LeaveLiveClassCommandValidator>();
             services.AddTransient<IValidator<LMS.Application.Features.LiveClasses.Commands.EndLiveClass.EndLiveClassCommand>, LMS.Application.Features.LiveClasses.Commands.EndLiveClass.EndLiveClassCommandValidator>();
             services.AddTransient<IValidator<LMS.Application.Features.LiveClasses.Commands.RefreshToken.RefreshTokenCommand>, LMS.Application.Features.LiveClasses.Commands.RefreshToken.RefreshTokenCommandValidator>();
+
+            services.AddScoped<IUserAccountDeletionService, UserAccountDeletionService>();
 
             return services;
         }

@@ -17,21 +17,31 @@ namespace LMS.Application.Features.Users.Commands.AddUser
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILmsDbContext _context;
+        private readonly IUserAccountDeletionService _accountDeletionService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public AddUserCommandHandler(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
+            IUserAccountDeletionService accountDeletionService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _context = context;
+            _accountDeletionService = accountDeletionService;
             _localizer = localizer;
         }
 
         public async Task<Result<UserDto>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             var email = request.Email.Trim();
+
+            var existingUser = await _userManager.FindByEmailAsync(email);
+            existingUser ??= await _userManager.FindByNameAsync(email);
+            if (existingUser is not null && existingUser.IsDeleted)
+            {
+                await _accountDeletionService.HardDeleteUserAsync(existingUser.Id, cancellationToken);
+            }
 
             var user = new ApplicationUser
             {

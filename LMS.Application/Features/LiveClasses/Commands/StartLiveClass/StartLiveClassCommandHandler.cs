@@ -21,18 +21,18 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
     {
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IAgoraTokenService _agoraTokenService;
+        private readonly ILiveClassTokenService _liveClassTokenService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public StartLiveClassCommandHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
-            IAgoraTokenService agoraTokenService,
+            ILiveClassTokenService liveClassTokenService,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
             _currentUserService = currentUserService;
-            _agoraTokenService = agoraTokenService;
+            _liveClassTokenService = liveClassTokenService;
             _localizer = localizer;
         }
 
@@ -40,11 +40,11 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
             StartLiveClassCommand request,
             CancellationToken cancellationToken)
         {
-            if (!_agoraTokenService.IsConfigured)
+            if (!_liveClassTokenService.IsConfigured)
             {
                 throw new ValidationException(new List<ValidationFailure>
                 {
-                    new("Agora", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
+                    new("LiveStreaming", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
                 });
             }
 
@@ -69,7 +69,7 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
             }
 
             var now = DateTime.UtcNow;
-            var joinOpensAt = session.StartsAtUtc.AddMinutes(-_agoraTokenService.JoinLeadMinutes);
+            var joinOpensAt = session.StartsAtUtc.AddMinutes(-_liveClassTokenService.JoinLeadMinutes);
             var joinClosesAt = session.EndsAtUtc.AddMinutes(30);
 
             if (now < joinOpensAt)
@@ -108,26 +108,32 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
                 room.Start(now);
             }
 
-            uint agoraUid = _agoraTokenService.GenerateAgoraUid(currentUserId);
+            uint participantUid = _liveClassTokenService.GenerateParticipantUid(currentUserId);
 
             var participant = LiveRoomParticipant.Create(
                 room.Id,
                 currentUserId,
                 ParticipantRole.Host,
-                agoraUid,
+                participantUid,
                 now);
 
             await _context.LiveRoomParticipants.AddAsync(participant, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            string token = _agoraTokenService.GenerateRtcToken(room.ChannelName, agoraUid, isPublisher: true);
-            var expiresAtUtc = now.AddMinutes(1440);
+            string token = _liveClassTokenService.GenerateAccessToken(
+                room.ChannelName,
+                participantUid,
+                canPublish: true);
+
+            var expiresAtUtc = now.AddMinutes(_liveClassTokenService.TokenLifetimeMinutes);
 
             var dto = new LiveClassTokenDto
             {
                 RoomId = room.Id,
-                ChannelName = room.ChannelName,
-                Uid = agoraUid,
+                Url = _liveClassTokenService.Url,
+                RoomName = room.ChannelName,
+                Identity = participantUid.ToString(),
+                Uid = participantUid,
                 Token = token,
                 ExpiresAtUtc = expiresAtUtc,
                 Role = ParticipantRole.Host.ToString(),

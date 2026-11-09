@@ -20,29 +20,29 @@ namespace LMS.Application.Features.Sessions.Commands.ConfirmSession
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly IStringLocalizer<Messages> _localizer;
-        private readonly IAgoraTokenService _agoraTokenService;
+        private readonly ILiveClassTokenService _liveClassTokenService;
 
         public ConfirmSessionCommandHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
             IStringLocalizer<Messages> localizer,
-            IAgoraTokenService agoraTokenService)
+            ILiveClassTokenService liveClassTokenService)
         {
             _context = context;
             _currentUserService = currentUserService;
             _localizer = localizer;
-            _agoraTokenService = agoraTokenService;
+            _liveClassTokenService = liveClassTokenService;
         }
 
         public async Task<Result<SessionDto>> Handle(
             ConfirmSessionCommand request,
             CancellationToken cancellationToken)
         {
-            if (!_agoraTokenService.IsConfigured)
+            if (!_liveClassTokenService.IsConfigured)
             {
                 throw new ValidationException(new List<ValidationFailure>
                 {
-                    new("Agora", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
+                    new("LiveStreaming", _localizer[LocalizationKeys.LiveClasses.ServiceNotConfigured].Value)
                 });
             }
 

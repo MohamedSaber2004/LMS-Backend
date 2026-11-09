@@ -25,6 +25,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         private readonly IFileValidator _fileValidator;
         private readonly IVideoValidator _videoValidator;
         private readonly IEmailService _emailService;
+        private readonly IUserAccountDeletionService _accountDeletionService;
         private readonly EmailSettings _emailSettings;
         private readonly IStringLocalizer<Messages> _localizer;
 
@@ -34,6 +35,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             IFileValidator fileValidator,
             IVideoValidator videoValidator,
             IEmailService emailService,
+            IUserAccountDeletionService accountDeletionService,
             IOptions<EmailSettings> emailOptions,
             IStringLocalizer<Messages> localizer)
         {
@@ -42,6 +44,7 @@ namespace LMS.Application.Features.Authentication.Commands.Register
             _fileValidator = fileValidator;
             _videoValidator = videoValidator;
             _emailService = emailService;
+            _accountDeletionService = accountDeletionService;
             _emailSettings = emailOptions?.Value ?? new EmailSettings();
             _localizer = localizer;
         }
@@ -50,6 +53,14 @@ namespace LMS.Application.Features.Authentication.Commands.Register
         {
             var isInstructor = request.Role == UserType.Instructor;
             var email = request.Email.Trim();
+
+            var existingUser = await _userManager.FindByEmailAsync(email);
+            existingUser ??= await _userManager.FindByNameAsync(email);
+            if (existingUser is not null && existingUser.IsDeleted)
+            {
+                await _accountDeletionService.HardDeleteUserAsync(existingUser.Id, cancellationToken);
+            }
+
             var uploadedFiles = new List<UploadedFile>();
 
             if (isInstructor)

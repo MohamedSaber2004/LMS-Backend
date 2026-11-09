@@ -5,10 +5,10 @@ using LMS.Application.Common.Options;
 using LMS.Domain.Entities;
 using LMS.Domain.Repositories.Interfaces.Base;
 using LMS.Infrastructure.Repositories.Implementations.Base;
-using LMS.Infrastructure.Services.Agora;
 using LMS.Infrastructure.Services.Attachments;
 using LMS.Infrastructure.Services.Authentication;
 using LMS.Infrastructure.Services.Email;
+using LMS.Infrastructure.Services.LiveKit;
 using LMS.Infrastructure.Services.Scheduling;
 using LMS.Infrastructure.Services.Security;
 using LMS.Persistence;
@@ -51,7 +51,7 @@ namespace LMS.Infrastructure
             services.AddScoped<IAvailabilityMaterializationService, AvailabilityMaterializationService>();
             services.AddScoped<ISessionLifecycleService, SessionLifecycleService>();
             services.AddScoped<IVacationBackgroundService, VacationBackgroundService>();
-            services.AddScoped<IAgoraTokenService, AgoraTokenService>();
+            services.AddScoped<ILiveClassTokenService, LiveKitTokenService>();
 
             var identitySettings = configuration.GetSection("IdentityOptions").Get<LMS.Application.Common.Options.IdentityOptions>()
                 ?? new LMS.Application.Common.Options.IdentityOptions();

@@ -11,7 +11,7 @@ using LMS.Application.Features.LiveClasses.Commands.LeaveLiveClass;
 using LMS.Application.Features.LiveClasses.Commands.RefreshToken;
 using LMS.Application.Features.LiveClasses.Commands.StartLiveClass;
 using LMS.Application.Features.LiveClasses.DTOs;
-using LMS.Application.Features.LiveClasses.Queries.GetAgoraConfig;
+using LMS.Application.Features.LiveClasses.Queries.GetLiveClassConfig;
 using LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession;
 using LMS.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -26,19 +26,19 @@ namespace LMS.API.Controllers.V1
     public class LiveClassesController : BaseController
     {
         /// <summary>
-        /// Get Agora configuration parameters (AppId, enabled status, join lead time).
+        /// Get live class provider configuration parameters (server URL, enabled status, join lead time).
         /// </summary>
         [HttpGet(ApiRoutes.LiveClasses.Config)]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(ApiResponse<AgoraConfigDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<LiveClassConfigDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetConfig(CancellationToken cancellationToken)
         {
-            var result = await Mediator.Send(new GetAgoraConfigQuery(), cancellationToken);
+            var result = await Mediator.Send(new GetLiveClassConfigQuery(), cancellationToken);
             return FromResult(result);
         }
 
         /// <summary>
-        /// Start the live class room and acquire Agora publisher token (Instructor only).
+        /// Start the live class room and acquire a publisher access token (Instructor only).
         /// </summary>
         [HttpPost(ApiRoutes.LiveClasses.Start)]
         [RoleAuthorize(UserType.Instructor)]
@@ -55,7 +55,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Join an ongoing or upcoming live class and acquire Agora token (Instructor or Learner).
+        /// Join an ongoing or upcoming live class and acquire an access token (Instructor or Learner).
         /// </summary>
         [HttpPost(ApiRoutes.LiveClasses.Join)]
         [RoleAuthorize(UserType.Instructor, UserType.Learner)]
@@ -119,7 +119,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Refresh the Agora RTC token during a live call before expiration.
+        /// Refresh the RTC access token during a live call before expiration.
         /// </summary>
         [HttpPost(ApiRoutes.LiveClasses.Token)]
         [RoleAuthorize(UserType.Instructor, UserType.Learner)]

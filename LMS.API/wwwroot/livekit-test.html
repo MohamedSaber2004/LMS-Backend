@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMS Live Class - تجربة البث المباشر LiveKit</title>
+  <script src="https://cdn.jsdelivr.net/npm/livekit-client@2.23.0/dist/livekit-client.umd.js"></script>
+  <style>
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: #0f172a; color: #f8fafc; margin: 0; padding: 24px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    .card { background: #1e293b; border-radius: 16px; padding: 24px; width: 100%; max-width: 900px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    h1 { margin-top: 0; color: #38bdf8; font-size: 24px; text-align: center; }
+    .grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .full-width { grid-column: span 2; }
+    label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+    input { width: 100%; padding: 10px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; }
+    input:focus { outline: none; border-color: #38bdf8; }
+    .btn-group { display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; }
+    button { padding: 12px 24px; font-size: 15px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .btn-join { background: #10b981; color: white; }
+    .btn-join:hover { background: #059669; }
+    .btn-leave { background: #ef4444; color: white; display: none; }
+    .btn-leave:hover { background: #dc2626; }
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; min-height: 320px; }
+    .video-box { background: #020617; border-radius: 12px; overflow: hidden; position: relative; height: 320px; border: 2px solid #334155; display: flex; align-items: center; justify-content: center; }
+    .video-box video { width: 100%; height: 100%; object-fit: cover; }
+    .video-label { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 6px; font-size: 12px; z-index: 10; }
+    .status-text { text-align: center; font-size: 14px; color: #38bdf8; min-height: 20px; margin-bottom: 12px; }
+    .hint { font-size: 12px; color: #64748b; text-align: center; margin-top: 16px; line-height: 1.8; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🎥 تجربة قاعة البث المباشر (LiveKit Live Class Test)</h1>
+    <div class="status-text" id="statusText">جاهز للاتصال بالقاعة...</div>
+
+    <div class="grid-form">
+      <div>
+        <label>Server URL (من /api/v1/live-classes/config):</label>
+        <input type="text" id="url" autocomplete="off" placeholder="wss://xxxx.livekit.cloud" />
+      </div>
+      <div>
+        <label>Room Name (اسم القاعة):</label>
+        <input type="text" id="room" autocomplete="off" placeholder="live-.............." />
+      </div>
+      <div>
+        <label>Identity (المعرف الرقمي من التوكن):</label>
+        <input type="text" id="identity" autocomplete="off" placeholder="3356758711" />
+      </div>
+      <div>
+        <label>Role (الدور):</label>
+        <input type="text" id="role" value="Host" readonly style="background:#1e293b; color:#94a3b8;" />
+      </div>
+      <div class="full-width">
+        <label>Token (رمز الدخول الصادر من السيرفر):</label>
+        <input type="text" id="token" autocomplete="off" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn-join" id="btnJoin" onclick="joinRoom()">🚀 انضمام للقاعة وتشغيل الكاميرا</button>
+      <button class="btn-leave" id="btnLeave" onclick="leaveRoom()">🛑 مغادرة القاعة</button>
+    </div>
+
+    <div class="video-grid">
+      <div class="video-box" id="localVideoContainer">
+        <div class="video-label">كاميرتي (Local Stream)</div>
+        <span style="color:#64748b;" id="localPlaceholder">الكاميرا متوقفة</span>
+      </div>
+      <div class="video-box" id="remoteVideoContainer">
+        <div class="video-label">الطرف الآخر (Remote Stream)</div>
+        <span style="color:#64748b;" id="remotePlaceholder">في انتظار انضمام المشترك الآخر...</span>
+      </div>
+    </div>
+
+    <div class="hint">
+      القيم تُقرأ من الـ query string أيضاً: <code>?url=&amp;room=&amp;identity=&amp;token=</code><br />
+      التوكن هو الذي يحدد القاعة والمعرف — اسم القاعة هنا للعرض فقط.
+    </div>
+  </div>
+
+  <div id="audioHolder" style="display:none"></div>
+
+  <script>
+    const { Room, RoomEvent, Track } = LivekitClient;
+    let room = null;
+
+    function setText(text) {
+      document.getElementById("statusText").innerText = text;
+    }
+
+    function prefillFromQuery() {
+      const q = new URLSearchParams(location.search);
+      for (const key of ["url", "room", "identity", "token", "role"]) {
+        const value = q.get(key);
+        if (value) document.getElementById(key).value = value;
+      }
+    }
+
+    function attachLocal(publication) {
+      const container = document.getElementById("localVideoContainer");
+      if (publication.kind !== Track.Kind.Video || !publication.track) return;
+      document.getElementById("localPlaceholder").style.display = "none";
+      container.appendChild(publication.track.attach());
+    }
+
+    async function joinRoom() {
+      const url = document.getElementById("url").value.trim();
+      const token = document.getElementById("token").value.trim().replace(/^bearer\s+/i, "");
+      const identity = document.getElementById("identity").value.trim();
+
+      if (!url || !token) {
+        setText("أدخل الـ Server URL والـ Token أولاً.");
+        return;
+      }
+
+      try {
+        setText("جاري إنشاء الاتصال بسحابة LiveKit...");
+
+        room = new Room({ adaptiveStream: true, dynacast: true });
+
+        room.on(RoomEvent.LocalTrackPublished, (publication) => {
+          attachLocal(publication);
+          setText("تم نشر الكاميرا والمايكروفون بنجاح (Live) ✅");
+        });
+
+        room.on(RoomEvent.TrackSubscribed, (track, publication, participant) => {
+          if (track.kind === Track.Kind.Video) {
+            document.getElementById("remotePlaceholder").style.display = "none";
+            document.getElementById("remoteVideoContainer").appendChild(track.attach());
+          } else if (track.kind === Track.Kind.Audio) {
+            document.getElementById("audioHolder").appendChild(track.attach());
+          }
+          setText(`انضم ${participant.identity} إلى القاعة.`);
+        });
+
+        room.on(RoomEvent.TrackUnsubscribed, (track) => {
+          const removed = track.detach();
+          (Array.isArray(removed) ? removed : [removed]).forEach(el => el && el.remove());
+          if (track.kind === Track.Kind.Video) {
+            document.getElementById("remotePlaceholder").style.display = "block";
+          }
+        });
+
+        room.on(RoomEvent.Disconnected, () => setText("انقطع الاتصال بالقاعة."));
+        room.on(RoomEvent.Reconnecting, () => setText("إعادة الاتصال بالقاعة..."));
+        room.on(RoomEvent.Reconnected, () => setText("تمت إعادة الاتصال ✅"));
+
+        await room.connect(url, token);
+        setText(`تم الانضمام بهوية ${room.localParticipant.identity ?? identity}. جاري فتح الكاميرا...`);
+
+        await room.localParticipant.setMicrophoneEnabled(true);
+        await room.localParticipant.setCameraEnabled(true);
+
+        document.getElementById("btnJoin").style.display = "none";
+        document.getElementById("btnLeave").style.display = "inline-block";
+
+        const cameraPublication = room.localParticipant.getTrackPublication(Track.Source.Camera);
+        if (cameraPublication && !document.getElementById("localVideoContainer").querySelector("video")) {
+          attachLocal(cameraPublication);
+        }
+      } catch (err) {
+        console.error("Error joining room:", err);
+        setText(`خطأ في الانضمام: ${err.message || err}`);
+        await leaveRoom();
+      }
+    }
+
+    async function leaveRoom() {
+      try {
+        if (room) await room.disconnect();
+      } catch (err) {
+        console.warn("disconnect error:", err);
+      }
+
+      room = null;
+      document.getElementById("localVideoContainer").querySelectorAll("video").forEach(v => v.remove());
+      document.getElementById("remoteVideoContainer").querySelectorAll("video").forEach(v => v.remove());
+      document.getElementById("audioHolder").innerHTML = "";
+      document.getElementById("localPlaceholder").style.display = "block";
+      document.getElementById("remotePlaceholder").style.display = "block";
+      document.getElementById("btnJoin").style.display = "inline-block";
+      document.getElementById("btnLeave").style.display = "none";
+      setText("تمت مغادرة القاعة.");
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      prefillFromQuery();
+
+      try {
+        const res = await fetch("/api/v1/live-classes/config");
+        const body = await res.json();
+        const data = body.data ?? body;
+        if (data.enabled && data.url) {
+          document.getElementById("url").value = data.url;
+          setText(`الخدمة مهيأة — المزوِّد جاهز على ${data.url}`);
+        } else {
+          setText("الخدمة غير مهيأة في appsettings (أدخل بيانات LiveKit أولاً).");
+        }
+      } catch (err) {
+        console.warn("config fetch failed:", err);
+      }
+    });
+  </script>
+</body>
+</html>
