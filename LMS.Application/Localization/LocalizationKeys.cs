@@ -376,6 +376,7 @@ namespace LMS.Application.Localization
             public const string LessonStartsAtRequired = "Courses.LessonStartsAtRequired";
             public const string LessonEndsAtRequired = "Courses.LessonEndsAtRequired";
             public const string LessonTimeRangeInvalid = "Courses.LessonTimeRangeInvalid";
+            public const string LessonSessionWindowInPast = "Courses.LessonSessionWindowInPast";
         }
 
         public static class Countries

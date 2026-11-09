@@ -1,6 +1,8 @@
 using LMS.Application.Common.Interfaces;
+using LMS.Application.Common.Options;
 using LMS.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Infrastructure.Services.Scheduling
 {
@@ -9,20 +11,22 @@ namespace LMS.Infrastructure.Services.Scheduling
         private const int BatchSize = 500;
 
         private readonly ILmsDbContext _context;
+        private readonly SchedulingOptions _options;
 
-        public SessionLifecycleService(ILmsDbContext context)
+        public SessionLifecycleService(ILmsDbContext context, IOptions<SchedulingOptions> options)
         {
             _context = context;
+            _options = options.Value;
         }
 
         public async Task<int> ExpireElapsedSessionsAsync(CancellationToken cancellationToken = default)
         {
             var now = DateTime.UtcNow;
+            var confirmedCutoff = now.AddMinutes(-_options.JoinTailMinutes);
 
             var elapsed = await _context.Sessions
-                .Where(session => (session.Status == SessionStatus.Pending
-                                || session.Status == SessionStatus.Confirmed)
-                    && session.EndsAtUtc <= now)
+                .Where(session => (session.Status == SessionStatus.Pending && session.EndsAtUtc <= now)
+                                || (session.Status == SessionStatus.Confirmed && session.EndsAtUtc <= confirmedCutoff))
                 .OrderBy(session => session.EndsAtUtc)
                 .Take(BatchSize)
                 .ToListAsync(cancellationToken);
@@ -74,12 +78,13 @@ namespace LMS.Infrastructure.Services.Scheduling
         public async Task<int> CleanupOrphanedLiveRoomsAsync(CancellationToken cancellationToken = default)
         {
             var now = DateTime.UtcNow;
+            var cutoff = now.AddMinutes(-_options.JoinTailMinutes);
 
             var orphanedRooms = await _context.LiveRooms
                 .Include(r => r.Session)
                 .Include(r => r.Participants)
                 .Where(r => (r.Status == LiveRoomStatus.Live || r.Status == LiveRoomStatus.NotStarted)
-                         && r.Session.EndsAtUtc <= now)
+                         && r.Session.EndsAtUtc <= cutoff)
                 .Take(BatchSize)
                 .ToListAsync(cancellationToken);
 

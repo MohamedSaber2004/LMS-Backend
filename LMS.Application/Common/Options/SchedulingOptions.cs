@@ -4,7 +4,11 @@ namespace LMS.Application.Common.Options
     {
         public const string SectionName = "Scheduling";
 
+        public const int DefaultJoinTailMinutes = 30;
+
         public int DaysAhead { get; set; } = 30;
+
+        public int JoinTailMinutes { get; set; } = DefaultJoinTailMinutes;
 
         public int MaxDaysAhead { get; set; } = 365;
 

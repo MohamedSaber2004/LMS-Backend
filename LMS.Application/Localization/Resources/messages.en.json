@@ -352,7 +352,8 @@
     "LessonSessionScheduledSuccess": "Live session for lesson scheduled successfully.",
     "LessonStartsAtRequired": "Start time is required.",
     "LessonEndsAtRequired": "End time is required.",
-    "LessonTimeRangeInvalid": "End time must be after start time."
+    "LessonTimeRangeInvalid": "End time must be after start time.",
+    "LessonSessionWindowInPast": "The lesson session window must be in the future. You sent start {0} UTC and end {1} UTC."
   },
   "Countries": {
     "CountryEnNameRequired": "Country English name is required.",
@@ -400,14 +401,14 @@
     "ServiceNotConfigured": "The live class service is not configured.",
     "OnlyInstructorCanStart": "Only the assigned instructor can start this live class.",
     "OnlyInstructorCanEnd": "Only the host instructor can end this live class.",
-    "SessionMustBeConfirmed": "Session must be confirmed before accessing live class.",
+    "SessionMustBeConfirmed": "Session must be confirmed before accessing live class. Current status: {0}.",
     "JoinWindowNotOpen": "Live class cannot be joined yet. It opens {0} UTC.",
-    "SessionWindowPassed": "The scheduled time window for this session has already passed.",
+    "SessionWindowPassed": "The scheduled time window for this session has already passed. It closed {0} UTC.",
     "ClassAlreadyEnded": "This live class has already ended.",
     "NotAuthorizedToJoin": "You are not authorized to join this live class.",
     "NotAuthorizedToView": "You are not authorized to view this live class session.",
     "NotAuthorizedToRefreshToken": "You are not authorized to refresh token for this live class.",
-    "RoomNotActive": "Cannot refresh token for a non-active live class.",
+    "RoomNotActive": "Cannot refresh token for a non-active live class. Room status: {0}.",
     "RoomNotFound": "No active live room found.",
     "CannotCancelWhileLive": "Cannot cancel a session while its live class is in progress.",
     "CannotRescheduleStartedOrEnded": "Cannot reschedule a session after its live class has started or ended.",

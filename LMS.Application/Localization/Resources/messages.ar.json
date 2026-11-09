@@ -352,7 +352,8 @@
     "LessonSessionScheduledSuccess": "تم جدولة الحصة المباشرة للدرس بنجاح.",
     "LessonStartsAtRequired": "موعد بداية الحصة مطلوب.",
     "LessonEndsAtRequired": "موعد نهاية الحصة مطلوب.",
-    "LessonTimeRangeInvalid": "موعد نهاية الحصة يجب أن يكون بعد موعد البداية."
+    "LessonTimeRangeInvalid": "موعد نهاية الحصة يجب أن يكون بعد موعد البداية.",
+    "LessonSessionWindowInPast": "موعد بداية ونهاية الحصة يجب أن يكونا في المستقبل. لقد أرسلت بداية {0} UTC ونهاية {1} UTC."
   },
   "Countries": {
     "CountryEnNameRequired": "Country English name is required.",
@@ -400,14 +401,14 @@
     "ServiceNotConfigured": "خدمة البث الحي غير مهيأة.",
     "OnlyInstructorCanStart": "يمكن للمدرس المعين فقط بدء هذه الحصة المباشرة.",
     "OnlyInstructorCanEnd": "يمكن لمدرس الحصة فقط إنهاء هذه الحصة المباشرة.",
-    "SessionMustBeConfirmed": "يجب تأكيد الحصة أولاً قبل الدخول إلى البث المباشر.",
+    "SessionMustBeConfirmed": "يجب تأكيد الحصة أولاً قبل الدخول إلى البث المباشر. الحالة الحالية: {0}.",
     "JoinWindowNotOpen": "لا يمكن الانضمام للحصة بعد. تفتح الغرفة في {0} UTC.",
-    "SessionWindowPassed": "انتهت الفترة الزمنية المحددة لهذه الحصة بالفعل.",
+    "SessionWindowPassed": "انتهت الفترة الزمنية المحددة لهذه الحصة بالفعل. لقد انتهت في {0} UTC.",
     "ClassAlreadyEnded": "هذه الحصة المباشرة قد انتهت بالفعل.",
     "NotAuthorizedToJoin": "غير مصرح لك بالانضمام إلى هذه الحصة المباشرة.",
     "NotAuthorizedToView": "غير مصرح لك بعرض بيانات هذه الحصة المباشرة.",
     "NotAuthorizedToRefreshToken": "غير مصرح لك بتجديد التوكن لهذه الحصة المباشرة.",
-    "RoomNotActive": "لا يمكن تجديد التوكن لقاعة بث غير نشطة.",
+    "RoomNotActive": "لا يمكن تجديد التوكن لقاعة بث غير نشطة. حالة القاعة: {0}.",
     "RoomNotFound": "لم يتم العثور على قاعة بث نشطة.",
     "CannotCancelWhileLive": "لا يمكن إلغاء الحصة أثناء استمرار البث المباشر.",
     "CannotRescheduleStartedOrEnded": "لا يمكن إعادة جدولة الحصة بعد بدء أو انتهاء قاعة البث المباشر.",

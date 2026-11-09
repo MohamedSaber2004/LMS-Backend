@@ -44,6 +44,8 @@ namespace LMS.Application.Features.Courses.Commands.Admin.UpdateLesson
             var lesson = await _context.Lessons
                 .Include(item => item.QuizQuestions)
                 .ThenInclude(question => question.Options)
+                .Include(item => item.Session)
+                .ThenInclude(session => session!.LiveRoom)
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Courses.LessonNotFound);
 

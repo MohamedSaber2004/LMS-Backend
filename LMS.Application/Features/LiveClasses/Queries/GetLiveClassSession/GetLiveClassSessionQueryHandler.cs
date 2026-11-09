@@ -6,12 +6,14 @@ using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
+using LMS.Application.Common.Options;
 using LMS.Application.Features.LiveClasses.DTOs;
 using LMS.Application.Localization;
 using LMS.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
 {
@@ -20,17 +22,20 @@ namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly ILiveClassTokenService _liveClassTokenService;
+        private readonly SchedulingOptions _scheduling;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public GetLiveClassSessionQueryHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
             ILiveClassTokenService liveClassTokenService,
+            IOptions<SchedulingOptions> schedulingOptions,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
             _currentUserService = currentUserService;
             _liveClassTokenService = liveClassTokenService;
+            _scheduling = schedulingOptions.Value;
             _localizer = localizer;
         }
 
@@ -65,7 +70,7 @@ namespace LMS.Application.Features.LiveClasses.Queries.GetLiveClassSession
             var now = DateTime.UtcNow;
             int leadMinutes = _liveClassTokenService.JoinLeadMinutes;
             var joinOpensAtUtc = session.StartsAtUtc.AddMinutes(-leadMinutes);
-            var joinClosesAtUtc = session.EndsAtUtc.AddMinutes(30);
+            var joinClosesAtUtc = session.EndsAtUtc.AddMinutes(_scheduling.JoinTailMinutes);
 
             var room = session.LiveRoom;
             var roomStatus = room != null ? room.Status : LiveRoomStatus.NotStarted;

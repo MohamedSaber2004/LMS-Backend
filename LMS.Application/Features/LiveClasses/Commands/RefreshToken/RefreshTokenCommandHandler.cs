@@ -68,11 +68,19 @@ namespace LMS.Application.Features.LiveClasses.Commands.RefreshToken
                 throw new ForbiddenException(LocalizationKeys.LiveClasses.NotAuthorizedToRefreshToken);
             }
 
-            if (session.LiveRoom == null || session.LiveRoom.Status == LiveRoomStatus.Ended)
+            if (session.LiveRoom == null)
             {
                 throw new ValidationException(new List<ValidationFailure>
                 {
-                    new("Room", _localizer[LocalizationKeys.LiveClasses.RoomNotActive].Value)
+                    new("Room", _localizer[LocalizationKeys.LiveClasses.RoomNotFound].Value)
+                });
+            }
+
+            if (session.LiveRoom.Status == LiveRoomStatus.Ended)
+            {
+                throw new ValidationException(new List<ValidationFailure>
+                {
+                    new("Room", string.Format(_localizer[LocalizationKeys.LiveClasses.RoomNotActive].Value, session.LiveRoom.Status))
                 });
             }
 

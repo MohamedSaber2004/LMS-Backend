@@ -7,6 +7,7 @@ using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
+using LMS.Application.Common.Options;
 using LMS.Application.Features.LiveClasses.DTOs;
 using LMS.Application.Localization;
 using LMS.Domain.Entities;
@@ -14,6 +15,7 @@ using LMS.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
 {
@@ -22,17 +24,20 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly ILiveClassTokenService _liveClassTokenService;
+        private readonly SchedulingOptions _scheduling;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public StartLiveClassCommandHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
             ILiveClassTokenService liveClassTokenService,
+            IOptions<SchedulingOptions> schedulingOptions,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
             _currentUserService = currentUserService;
             _liveClassTokenService = liveClassTokenService;
+            _scheduling = schedulingOptions.Value;
             _localizer = localizer;
         }
 
@@ -64,13 +69,13 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
             {
                 throw new ValidationException(new List<ValidationFailure>
                 {
-                    new("Session", _localizer[LocalizationKeys.LiveClasses.SessionMustBeConfirmed].Value)
+                    new("Session", string.Format(_localizer[LocalizationKeys.LiveClasses.SessionMustBeConfirmed].Value, session.Status))
                 });
             }
 
             var now = DateTime.UtcNow;
             var joinOpensAt = session.StartsAtUtc.AddMinutes(-_liveClassTokenService.JoinLeadMinutes);
-            var joinClosesAt = session.EndsAtUtc.AddMinutes(30);
+            var joinClosesAt = session.EndsAtUtc.AddMinutes(_scheduling.JoinTailMinutes);
 
             if (now < joinOpensAt)
             {
@@ -84,7 +89,7 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
             {
                 throw new ValidationException(new List<ValidationFailure>
                 {
-                    new("Time", _localizer[LocalizationKeys.LiveClasses.SessionWindowPassed].Value)
+                    new("Time", string.Format(_localizer[LocalizationKeys.LiveClasses.SessionWindowPassed].Value, joinClosesAt.ToString("yyyy-MM-dd HH:mm")))
                 });
             }
 

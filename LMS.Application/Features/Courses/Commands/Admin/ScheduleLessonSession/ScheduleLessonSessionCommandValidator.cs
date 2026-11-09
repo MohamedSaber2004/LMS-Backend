@@ -1,4 +1,6 @@
+using System.Globalization;
 using FluentValidation;
+using FluentValidation.Validators;
 using LMS.Application.Localization;
 using Microsoft.Extensions.Localization;
 
@@ -6,8 +8,12 @@ namespace LMS.Application.Features.Courses.Commands.Admin.ScheduleLessonSession
 {
     public class ScheduleLessonSessionCommandValidator : AbstractValidator<ScheduleLessonSessionCommand>
     {
+        private readonly IStringLocalizer<Messages> _localizer;
+
         public ScheduleLessonSessionCommandValidator(IStringLocalizer<Messages> localizer)
         {
+            _localizer = localizer;
+
             RuleFor(x => x.LessonId)
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Courses.LessonIdRequired].Value);
@@ -28,7 +34,26 @@ namespace LMS.Application.Features.Courses.Commands.Admin.ScheduleLessonSession
 
             RuleFor(x => x.SeatCapacity)
                 .GreaterThan(0);
+
+            RuleFor(command => command)
+                .Custom(RejectClosedWindow);
+        }
+
+        private void RejectClosedWindow(
+            ScheduleLessonSessionCommand command,
+            CustomContext context)
+        {
+            if (command.EndsAtUtc == default || command.EndsAtUtc > DateTime.UtcNow)
+            {
+                return;
+            }
+
+            context.AddFailure(
+                nameof(ScheduleLessonSessionCommand.EndsAtUtc),
+                string.Format(
+                    _localizer[LocalizationKeys.Courses.LessonSessionWindowInPast].Value,
+                    command.StartsAtUtc.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+                    command.EndsAtUtc.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)));
         }
     }
 }
-

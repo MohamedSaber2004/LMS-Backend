@@ -1,4 +1,5 @@
 using System;
+using LMS.Application.Common.Options;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Domain.Entities;
 using LMS.Domain.Enums;
@@ -11,7 +12,8 @@ namespace LMS.Application.Features.Sessions
             Session session,
             string instructorFullName,
             SessionBooking? myBooking = null,
-            int joinLeadMinutes = 15) => new()
+            int joinLeadMinutes = 15,
+            int joinTailMinutes = SchedulingOptions.DefaultJoinTailMinutes) => new()
         {
             Id = session.Id,
             InstructorId = session.InstructorId,
@@ -36,7 +38,7 @@ namespace LMS.Application.Features.Sessions
                 CanJoinNow = session.Status == SessionStatus.Confirmed &&
                              session.LiveRoom.Status != LiveRoomStatus.Ended &&
                              DateTime.UtcNow >= session.StartsAtUtc.AddMinutes(-joinLeadMinutes) &&
-                             DateTime.UtcNow <= session.EndsAtUtc.AddMinutes(30),
+                             DateTime.UtcNow <= session.EndsAtUtc.AddMinutes(joinTailMinutes),
                 StartedAtUtc = session.LiveRoom.StartedAtUtc,
                 EndedAtUtc = session.LiveRoom.EndedAtUtc
             }

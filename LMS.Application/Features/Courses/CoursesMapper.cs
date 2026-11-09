@@ -89,6 +89,10 @@ namespace LMS.Application.Features.Courses
             Order = lesson.Order,
             IsFreeDemo = lesson.IsFreeDemo,
             IsActive = lesson.IsActive,
+            SessionId = lesson.Session?.Id,
+            SessionStartsAtUtc = lesson.Session?.StartsAtUtc,
+            SessionEndsAtUtc = lesson.Session?.EndsAtUtc,
+            LiveRoomStatus = lesson.Session?.LiveRoom?.Status,
             QuizQuestions = lesson.QuizQuestions
                 .OrderBy(question => question.Order)
                 .Select(ToAdminQuestionDto)
