@@ -9827,7 +9827,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AgoraConfigDtoApiResponse"
+                  "$ref": "#/components/schemas/LiveClassConfigDtoApiResponse"
                 },
                 "examples": {
                   "application/json": {
@@ -17883,65 +17883,6 @@
         },
         "additionalProperties": false
       },
-      "AgoraConfigDto": {
-        "required": [
-          "enabled",
-          "appId",
-          "joinLeadMinutes"
-        ],
-        "type": "object",
-        "properties": {
-          "enabled": {
-            "type": "boolean"
-          },
-          "appId": {
-            "type": "string"
-          },
-          "joinLeadMinutes": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AgoraConfigDtoApiResponse": {
-        "required": [
-          "success",
-          "errors",
-          "statusCode"
-        ],
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "isSuccess": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "errors": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "data": {
-            "$ref": "#/components/schemas/AgoraConfigDto"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApproveInstructorApplicationCommand": {
         "required": [
           "applicationId"
@@ -20470,10 +20411,70 @@
         },
         "additionalProperties": false
       },
+      "LiveClassConfigDto": {
+        "required": [
+          "enabled",
+          "url",
+          "joinLeadMinutes"
+        ],
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "url": {
+            "type": "string"
+          },
+          "joinLeadMinutes": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LiveClassConfigDtoApiResponse": {
+        "required": [
+          "success",
+          "errors",
+          "statusCode"
+        ],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "data": {
+            "$ref": "#/components/schemas/LiveClassConfigDto"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "LiveClassDetailsDto": {
         "required": [
           "sessionId",
-          "channelName",
+          "url",
+          "roomName",
           "status",
           "canJoinNow",
           "joinOpensAtUtc",
@@ -20494,7 +20495,10 @@
             "format": "uuid",
             "nullable": true
           },
-          "channelName": {
+          "url": {
+            "type": "string"
+          },
+          "roomName": {
             "type": "string"
           },
           "status": {
@@ -20582,7 +20586,9 @@
       "LiveClassTokenDto": {
         "required": [
           "roomId",
-          "channelName",
+          "url",
+          "roomName",
+          "identity",
           "uid",
           "token",
           "expiresAtUtc",
@@ -20595,7 +20601,13 @@
             "type": "string",
             "format": "uuid"
           },
-          "channelName": {
+          "url": {
+            "type": "string"
+          },
+          "roomName": {
+            "type": "string"
+          },
+          "identity": {
             "type": "string"
           },
           "uid": {
@@ -21406,7 +21418,7 @@
           "userId",
           "fullName",
           "role",
-          "agoraUid",
+          "uid",
           "joinedAtUtc",
           "isOnline"
         ],
@@ -21422,7 +21434,7 @@
           "role": {
             "type": "string"
           },
-          "agoraUid": {
+          "uid": {
             "type": "integer",
             "format": "int32"
           },
