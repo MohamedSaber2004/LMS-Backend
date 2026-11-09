@@ -58,6 +58,11 @@ namespace LMS.Application.Features.Courses.DTOs
         public bool IsFreeDemo { get; set; }
         public string VideoUrl { get; set; } = string.Empty;
         public string? StudyBookUrl { get; set; }
+        public Guid? SessionId { get; set; }
+        public DateTime? SessionStartsAtUtc { get; set; }
+        public DateTime? SessionEndsAtUtc { get; set; }
+        public LMS.Domain.Enums.LiveRoomStatus? LiveRoomStatus { get; set; }
+        public bool CanJoinLiveRoom { get; set; }
         public LessonProgressDto? Progress { get; set; }
         public IReadOnlyCollection<QuizQuestionDto> QuizQuestions { get; set; } = Array.Empty<QuizQuestionDto>();
         public QuizResultDto? LastAttempt { get; set; }

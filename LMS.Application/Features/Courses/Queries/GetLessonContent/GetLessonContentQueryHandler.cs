@@ -35,6 +35,8 @@ namespace LMS.Application.Features.Courses.Queries.GetLessonContent
             var lesson = await _context.Lessons
                 .AsNoTracking()
                 .Include(item => item.Course)
+                .Include(item => item.Session)
+                    .ThenInclude(session => session!.LiveRoom)
                 .Include(item => item.QuizQuestions)
                 .ThenInclude(question => question.Options)
                 .FirstOrDefaultAsync(
@@ -78,8 +80,13 @@ namespace LMS.Application.Features.Courses.Queries.GetLessonContent
                 Title = lesson.Title,
                 Order = lesson.Order,
                 IsFreeDemo = lesson.IsFreeDemo,
-                VideoUrl = lesson.VideoUrl,
+                VideoUrl = lesson.VideoUrl ?? string.Empty,
                 StudyBookUrl = lesson.StudyBookUrl,
+                SessionId = lesson.Session?.Id,
+                SessionStartsAtUtc = lesson.Session?.StartsAtUtc,
+                SessionEndsAtUtc = lesson.Session?.EndsAtUtc,
+                LiveRoomStatus = lesson.Session?.LiveRoom?.Status,
+                CanJoinLiveRoom = lesson.Session?.LiveRoom?.Status == LMS.Domain.Enums.LiveRoomStatus.Live,
                 Progress = progress,
                 LastAttempt = lastAttempt,
                 QuizQuestions = lesson.QuizQuestions

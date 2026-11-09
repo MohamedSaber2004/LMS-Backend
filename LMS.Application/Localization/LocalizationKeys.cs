@@ -372,6 +372,10 @@ namespace LMS.Application.Localization
             public const string AnswerOptionInvalid = "Courses.AnswerOptionInvalid";
             public const string DuplicateAnswerNotAllowed = "Courses.DuplicateAnswerNotAllowed";
             public const string QuizSubmittedSuccess = "Courses.QuizSubmittedSuccess";
+            public const string LessonSessionScheduledSuccess = "Courses.LessonSessionScheduledSuccess";
+            public const string LessonStartsAtRequired = "Courses.LessonStartsAtRequired";
+            public const string LessonEndsAtRequired = "Courses.LessonEndsAtRequired";
+            public const string LessonTimeRangeInvalid = "Courses.LessonTimeRangeInvalid";
         }
 
         public static class Countries

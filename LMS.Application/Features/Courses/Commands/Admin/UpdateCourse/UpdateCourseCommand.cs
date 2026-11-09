@@ -20,6 +20,8 @@ namespace LMS.Application.Features.Courses.Commands.Admin.UpdateCourse
 
         public CourseLevel Level { get; set; }
 
+        public CourseType Type { get; set; } = CourseType.Recorded;
+
         public int Order { get; set; }
 
         public bool IsActive { get; set; } = true;

@@ -58,6 +58,7 @@ namespace LMS.Application.Features.Courses.Queries.GetMyCoursesPagginated
                     enrollment.Course.Description,
                     enrollment.Course.CoverUrl,
                     enrollment.Course.Level,
+                    enrollment.Course.Type,
                     LessonCount = enrollment.Course.Lessons.Count(lesson => lesson.IsActive),
                     Instructors = enrollment.Course.CourseInstructors
                         .OrderBy(courseInstructor => courseInstructor.CreatedAt)
@@ -109,6 +110,7 @@ namespace LMS.Application.Features.Courses.Queries.GetMyCoursesPagginated
                     Description = enrollment.Description,
                     CoverUrl = enrollment.CoverUrl,
                     Level = enrollment.Level,
+                    Type = enrollment.Type,
                     LessonCount = enrollment.LessonCount,
                     Instructors = enrollment.Instructors,
                     CompletedLessonCount = rows.Count(row => row.IsCompleted),

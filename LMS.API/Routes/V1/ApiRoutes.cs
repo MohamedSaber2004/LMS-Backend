@@ -157,6 +157,7 @@ namespace LMS.API.Routes.V1
             public const string AdminCourseById = "admin/courses/{id:guid}";
             public const string AdminLessons = "admin/lessons";
             public const string AdminLessonById = "admin/lessons/{id:guid}";
+            public const string AdminLessonSession = "admin/lessons/{id:guid}/session";
             public const string AdminQuizQuestions = "admin/quiz-questions";
             public const string AdminQuizQuestionById = "admin/quiz-questions/{id:guid}";
             public const string AdminCourseInstructors = "admin/courses/{id:guid}/instructors";

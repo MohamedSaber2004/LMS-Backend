@@ -348,7 +348,11 @@
     "AnswerQuestionInvalid": "One or more questions do not belong to this lesson.",
     "AnswerOptionInvalid": "One or more options do not belong to their question.",
     "DuplicateAnswerNotAllowed": "Each question can be answered only once.",
-    "QuizSubmittedSuccess": "Quiz submitted successfully."
+    "QuizSubmittedSuccess": "Quiz submitted successfully.",
+    "LessonSessionScheduledSuccess": "تم جدولة الحصة المباشرة للدرس بنجاح.",
+    "LessonStartsAtRequired": "موعد بداية الحصة مطلوب.",
+    "LessonEndsAtRequired": "موعد نهاية الحصة مطلوب.",
+    "LessonTimeRangeInvalid": "موعد نهاية الحصة يجب أن يكون بعد موعد البداية."
   },
   "Countries": {
     "CountryEnNameRequired": "Country English name is required.",

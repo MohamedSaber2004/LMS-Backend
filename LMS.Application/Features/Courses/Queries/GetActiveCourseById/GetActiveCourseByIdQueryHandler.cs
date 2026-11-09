@@ -35,6 +35,8 @@ namespace LMS.Application.Features.Courses.Queries.GetActiveCourseById
             var course = await _context.Courses
                 .AsNoTracking()
                 .Include(item => item.Lessons)
+                    .ThenInclude(lesson => lesson.Session)
+                        .ThenInclude(session => session!.LiveRoom)
                 .IncludeAssignedInstructors()
                 .Where(item => item.IsActive)
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)

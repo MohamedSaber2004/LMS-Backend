@@ -11,6 +11,7 @@ namespace LMS.Application.Features.Courses.DTOs
         public string Description { get; set; } = string.Empty;
         public string? CoverUrl { get; set; }
         public CourseLevel Level { get; set; }
+        public CourseType Type { get; set; }
         public int Order { get; set; }
         public int LessonCount { get; set; }
         public IReadOnlyCollection<InstructorRefDto> Instructors { get; set; } = Array.Empty<InstructorRefDto>();

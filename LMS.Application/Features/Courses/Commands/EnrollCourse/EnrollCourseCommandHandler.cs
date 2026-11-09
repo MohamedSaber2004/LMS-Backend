@@ -37,6 +37,8 @@ namespace LMS.Application.Features.Courses.Commands.EnrollCourse
             var course = await _context.Courses
                 .AsNoTracking()
                 .Include(item => item.Lessons)
+                    .ThenInclude(lesson => lesson.Session)
+                        .ThenInclude(session => session!.LiveRoom)
                 .IncludeAssignedInstructors()
                 .FirstOrDefaultAsync(
                     item => item.Id == request.CourseId && item.IsActive,
@@ -50,6 +52,32 @@ namespace LMS.Application.Features.Courses.Commands.EnrollCourse
             {
                 await _context.CourseEnrollments.AddAsync(
                     CourseEnrollment.Create(course.Id, learnerId), cancellationToken);
+
+                if (course.Type == LMS.Domain.Enums.CourseType.Live)
+                {
+                    var liveSessions = await _context.Sessions
+                        .Include(s => s.Bookings)
+                        .Where(s => s.Lesson != null
+                            && s.Lesson.CourseId == course.Id
+                            && s.Status != LMS.Domain.Enums.SessionStatus.Cancelled)
+                        .ToListAsync(cancellationToken);
+
+                    foreach (var session in liveSessions)
+                    {
+                        var hasBooking = session.Bookings.Any(b => b.LearnerId == learnerId
+                            && b.Status != LMS.Domain.Enums.BookingStatus.Cancelled
+                            && b.Status != LMS.Domain.Enums.BookingStatus.Declined);
+
+                        if (!hasBooking)
+                        {
+                            var booking = SessionBooking.Create(session.Id, learnerId);
+                            booking.Confirm();
+                            await _context.SessionBookings.AddAsync(booking, cancellationToken);
+                            session.ReserveSeat();
+                        }
+                    }
+                }
+
                 await _context.SaveChangesAsync(cancellationToken);
             }
 

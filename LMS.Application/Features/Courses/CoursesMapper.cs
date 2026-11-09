@@ -12,6 +12,7 @@ namespace LMS.Application.Features.Courses
             Description = course.Description,
             CoverUrl = course.CoverUrl,
             Level = course.Level,
+            Type = course.Type,
             Order = course.Order,
             LessonCount = lessonCount,
             Instructors = ToInstructorRefs(course),
@@ -25,6 +26,7 @@ namespace LMS.Application.Features.Courses
             Description = course.Description,
             CoverUrl = course.CoverUrl,
             Level = course.Level,
+            Type = course.Type,
             Order = course.Order,
             IsEnrolled = isEnrolled,
             Instructors = ToInstructorRefs(course),
@@ -41,7 +43,13 @@ namespace LMS.Application.Features.Courses
             Title = lesson.Title,
             Order = lesson.Order,
             IsFreeDemo = lesson.IsFreeDemo,
-            HasStudyBook = !string.IsNullOrWhiteSpace(lesson.StudyBookUrl)
+            HasStudyBook = !string.IsNullOrWhiteSpace(lesson.StudyBookUrl),
+            HasVideo = !string.IsNullOrWhiteSpace(lesson.VideoUrl),
+            SessionId = lesson.Session?.Id,
+            SessionStartsAtUtc = lesson.Session?.StartsAtUtc,
+            SessionEndsAtUtc = lesson.Session?.EndsAtUtc,
+            LiveRoomStatus = lesson.Session?.LiveRoom?.Status,
+            CanJoinLiveRoom = lesson.Session?.LiveRoom?.Status == LMS.Domain.Enums.LiveRoomStatus.Live
         };
 
         public static CourseAdminDetailDto ToAdminDetailDto(Course course) => new()
@@ -51,6 +59,7 @@ namespace LMS.Application.Features.Courses
             Description = course.Description,
             CoverUrl = course.CoverUrl,
             Level = course.Level,
+            Type = course.Type,
             Order = course.Order,
             IsActive = course.IsActive,
             Instructors = ToInstructorRefs(course),
@@ -75,7 +84,7 @@ namespace LMS.Application.Features.Courses
         {
             Id = lesson.Id,
             Title = lesson.Title,
-            VideoUrl = lesson.VideoUrl,
+            VideoUrl = lesson.VideoUrl ?? string.Empty,
             StudyBookUrl = lesson.StudyBookUrl,
             Order = lesson.Order,
             IsFreeDemo = lesson.IsFreeDemo,

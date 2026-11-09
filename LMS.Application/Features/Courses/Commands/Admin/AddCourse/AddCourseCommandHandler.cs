@@ -50,7 +50,8 @@ namespace LMS.Application.Features.Courses.Commands.Admin.AddCourse
                 request.Description.Trim(),
                 uploadedCover ?? Normalize(request.CoverUrl),
                 request.Level,
-                request.Order);
+                request.Order,
+                request.Type);
 
             try
             {

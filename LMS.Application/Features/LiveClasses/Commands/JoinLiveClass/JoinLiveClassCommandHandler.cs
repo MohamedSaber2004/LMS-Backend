@@ -53,6 +53,10 @@ namespace LMS.Application.Features.LiveClasses.Commands.JoinLiveClass
                 .Include(s => s.Instructor)
                 .Include(s => s.Bookings)
                     .ThenInclude(b => b.Learner)
+                .Include(s => s.Lesson)
+                    .ThenInclude(l => l!.Course)
+                        .ThenInclude(c => c.Enrollments)
+                            .ThenInclude(e => e.Learner)
                 .Include(s => s.LiveRoom)
                 .FirstOrDefaultAsync(s => s.Id == request.SessionId, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Sessions.SessionNotFound);
@@ -62,7 +66,8 @@ namespace LMS.Application.Features.LiveClasses.Commands.JoinLiveClass
             bool isLearner = session.Bookings.Any(b =>
                 b.Learner.UserId == currentUserId &&
                 b.Status != BookingStatus.Cancelled &&
-                b.Status != BookingStatus.Declined);
+                b.Status != BookingStatus.Declined)
+                || (session.Lesson != null && session.Lesson.Course.Enrollments.Any(e => e.Learner.UserId == currentUserId));
 
             if (!isHost && !isLearner)
             {

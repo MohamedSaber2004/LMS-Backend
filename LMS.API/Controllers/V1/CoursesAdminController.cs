@@ -210,6 +210,29 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
+        /// Schedule or update a live session for a lesson in a live course. Automatically reserves seats for all enrolled learners.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost(ApiRoutes.Courses.AdminLessonSession)]
+        [ProducesResponseType(typeof(ApiResponse<LessonAdminDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ScheduleLessonSession(
+            [FromRoute] Guid id,
+            [FromBody] LMS.Application.Features.Courses.Commands.Admin.ScheduleLessonSession.ScheduleLessonSessionCommand command,
+            CancellationToken cancellationToken)
+        {
+            command.LessonId = id;
+            var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
         /// Create a quiz question on a lesson with its options sent in the same body. Between 2
         /// and 10 options, exactly one of them correct.
         /// </summary>

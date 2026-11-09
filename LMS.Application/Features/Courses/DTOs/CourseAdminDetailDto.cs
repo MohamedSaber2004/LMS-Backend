@@ -34,6 +34,10 @@ namespace LMS.Application.Features.Courses.DTOs
         public int Order { get; set; }
         public bool IsFreeDemo { get; set; }
         public bool IsActive { get; set; }
+        public Guid? SessionId { get; set; }
+        public DateTime? SessionStartsAtUtc { get; set; }
+        public DateTime? SessionEndsAtUtc { get; set; }
+        public LiveRoomStatus? LiveRoomStatus { get; set; }
         public IReadOnlyCollection<QuizQuestionAdminDto> QuizQuestions { get; set; } = Array.Empty<QuizQuestionAdminDto>();
     }
 
@@ -46,6 +50,7 @@ namespace LMS.Application.Features.Courses.DTOs
         public string Description { get; set; } = string.Empty;
         public string? CoverUrl { get; set; }
         public CourseLevel Level { get; set; }
+        public CourseType Type { get; set; }
         public int Order { get; set; }
         public bool IsActive { get; set; }
         public IReadOnlyCollection<InstructorRefDto> Instructors { get; set; } = Array.Empty<InstructorRefDto>();

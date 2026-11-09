@@ -348,7 +348,11 @@
     "AnswerQuestionInvalid": "One or more questions do not belong to this lesson.",
     "AnswerOptionInvalid": "One or more options do not belong to their question.",
     "DuplicateAnswerNotAllowed": "Each question can be answered only once.",
-    "QuizSubmittedSuccess": "Quiz submitted successfully."
+    "QuizSubmittedSuccess": "Quiz submitted successfully.",
+    "LessonSessionScheduledSuccess": "Live session for lesson scheduled successfully.",
+    "LessonStartsAtRequired": "Start time is required.",
+    "LessonEndsAtRequired": "End time is required.",
+    "LessonTimeRangeInvalid": "End time must be after start time."
   },
   "Countries": {
     "CountryEnNameRequired": "Country English name is required.",

@@ -30,8 +30,11 @@ namespace LMS.Application.Features.Courses.Queries.Admin.GetAdminCourseById
             var course = await _context.Courses
                 .AsNoTracking()
                 .Include(item => item.Lessons)
-                .ThenInclude(lesson => lesson.QuizQuestions)
-                .ThenInclude(question => question.Options)
+                    .ThenInclude(lesson => lesson.QuizQuestions)
+                        .ThenInclude(question => question.Options)
+                .Include(item => item.Lessons)
+                    .ThenInclude(lesson => lesson.Session)
+                        .ThenInclude(session => session!.LiveRoom)
                 .IncludeAssignedInstructors()
                 .FirstOrDefaultAsync(item => item.Id == request.Id, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Courses.CourseNotFound);
