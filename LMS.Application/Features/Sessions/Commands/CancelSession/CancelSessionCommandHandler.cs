@@ -64,6 +64,16 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 {
                     booking.Cancel(actorUserId, request.Reason);
                     session.ReleaseSeat();
+
+                    if (!session.IsTrial)
+                    {
+                        var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
+                        var package = await _context.LearnerPackages
+                            .Where(lp => lp.LearnerId == booking.LearnerId && lp.InstructorId == session.InstructorId)
+                            .OrderByDescending(lp => lp.CreatedAt)
+                            .FirstOrDefaultAsync(cancellationToken);
+                        package?.RefundHours(hoursToRefund);
+                    }
                 }
 
                 session.Cancel(actorUserId, request.Reason);
@@ -85,7 +95,16 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 booking.Cancel(actorUserId, request.Reason);
                 session.ReleaseSeat();
 
-                // A one-to-one has no seat left to keep it alive once its only learner walks away.
+                if (!session.IsTrial)
+                {
+                    var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
+                    var package = await _context.LearnerPackages
+                        .Where(lp => lp.LearnerId == learnerId && lp.InstructorId == session.InstructorId)
+                        .OrderByDescending(lp => lp.CreatedAt)
+                        .FirstOrDefaultAsync(cancellationToken);
+                    package?.RefundHours(hoursToRefund);
+                }
+
                 if (!session.Bookings.Any(Held))
                 {
                     session.Cancel(actorUserId, request.Reason);

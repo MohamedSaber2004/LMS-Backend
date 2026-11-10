@@ -35,6 +35,12 @@ namespace LMS.Application.Common.Interfaces
         DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; }
         DbSet<LiveRoom> LiveRooms { get; }
         DbSet<LiveRoomParticipant> LiveRoomParticipants { get; }
+        DbSet<LearnerPackage> LearnerPackages { get; }
+        DbSet<PackageTier> PackageTiers { get; }
+        DbSet<PackageHourAdjustment> PackageHourAdjustments { get; }
+        DbSet<TeacherWallet> TeacherWallets { get; }
+        DbSet<TeacherWalletTransaction> TeacherWalletTransactions { get; }
+        DbSet<SessionReview> SessionReviews { get; }
         DbSet<IdentityRole<Guid>> Roles { get; }
         DbSet<IdentityUserRole<Guid>> UserRoles { get; }
 

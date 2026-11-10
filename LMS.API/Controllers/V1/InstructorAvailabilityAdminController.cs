@@ -12,8 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Admin]
+    /// Cross-instructor availability oversight and weekly slot management on behalf of any instructor.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorAvailability.Base)]
+    [Tags("Admin: Availability")]
     [RoleAuthorize(UserType.Admin)]
     public class InstructorAvailabilityAdminController : BaseController
     {

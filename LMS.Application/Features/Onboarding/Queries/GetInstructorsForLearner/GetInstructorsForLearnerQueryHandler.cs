@@ -75,6 +75,34 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 query = query.Where(instructor => instructor.User.CountryId == request.CountryId.Value);
             }
 
+            if (!string.IsNullOrWhiteSpace(request.Language))
+            {
+                var lang = request.Language.Trim();
+                query = query.Where(instructor => instructor.Languages.Contains(lang));
+            }
+
+            if (request.IsNativeSpeaker.HasValue)
+            {
+                query = query.Where(instructor => instructor.IsNativeSpeaker == request.IsNativeSpeaker.Value);
+            }
+
+            if (request.Ranking != RankingFilter.All)
+            {
+                query = query
+                    .OrderByDescending(i => i.RatingAverage)
+                    .ThenByDescending(i => i.CompletedSessionsCount)
+                    .ThenByDescending(i => i.TotalReviews);
+
+                if (request.Ranking == RankingFilter.Top5)
+                {
+                    query = query.Take(5);
+                }
+                else if (request.Ranking == RankingFilter.Top10)
+                {
+                    query = query.Take(10);
+                }
+            }
+
             if (request.Day.HasValue)
             {
                 var day = request.Day.Value;
@@ -141,7 +169,13 @@ namespace LMS.Application.Features.Onboarding.Queries.GetInstructorsForLearner
                 instructor.User.Country?.CountryEnName,
                 introVideo,
                 certificates,
-                instructor.Application?.ReviewedAt ?? instructor.CreatedAt);
+                instructor.Application?.ReviewedAt ?? instructor.CreatedAt,
+                instructor.IsNativeSpeaker,
+                instructor.Rank,
+                instructor.GetLanguagesList(),
+                instructor.RatingAverage,
+                instructor.TotalReviews,
+                instructor.CompletedSessionsCount);
         }
     }
 }

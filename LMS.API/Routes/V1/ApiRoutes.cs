@@ -38,6 +38,7 @@ namespace LMS.API.Routes.V1
             public const string GetById = "{id:guid}";
             public const string Approve = "approve";
             public const string Reject = "reject";
+            public const string SetPricing = "{id:guid}/pricing";
             public const string MyStatus = "my-status";
             public const string Resubmit = "resubmit";
         }
@@ -73,7 +74,6 @@ namespace LMS.API.Routes.V1
             public const string My = "my";
             public const string MySlots = "my/weekly-slots";
             public const string MySlotById = "my/weekly-slots/{id:guid}";
-            public const string MyVacationMode = "my/vacation-mode";
             public const string MyCalendar = "my/calendar";
             public const string MyCalendarDay = "my/calendar/day";
             public const string MyCalendarWindow = "my/calendar/window";
@@ -90,6 +90,7 @@ namespace LMS.API.Routes.V1
             public const string Confirm = "{id:guid}/confirm";
             public const string Decline = "{id:guid}/decline";
             public const string Cancel = "{id:guid}/cancel";
+            public const string ConfirmAttendance = "{id:guid}/confirm-attendance";
             public const string Reschedule = "{id:guid}/reschedule";
         }
 
@@ -101,9 +102,78 @@ namespace LMS.API.Routes.V1
             public const string Decline = "{id:guid}/decline";
         }
 
+        public static class Learner
+        {
+            public const string Base = BaseRoutes.Base + "/learner";
+
+            public static class Teachers
+            {
+                public const string Base = Learner.Base + "/teachers";
+                public const string GetAll = "";
+                public const string GetById = "{id:guid}";
+                public const string Schedule = "{id:guid}/schedule";
+            }
+
+            public static class Packages
+            {
+                public const string Base = Learner.Base + "/packages";
+                public const string Catalog = "catalog";
+                public const string Purchase = "purchase";
+                public const string MyBalances = "my-balances";
+            }
+
+            public static class Sessions
+            {
+                public const string Base = Learner.Base + "/sessions";
+                public const string Rate = "{id:guid}/rate";
+            }
+        }
+
+        public static class Admin
+        {
+            public const string Base = BaseRoutes.Base + "/admin";
+
+            public static class Teachers
+            {
+                public const string Base = Admin.Base + "/teachers";
+                public const string GetAll = "";
+                public const string ToggleStatus = "{id:guid}/toggle-status";
+                public const string Wallet = "{id:guid}/wallet";
+            }
+
+            public static class Sessions
+            {
+                public const string Base = Admin.Base + "/sessions";
+                public const string GetAll = "";
+                public const string GetById = "{id:guid}";
+                public const string Cancel = "{id:guid}/cancel";
+            }
+
+            public static class Packages
+            {
+                public const string Base = Admin.Base + "/packages";
+                public const string GetAll = "";
+                public const string AdjustHours = "{id:guid}/adjust";
+                public const string Tiers = "tiers";
+                public const string TierById = "tiers/{id:guid}";
+            }
+
+            public static class Finances
+            {
+                public const string Base = Admin.Base + "/finances";
+                public const string Overview = "overview";
+            }
+        }
+
         public static class Teacher
         {
             public const string Base = BaseRoutes.Base + "/teacher";
+
+            public static class Students
+            {
+                public const string Base = Teacher.Base + "/students";
+                public const string GetAll = "";
+            }
 
             public static class Sessions
             {
@@ -123,7 +193,26 @@ namespace LMS.API.Routes.V1
             public static class Availability
             {
                 public const string Base = Teacher.Base + "/availability";
+                public const string GetWeeklySlots = "";
+                public const string Slots = "weekly-slots";
+                public const string SlotById = "weekly-slots/{id:guid}";
                 public const string VacationMode = "vacation-mode";
+                public const string Calendar = "calendar";
+                public const string CalendarDay = "calendar/day";
+                public const string CalendarWindow = "calendar/window";
+            }
+
+            public static class Wallet
+            {
+                public const string Base = Teacher.Base + "/wallet";
+                public const string Summary = "";
+                public const string Transactions = "transactions";
+                public const string Withdraw = "withdraw";
+            }
+
+            public static class Profile
+            {
+                public const string Base = Teacher.Base + "/profile";
             }
         }
 

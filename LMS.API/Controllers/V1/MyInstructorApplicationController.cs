@@ -10,9 +10,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Instructor / Registered User]
+    /// Tracking instructor application approval status and resubmission of rejected applications.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorApplications.Base)]
-    [RoleAuthorize]
+    [Tags("Teacher: Application")]
+    [Authorize]
     public class MyInstructorApplicationController : BaseController
     {
         /// <summary>

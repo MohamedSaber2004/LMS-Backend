@@ -177,6 +177,7 @@
     "AnswersSubmittedSuccess": "Your answers have been saved successfully.",
     "AnswersRetrieved": "Your onboarding answers have been retrieved successfully.",
     "InstructorsRetrieved": "Instructors retrieved successfully.",
+    "InstructorDetailsRetrieved": "Instructor details retrieved successfully.",
     "PriceRangeInvalid": "Price filters must be greater than zero and the maximum cannot be lower than the minimum.",
     "PageNumberInvalid": "Page number must be greater than zero.",
     "PageSizeInvalid": "Page size must be between 1 and {0}.",
@@ -258,6 +259,12 @@
     "RescheduleApprovedSuccess": "Reschedule request approved and the session moved.",
     "RescheduleDeclinedSuccess": "Reschedule request declined and the session kept its time.",
     "RescheduleWithdrawnSuccess": "Reschedule request withdrawn successfully.",
+    "DurationInvalid": "Session duration must be either 25 or 50 minutes.",
+    "TrialAlreadyUsed": "You have already used your free trial lesson.",
+    "InsufficientPackageHours": "Insufficient hours balance with this teacher. Please purchase a package first.",
+    "AttendanceAlreadyConfirmed": "Session attendance has already been confirmed.",
+    "CannotConfirmCancelled": "Cannot confirm attendance for a cancelled session.",
+    "AttendanceConfirmedSuccess": "Session attendance confirmed and teacher earnings credited successfully.",
     "RescheduleNotWithdrawable": "Only pending reschedule requests can be withdrawn.",
     "RescheduleNotOwner": "You can only withdraw reschedule requests initiated by you.",
     "RescheduleRequestsRetrieved": "Reschedule requests retrieved successfully.",
@@ -294,6 +301,7 @@
     "TitleRequired": "Title is required.",
     "TitleTooLong": "Title cannot exceed {0} characters.",
     "OrderMustBeNonNegative": "Order must be zero or greater.",
+    "PriceMustBePositive": "Course price must be greater than zero.",
     "PageNumberInvalid": "Page number must be greater than zero.",
     "PageSizeInvalid": "Page size must be between 1 and {0}.",
     "SearchTooLong": "Search term cannot exceed {0} characters.",
@@ -313,6 +321,7 @@
     "InstructorNotAssignable": "One or more selected instructors are not approved, active instructors.",
     "InstructorsAssignedSuccess": "Course instructors updated successfully.",
     "InstructorsRetrieved": "Instructors retrieved successfully.",
+    "InstructorDetailsRetrieved": "Instructor details retrieved successfully.",
     "LessonIdRequired": "Lesson identifier is required.",
     "LessonNotFound": "Lesson was not found.",
     "VideoSourceRequired": "A lesson video is required: send either a video file or a video link.",
@@ -419,5 +428,66 @@
     "TokenRefreshedSuccess": "Token refreshed successfully.",
     "ConfigRetrieved": "Live class configuration retrieved successfully.",
     "SessionDetailsRetrieved": "Live class details retrieved successfully."
+  },
+  "Packages": {
+    "InstructorIdRequired": "Instructor identifier is required.",
+    "PurchaseSuccess": "Package hours activated successfully.",
+    "CatalogRetrieved": "Package catalog retrieved successfully.",
+    "PackagesRetrieved": "Learner packages retrieved successfully.",
+    "PackageHoursExceedTotal": "The requested balance of {0} hours exceeds the {1} hours purchased in this package.",
+    "PackageAdjustmentHoursNegative": "The requested balance cannot be negative.",
+    "PackageAdjustmentReasonRequired": "A reason is required because every hour adjustment is recorded in the package history.",
+    "PackageAdjustmentReasonTooLong": "Reason must not exceed {0} characters.",
+    "TierNotFound": "The {0} hour package is not on sale. Available packages: {1}.",
+    "TiersUnavailable": "No package tiers are configured yet. An admin must add one from Admin > Packages.",
+    "TiersRetrieved": "Package tiers retrieved successfully.",
+    "TierCreated": "Package tier created successfully.",
+    "TierUpdated": "Package tier updated successfully.",
+    "TierDeleted": "Package tier deleted successfully.",
+    "TierNameRequired": "Package tier name is required.",
+    "TierNameTooLong": "Package tier name must not exceed {0} characters.",
+    "TierHoursMustBePositive": "Package hours must be greater than 0.",
+    "TierHoursAlreadyUsed": "A {0} hour package tier already exists. Package hours must be unique because learners buy by hours.",
+    "TierSessionsInvalid": "Session counts cannot be negative.",
+    "TierDescriptionRequired": "Package tier description is required.",
+    "TierDescriptionTooLong": "Package tier description must not exceed {0} characters.",
+    "TierDisplayOrderInvalid": "Display order cannot be negative.",
+    "TierIdRequired": "Package tier identifier is required."
+  },
+  "Wallets": {
+    "SummaryRetrieved": "Teacher wallet summary retrieved successfully.",
+    "TransactionsRetrieved": "Teacher wallet transactions retrieved successfully.",
+    "NoTransactions": "No transactions recorded yet.",
+    "WithdrawalAmountMustBePositive": "Withdrawal amount must be greater than zero.",
+    "WithdrawalAmountExceedsBalance": "Withdrawal amount exceeds available wallet balance.",
+    "WithdrawalSuccess": "Withdrawal request processed successfully."
+  },
+  "AdminManagement": {
+    "TeachersRetrievedSuccess": "Teachers list retrieved successfully.",
+    "TeacherDetailsRetrievedSuccess": "Teacher details retrieved successfully.",
+    "TeacherStatusUpdatedSuccess": "Teacher account status updated successfully.",
+    "PackagesRetrievedSuccess": "System packages retrieved successfully.",
+    "PackageAdjustedSuccess": "Package hours adjusted successfully.",
+    "SessionsRetrievedSuccess": "Platform sessions retrieved successfully.",
+    "SessionCancelledSuccess": "Session cancelled by administrator successfully.",
+    "OverviewRetrievedSuccess": "Financial overview retrieved successfully."
+  },
+  "TeacherManagement": {
+    "LearnersRetrievedSuccess": "Teacher learners list retrieved successfully.",
+    "LearnerDetailsRetrievedSuccess": "Learner progress details retrieved successfully."
+  },
+  "Reviews": {
+    "SessionIdRequired": "Session identifier is required.",
+    "RatingRangeInvalid": "Rating must be between 1 and 5 stars.",
+    "CommentTooLong": "Comment cannot exceed 1000 characters.",
+    "CannotReviewIncomplete": "Cannot review a session that is not yet completed.",
+    "AlreadyReviewed": "This session has already been reviewed.",
+    "ReviewSuccess": "Thank you! Your review has been submitted successfully."
+  },
+  "Pricing": {
+    "InstructorIdRequired": "Instructor identifier is required.",
+    "HourlyRateMustBePositive": "Hourly rate must be greater than zero.",
+    "CommissionRateRange": "Commission rate must be between 0% and 100%.",
+    "PricingUpdatedSuccess": "Teacher hourly rate and platform commission updated successfully."
   }
 }

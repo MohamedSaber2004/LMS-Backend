@@ -30,6 +30,30 @@ namespace LMS.Persistence.Configurations
             builder.Property(instructor => instructor.HourlyRate)
                 .HasPrecision(10, 2);
 
+            builder.Property(instructor => instructor.CommissionRate)
+                .HasPrecision(5, 2)
+                .HasDefaultValue(20.00m);
+
+            builder.Property(instructor => instructor.IsNativeSpeaker)
+                .IsRequired()
+                .HasDefaultValue(true);
+
+            builder.Property(instructor => instructor.Rank);
+
+            builder.Property(instructor => instructor.Languages)
+                .HasMaxLength(200)
+                .HasDefaultValue("Arabic");
+
+            builder.Property(instructor => instructor.RatingAverage)
+                .HasPrecision(3, 2)
+                .HasDefaultValue(0.00m);
+
+            builder.Property(instructor => instructor.TotalReviews)
+                .HasDefaultValue(0);
+
+            builder.Property(instructor => instructor.CompletedSessionsCount)
+                .HasDefaultValue(0);
+
             builder.Property(instructor => instructor.VacationMode)
                 .IsRequired()
                 .HasDefaultValue(false);

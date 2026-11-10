@@ -15,6 +15,8 @@ namespace LMS.Domain.Entities
 
         public CourseType Type { get; private set; }
 
+        public decimal Price { get; private set; }
+
         public int Order { get; private set; }
 
         public virtual ICollection<Lesson> Lessons { get; private set; } = new List<Lesson>();
@@ -33,6 +35,7 @@ namespace LMS.Domain.Entities
             string? coverUrl,
             CourseLevel level,
             int order,
+            decimal price,
             CourseType type = CourseType.Live)
         {
             return new Course
@@ -42,6 +45,7 @@ namespace LMS.Domain.Entities
                 CoverUrl = coverUrl,
                 Level = level,
                 Order = order,
+                Price = price,
                 Type = type
             };
         }
@@ -52,6 +56,7 @@ namespace LMS.Domain.Entities
             string? coverUrl,
             CourseLevel level,
             int order,
+            decimal price,
             CourseType type = CourseType.Live)
         {
             Title = title;
@@ -59,6 +64,7 @@ namespace LMS.Domain.Entities
             CoverUrl = coverUrl;
             Level = level;
             Order = order;
+            Price = price;
             Type = type;
         }
     }

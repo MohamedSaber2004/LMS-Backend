@@ -15,5 +15,9 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
 
         public Guid ApplicationId { get; set; }
         public string? ReviewNotes { get; set; }
+        public decimal? HourlyRate { get; set; }
+        public decimal? CommissionRate { get; set; }
+        public bool? IsNativeSpeaker { get; set; }
+        public List<string>? Languages { get; set; }
     }
 }

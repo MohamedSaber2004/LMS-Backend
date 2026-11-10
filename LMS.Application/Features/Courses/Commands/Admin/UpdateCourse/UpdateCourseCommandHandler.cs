@@ -68,6 +68,7 @@ namespace LMS.Application.Features.Courses.Commands.Admin.UpdateCourse
                     coverSource,
                     request.Level,
                     request.Order,
+                    request.Price,
                     request.Type);
 
                 course.SetActiveState(request.IsActive, _currentUserService.UserId.ToString());

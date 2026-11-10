@@ -16,8 +16,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Admin]
+    /// Manage the learner onboarding question set and its answer options.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Onboarding.Base)]
+    [Tags("Admin: Onboarding")]
     [Authorize]
     [RoleAuthorize(UserType.Admin)]
     public class OnboardingAdminController : BaseController

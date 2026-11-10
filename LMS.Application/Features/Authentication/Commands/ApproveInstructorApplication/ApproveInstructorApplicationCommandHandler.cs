@@ -84,6 +84,25 @@ namespace LMS.Application.Features.Authentication.Commands.ApproveInstructorAppl
             }
 
             application.Approve(adminUserId, NormalizeOptional(request.ReviewNotes));
+
+            if (application.Instructor != null)
+            {
+                var hourlyRate = request.HourlyRate ?? application.Instructor.HourlyRate;
+                var commissionRate = request.CommissionRate ?? application.Instructor.CommissionRate;
+                application.Instructor.SetAdminPricing(
+                    hourlyRate,
+                    commissionRate,
+                    request.IsNativeSpeaker,
+                    request.Languages);
+
+                var walletExists = await _context.TeacherWallets
+                    .AnyAsync(w => w.InstructorId == application.Instructor.Id, cancellationToken);
+                if (!walletExists)
+                {
+                    _context.TeacherWallets.Add(TeacherWallet.Create(application.Instructor.Id));
+                }
+            }
+
             await _context.SaveChangesAsync(cancellationToken);
 
             var message = _localizer[LocalizationKeys.Authentication.InstructorApprovedSuccess].Value;

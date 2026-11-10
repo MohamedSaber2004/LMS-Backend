@@ -33,7 +33,13 @@ namespace LMS.Persistence.Seeding
                     continue;
                 }
 
-                var course = Course.Create(seed.Title, seed.Description, seed.CoverUrl, seed.Level, seed.Order);
+                var course = Course.Create(
+                    seed.Title,
+                    seed.Description,
+                    seed.CoverUrl,
+                    seed.Level,
+                    seed.Order,
+                    seed.Price);
                 await context.Courses.AddAsync(course, cancellationToken);
                 contentRows += await context.SaveChangesAsync(cancellationToken);
 
@@ -118,7 +124,7 @@ namespace LMS.Persistence.Seeding
                 }
 
                 await context.CourseEnrollments
-                    .AddAsync(CourseEnrollment.Create(course.Id, learner.Id), cancellationToken);
+                    .AddAsync(CourseEnrollment.Create(course.Id, learner.Id, course.Price), cancellationToken);
                 written += await context.SaveChangesAsync(cancellationToken);
             }
 
@@ -231,6 +237,7 @@ namespace LMS.Persistence.Seeding
                 + "Every lesson is a short clip you can watch once a day, and the first lesson is open without enrolling.",
                 CourseLevel.Beginner,
                 1,
+                49.00m,
                 "/static/courses/egyptian-arabic-101.svg",
                 true,
                 new[]
@@ -311,6 +318,7 @@ namespace LMS.Persistence.Seeding
                 + "Recommended before you try the work or travel courses.",
                 CourseLevel.Elementary,
                 2,
+                59.00m,
                 "/static/courses/msa-foundations.svg",
                 true,
                 new[]
@@ -370,6 +378,7 @@ namespace LMS.Persistence.Seeding
                 + "deal moves forward.",
                 CourseLevel.Intermediate,
                 3,
+                79.00m,
                 "/static/courses/arabic-for-work.svg",
                 true,
                 new[]
@@ -429,6 +438,7 @@ namespace LMS.Persistence.Seeding
                 + "recordings are replaced.",
                 CourseLevel.Beginner,
                 4,
+                39.00m,
                 "/static/courses/ramadan-vocabulary.svg",
                 false,
                 new[]
@@ -455,6 +465,7 @@ namespace LMS.Persistence.Seeding
             string Description,
             CourseLevel Level,
             int Order,
+            decimal Price,
             string? CoverUrl,
             bool IsPublished,
             IReadOnlyList<LessonSeed> Lessons);

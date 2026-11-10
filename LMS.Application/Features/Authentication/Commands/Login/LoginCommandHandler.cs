@@ -39,7 +39,7 @@ namespace LMS.Application.Features.Authentication.Commands.Login
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null || user.IsDeleted || !user.IsActive)
             {
-                throw new UnAuthorizedException();
+                throw new UnAuthorizedException(LocalizationKeys.Authentication.InvalidCredentials);
             }
 
             await _userManager.ResetAccessFailedCountAsync(user);

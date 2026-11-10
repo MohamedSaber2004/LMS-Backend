@@ -10,12 +10,15 @@ namespace LMS.Domain.Entities
         public Guid LearnerId { get; private set; }
         public virtual Learner Learner { get; private set; } = null!;
 
-        public static CourseEnrollment Create(Guid courseId, Guid learnerId)
+        public decimal PricePaid { get; private set; }
+
+        public static CourseEnrollment Create(Guid courseId, Guid learnerId, decimal pricePaid)
         {
             return new CourseEnrollment
             {
                 CourseId = courseId,
-                LearnerId = learnerId
+                LearnerId = learnerId,
+                PricePaid = pricePaid
             };
         }
     }

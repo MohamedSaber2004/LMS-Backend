@@ -6,6 +6,7 @@ using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
 using LMS.Application.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
@@ -37,6 +38,10 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Sessions.SlotIdRequired].Value);
 
+            RuleFor(command => command.DurationMinutes)
+                .Must(d => d == 25 || d == 50)
+                .WithMessage(localizer[LocalizationKeys.Sessions.DurationInvalid].Value);
+
             RuleFor(command => command)
                 .CustomAsync(ValidateAsync);
         }
@@ -63,6 +68,40 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 context.AddFailure(
                     nameof(CreateBookingCommand.AvailabilityInstanceId),
                     _localizer[BlockerKey(blocker), _scheduling.MinimumBreakMinutes].Value);
+                return;
+            }
+
+            if (command.IsTrial)
+            {
+                var hasTrial = await _context.Sessions
+                    .AnyAsync(s => s.Bookings.Any(b => b.LearnerId == learnerId)
+                        && s.IsTrial
+                        && s.Status != Domain.Enums.SessionStatus.Cancelled,
+                        cancellationToken);
+
+                if (hasTrial)
+                {
+                    context.AddFailure(
+                        nameof(CreateBookingCommand.IsTrial),
+                        _localizer[LocalizationKeys.Sessions.TrialAlreadyUsed].Value);
+                }
+            }
+            else
+            {
+                var requiredHours = command.DurationMinutes == 25 ? 0.5m : 1.0m;
+                var hasBalance = await _context.LearnerPackages
+                    .AnyAsync(lp => lp.LearnerId == learnerId
+                        && lp.InstructorId == command.InstructorId
+                        && lp.IsActive
+                        && lp.RemainingHours >= requiredHours,
+                        cancellationToken);
+
+                if (!hasBalance)
+                {
+                    context.AddFailure(
+                        nameof(CreateBookingCommand.DurationMinutes),
+                        _localizer[LocalizationKeys.Sessions.InsufficientPackageHours].Value);
+                }
             }
         }
 

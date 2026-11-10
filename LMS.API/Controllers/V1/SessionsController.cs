@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
+    /// [Allowed Roles: Instructor and Learner]
     /// Sessions and bookings. The caller is never asked who they are: an instructor gets their own
     /// teaching list, a learner gets the sessions they hold a seat on, and every write re-checks that
     /// the caller really is the teacher or one of the learners of that session.
@@ -183,6 +184,26 @@ namespace LMS.API.Controllers.V1
         {
             command.Id = id;
             var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost(ApiRoutes.Sessions.ConfirmAttendance)]
+        [ProducesResponseType(typeof(ApiResponse<SessionDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ConfirmAttendance(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(new LMS.Application.Features.Sessions.Commands.ConfirmAttendance.ConfirmAttendanceCommand { SessionId = id }, cancellationToken);
             return FromResult(result);
         }
 

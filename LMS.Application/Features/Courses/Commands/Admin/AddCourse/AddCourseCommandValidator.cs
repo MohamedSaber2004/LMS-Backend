@@ -42,6 +42,10 @@ namespace LMS.Application.Features.Courses.Commands.Admin.AddCourse
                 .GreaterThanOrEqualTo(0)
                 .WithMessage(localizer[LocalizationKeys.Courses.OrderMustBeNonNegative].Value);
 
+            RuleFor(command => command.Price)
+                .GreaterThan(0)
+                .WithMessage(localizer[LocalizationKeys.Courses.PriceMustBePositive].Value);
+
             RuleFor(command => command.CoverUrl)
                 .MaximumLength(CoursesMediaChecks.MaxUrlLength)
                 .WithMessage(localizer[LocalizationKeys.Courses.UrlTooLong, CoursesMediaChecks.MaxUrlLength].Value);

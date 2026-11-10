@@ -77,8 +77,7 @@ namespace LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorPr
                 request.Bio.Trim(),
                 request.YearsOfExperience!.Value,
                 request.Education!.Trim(),
-                NormalizeOptional(request.LinkedInUrl),
-                request.HourlyRate!.Value);
+                NormalizeOptional(request.LinkedInUrl));
 
             await _context.SaveChangesAsync(cancellationToken);
 

@@ -20,5 +20,6 @@ namespace LMS.Application.Features.Courses.DTOs
         public int? LastWatchedSeconds { get; set; }
         public bool? LastLessonIsCompleted { get; set; }
         public DateTime EnrolledAtUtc { get; set; }
+        public decimal PricePaid { get; set; }
     }
 }

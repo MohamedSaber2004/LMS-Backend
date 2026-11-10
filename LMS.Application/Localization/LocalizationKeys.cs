@@ -192,6 +192,7 @@ namespace LMS.Application.Localization
             public const string AnswersSubmittedSuccess = "Onboarding.AnswersSubmittedSuccess";
             public const string AnswersRetrieved = "Onboarding.AnswersRetrieved";
             public const string InstructorsRetrieved = "Onboarding.InstructorsRetrieved";
+            public const string InstructorDetailsRetrieved = "Onboarding.InstructorDetailsRetrieved";
             public const string PriceRangeInvalid = "Onboarding.PriceRangeInvalid";
             public const string PageNumberInvalid = "Onboarding.PageNumberInvalid";
             public const string PageSizeInvalid = "Onboarding.PageSizeInvalid";
@@ -281,6 +282,12 @@ namespace LMS.Application.Localization
             public const string RescheduleRequestedSuccess = "Sessions.RescheduleRequestedSuccess";
             public const string RescheduleApprovedSuccess = "Sessions.RescheduleApprovedSuccess";
             public const string RescheduleDeclinedSuccess = "Sessions.RescheduleDeclinedSuccess";
+            public const string DurationInvalid = "Sessions.DurationInvalid";
+            public const string TrialAlreadyUsed = "Sessions.TrialAlreadyUsed";
+            public const string InsufficientPackageHours = "Sessions.InsufficientPackageHours";
+            public const string AttendanceAlreadyConfirmed = "Sessions.AttendanceAlreadyConfirmed";
+            public const string CannotConfirmCancelled = "Sessions.CannotConfirmCancelled";
+            public const string AttendanceConfirmedSuccess = "Sessions.AttendanceConfirmedSuccess";
         }
 
         public static class HelpCenter
@@ -317,6 +324,7 @@ namespace LMS.Application.Localization
             public const string TitleRequired = "Courses.TitleRequired";
             public const string TitleTooLong = "Courses.TitleTooLong";
             public const string OrderMustBeNonNegative = "Courses.OrderMustBeNonNegative";
+            public const string PriceMustBePositive = "Courses.PriceMustBePositive";
             public const string PageNumberInvalid = "Courses.PageNumberInvalid";
             public const string PageSizeInvalid = "Courses.PageSizeInvalid";
             public const string SearchTooLong = "Courses.SearchTooLong";
@@ -449,6 +457,79 @@ namespace LMS.Application.Localization
             public const string TokenRefreshedSuccess = "LiveClasses.TokenRefreshedSuccess";
             public const string ConfigRetrieved = "LiveClasses.ConfigRetrieved";
             public const string SessionDetailsRetrieved = "LiveClasses.SessionDetailsRetrieved";
+        }
+
+        public static class Packages
+        {
+            public const string InstructorIdRequired = "Packages.InstructorIdRequired";
+            public const string PurchaseSuccess = "Packages.PurchaseSuccess";
+            public const string CatalogRetrieved = "Packages.CatalogRetrieved";
+            public const string PackagesRetrieved = "Packages.PackagesRetrieved";
+            public const string PackageHoursExceedTotal = "Packages.PackageHoursExceedTotal";
+            public const string PackageAdjustmentHoursNegative = "Packages.PackageAdjustmentHoursNegative";
+            public const string PackageAdjustmentReasonRequired = "Packages.PackageAdjustmentReasonRequired";
+            public const string PackageAdjustmentReasonTooLong = "Packages.PackageAdjustmentReasonTooLong";
+            public const string TierNotFound = "Packages.TierNotFound";
+            public const string TiersUnavailable = "Packages.TiersUnavailable";
+            public const string TiersRetrieved = "Packages.TiersRetrieved";
+            public const string TierCreated = "Packages.TierCreated";
+            public const string TierUpdated = "Packages.TierUpdated";
+            public const string TierDeleted = "Packages.TierDeleted";
+            public const string TierNameRequired = "Packages.TierNameRequired";
+            public const string TierNameTooLong = "Packages.TierNameTooLong";
+            public const string TierHoursMustBePositive = "Packages.TierHoursMustBePositive";
+            public const string TierHoursAlreadyUsed = "Packages.TierHoursAlreadyUsed";
+            public const string TierSessionsInvalid = "Packages.TierSessionsInvalid";
+            public const string TierDescriptionRequired = "Packages.TierDescriptionRequired";
+            public const string TierDescriptionTooLong = "Packages.TierDescriptionTooLong";
+            public const string TierDisplayOrderInvalid = "Packages.TierDisplayOrderInvalid";
+            public const string TierIdRequired = "Packages.TierIdRequired";
+        }
+
+        public static class Wallets
+        {
+            public const string SummaryRetrieved = "Wallets.SummaryRetrieved";
+            public const string TransactionsRetrieved = "Wallets.TransactionsRetrieved";
+            public const string NoTransactions = "Wallets.NoTransactions";
+            public const string WithdrawalAmountMustBePositive = "Wallets.WithdrawalAmountMustBePositive";
+            public const string WithdrawalAmountExceedsBalance = "Wallets.WithdrawalAmountExceedsBalance";
+            public const string WithdrawalSuccess = "Wallets.WithdrawalSuccess";
+        }
+
+        public static class AdminManagement
+        {
+            public const string TeachersRetrievedSuccess = "AdminManagement.TeachersRetrievedSuccess";
+            public const string TeacherDetailsRetrievedSuccess = "AdminManagement.TeacherDetailsRetrievedSuccess";
+            public const string TeacherStatusUpdatedSuccess = "AdminManagement.TeacherStatusUpdatedSuccess";
+            public const string PackagesRetrievedSuccess = "AdminManagement.PackagesRetrievedSuccess";
+            public const string PackageAdjustedSuccess = "AdminManagement.PackageAdjustedSuccess";
+            public const string SessionsRetrievedSuccess = "AdminManagement.SessionsRetrievedSuccess";
+            public const string SessionCancelledSuccess = "AdminManagement.SessionCancelledSuccess";
+            public const string OverviewRetrievedSuccess = "AdminManagement.OverviewRetrievedSuccess";
+        }
+
+        public static class TeacherManagement
+        {
+            public const string LearnersRetrievedSuccess = "TeacherManagement.LearnersRetrievedSuccess";
+            public const string LearnerDetailsRetrievedSuccess = "TeacherManagement.LearnerDetailsRetrievedSuccess";
+        }
+
+        public static class Reviews
+        {
+            public const string SessionIdRequired = "Reviews.SessionIdRequired";
+            public const string RatingRangeInvalid = "Reviews.RatingRangeInvalid";
+            public const string CommentTooLong = "Reviews.CommentTooLong";
+            public const string CannotReviewIncomplete = "Reviews.CannotReviewIncomplete";
+            public const string AlreadyReviewed = "Reviews.AlreadyReviewed";
+            public const string ReviewSuccess = "Reviews.ReviewSuccess";
+        }
+
+        public static class Pricing
+        {
+            public const string InstructorIdRequired = "Pricing.InstructorIdRequired";
+            public const string HourlyRateMustBePositive = "Pricing.HourlyRateMustBePositive";
+            public const string CommissionRateRange = "Pricing.CommissionRateRange";
+            public const string PricingUpdatedSuccess = "Pricing.PricingUpdatedSuccess";
         }
     }
 }

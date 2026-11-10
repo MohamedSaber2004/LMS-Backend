@@ -17,8 +17,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Admin]
+    /// Manage help center categories and articles, including visibility of already published content.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.HelpCenter.Base)]
+    [Tags("Admin: Help Center")]
     [RoleAuthorize(UserType.Admin)]
     public class HelpCenterAdminController : BaseController
     {

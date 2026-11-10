@@ -16,8 +16,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Public (course catalog and lesson content) · Learner (my courses, enroll, progress, quiz)]
+    /// Learner-facing catalogue of published courses and the enrollment, progress and quiz writes.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Courses.Base)]
+    [Tags("Courses (Learner & Public)")]
     public class CoursesController : BaseController
     {
         /// <summary>

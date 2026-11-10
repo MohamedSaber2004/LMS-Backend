@@ -21,5 +21,7 @@ namespace LMS.Application.Features.Courses.Commands.Admin.AddCourse
         public CourseType Type { get; set; } = CourseType.Recorded;
 
         public int Order { get; set; }
+
+        public decimal Price { get; set; }
     }
 }

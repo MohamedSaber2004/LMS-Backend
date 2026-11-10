@@ -21,8 +21,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Admin]
+    /// Admin management of courses, published/unpublished lessons, quiz questions, and teacher assignments.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Courses.Base)]
+    [Tags("Admin: Courses")]
     [RoleAuthorize(UserType.Admin)]
     public class CoursesAdminController : BaseController
     {

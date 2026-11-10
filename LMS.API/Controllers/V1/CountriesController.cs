@@ -15,8 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Public (list and by-id lookups) · Admin (paginated list, create, update, delete)]
+    /// Country reference data, including the time zone anchor every schedule is resolved against.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Countries.Base)]
+    [Tags("Countries")]
     [Authorize]
     [RoleAuthorize(UserType.Admin)]
     public class CountriesController : BaseController

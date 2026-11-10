@@ -13,10 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// Teacher-specific session operations including cancellations, reschedule requests, and participants roster.
+    /// [Allowed Roles: Instructor (Teacher)]
+    /// Teacher-side session actions that learners cannot perform: cancelling a session, answering with a reschedule request, and reading the participants roster.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Teacher.Sessions.Base)]
+    [Tags("Teacher: Sessions")]
     [Authorize]
     [RoleAuthorize(UserType.Instructor)]
     public class TeacherSessionsController : BaseController

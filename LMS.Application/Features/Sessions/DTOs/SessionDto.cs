@@ -22,6 +22,12 @@ namespace LMS.Application.Features.Sessions.DTOs
 
         public decimal Price { get; set; }
 
+        public int DurationMinutes { get; set; }
+
+        public bool IsTrial { get; set; }
+
+        public bool IsAttendanceConfirmed { get; set; }
+
         public int SeatCapacity { get; set; }
 
         public int SeatsBooked { get; set; }

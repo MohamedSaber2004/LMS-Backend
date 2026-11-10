@@ -12,10 +12,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
+    /// [Allowed Roles: Instructor (Teacher)]
     /// Reschedule requests queries and withdrawal operations for instructors.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Teacher.RescheduleRequests.Base)]
+    [Tags("Teacher: Reschedule Requests")]
     [Authorize]
     [RoleAuthorize(UserType.Instructor)]
     public class TeacherRescheduleRequestsController : BaseController

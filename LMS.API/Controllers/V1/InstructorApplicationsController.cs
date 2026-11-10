@@ -13,8 +13,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Admin]
+    /// Review instructor applications: list, inspect, approve with initial pricing, reject, and set pricing.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorApplications.Base)]
+    [Tags("Admin: Instructor Applications")]
     [RoleAuthorize(UserType.Admin)]
     public class InstructorApplicationsController : BaseController
     {
@@ -84,6 +89,25 @@ namespace LMS.API.Controllers.V1
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Reject([FromBody] RejectInstructorApplicationCommand command, CancellationToken cancellationToken)
         {
+            var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Update teacher hourly rate and company commission rate (CCR) by Admin.
+        /// </summary>
+        [HttpPut(ApiRoutes.InstructorApplications.SetPricing)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> SetPricing(
+            [FromRoute] Guid id,
+            [FromBody] LMS.Application.Features.InstructorProfile.Commands.SetInstructorPricingAdmin.SetInstructorPricingAdminCommand command,
+            CancellationToken cancellationToken)
+        {
+            command.InstructorId = id;
             var result = await Mediator.Send(command, cancellationToken);
             return FromResult(result);
         }

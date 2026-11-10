@@ -53,12 +53,39 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                     cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Sessions.SlotNotFound);
 
+            var durationMinutes = request.DurationMinutes is 25 or 50 ? request.DurationMinutes : 50;
+            var sessionEndsAtUtc = instance.StartsAtUtc.AddMinutes(durationMinutes);
+            decimal sessionPrice = 0m;
+
+            if (!request.IsTrial)
+            {
+                var requiredHours = durationMinutes == 25 ? 0.5m : 1.0m;
+                var package = await _context.LearnerPackages
+                    .Where(lp => lp.LearnerId == learnerId
+                        && lp.InstructorId == request.InstructorId
+                        && lp.IsActive
+                        && lp.RemainingHours >= requiredHours)
+                    .OrderBy(lp => lp.CreatedAt)
+                    .FirstOrDefaultAsync(cancellationToken)
+                    ?? throw new BadRequestException(LocalizationKeys.Sessions.InsufficientPackageHours);
+
+                package.DeductHours(requiredHours);
+                sessionPrice = Math.Round(instructor.HourlyRate * requiredHours, 2);
+            }
+
             var session = Session.Create(
                 request.InstructorId,
                 SessionType.OneToOne,
                 instance.StartsAtUtc,
-                instance.EndsAtUtc,
-                instructor.HourlyRate);
+                sessionEndsAtUtc,
+                sessionPrice,
+                title: request.IsTrial ? "Free Trial Lesson" : null,
+                seatCapacity: 1,
+                lessonId: null,
+                durationMinutes: durationMinutes,
+                isTrial: request.IsTrial,
+                hourlyRateSnapshot: instructor.HourlyRate,
+                commissionRateSnapshot: instructor.CommissionRate);
 
             var booking = SessionBooking.Create(session.Id, learnerId);
 

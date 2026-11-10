@@ -62,10 +62,6 @@ namespace LMS.Application.Features.InstructorProfile.Commands.UpdateInstructorPr
                     EducationMaxLength].Value);
 
             RuleFor(x => x.HourlyRate)
-                .NotNull()
-                .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateRequired].Value)
-                .Must(rate => rate is null || rate.Value > 0m)
-                .WithMessage(localizer[LocalizationKeys.Authentication.HourlyRateRequired].Value)
                 .Must(rate => rate is null || rate.Value <= MaxHourlyRate)
                 .WithMessage(localizer[
                     LocalizationKeys.Authentication.HourlyRateTooLarge,

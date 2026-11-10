@@ -7,7 +7,6 @@ using LMS.Application.Features.Availability.Commands.Admin.DeleteAvailabilitySlo
 using LMS.Application.Features.Availability.Commands.Admin.EditAvailabilitySlot;
 using LMS.Application.Features.Availability.Commands.SetAvailabilityDay;
 using LMS.Application.Features.Availability.Commands.SetAvailabilityWindow;
-using LMS.Application.Features.Availability.Commands.SetVacationMode;
 using LMS.Application.Features.Availability.DTOs;
 using LMS.Application.Features.Availability.Queries.GetMyAvailability;
 using LMS.Application.Features.Availability.Queries.GetMyAvailabilityCalendar;
@@ -18,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
+    /// [Allowed Roles: Instructor (Teacher)]
     /// Availability self-service for the signed-in instructor. Every write is pinned to the caller's
     /// own instructor row, so no instructor id is ever taken from the request body or route here.
     /// </summary>
@@ -99,25 +99,6 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> DeleteSlot([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new DeleteAvailabilitySlotCommand { Id = id }, cancellationToken);
-            return FromResult(result);
-        }
-
-        /// <summary>
-        /// Turn vacation mode on or off for the signed-in instructor. While it is on, no new booking
-        /// can be placed; already confirmed sessions keep their slots.
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpPut(ApiRoutes.InstructorAvailability.MyVacationMode)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> SetVacationMode(
-            [FromBody] SetVacationModeCommand command,
-            CancellationToken cancellationToken)
-        {
-            var result = await Mediator.Send(command, cancellationToken);
             return FromResult(result);
         }
 

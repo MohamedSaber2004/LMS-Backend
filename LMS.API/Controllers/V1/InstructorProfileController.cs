@@ -11,8 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Instructor (Teacher)]
+    /// Teacher-managed public bio, specialization, years of experience, and credentials management.
+    /// </summary>
     [ApiVersion("1.0")]
+    [Route(ApiRoutes.Teacher.Profile.Base)]
     [Route(ApiRoutes.InstructorProfile.Base)]
+    [Tags("Teacher: Profile")]
     [Authorize]
     [RoleAuthorize(UserType.Instructor)]
     public class InstructorProfileController : BaseController

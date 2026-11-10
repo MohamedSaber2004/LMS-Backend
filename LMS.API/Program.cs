@@ -317,6 +317,15 @@ namespace LMS.API
             builder.Services.AddMemoryCache();
             builder.Services.AddInMemoryRateLimiting();
             builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+            builder.Services.Configure<IpRateLimitOptions>(options =>
+            {
+                options.QuotaExceededResponse = new QuotaExceededResponse
+                {
+                    ContentType = "application/json",
+                    StatusCode = StatusCodes.Status429TooManyRequests,
+                    Content = "{\"isSuccess\":false,\"message\":\"Too many requests. Please wait a moment before trying again.\",\"statusCode\":429,\"errors\":{\"General\":[\"Rate limit quota exceeded. Please wait a moment before trying again.\"]}}"
+                };
+            });
             builder.Services.Configure<ClientRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
             builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
@@ -362,6 +371,7 @@ namespace LMS.API
                 options.SchemaFilter<RequiredFieldsSchemaFilter>();
                 options.DocumentFilter<RequiredFieldsDocumentFilter>();
                 options.DocumentFilter<RemoveApiVersionParameterDocumentFilter>();
+                options.DocumentFilter<ControllerRoleTagDocumentFilter>();
             });
 
             builder.Services.AddOptions<SwaggerGenOptions>().Configure<IApiVersionDescriptionProvider>((options, provider) =>
@@ -535,6 +545,21 @@ namespace LMS.API
                 catch (Exception ex)
                 {
                     Log.Error(ex, "An error occurred while seeding the help center.");
+                }
+            }
+
+            if (args.Contains("--seed-package-tiers"))
+            {
+                using var scope = app.Services.CreateScope();
+                try
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<LmsDbContext>();
+                    await PackageTierSeeder.SeedPackageTiersAsync(dbContext);
+                    Log.Information("Package tier seeding finished.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An error occurred while seeding package tiers.");
                 }
             }
 

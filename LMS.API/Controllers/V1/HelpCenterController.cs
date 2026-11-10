@@ -10,8 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Public]
+    /// Read-only browsing of active help center categories and articles.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.HelpCenter.Base)]
+    [Tags("Help Center (Public)")]
     public class HelpCenterController : BaseController
     {
         /// <summary>

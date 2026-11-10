@@ -51,7 +51,7 @@ namespace LMS.Application.Features.Courses.Commands.EnrollCourse
             if (!alreadyEnrolled)
             {
                 await _context.CourseEnrollments.AddAsync(
-                    CourseEnrollment.Create(course.Id, learnerId), cancellationToken);
+                    CourseEnrollment.Create(course.Id, learnerId, course.Price), cancellationToken);
 
                 if (course.Type == LMS.Domain.Enums.CourseType.Live)
                 {

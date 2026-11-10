@@ -142,6 +142,10 @@ namespace LMS.Application.Common.Services
                     .Where(sa => sa.LearnerId == learnerId)
                     .ExecuteDeleteAsync(cancellationToken);
 
+                await _context.LearnerPackages.IgnoreQueryFilters()
+                    .Where(lp => lp.LearnerId == learnerId)
+                    .ExecuteDeleteAsync(cancellationToken);
+
                 await _context.SessionBookings.IgnoreQueryFilters()
                     .Where(sb => sb.LearnerId == learnerId)
                     .ExecuteDeleteAsync(cancellationToken);
@@ -209,6 +213,14 @@ namespace LMS.Application.Common.Services
 
                 await _context.InstructorCertificates.IgnoreQueryFilters()
                     .Where(ic => ic.InstructorId == instructorId)
+                    .ExecuteDeleteAsync(cancellationToken);
+
+                await _context.LearnerPackages.IgnoreQueryFilters()
+                    .Where(lp => lp.InstructorId == instructorId)
+                    .ExecuteDeleteAsync(cancellationToken);
+
+                await _context.TeacherWallets.IgnoreQueryFilters()
+                    .Where(w => w.InstructorId == instructorId)
                     .ExecuteDeleteAsync(cancellationToken);
 
                 await _context.InstructorApplications.IgnoreQueryFilters()

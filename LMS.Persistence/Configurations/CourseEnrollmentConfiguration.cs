@@ -15,6 +15,10 @@ namespace LMS.Persistence.Configurations
             builder.Property(enrollment => enrollment.CreatedBy)
                 .IsRequired();
 
+            builder.Property(enrollment => enrollment.PricePaid)
+                .HasPrecision(10, 2)
+                .IsRequired();
+
             builder.Property(enrollment => enrollment.Version)
                 .IsRowVersion();
 

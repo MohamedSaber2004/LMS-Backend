@@ -1,5 +1,4 @@
 using Asp.Versioning;
-using LMS.API.Filters;
 using LMS.API.Routes.V1;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Authentication.Commands.ChangetPassword;
@@ -20,8 +19,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Public (login, register, password and OTP flows) · Any authenticated user (profile, logout, change password, delete account)]
+    /// Identity entry points: token issuing, email verification, password reset and the caller's own account.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Authentication.Base)]
+    [Tags("Authentication")]
     public class AuthenticationController : BaseController
     {
         /// <summary>
@@ -219,7 +223,7 @@ namespace LMS.API.Controllers.V1
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [RoleAuthorize]
+        [Authorize]
         [HttpGet]
         [Route(ApiRoutes.Authentication.GetUserProfile)]
         [ProducesResponseType(typeof(ApiResponse<UserProfileDto>), StatusCodes.Status200OK)]

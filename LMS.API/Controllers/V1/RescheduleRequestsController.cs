@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Instructor and Learner]
+    /// Act on a pending reschedule request: the receiving party approves or declines the proposed move.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.RescheduleRequests.Base)]
     [RoleAuthorize(UserType.Instructor, UserType.Learner)]

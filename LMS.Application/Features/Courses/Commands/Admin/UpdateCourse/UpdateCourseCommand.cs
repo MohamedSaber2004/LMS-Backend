@@ -24,6 +24,8 @@ namespace LMS.Application.Features.Courses.Commands.Admin.UpdateCourse
 
         public int Order { get; set; }
 
+        public decimal Price { get; set; }
+
         public bool IsActive { get; set; } = true;
     }
 }

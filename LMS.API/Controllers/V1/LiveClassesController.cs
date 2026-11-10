@@ -20,8 +20,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Public (live class config) · Instructor (start, end) · Instructor and Learner (join, leave, session state, token)]
+    /// Real time classroom entry points: minting the room token and driving the room lifecycle.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.LiveClasses.Base)]
+    [Tags("Live Classes")]
     [Authorize]
     public class LiveClassesController : BaseController
     {

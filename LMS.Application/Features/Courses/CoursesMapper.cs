@@ -14,6 +14,7 @@ namespace LMS.Application.Features.Courses
             Level = course.Level,
             Type = course.Type,
             Order = course.Order,
+            Price = course.Price,
             LessonCount = lessonCount,
             Instructors = ToInstructorRefs(course),
             IsActive = course.IsActive
@@ -28,6 +29,7 @@ namespace LMS.Application.Features.Courses
             Level = course.Level,
             Type = course.Type,
             Order = course.Order,
+            Price = course.Price,
             IsEnrolled = isEnrolled,
             Instructors = ToInstructorRefs(course),
             Lessons = course.Lessons
@@ -61,6 +63,7 @@ namespace LMS.Application.Features.Courses
             Level = course.Level,
             Type = course.Type,
             Order = course.Order,
+            Price = course.Price,
             IsActive = course.IsActive,
             Instructors = ToInstructorRefs(course),
             Lessons = course.Lessons

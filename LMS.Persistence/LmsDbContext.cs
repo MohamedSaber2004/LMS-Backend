@@ -43,6 +43,12 @@ namespace LMS.Persistence
         public DbSet<QuizAttemptAnswer> QuizAttemptAnswers { get; set; }
         public DbSet<LiveRoom> LiveRooms { get; set; }
         public DbSet<LiveRoomParticipant> LiveRoomParticipants { get; set; }
+        public DbSet<LearnerPackage> LearnerPackages { get; set; }
+        public DbSet<PackageTier> PackageTiers { get; set; }
+        public DbSet<PackageHourAdjustment> PackageHourAdjustments { get; set; }
+        public DbSet<TeacherWallet> TeacherWallets { get; set; }
+        public DbSet<TeacherWalletTransaction> TeacherWalletTransactions { get; set; }
+        public DbSet<SessionReview> SessionReviews { get; set; }
 
         public LmsDbContext(
             ICurrentUserService currentUserService,

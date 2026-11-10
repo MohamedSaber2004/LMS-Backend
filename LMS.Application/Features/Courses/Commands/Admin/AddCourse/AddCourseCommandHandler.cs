@@ -51,6 +51,7 @@ namespace LMS.Application.Features.Courses.Commands.Admin.AddCourse
                 uploadedCover ?? Normalize(request.CoverUrl),
                 request.Level,
                 request.Order,
+                request.Price,
                 request.Type);
 
             try

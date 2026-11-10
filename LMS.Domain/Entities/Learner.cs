@@ -10,6 +10,7 @@ namespace LMS.Domain.Entities
         public decimal? HourlyRate { get; private set; }
 
         public virtual ICollection<SessionAttendance> Attendances { get; private set; } = new List<SessionAttendance>();
+        public virtual ICollection<LearnerPackage> Packages { get; private set; } = new List<LearnerPackage>();
 
         public static Learner Create(Guid userId, decimal? hourlyRate = null)
         {

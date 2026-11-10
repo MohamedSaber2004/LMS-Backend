@@ -13,5 +13,7 @@ namespace LMS.Application.Features.Sessions.Queries.GetBookableSlots
         public DateOnly From { get; set; }
 
         public DateOnly To { get; set; }
+
+        public string? TimeZoneId { get; set; }
     }
 }

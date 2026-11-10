@@ -49,10 +49,12 @@ namespace LMS.Application.Features.Sessions.Queries.GetSessionById
 
             var isTeacher = ownInstructorId == session.InstructorId;
 
+            var seesAllBookings = isTeacher || ActorOwnership.IsAdmin(_currentUserService);
+
             var ownLearnerId = await ActorOwnership.ResolveLearnerIdAsync(
                 _context, _currentUserService.UserId, cancellationToken);
 
-            var myBooking = isTeacher
+            var myBooking = seesAllBookings
                 ? null
                 : session.Bookings.FirstOrDefault(booking => booking.LearnerId == ownLearnerId);
 
@@ -62,7 +64,7 @@ namespace LMS.Application.Features.Sessions.Queries.GetSessionById
                     session,
                     session.Instructor?.User?.FullName ?? string.Empty,
                     myBooking),
-                Bookings = isTeacher
+                Bookings = seesAllBookings
                     ? session.Bookings
                         .OrderBy(booking => booking.CreatedAt)
                         .Select(booking => SessionMapper.ToBookingDto(

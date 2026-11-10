@@ -13,5 +13,13 @@ namespace LMS.Application.Features.Sessions.DTOs
         public DateTime StartsAtUtc { get; set; }
 
         public DateTime EndsAtUtc { get; set; }
+
+        public DateTime? LocalStartsAt { get; set; }
+
+        public DateTime? LocalEndsAt { get; set; }
+
+        public DateOnly? LocalDate { get; set; }
+
+        public string? TimeZoneId { get; set; }
     }
 }

@@ -54,6 +54,7 @@ namespace LMS.Application.Features.Courses.Queries.GetMyCoursesPagginated
                 {
                     enrollment.CourseId,
                     enrollment.CreatedAt,
+                    enrollment.PricePaid,
                     enrollment.Course.Title,
                     enrollment.Course.Description,
                     enrollment.Course.CoverUrl,
@@ -118,7 +119,8 @@ namespace LMS.Application.Features.Courses.Queries.GetMyCoursesPagginated
                     LastLessonTitle = last?.LessonTitle,
                     LastWatchedSeconds = last?.LastWatchedSeconds,
                     LastLessonIsCompleted = last?.IsCompleted,
-                    EnrolledAtUtc = enrollment.CreatedAt
+                    EnrolledAtUtc = enrollment.CreatedAt,
+                    PricePaid = enrollment.PricePaid
                 });
             }
 

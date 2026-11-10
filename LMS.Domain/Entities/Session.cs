@@ -22,6 +22,12 @@ namespace LMS.Domain.Entities
         public SessionStatus Status { get; private set; }
 
         public decimal Price { get; private set; }
+        public int DurationMinutes { get; private set; } = 50;
+        public bool IsTrial { get; private set; }
+        public decimal HourlyRateSnapshot { get; private set; }
+        public decimal CommissionRateSnapshot { get; private set; }
+        public bool IsAttendanceConfirmed { get; private set; }
+        public DateTime? AttendanceConfirmedAtUtc { get; private set; }
 
         public int SeatCapacity { get; private set; }
 
@@ -44,7 +50,11 @@ namespace LMS.Domain.Entities
             decimal price,
             string? title = null,
             int seatCapacity = 1,
-            Guid? lessonId = null)
+            Guid? lessonId = null,
+            int durationMinutes = 50,
+            bool isTrial = false,
+            decimal hourlyRateSnapshot = 0m,
+            decimal commissionRateSnapshot = 0m)
         {
             return new Session
             {
@@ -57,8 +67,19 @@ namespace LMS.Domain.Entities
                 Title = title,
                 SeatCapacity = type == SessionType.OneToOne ? 1 : seatCapacity,
                 Status = SessionStatus.Pending,
-                SeatsBooked = 0
+                SeatsBooked = 0,
+                DurationMinutes = durationMinutes,
+                IsTrial = isTrial,
+                HourlyRateSnapshot = hourlyRateSnapshot,
+                CommissionRateSnapshot = commissionRateSnapshot
             };
+        }
+
+        public void ConfirmAttendance(DateTime confirmedAtUtc)
+        {
+            IsAttendanceConfirmed = true;
+            AttendanceConfirmedAtUtc = confirmedAtUtc;
+            Status = SessionStatus.Completed;
         }
 
         public void AssignLesson(Guid lessonId)

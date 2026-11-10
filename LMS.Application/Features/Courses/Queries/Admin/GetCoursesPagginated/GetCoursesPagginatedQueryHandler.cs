@@ -77,6 +77,7 @@ namespace LMS.Application.Features.Courses.Queries.Admin.GetCoursesPagginated
                     CoverUrl = course.CoverUrl,
                     Level = course.Level,
                     Order = course.Order,
+                    Price = course.Price,
                     IsActive = course.IsActive,
                     LessonCount = course.Lessons.Count(lesson => lesson.IsActive),
                     Instructors = course.CourseInstructors

@@ -30,6 +30,10 @@ namespace LMS.Persistence.Configurations
                 .HasConversion<int>()
                 .IsRequired();
 
+            builder.Property(course => course.Price)
+                .HasPrecision(10, 2)
+                .IsRequired();
+
             builder.Property(course => course.Order)
                 .IsRequired();
 

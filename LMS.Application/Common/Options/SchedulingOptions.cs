@@ -18,6 +18,6 @@ namespace LMS.Application.Common.Options
 
         public int InstructorLockHours { get; set; } = 24;
 
-        public int LearnerLockHours { get; set; } = 12;
+        public int LearnerLockHours { get; set; } = 24;
     }
 }

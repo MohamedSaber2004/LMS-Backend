@@ -11,8 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Any authenticated user]
+    /// Upload, replace and download stored files (certificates, intro videos, avatars).
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Attachments.Base)]
+    [Tags("Attachments")]
     [Authorize]
     public class AttachmentsController : BaseController
     {

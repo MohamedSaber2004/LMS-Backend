@@ -1,3 +1,4 @@
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.DTOs;
@@ -51,8 +52,26 @@ namespace LMS.Application.Features.Sessions.Queries.GetBookableSlots
                 })
                 .ToListAsync(cancellationToken);
 
+            TimeZoneInfo? clientZone = null;
+            if (!string.IsNullOrWhiteSpace(request.TimeZoneId))
+            {
+                TimezoneHelper.TryResolve(request.TimeZoneId, out clientZone);
+            }
+
+            var resultSlots = slots.Select(slot =>
+            {
+                if (clientZone != null)
+                {
+                    slot.TimeZoneId = clientZone.Id;
+                    slot.LocalStartsAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(slot.StartsAtUtc, DateTimeKind.Utc), clientZone);
+                    slot.LocalEndsAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(slot.EndsAtUtc, DateTimeKind.Utc), clientZone);
+                    slot.LocalDate = DateOnly.FromDateTime(slot.LocalStartsAt.Value);
+                }
+                return slot;
+            }).ToList();
+
             return Result<IReadOnlyCollection<BookableSlotDto>>.Success(
-                slots,
+                resultSlots,
                 _localizer[LocalizationKeys.Sessions.SlotsRetrieved].Value);
         }
     }

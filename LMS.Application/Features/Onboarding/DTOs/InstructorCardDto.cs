@@ -17,7 +17,13 @@ namespace LMS.Application.Features.Onboarding.DTOs
             string? countryName,
             string? introVideoPath,
             IReadOnlyCollection<string> certificatePaths,
-            DateTime approvedAt)
+            DateTime approvedAt,
+            bool isNativeSpeaker = true,
+            int? rank = null,
+            IReadOnlyCollection<string>? languages = null,
+            decimal ratingAverage = 0.0m,
+            int totalReviews = 0,
+            int completedSessionsCount = 0)
         {
             Id = id;
             UserId = userId;
@@ -32,6 +38,12 @@ namespace LMS.Application.Features.Onboarding.DTOs
             IntroVideoPath = introVideoPath;
             CertificatePaths = certificatePaths;
             ApprovedAt = approvedAt;
+            IsNativeSpeaker = isNativeSpeaker;
+            Rank = rank;
+            Languages = languages ?? Array.Empty<string>();
+            RatingAverage = ratingAverage;
+            TotalReviews = totalReviews;
+            CompletedSessionsCount = completedSessionsCount;
         }
 
         public Guid Id { get; set; }
@@ -47,5 +59,11 @@ namespace LMS.Application.Features.Onboarding.DTOs
         public string? IntroVideoPath { get; set; }
         public IReadOnlyCollection<string> CertificatePaths { get; set; } = Array.Empty<string>();
         public DateTime ApprovedAt { get; set; }
+        public bool IsNativeSpeaker { get; set; }
+        public int? Rank { get; set; }
+        public IReadOnlyCollection<string> Languages { get; set; } = Array.Empty<string>();
+        public decimal RatingAverage { get; set; }
+        public int TotalReviews { get; set; }
+        public int CompletedSessionsCount { get; set; }
     }
 }

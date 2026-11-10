@@ -15,8 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Admin]
+    /// Admin management of platform user accounts, role assignments, password changes, and account activation.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Users.Base)]
+    [Tags("Admin: Users")]
     [Authorize]
     [RoleAuthorize(UserType.Admin)]
     public class UsersController : BaseController

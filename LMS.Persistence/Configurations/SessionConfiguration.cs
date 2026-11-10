@@ -32,6 +32,28 @@ namespace LMS.Persistence.Configurations
             builder.Property(session => session.Price)
                 .HasPrecision(10, 2);
 
+            builder.Property(session => session.DurationMinutes)
+                .IsRequired()
+                .HasDefaultValue(50);
+
+            builder.Property(session => session.IsTrial)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(session => session.HourlyRateSnapshot)
+                .HasPrecision(10, 2)
+                .HasDefaultValue(0m);
+
+            builder.Property(session => session.CommissionRateSnapshot)
+                .HasPrecision(5, 2)
+                .HasDefaultValue(0m);
+
+            builder.Property(session => session.IsAttendanceConfirmed)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(session => session.AttendanceConfirmedAtUtc);
+
             builder.Property(session => session.CancelReason)
                 .HasMaxLength(1000);
 

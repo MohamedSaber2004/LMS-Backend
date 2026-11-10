@@ -13,8 +13,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers.V1
 {
+    /// <summary>
+    /// [Allowed Roles: Learner]
+    /// Learner onboarding wizard: answer the active question set and browse instructors matched to those answers.
+    /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Onboarding.Base)]
+    [Tags("Learner: Onboarding")]
     [Authorize]
     [RoleAuthorize(UserType.Learner)]
     public class OnboardingController : BaseController

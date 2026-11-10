@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
+    /// [Allowed Roles: Instructor (Teacher)]
     /// Availability management and automated vacation mode handling for instructors.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Teacher.Availability.Base)]
+    [Tags("Teacher: Availability")]
     [RoleAuthorize(UserType.Instructor)]
     public class TeacherAvailabilityController : BaseController
     {

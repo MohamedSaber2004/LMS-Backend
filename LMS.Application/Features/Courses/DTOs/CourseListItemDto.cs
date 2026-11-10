@@ -13,6 +13,7 @@ namespace LMS.Application.Features.Courses.DTOs
         public CourseLevel Level { get; set; }
         public CourseType Type { get; set; }
         public int Order { get; set; }
+        public decimal Price { get; set; }
         public int LessonCount { get; set; }
         public IReadOnlyCollection<InstructorRefDto> Instructors { get; set; } = Array.Empty<InstructorRefDto>();
         public bool IsActive { get; set; }

@@ -28,30 +28,30 @@ namespace LMS.Application.Features.Authentication.Commands.Login
                         string.IsNullOrWhiteSpace(command.Password) ||
                         !EmailValidator.IsValid(command.Email))
                     {
-                        throw new UnAuthorizedException();
+                        throw new UnAuthorizedException(LMS.Application.Localization.LocalizationKeys.Authentication.InvalidCredentials);
                     }
 
                     var user = await _userManager.FindByEmailAsync(command.Email);
                     if (user == null || user.IsDeleted || !user.IsActive)
                     {
-                        throw new UnAuthorizedException();
+                        throw new UnAuthorizedException(LMS.Application.Localization.LocalizationKeys.Authentication.InvalidCredentials);
                     }
 
                     if (await _userManager.IsLockedOutAsync(user))
                     {
-                        throw new UnAuthorizedException();
+                        throw new UnAuthorizedException(LMS.Application.Localization.LocalizationKeys.Authentication.AccountLocked);
                     }
 
                     if (_identityOptions.RequireConfirmedEmail && !await _userManager.IsEmailConfirmedAsync(user))
                     {
-                        throw new UnAuthorizedException();
+                        throw new UnAuthorizedException(LMS.Application.Localization.LocalizationKeys.Authentication.EmailNotConfirmed);
                     }
 
                     var isPasswordValid = await _userManager.CheckPasswordAsync(user, command.Password);
                     if (!isPasswordValid)
                     {
                         await _userManager.AccessFailedAsync(user);
-                        throw new UnAuthorizedException();
+                        throw new UnAuthorizedException(LMS.Application.Localization.LocalizationKeys.Authentication.InvalidCredentials);
                     }
                 });
         }
