@@ -14755,14 +14755,6 @@
         "summary": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
         "parameters": [
           {
-            "name": "instructorId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
             "name": "Accept-Language",
             "in": "header",
             "description": "Response language En.",
@@ -14908,14 +14900,6 @@
         ],
         "summary": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
         "parameters": [
-          {
-            "name": "instructorId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "Accept-Language",
             "in": "header",
@@ -19572,6 +19556,145 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SessionDetailDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/{id}/pay": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDtoApiResponse"
                 },
                 "examples": {
                   "application/json": {
@@ -24467,6 +24590,7 @@
           "totalHours",
           "totalFullSessions",
           "totalHalfSessions",
+          "pricePerHour",
           "description",
           "displayOrder"
         ],
@@ -24486,6 +24610,15 @@
           "totalHalfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerHour": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "description": {
             "type": "string"
@@ -27354,6 +27487,8 @@
           "totalHours",
           "totalFullSessions",
           "totalHalfSessions",
+          "pricePerHour",
+          "totalPrice",
           "description",
           "displayOrder"
         ],
@@ -27377,6 +27512,14 @@
           "totalHalfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerHour": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
           },
           "description": {
             "type": "string"
@@ -27641,23 +27784,13 @@
       },
       "PurchasePackageCommand": {
         "required": [
-          "totalHours"
+          "tierId"
         ],
         "type": "object",
         "properties": {
-          "instructorId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
           "tierId": {
             "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "totalHours": {
-            "type": "number",
-            "format": "double"
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -28417,6 +28550,7 @@
           "price",
           "durationMinutes",
           "isTrial",
+          "isPaid",
           "isAttendanceConfirmed",
           "seatCapacity",
           "seatsBooked"
@@ -28462,6 +28596,14 @@
           },
           "isTrial": {
             "type": "boolean"
+          },
+          "isPaid": {
+            "type": "boolean"
+          },
+          "paidAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "isAttendanceConfirmed": {
             "type": "boolean"
@@ -29765,6 +29907,7 @@
           "totalHours",
           "totalFullSessions",
           "totalHalfSessions",
+          "pricePerHour",
           "description",
           "displayOrder"
         ],
@@ -29784,6 +29927,15 @@
           "totalHalfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerHour": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "description": {
             "type": "string"
