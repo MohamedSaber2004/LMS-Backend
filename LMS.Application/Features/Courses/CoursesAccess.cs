@@ -25,7 +25,14 @@ namespace LMS.Application.Features.Courses
             Guid? learnerId,
             CancellationToken cancellationToken)
         {
-            if (lesson.IsFreeDemo)
+            if (lesson.IsFreeDemo || lesson.Order == 1)
+            {
+                return;
+            }
+
+            var isFirstLesson = !await context.Lessons
+                .AnyAsync(l => l.CourseId == lesson.CourseId && l.Order < lesson.Order, cancellationToken);
+            if (isFirstLesson)
             {
                 return;
             }

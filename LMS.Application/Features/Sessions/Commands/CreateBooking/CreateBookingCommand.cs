@@ -1,5 +1,6 @@
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.DTOs;
+using LMS.Domain.Enums;
 using MediatR;
 
 namespace LMS.Application.Features.Sessions.Commands.CreateBooking
@@ -10,7 +11,7 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
 
         public Guid AvailabilityInstanceId { get; set; }
 
-        public int DurationMinutes { get; set; } = 50;
+        public AcademicSessionDuration DurationMinutes { get; set; } = AcademicSessionDuration.Session50Min;
 
         public bool IsTrial { get; set; } = false;
     }

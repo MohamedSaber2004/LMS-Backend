@@ -53,7 +53,7 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                     cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Sessions.SlotNotFound);
 
-            var durationMinutes = request.DurationMinutes is 25 or 50 ? request.DurationMinutes : 50;
+            var durationMinutes = (int)request.DurationMinutes is 25 or 50 ? (int)request.DurationMinutes : 50;
             var sessionEndsAtUtc = instance.StartsAtUtc.AddMinutes(durationMinutes);
             decimal sessionPrice = 0m;
 

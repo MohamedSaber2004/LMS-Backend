@@ -2,8 +2,8 @@ namespace LMS.Domain.Enums
 {
     public enum AcademicSessionDuration
     {
-        HalfHour = 25,
-        FullHour = 50
+        Session25Min = 25,
+        Session50Min = 50
     }
 }
 

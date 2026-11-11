@@ -2,7 +2,6 @@ using Asp.Versioning;
 using LMS.API.Filters;
 using LMS.API.Routes.V1;
 using LMS.Application.Common.Models;
-using LMS.Application.Features.Packages.Commands.AdjustPackageHours;
 using LMS.Application.Features.Packages.Commands.CreatePackageTier;
 using LMS.Application.Features.Packages.Commands.DeletePackageTier;
 using LMS.Application.Features.Packages.Commands.UpdatePackageTier;
@@ -34,24 +33,6 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> GetAll([FromQuery] GetAdminPackagesQuery query, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(query, cancellationToken);
-            return FromResult(result);
-        }
-
-        /// <summary>
-        /// Adjust remaining hours of a learner's package (for administrative corrections or compensation).
-        /// </summary>
-        [HttpPost(ApiRoutes.Admin.Packages.AdjustHours)]
-        [RequirePermission(AdminPermission.PackagesUpdate)]
-        [ProducesResponseType(typeof(ApiResponse<LearnerPackageDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AdjustHours(
-            [FromRoute] Guid id,
-            [FromBody] AdjustPackageHoursCommand command,
-            CancellationToken cancellationToken)
-        {
-            command.PackageId = id;
-            var result = await Mediator.Send(command, cancellationToken);
             return FromResult(result);
         }
 

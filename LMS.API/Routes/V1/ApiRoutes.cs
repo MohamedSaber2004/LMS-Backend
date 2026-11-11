@@ -121,6 +121,7 @@ namespace LMS.API.Routes.V1
                 public const string Catalog = "catalog";
                 public const string Purchase = "purchase";
                 public const string MyBalances = "my-balances";
+                public const string Wallet = "wallet";
             }
 
             public static class Sessions
@@ -154,7 +155,6 @@ namespace LMS.API.Routes.V1
             {
                 public const string Base = Admin.Base + "/packages";
                 public const string GetAll = "";
-                public const string AdjustHours = "{id:guid}/adjust";
                 public const string Tiers = "tiers";
                 public const string TierById = "tiers/{id:guid}";
             }

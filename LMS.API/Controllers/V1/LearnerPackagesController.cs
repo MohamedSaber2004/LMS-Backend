@@ -6,6 +6,7 @@ using LMS.Application.Features.Packages.Commands.PurchasePackage;
 using LMS.Application.Features.Packages.DTOs;
 using LMS.Application.Features.Packages.Queries.GetMyPackages;
 using LMS.Application.Features.Packages.Queries.GetPackageCatalog;
+using LMS.Application.Features.Packages.Queries.GetLearnerWallet;
 using LMS.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,6 +59,19 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> GetMyBalances([FromQuery] Guid? instructorId, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new GetMyPackagesQuery { InstructorId = instructorId }, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.
+        /// </summary>
+        [HttpGet(ApiRoutes.Learner.Packages.Wallet)]
+        [Authorize]
+        [RoleAuthorize(UserType.Learner)]
+        [ProducesResponseType(typeof(ApiResponse<LearnerSessionsWalletDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetWallet(CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(new GetLearnerWalletQuery(), cancellationToken);
             return FromResult(result);
         }
     }

@@ -220,7 +220,6 @@ namespace LMS.Application
             services.AddTransient<IValidator<LMS.Application.Features.LiveClasses.Commands.EndLiveClass.EndLiveClassCommand>, LMS.Application.Features.LiveClasses.Commands.EndLiveClass.EndLiveClassCommandValidator>();
             services.AddTransient<IValidator<LMS.Application.Features.LiveClasses.Commands.RefreshToken.RefreshTokenCommand>, LMS.Application.Features.LiveClasses.Commands.RefreshToken.RefreshTokenCommandValidator>();
 
-            services.AddTransient<IValidator<LMS.Application.Features.Packages.Commands.AdjustPackageHours.AdjustPackageHoursCommand>, LMS.Application.Features.Packages.Commands.AdjustPackageHours.AdjustPackageHoursCommandValidator>();
             services.AddTransient<IValidator<LMS.Application.Features.Packages.Commands.PurchasePackage.PurchasePackageCommand>, LMS.Application.Features.Packages.Commands.PurchasePackage.PurchasePackageCommandValidator>();
             services.AddTransient<IValidator<LMS.Application.Features.Packages.Commands.CreatePackageTier.CreatePackageTierCommand>, LMS.Application.Features.Packages.Commands.CreatePackageTier.CreatePackageTierCommandValidator>();
             services.AddTransient<IValidator<LMS.Application.Features.Packages.Commands.UpdatePackageTier.UpdatePackageTierCommand>, LMS.Application.Features.Packages.Commands.UpdatePackageTier.UpdatePackageTierCommandValidator>();

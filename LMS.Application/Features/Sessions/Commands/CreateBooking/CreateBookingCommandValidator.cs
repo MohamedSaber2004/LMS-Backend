@@ -39,7 +39,7 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 .WithMessage(localizer[LocalizationKeys.Sessions.SlotIdRequired].Value);
 
             RuleFor(command => command.DurationMinutes)
-                .Must(d => d == 25 || d == 50)
+                .IsInEnum()
                 .WithMessage(localizer[LocalizationKeys.Sessions.DurationInvalid].Value);
 
             RuleFor(command => command)
@@ -88,7 +88,7 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
             }
             else
             {
-                var requiredHours = command.DurationMinutes == 25 ? 0.5m : 1.0m;
+                var requiredHours = command.DurationMinutes == Domain.Enums.AcademicSessionDuration.Session25Min ? 0.5m : 1.0m;
                 var hasBalance = await _context.LearnerPackages
                     .AnyAsync(lp => lp.LearnerId == learnerId
                         && lp.IsActive
