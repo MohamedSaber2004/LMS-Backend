@@ -17293,6 +17293,956 @@
       ]
     },
     {
+      "name": "Admin: Permissions",
+      "description": "",
+      "item": [
+        {
+          "name": "List every permission code grouped by feature, with the calling account's effective permissions.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "permissions"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "List every permission code grouped by feature, with the calling account's effective permissions.",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "List every permission code grouped by feature, with the calling account's effective permissions.",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "List every permission code grouped by feature, with the calling account's effective permissions.",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "List every permission code grouped by feature, with the calling account's effective permissions.",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [],
+              "body": "",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "List every permission code grouped by feature, with the calling account's effective permissions.",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "List every permission code grouped by feature, with the calling account's effective permissions.",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "List the permission codes granted to a user account.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "users",
+                "{{id}}",
+                "permissions"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "List the permission codes granted to a user account.",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "List the permission codes granted to a user account.",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "List the permission codes granted to a user account.",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "List the permission codes granted to a user account.",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "List the permission codes granted to a user account.",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [],
+              "body": "",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "List the permission codes granted to a user account.",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "List the permission codes granted to a user account.",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": ""
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "users",
+                "{{id}}",
+                "permissions"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [],
+              "body": "",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/admin/users/{{id}}/permissions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "users",
+                    "{{id}}",
+                    "permissions"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Replace the permission codes granted to a user account. Sending an empty list revokes every grant.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    0\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Admin: Sessions",
       "description": "",
       "item": [
@@ -33253,7 +34203,7 @@
       "description": "",
       "item": [
         {
-          "name": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+          "name": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
           "request": {
             "method": "GET",
             "header": [
@@ -33284,7 +34234,7 @@
               ],
               "variable": []
             },
-            "description": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+            "description": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
             "body": null
           },
           "response": [
@@ -33320,7 +34270,7 @@
                   ],
                   "variable": []
                 },
-                "description": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+                "description": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
                 "body": null
               },
               "status": "OK",
@@ -33366,7 +34316,7 @@
                   ],
                   "variable": []
                 },
-                "description": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+                "description": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
                 "body": null
               },
               "status": "Not Found",
@@ -33412,7 +34362,7 @@
                   ],
                   "variable": []
                 },
-                "description": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+                "description": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
                 "body": null
               },
               "status": "Validation failed",
@@ -33458,7 +34408,7 @@
                   ],
                   "variable": []
                 },
-                "description": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+                "description": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
                 "body": null
               },
               "status": "Unauthorized",
@@ -33504,7 +34454,7 @@
                   ],
                   "variable": []
                 },
-                "description": "Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).",
+                "description": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
                 "body": null
               },
               "status": "Server error",
@@ -33521,7 +34471,7 @@
           ]
         },
         {
-          "name": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+          "name": "Subscribe to a package plan of sessions/hours. Requires learner login.",
           "request": {
             "method": "POST",
             "header": [
@@ -33551,10 +34501,10 @@
               "query": [],
               "variable": []
             },
-            "description": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+            "description": "Subscribe to a package plan of sessions/hours. Requires learner login.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -33594,10 +34544,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+                "description": "Subscribe to a package plan of sessions/hours. Requires learner login.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -33647,10 +34597,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+                "description": "Subscribe to a package plan of sessions/hours. Requires learner login.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -33700,10 +34650,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+                "description": "Subscribe to a package plan of sessions/hours. Requires learner login.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -33753,10 +34703,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+                "description": "Subscribe to a package plan of sessions/hours. Requires learner login.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -33801,10 +34751,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.",
+                "description": "Subscribe to a package plan of sessions/hours. Requires learner login.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -33826,7 +34776,7 @@
           ]
         },
         {
-          "name": "View learner's active package balances and remaining session credits. Requires learner login.",
+          "name": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
           "request": {
             "method": "GET",
             "header": [
@@ -33857,7 +34807,7 @@
               ],
               "variable": []
             },
-            "description": "View learner's active package balances and remaining session credits. Requires learner login.",
+            "description": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
             "body": null
           },
           "response": [
@@ -33893,7 +34843,7 @@
                   ],
                   "variable": []
                 },
-                "description": "View learner's active package balances and remaining session credits. Requires learner login.",
+                "description": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
                 "body": null
               },
               "status": "OK",
@@ -33939,7 +34889,7 @@
                   ],
                   "variable": []
                 },
-                "description": "View learner's active package balances and remaining session credits. Requires learner login.",
+                "description": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
                 "body": null
               },
               "status": "Unauthorized",
@@ -33985,7 +34935,7 @@
                   ],
                   "variable": []
                 },
-                "description": "View learner's active package balances and remaining session credits. Requires learner login.",
+                "description": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
                 "body": null
               },
               "status": "Forbidden",
@@ -34026,7 +34976,7 @@
                   ],
                   "variable": []
                 },
-                "description": "View learner's active package balances and remaining session credits. Requires learner login.",
+                "description": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
                 "body": null
               },
               "status": "Validation failed",
@@ -34072,7 +35022,7 @@
                   ],
                   "variable": []
                 },
-                "description": "View learner's active package balances and remaining session credits. Requires learner login.",
+                "description": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
                 "body": null
               },
               "status": "Server error",
@@ -40595,7 +41545,7 @@
       "description": "",
       "item": [
         {
-          "name": "List the signed-in instructor's sessions.",
+          "name": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
           "request": {
             "method": "GET",
             "header": [
@@ -40634,7 +41584,7 @@
               ],
               "variable": []
             },
-            "description": "List the signed-in instructor's sessions.",
+            "description": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
             "body": null
           },
           "response": [
@@ -40678,7 +41628,7 @@
                   ],
                   "variable": []
                 },
-                "description": "List the signed-in instructor's sessions.",
+                "description": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
                 "body": null
               },
               "status": "OK",
@@ -40732,7 +41682,7 @@
                   ],
                   "variable": []
                 },
-                "description": "List the signed-in instructor's sessions.",
+                "description": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
                 "body": null
               },
               "status": "Bad Request",
@@ -40786,7 +41736,7 @@
                   ],
                   "variable": []
                 },
-                "description": "List the signed-in instructor's sessions.",
+                "description": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
                 "body": null
               },
               "status": "Unauthorized",
@@ -40840,7 +41790,7 @@
                   ],
                   "variable": []
                 },
-                "description": "List the signed-in instructor's sessions.",
+                "description": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
                 "body": null
               },
               "status": "Forbidden",
@@ -40894,7 +41844,7 @@
                   ],
                   "variable": []
                 },
-                "description": "List the signed-in instructor's sessions.",
+                "description": "List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).",
                 "body": null
               },
               "status": "Server error",
@@ -44088,6 +45038,320 @@
                     }
                   }
                 }
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "Get the participants list and attendance records for a session taught by the calling instructor.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{id}}",
+                "participants"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "participants"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "participants"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "participants"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "participants"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "participants"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/participants",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "participants"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "Get the participants list and attendance records for a session taught by the calling instructor.",
+                "body": null
               },
               "status": "Server error",
               "code": 500,
