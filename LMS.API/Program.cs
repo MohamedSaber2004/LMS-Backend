@@ -69,6 +69,7 @@ namespace LMS.API
             }
             catch
             {
+
             }
         }
 
