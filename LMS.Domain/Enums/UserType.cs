@@ -6,5 +6,6 @@ namespace LMS.Domain.Enums
         Instructor = 1,
         Admin = 2,
         SubAdmin = 4
+
     }
 }
