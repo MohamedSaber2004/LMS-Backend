@@ -6057,12 +6057,12 @@
         ]
       }
     },
-    "/api/v1/admin/packages": {
+    "/api/v1/admin/packages/student-subscriptions": {
       "get": {
         "tags": [
           "Admin: Packages"
         ],
-        "summary": "List all student purchased packages across the platform.",
+        "summary": "[Admin] List all students' active and past subscriptions across the platform (shows student name, plan name, remaining sessions balance, and status).",
         "parameters": [
           {
             "name": "InstructorId",
@@ -6245,7 +6245,7 @@
         "tags": [
           "Admin: Packages"
         ],
-        "summary": "List the package tiers that learners can buy.",
+        "summary": "[Admin] List all subscription plan tiers in the catalog (the available plans that students can subscribe to).",
         "parameters": [
           {
             "name": "Accept-Language",
@@ -6387,7 +6387,7 @@
         "tags": [
           "Admin: Packages"
         ],
-        "summary": "Add a package tier to the catalog.",
+        "summary": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
         "parameters": [
           {
             "name": "Accept-Language",
@@ -6560,7 +6560,7 @@
         "tags": [
           "Admin: Packages"
         ],
-        "summary": "Update a package tier. Existing learner packages keep the name and hours they were bought with.",
+        "summary": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
         "parameters": [
           {
             "name": "id",
@@ -6724,7 +6724,7 @@
         "tags": [
           "Admin: Packages"
         ],
-        "summary": "Remove a package tier from the catalog.",
+        "summary": "[Admin] Remove a subscription plan tier from the platform catalog.",
         "parameters": [
           {
             "name": "id",
@@ -14747,12 +14747,12 @@
         ]
       }
     },
-    "/api/v1/learner/packages/catalog": {
+    "/api/v1/learner/packages/available-plans": {
       "get": {
         "tags": [
           "Learner: Packages"
         ],
-        "summary": "Get the subscription package tiers configured by the admin (available for the landing page and mobile).",
+        "summary": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
         "parameters": [
           {
             "name": "instructorId",
@@ -14901,12 +14901,166 @@
         }
       }
     },
-    "/api/v1/learner/packages/purchase": {
+    "/api/v1/learner/packages/catalog": {
+      "get": {
+        "tags": [
+          "Learner: Packages"
+        ],
+        "summary": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
+        "parameters": [
+          {
+            "name": "instructorId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PackageCatalogItemDtoIReadOnlyCollectionApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/learner/packages/subscribe": {
       "post": {
         "tags": [
           "Learner: Packages"
         ],
-        "summary": "Subscribe to a package plan of sessions/hours. Requires learner login.",
+        "summary": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
         "parameters": [
           {
             "name": "Accept-Language",
@@ -15048,21 +15202,160 @@
         ]
       }
     },
-    "/api/v1/learner/packages/my-balances": {
+    "/api/v1/learner/packages/purchase": {
+      "post": {
+        "tags": [
+          "Learner: Packages"
+        ],
+        "summary": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePackageCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePackageCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePackageCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearnerPackageDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/learner/packages/wallet": {
       "get": {
         "tags": [
           "Learner: Packages"
         ],
-        "summary": "View learner's active subscription package balances and remaining session credits. Requires learner login.",
+        "summary": "[Student] View student's virtual sessions wallet: total plan sessions, remaining sessions, full (50m) and half (25m) session counts, and free trial status.",
         "parameters": [
-          {
-            "name": "instructorId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
           {
             "name": "Accept-Language",
             "in": "header",
@@ -15082,7 +15375,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LearnerPackageDtoIReadOnlyCollectionApiResponse"
+                  "$ref": "#/components/schemas/LearnerSessionsWalletDtoApiResponse"
                 },
                 "examples": {
                   "application/json": {
@@ -15200,13 +15493,21 @@
         ]
       }
     },
-    "/api/v1/learner/packages/wallet": {
+    "/api/v1/learner/packages/my-balances": {
       "get": {
         "tags": [
           "Learner: Packages"
         ],
-        "summary": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+        "summary": "[Student] View student's detailed package subscription records and history. Requires student login.",
         "parameters": [
+          {
+            "name": "instructorId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
           {
             "name": "Accept-Language",
             "in": "header",
@@ -15226,7 +15527,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LearnerSessionsWalletDtoApiResponse"
+                  "$ref": "#/components/schemas/LearnerPackageDtoIReadOnlyCollectionApiResponse"
                 },
                 "examples": {
                   "application/json": {
@@ -18772,7 +19073,7 @@
         "tags": [
           "Sessions"
         ],
-        "summary": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
+        "summary": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
         "parameters": [
           {
             "name": "Accept-Language",
