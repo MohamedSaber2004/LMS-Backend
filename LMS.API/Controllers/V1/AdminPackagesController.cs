@@ -24,7 +24,6 @@ namespace LMS.API.Controllers.V1
     [RoleAuthorize]
     public class AdminPackagesController : BaseController
     {
-
         /// <summary>
         /// [Admin] List all students' active and past subscriptions across the platform (shows student name, plan name, remaining sessions balance, and status).
         /// </summary>
