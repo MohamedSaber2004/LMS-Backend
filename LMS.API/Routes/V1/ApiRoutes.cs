@@ -93,6 +93,7 @@ namespace LMS.API.Routes.V1
             public const string ConfirmAttendance = "{id:guid}/confirm-attendance";
             public const string Reschedule = "{id:guid}/reschedule";
             public const string Participants = "{id:guid}/participants";
+            public const string Pay = "{id:guid}/pay";
         }
 
         public static class RescheduleRequests

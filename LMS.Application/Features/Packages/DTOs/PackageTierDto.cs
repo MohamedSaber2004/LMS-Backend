@@ -7,6 +7,8 @@ namespace LMS.Application.Features.Packages.DTOs
         public decimal TotalHours { get; set; }
         public int TotalFullSessions { get; set; }
         public int TotalHalfSessions { get; set; }
+        public decimal PricePerHour { get; set; }
+        public decimal TotalPrice { get; set; }
         public string Description { get; set; } = string.Empty;
         public int DisplayOrder { get; set; }
     }

@@ -65,7 +65,7 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                     booking.Cancel(actorUserId, request.Reason);
                     session.ReleaseSeat();
 
-                    if (!session.IsTrial)
+                    if (!session.IsTrial && session.IsPaid)
                     {
                         var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
                         var package = await _context.LearnerPackages
@@ -95,7 +95,7 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 booking.Cancel(actorUserId, request.Reason);
                 session.ReleaseSeat();
 
-                if (!session.IsTrial)
+                if (!session.IsTrial && session.IsPaid)
                 {
                     var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
                     var package = await _context.LearnerPackages

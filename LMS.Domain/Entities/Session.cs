@@ -24,6 +24,8 @@ namespace LMS.Domain.Entities
         public decimal Price { get; private set; }
         public int DurationMinutes { get; private set; } = 50;
         public bool IsTrial { get; private set; }
+        public bool IsPaid { get; private set; }
+        public DateTime? PaidAtUtc { get; private set; }
         public decimal HourlyRateSnapshot { get; private set; }
         public decimal CommissionRateSnapshot { get; private set; }
         public bool IsAttendanceConfirmed { get; private set; }
@@ -54,7 +56,8 @@ namespace LMS.Domain.Entities
             int durationMinutes = 50,
             bool isTrial = false,
             decimal hourlyRateSnapshot = 0m,
-            decimal commissionRateSnapshot = 0m)
+            decimal commissionRateSnapshot = 0m,
+            bool isPaid = false)
         {
             return new Session
             {
@@ -70,9 +73,17 @@ namespace LMS.Domain.Entities
                 SeatsBooked = 0,
                 DurationMinutes = durationMinutes,
                 IsTrial = isTrial,
+                IsPaid = isTrial || isPaid,
+                PaidAtUtc = (isTrial || isPaid) ? AppNow : null,
                 HourlyRateSnapshot = hourlyRateSnapshot,
                 CommissionRateSnapshot = commissionRateSnapshot
             };
+        }
+
+        public void MarkPaid(DateTime paidAtUtc)
+        {
+            IsPaid = true;
+            PaidAtUtc = paidAtUtc;
         }
 
         public void ConfirmAttendance(DateTime confirmedAtUtc)

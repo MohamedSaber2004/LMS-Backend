@@ -39,6 +39,8 @@ namespace LMS.Application.Features.Packages.Queries.GetLearnerWallet
                     _context, _currentUserService.UserId, cancellationToken)
                 ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
 
+            var defaultInstructorName = _localizer[LocalizationKeys.Packages.AllInstructors].Value;
+
             var packages = await _context.LearnerPackages
                 .AsNoTracking()
                 .Include(lp => lp.Instructor!)
@@ -49,7 +51,7 @@ namespace LMS.Application.Features.Packages.Queries.GetLearnerWallet
                 {
                     Id = lp.Id,
                     InstructorId = lp.InstructorId,
-                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : "All Instructors",
+                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : defaultInstructorName,
                     PackageName = lp.PackageName,
                     TotalHours = lp.TotalHours,
                     RemainingHours = lp.RemainingHours,

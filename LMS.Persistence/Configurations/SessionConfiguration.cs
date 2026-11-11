@@ -40,6 +40,12 @@ namespace LMS.Persistence.Configurations
                 .IsRequired()
                 .HasDefaultValue(false);
 
+            builder.Property(session => session.IsPaid)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            builder.Property(session => session.PaidAtUtc);
+
             builder.Property(session => session.HourlyRateSnapshot)
                 .HasPrecision(10, 2)
                 .HasDefaultValue(0m);

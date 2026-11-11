@@ -1,4 +1,4 @@
-﻿using LMS.Application.Common.Interfaces;
+using LMS.Application.Common.Interfaces;
 using System.Globalization;
 using System.Text.Json;
 
@@ -38,7 +38,7 @@ namespace LMS.Application.Localization
                 return;
             }
 
-            var cultures = new[] { "en", "ar" };
+            var cultures = new[] { "en" };
 
             foreach (var culture in cultures)
             {

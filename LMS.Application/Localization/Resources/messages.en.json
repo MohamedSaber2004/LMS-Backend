@@ -265,6 +265,10 @@
     "AttendanceAlreadyConfirmed": "Session attendance has already been confirmed.",
     "CannotConfirmCancelled": "Cannot confirm attendance for a cancelled session.",
     "AttendanceConfirmedSuccess": "Session attendance confirmed and teacher earnings credited successfully.",
+    "SessionMustBeConfirmedBeforePayment": "Session must be confirmed by the instructor before payment can be completed.",
+    "PaymentAlreadyCompleted": "Payment for this session has already been completed.",
+    "PaymentSuccess": "Session payment completed successfully. You can now start the session at the scheduled time.",
+    "FreeTrialLessonTitle": "Free Trial Lesson",
     "RescheduleNotWithdrawable": "Only pending reschedule requests can be withdrawn.",
     "RescheduleNotOwner": "You can only withdraw reschedule requests initiated by you.",
     "RescheduleRequestsRetrieved": "Reschedule requests retrieved successfully.",
@@ -429,10 +433,13 @@
     "ClassEndedSuccess": "Live class ended successfully.",
     "TokenRefreshedSuccess": "Token refreshed successfully.",
     "ConfigRetrieved": "Live class configuration retrieved successfully.",
-    "SessionDetailsRetrieved": "Live class details retrieved successfully."
+    "SessionDetailsRetrieved": "Live class details retrieved successfully.",
+    "SessionNotPaidStudent": "The session has not been paid for by the student. Payment must be completed before starting.",
+    "SessionNotPaidJoin": "The session has not been paid for. Payment must be completed before joining."
   },
   "Packages": {
     "InstructorIdRequired": "Instructor identifier is required.",
+    "AllInstructors": "All Instructors",
     "PurchaseSuccess": "Package hours activated successfully.",
     "CatalogRetrieved": "Package catalog retrieved successfully.",
     "PackagesRetrieved": "Learner packages retrieved successfully.",

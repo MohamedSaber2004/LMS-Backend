@@ -7,6 +7,7 @@ using LMS.Application.Features.Sessions.Commands.CancelSession;
 using LMS.Application.Features.Sessions.Commands.ConfirmSession;
 using LMS.Application.Features.Sessions.Commands.CreateBooking;
 using LMS.Application.Features.Sessions.Commands.DeclineSession;
+using LMS.Application.Features.Sessions.Commands.PaySession;
 using LMS.Application.Features.Sessions.Commands.RequestReschedule;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Application.Features.Sessions.Queries.GetBookableSlots;
@@ -136,6 +137,25 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new GetSessionByIdQuery { Id = id }, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// [Student] Complete payment/package deduction for a confirmed session before it starts.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost(ApiRoutes.Sessions.Pay)]
+        [RoleAuthorize(UserType.Learner)]
+        [ProducesResponseType(typeof(ApiResponse<SessionDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Pay([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(new PaySessionCommand { SessionId = id }, cancellationToken);
             return FromResult(result);
         }
 

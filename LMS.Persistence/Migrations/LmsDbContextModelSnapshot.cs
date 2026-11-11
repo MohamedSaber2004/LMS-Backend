@@ -1644,6 +1644,12 @@ namespace LMS.Persistence.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<decimal>("PricePerHour")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)")
+                        .HasDefaultValue(0m);
+
                     b.Property<int>("TotalFullSessions")
                         .HasColumnType("int");
 
@@ -1653,6 +1659,12 @@ namespace LMS.Persistence.Migrations
                     b.Property<decimal>("TotalHours")
                         .HasPrecision(6, 2)
                         .HasColumnType("decimal(6,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)")
+                        .HasDefaultValue(0m);
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -2059,6 +2071,11 @@ namespace LMS.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsPaid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<bool>("IsTrial")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -2066,6 +2083,9 @@ namespace LMS.Persistence.Migrations
 
                     b.Property<Guid?>("LessonId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("PaidAtUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)

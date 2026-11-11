@@ -60,15 +60,17 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
             if (!request.IsTrial)
             {
                 var requiredHours = durationMinutes == 25 ? 0.5m : 1.0m;
-                var package = await _context.LearnerPackages
-                    .Where(lp => lp.LearnerId == learnerId
+                var hasActivePackage = await _context.LearnerPackages
+                    .AnyAsync(lp => lp.LearnerId == learnerId
                         && lp.IsActive
-                        && lp.RemainingHours >= requiredHours)
-                    .OrderBy(lp => lp.CreatedAt)
-                    .FirstOrDefaultAsync(cancellationToken)
-                    ?? throw new BadRequestException(LocalizationKeys.Sessions.InsufficientPackageHours);
+                        && lp.RemainingHours >= requiredHours,
+                        cancellationToken);
 
-                package.DeductHours(requiredHours);
+                if (!hasActivePackage)
+                {
+                    throw new BadRequestException(LocalizationKeys.Sessions.InsufficientPackageHours);
+                }
+
                 sessionPrice = Math.Round(instructor.HourlyRate * requiredHours, 2);
             }
 
@@ -78,13 +80,14 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 instance.StartsAtUtc,
                 sessionEndsAtUtc,
                 sessionPrice,
-                title: request.IsTrial ? "Free Trial Lesson" : null,
+                title: request.IsTrial ? _localizer[LocalizationKeys.Sessions.FreeTrialLessonTitle].Value : null,
                 seatCapacity: 1,
                 lessonId: null,
                 durationMinutes: durationMinutes,
                 isTrial: request.IsTrial,
                 hourlyRateSnapshot: instructor.HourlyRate,
-                commissionRateSnapshot: instructor.CommissionRate);
+                commissionRateSnapshot: instructor.CommissionRate,
+                isPaid: request.IsTrial);
 
             var booking = SessionBooking.Create(session.Id, learnerId);
 

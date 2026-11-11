@@ -11,7 +11,6 @@ namespace LMS.Application.Features.Packages.Queries.GetPackageCatalog
 {
     public class GetPackageCatalogQuery : IRequest<Result<IReadOnlyCollection<PackageCatalogItemDto>>>
     {
-        public Guid? InstructorId { get; set; }
     }
 
     public class GetPackageCatalogQueryHandler : IRequestHandler<GetPackageCatalogQuery, Result<IReadOnlyCollection<PackageCatalogItemDto>>>
@@ -31,18 +30,6 @@ namespace LMS.Application.Features.Packages.Queries.GetPackageCatalog
             GetPackageCatalogQuery request,
             CancellationToken cancellationToken)
         {
-            decimal hourlyRate = 0m;
-            if (request.InstructorId.HasValue && request.InstructorId.Value != Guid.Empty)
-            {
-                var instructor = await _context.Instructors
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(i => i.Id == request.InstructorId.Value, cancellationToken);
-                if (instructor != null)
-                {
-                    hourlyRate = instructor.HourlyRate;
-                }
-            }
-
             var tiers = await _context.PackageTiers
                 .AsNoTracking()
                 .OrderBy(t => t.DisplayOrder)
@@ -61,8 +48,8 @@ namespace LMS.Application.Features.Packages.Queries.GetPackageCatalog
                     TotalHours = t.TotalHours,
                     TotalFullSessions = t.TotalFullSessions,
                     TotalHalfSessions = t.TotalHalfSessions,
-                    PricePerHour = hourlyRate,
-                    TotalPrice = Math.Round(t.TotalHours * hourlyRate, 2),
+                    PricePerHour = t.PricePerHour,
+                    TotalPrice = t.TotalPrice,
                     Description = t.Description
                 })
                 .ToList();

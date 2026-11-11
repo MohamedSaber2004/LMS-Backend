@@ -61,6 +61,7 @@ namespace LMS.Application.Features.Packages.Queries.GetAdminPackages
 
             var pageNumber = request.PageNumber < 1 ? 1 : request.PageNumber;
             var pageSize = request.PageSize < 1 ? 10 : Math.Min(request.PageSize, 100);
+            var defaultInstructorName = _localizer[LocalizationKeys.Packages.AllInstructors].Value;
 
             var items = await query
                 .OrderByDescending(lp => lp.CreatedAt)
@@ -73,7 +74,7 @@ namespace LMS.Application.Features.Packages.Queries.GetAdminPackages
                     LearnerFullName = lp.Learner.User.FullName,
                     LearnerEmail = lp.Learner.User.Email ?? string.Empty,
                     InstructorId = lp.InstructorId,
-                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : "All Instructors",
+                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : defaultInstructorName,
                     PackageName = lp.PackageName,
                     TotalHours = lp.TotalHours,
                     RemainingHours = lp.RemainingHours,

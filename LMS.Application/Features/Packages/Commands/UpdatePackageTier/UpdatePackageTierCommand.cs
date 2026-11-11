@@ -20,6 +20,8 @@ namespace LMS.Application.Features.Packages.Commands.UpdatePackageTier
         public decimal TotalHours { get; set; }
         public int TotalFullSessions { get; set; }
         public int TotalHalfSessions { get; set; }
+        public decimal PricePerHour { get; set; }
+        public decimal? TotalPrice { get; set; }
         public string Description { get; set; } = string.Empty;
         public int DisplayOrder { get; set; }
     }
@@ -124,7 +126,9 @@ namespace LMS.Application.Features.Packages.Commands.UpdatePackageTier
                 request.TotalFullSessions,
                 request.TotalHalfSessions,
                 request.Description.Trim(),
-                displayOrder);
+                displayOrder,
+                request.PricePerHour,
+                request.TotalPrice);
 
             await _context.SaveChangesAsync(cancellationToken);
 

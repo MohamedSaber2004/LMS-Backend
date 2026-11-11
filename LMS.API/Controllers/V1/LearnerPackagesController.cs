@@ -30,9 +30,9 @@ namespace LMS.API.Controllers.V1
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<PackageCatalogItemDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCatalog([FromQuery] Guid? instructorId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetCatalog(CancellationToken cancellationToken)
         {
-            var result = await Mediator.Send(new GetPackageCatalogQuery { InstructorId = instructorId }, cancellationToken);
+            var result = await Mediator.Send(new GetPackageCatalogQuery(), cancellationToken);
             return FromResult(result);
         }
 

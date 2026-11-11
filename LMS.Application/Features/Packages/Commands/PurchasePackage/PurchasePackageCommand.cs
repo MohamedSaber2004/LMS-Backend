@@ -15,9 +15,7 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
 {
     public class PurchasePackageCommand : IRequest<Result<LearnerPackageDto>>
     {
-        public Guid? InstructorId { get; set; }
-        public Guid? TierId { get; set; }
-        public decimal TotalHours { get; set; }
+        public Guid TierId { get; set; }
     }
 
     public class PurchasePackageCommandValidator : AbstractValidator<PurchasePackageCommand>
@@ -26,48 +24,16 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
             ILmsDbContext context,
             IStringLocalizer<Messages> localizer)
         {
-            RuleFor(x => x)
-                .CustomAsync(async (command, validationContext, cancellationToken) =>
+            RuleFor(x => x.TierId)
+                .NotEmpty()
+                .WithMessage(localizer[LocalizationKeys.Packages.TiersUnavailable].Value)
+                .MustAsync(async (tierId, cancellationToken) =>
                 {
-                    if (command.TierId.HasValue && command.TierId.Value != Guid.Empty)
-                    {
-                        var tierExists = await context.PackageTiers
-                            .AsNoTracking()
-                            .AnyAsync(t => t.Id == command.TierId.Value, cancellationToken);
-
-                        if (!tierExists)
-                        {
-                            validationContext.AddFailure(
-                                nameof(command.TierId),
-                                localizer[LocalizationKeys.Packages.TiersUnavailable].Value);
-                        }
-                        return;
-                    }
-
-                    if (command.TotalHours <= 0)
-                    {
-                        validationContext.AddFailure(
-                            nameof(command.TotalHours),
-                            localizer[LocalizationKeys.Packages.TierHoursMustBePositive].Value);
-                        return;
-                    }
-
-                    var availableHours = await context.PackageTiers
+                    return await context.PackageTiers
                         .AsNoTracking()
-                        .OrderBy(tier => tier.DisplayOrder)
-                        .Select(tier => tier.TotalHours)
-                        .ToListAsync(cancellationToken);
-
-                    if (!availableHours.Contains(command.TotalHours))
-                    {
-                        validationContext.AddFailure(
-                            nameof(command.TotalHours),
-                            localizer[
-                                LocalizationKeys.Packages.TierNotFound,
-                                command.TotalHours.ToString("0.##"),
-                                string.Join(", ", availableHours.Select(hour => hour.ToString("0.##")))].Value);
-                    }
-                });
+                        .AnyAsync(t => t.Id == tierId, cancellationToken);
+                })
+                .WithMessage(localizer[LocalizationKeys.Packages.TiersUnavailable].Value);
         }
     }
 
@@ -95,46 +61,18 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
                     _context, _currentUserService.UserId, cancellationToken)
                 ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
 
-            PackageTier? tier = null;
-            if (request.TierId.HasValue && request.TierId.Value != Guid.Empty)
-            {
-                tier = await _context.PackageTiers
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(t => t.Id == request.TierId.Value, cancellationToken);
-            }
-            else if (request.TotalHours > 0)
-            {
-                tier = await _context.PackageTiers
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(t => t.TotalHours == request.TotalHours, cancellationToken);
-            }
-
-            if (tier == null)
-            {
-                throw new NotFoundException(LocalizationKeys.Packages.TiersUnavailable);
-            }
-
-            decimal hourlyRate = 0m;
-            string? instructorFullName = null;
-
-            if (request.InstructorId.HasValue && request.InstructorId.Value != Guid.Empty)
-            {
-                var instructor = await _context.Instructors
-                    .Include(i => i.User)
-                    .FirstOrDefaultAsync(i => i.Id == request.InstructorId.Value, cancellationToken);
-                if (instructor != null)
-                {
-                    hourlyRate = instructor.HourlyRate;
-                    instructorFullName = instructor.User?.FullName;
-                }
-            }
+            var tier = await _context.PackageTiers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(t => t.Id == request.TierId, cancellationToken)
+                ?? throw new NotFoundException(LocalizationKeys.Packages.TiersUnavailable);
 
             var package = LearnerPackage.Create(
                 learnerId,
                 tier.Name,
                 tier.TotalHours,
-                hourlyRate,
-                request.InstructorId);
+                tier.PricePerHour,
+                instructorId: null,
+                totalPrice: tier.TotalPrice);
 
             await _context.LearnerPackages.AddAsync(package, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -142,8 +80,8 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
             var dto = new LearnerPackageDto
             {
                 Id = package.Id,
-                InstructorId = package.InstructorId,
-                InstructorFullName = instructorFullName ?? "All Instructors",
+                InstructorId = null,
+                InstructorFullName = _localizer[LocalizationKeys.Packages.AllInstructors].Value,
                 PackageName = package.PackageName,
                 TotalHours = package.TotalHours,
                 RemainingHours = package.RemainingHours,

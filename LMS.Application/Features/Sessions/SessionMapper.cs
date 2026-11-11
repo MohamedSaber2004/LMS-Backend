@@ -26,6 +26,8 @@ namespace LMS.Application.Features.Sessions
             Price = session.Price,
             DurationMinutes = session.DurationMinutes,
             IsTrial = session.IsTrial,
+            IsPaid = session.IsPaid,
+            PaidAtUtc = session.PaidAtUtc,
             IsAttendanceConfirmed = session.IsAttendanceConfirmed,
             SeatCapacity = session.SeatCapacity,
             SeatsBooked = session.SeatsBooked,

@@ -44,7 +44,7 @@ namespace LMS.Application.Features.Sessions.Commands.AdminCancelSession
 
             session.Cancel(null, request.Reason ?? "Cancelled by platform administrator.");
 
-            if (!session.IsTrial)
+            if (!session.IsTrial && session.IsPaid)
             {
                 var booking = session.Bookings.FirstOrDefault();
                 if (booking != null)

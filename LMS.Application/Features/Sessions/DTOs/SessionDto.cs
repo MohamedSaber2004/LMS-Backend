@@ -26,6 +26,10 @@ namespace LMS.Application.Features.Sessions.DTOs
 
         public bool IsTrial { get; set; }
 
+        public bool IsPaid { get; set; }
+
+        public DateTime? PaidAtUtc { get; set; }
+
         public bool IsAttendanceConfirmed { get; set; }
 
         public int SeatCapacity { get; set; }

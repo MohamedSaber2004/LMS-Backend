@@ -51,13 +51,15 @@ namespace LMS.Application.Features.Packages.Queries.GetMyPackages
                 query = query.Where(lp => lp.InstructorId == request.InstructorId.Value);
             }
 
+            var defaultInstructorName = _localizer[LocalizationKeys.Packages.AllInstructors].Value;
+
             var packages = await query
                 .OrderByDescending(lp => lp.CreatedAt)
                 .Select(lp => new LearnerPackageDto
                 {
                     Id = lp.Id,
                     InstructorId = lp.InstructorId,
-                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : "All Instructors",
+                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : defaultInstructorName,
                     PackageName = lp.PackageName,
                     TotalHours = lp.TotalHours,
                     RemainingHours = lp.RemainingHours,

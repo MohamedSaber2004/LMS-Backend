@@ -288,6 +288,10 @@ namespace LMS.Application.Localization
             public const string AttendanceAlreadyConfirmed = "Sessions.AttendanceAlreadyConfirmed";
             public const string CannotConfirmCancelled = "Sessions.CannotConfirmCancelled";
             public const string AttendanceConfirmedSuccess = "Sessions.AttendanceConfirmedSuccess";
+            public const string SessionMustBeConfirmedBeforePayment = "Sessions.SessionMustBeConfirmedBeforePayment";
+            public const string PaymentAlreadyCompleted = "Sessions.PaymentAlreadyCompleted";
+            public const string PaymentSuccess = "Sessions.PaymentSuccess";
+            public const string FreeTrialLessonTitle = "Sessions.FreeTrialLessonTitle";
         }
 
         public static class HelpCenter
@@ -459,11 +463,14 @@ namespace LMS.Application.Localization
             public const string TokenRefreshedSuccess = "LiveClasses.TokenRefreshedSuccess";
             public const string ConfigRetrieved = "LiveClasses.ConfigRetrieved";
             public const string SessionDetailsRetrieved = "LiveClasses.SessionDetailsRetrieved";
+            public const string SessionNotPaidStudent = "LiveClasses.SessionNotPaidStudent";
+            public const string SessionNotPaidJoin = "LiveClasses.SessionNotPaidJoin";
         }
 
         public static class Packages
         {
             public const string InstructorIdRequired = "Packages.InstructorIdRequired";
+            public const string AllInstructors = "Packages.AllInstructors";
             public const string PurchaseSuccess = "Packages.PurchaseSuccess";
             public const string CatalogRetrieved = "Packages.CatalogRetrieved";
             public const string PackagesRetrieved = "Packages.PackagesRetrieved";

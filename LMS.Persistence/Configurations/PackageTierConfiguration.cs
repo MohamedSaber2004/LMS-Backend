@@ -26,6 +26,16 @@ namespace LMS.Persistence.Configurations
             builder.Property(t => t.TotalHalfSessions)
                 .IsRequired();
 
+            builder.Property(t => t.PricePerHour)
+                .HasPrecision(10, 2)
+                .IsRequired()
+                .HasDefaultValue(0m);
+
+            builder.Property(t => t.TotalPrice)
+                .HasPrecision(10, 2)
+                .IsRequired()
+                .HasDefaultValue(0m);
+
             builder.Property(t => t.Description)
                 .HasMaxLength(500)
                 .IsRequired();

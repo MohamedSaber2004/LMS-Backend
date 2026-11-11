@@ -11,6 +11,8 @@ namespace LMS.Application.Features.Packages.DTOs
             TotalHours = tier.TotalHours,
             TotalFullSessions = tier.TotalFullSessions,
             TotalHalfSessions = tier.TotalHalfSessions,
+            PricePerHour = tier.PricePerHour,
+            TotalPrice = tier.TotalPrice,
             Description = tier.Description,
             DisplayOrder = tier.DisplayOrder
         };

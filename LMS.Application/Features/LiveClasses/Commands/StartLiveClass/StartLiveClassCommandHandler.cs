@@ -73,6 +73,14 @@ namespace LMS.Application.Features.LiveClasses.Commands.StartLiveClass
                 });
             }
 
+            if (session.Lesson == null && !session.IsPaid && !session.IsTrial)
+            {
+                throw new ValidationException(new List<ValidationFailure>
+                {
+                    new("Payment", _localizer[LocalizationKeys.LiveClasses.SessionNotPaidStudent].Value)
+                });
+            }
+
             var now = DateTime.UtcNow;
             var joinOpensAt = session.StartsAtUtc.AddMinutes(-_liveClassTokenService.JoinLeadMinutes);
             var joinClosesAt = session.EndsAtUtc.AddMinutes(_scheduling.JoinTailMinutes);
