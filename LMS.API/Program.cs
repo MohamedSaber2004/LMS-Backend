@@ -324,7 +324,7 @@ namespace LMS.API
                 {
                     ContentType = "application/json",
                     StatusCode = StatusCodes.Status429TooManyRequests,
-                    Content = "{\"isSuccess\":false,\"message\":\"Too many requests. Please wait a moment before trying again.\",\"statusCode\":429,\"errors\":{\"General\":[\"Rate limit quota exceeded. Please wait a moment before trying again.\"]}}"
+                    Content = "{{\"isSuccess\":false,\"message\":\"Too many requests. Please wait a moment before trying again.\",\"statusCode\":429,\"errors\":{{\"General\":[\"Rate limit quota exceeded. Please wait a moment before trying again.\"]}}}}"
                 };
             });
             builder.Services.Configure<ClientRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));

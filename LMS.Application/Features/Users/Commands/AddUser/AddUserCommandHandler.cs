@@ -1,3 +1,4 @@
+using LMS.API.Services;
 using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
@@ -18,17 +19,20 @@ namespace LMS.Application.Features.Users.Commands.AddUser
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILmsDbContext _context;
         private readonly IUserAccountDeletionService _accountDeletionService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public AddUserCommandHandler(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
             IUserAccountDeletionService accountDeletionService,
+            ICurrentUserService currentUserService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _context = context;
             _accountDeletionService = accountDeletionService;
+            _currentUserService = currentUserService;
             _localizer = localizer;
         }
 
@@ -70,6 +74,17 @@ namespace LMS.Application.Features.Users.Commands.AddUser
             if (request.Role == UserType.Learner)
             {
                 await _context.Learners.AddAsync(Learner.Create(user.Id), cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            else if (request.Role == UserType.Instructor)
+            {
+                var instructor = Instructor.Create(user.Id, string.Empty, string.Empty, 0, string.Empty, null, 0m);
+                var application = InstructorApplication.Create(instructor.Id, 0m);
+                application.Approve(_currentUserService.UserId, null);
+
+                await _context.Instructors.AddAsync(instructor, cancellationToken);
+                await _context.InstructorApplications.AddAsync(application, cancellationToken);
+                await _context.TeacherWallets.AddAsync(TeacherWallet.Create(instructor.Id), cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
             }
 
