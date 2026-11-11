@@ -15576,413 +15576,6 @@
           ]
         },
         {
-          "name": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": ""
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "packages",
-                "{{id}}",
-                "adjust"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "00000000-0000-0000-0000-000000000000",
-                  "description": ""
-                }
-              ]
-            },
-            "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "admin",
-                    "packages",
-                    "{{id}}",
-                    "adjust"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Bad Request - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "admin",
-                    "packages",
-                    "{{id}}",
-                    "adjust"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "404 Not Found",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "admin",
-                    "packages",
-                    "{{id}}",
-                    "adjust"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "admin",
-                    "packages",
-                    "{{id}}",
-                    "adjust"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "403 Forbidden",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "admin",
-                    "packages",
-                    "{{id}}",
-                    "adjust"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [],
-              "body": "",
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/admin/packages/{{id}}/adjust",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "admin",
-                    "packages",
-                    "{{id}}",
-                    "adjust"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"newRemainingHours\": 0,\n  \"reason\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
           "name": "List the package tiers that learners can buy.",
           "request": {
             "method": "GET",
@@ -35037,6 +34630,233 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "name": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/learner/packages/wallet",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "learner",
+                "packages",
+                "wallet"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/learner/packages/wallet",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "learner",
+                    "packages",
+                    "wallet"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/learner/packages/wallet",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "learner",
+                    "packages",
+                    "wallet"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/learner/packages/wallet",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "learner",
+                    "packages",
+                    "wallet"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [],
+              "body": "",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "400 Validation failed - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/learner/packages/wallet",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "learner",
+                    "packages",
+                    "wallet"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+                "body": null
+              },
+              "status": "Validation failed",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/learner/packages/wallet",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "learner",
+                    "packages",
+                    "wallet"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "description": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },
@@ -41892,7 +41712,7 @@
             "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -41933,7 +41753,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -41984,7 +41804,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42035,7 +41855,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42086,7 +41906,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42137,7 +41957,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42188,7 +42008,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42239,7 +42059,7 @@
                 "description": "Book one dated availability window. The session lands as Pending until the instructor confirms it.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 0,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
                   "options": {
                     "raw": {
                       "language": "json"

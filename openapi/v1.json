@@ -6240,172 +6240,6 @@
         ]
       }
     },
-    "/api/v1/admin/packages/{id}/adjust": {
-      "post": {
-        "tags": [
-          "Admin: Packages"
-        ],
-        "summary": "Adjust remaining hours of a learner's package (for administrative corrections or compensation).",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdjustPackageHoursCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdjustPackageHoursCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AdjustPackageHoursCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LearnerPackageDtoApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
     "/api/v1/admin/packages/tiers": {
       "get": {
         "tags": [
@@ -15366,6 +15200,150 @@
         ]
       }
     },
+    "/api/v1/learner/packages/wallet": {
+      "get": {
+        "tags": [
+          "Learner: Packages"
+        ],
+        "summary": "View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.",
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearnerSessionsWalletDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/learner/sessions/{id}/rate": {
       "post": {
         "tags": [
@@ -22248,6 +22226,14 @@
   },
   "components": {
     "schemas": {
+      "AcademicSessionDuration": {
+        "enum": [
+          25,
+          50
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "AddAvailabilitySlotCommand": {
         "required": [
           "instructorId",
@@ -22470,23 +22456,6 @@
           },
           "isActive": {
             "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AdjustPackageHoursCommand": {
-        "required": [
-          "newRemainingHours"
-        ],
-        "type": "object",
-        "properties": {
-          "newRemainingHours": {
-            "type": "number",
-            "format": "double"
-          },
-          "reason": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -24170,7 +24139,6 @@
         "required": [
           "instructorId",
           "availabilityInstanceId",
-          "durationMinutes",
           "isTrial"
         ],
         "type": "object",
@@ -24184,8 +24152,7 @@
             "format": "uuid"
           },
           "durationMinutes": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/AcademicSessionDuration"
           },
           "isTrial": {
             "type": "boolean"
@@ -25549,6 +25516,96 @@
               "$ref": "#/components/schemas/LearnerPackageDto"
             },
             "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LearnerSessionsWalletDto": {
+        "required": [
+          "totalSessions",
+          "remainingSessions",
+          "hasFreeTrialAvailable",
+          "packages"
+        ],
+        "type": "object",
+        "properties": {
+          "totalSessions": {
+            "type": "number",
+            "format": "double"
+          },
+          "remainingSessions": {
+            "type": "number",
+            "format": "double"
+          },
+          "consumedSessions": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "remainingFullSessions": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "remainingHalfSessions": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasActivePlan": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "activePlanName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasFreeTrialAvailable": {
+            "type": "boolean"
+          },
+          "packages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LearnerPackageDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "LearnerSessionsWalletDtoApiResponse": {
+        "required": [
+          "success",
+          "errors",
+          "statusCode"
+        ],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "data": {
+            "$ref": "#/components/schemas/LearnerSessionsWalletDto"
           },
           "message": {
             "type": "string",
