@@ -81,10 +81,17 @@ jobs:
           path: publish
 
       - name: Install lftp
+        timeout-minutes: 3
         run: |
           if ! command -v lftp >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq lftp
+            # Fix transient runner DNS / IPv6 mirror timeouts
+            echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf > /dev/null || true
+            echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf > /dev/null || true
+            for attempt in 1 2 3; do
+              echo "Attempt $attempt to install lftp..."
+              sudo apt-get update -o Acquire::ForceIPv4=true -o Acquire::Retries=3 -o Acquire::http::Timeout=15 && \
+              sudo apt-get install -y -o Acquire::ForceIPv4=true lftp && break || sleep 5
+            done
           fi
           lftp --version | head -1
 
