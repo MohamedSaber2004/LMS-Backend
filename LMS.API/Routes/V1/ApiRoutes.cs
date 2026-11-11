@@ -118,7 +118,9 @@ namespace LMS.API.Routes.V1
             public static class Packages
             {
                 public const string Base = Learner.Base + "/packages";
+                public const string AvailablePlans = "available-plans";
                 public const string Catalog = "catalog";
+                public const string Subscribe = "subscribe";
                 public const string Purchase = "purchase";
                 public const string MyBalances = "my-balances";
                 public const string Wallet = "wallet";
@@ -154,7 +156,8 @@ namespace LMS.API.Routes.V1
             public static class Packages
             {
                 public const string Base = Admin.Base + "/packages";
-                public const string GetAll = "";
+                public const string GetAll = "student-subscriptions";
+                public const string StudentSubscriptions = "student-subscriptions";
                 public const string Tiers = "tiers";
                 public const string TierById = "tiers/{id:guid}";
             }

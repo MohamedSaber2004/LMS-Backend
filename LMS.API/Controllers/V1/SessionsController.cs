@@ -102,7 +102,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Book one dated availability window. The session lands as Pending until the instructor confirms it.
+        /// [Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>

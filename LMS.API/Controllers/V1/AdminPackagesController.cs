@@ -16,7 +16,7 @@ namespace LMS.API.Controllers.V1
 {
     /// <summary>
     /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
-    /// Admin management of the purchasable package tiers and of student hour packages across the system, including manual hour adjustments.
+    /// Admin management of the platform's subscription plan tiers catalog (e.g. 4, 8, 12 sessions) and tracking of all students' active/past subscriptions.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Admin.Packages.Base)]
@@ -25,7 +25,7 @@ namespace LMS.API.Controllers.V1
     public class AdminPackagesController : BaseController
     {
         /// <summary>
-        /// List all student purchased packages across the platform.
+        /// [Admin] List all students' active and past subscriptions across the platform (shows student name, plan name, remaining sessions balance, and status).
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Packages.GetAll)]
         [RequirePermission(AdminPermission.PackagesRead)]
@@ -37,7 +37,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// List the package tiers that learners can buy.
+        /// [Admin] List all subscription plan tiers in the catalog (the available plans that students can subscribe to).
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Packages.Tiers)]
         [RequirePermission(AdminPermission.PackageTiersRead)]
@@ -49,7 +49,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Add a package tier to the catalog.
+        /// [Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).
         /// </summary>
         [HttpPost(ApiRoutes.Admin.Packages.Tiers)]
         [RequirePermission(AdminPermission.PackageTiersAdd)]
@@ -64,7 +64,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Update a package tier. Existing learner packages keep the name and hours they were bought with.
+        /// [Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.
         /// </summary>
         [HttpPut(ApiRoutes.Admin.Packages.TierById)]
         [RequirePermission(AdminPermission.PackageTiersUpdate)]
@@ -82,7 +82,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Remove a package tier from the catalog.
+        /// [Admin] Remove a subscription plan tier from the platform catalog.
         /// </summary>
         [HttpDelete(ApiRoutes.Admin.Packages.TierById)]
         [RequirePermission(AdminPermission.PackageTiersDelete)]

@@ -14,8 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Learner (Catalog is Public)]
-    /// Student API for browsing the admin-defined package tiers, purchasing hour packages and tracking remaining balances.
+    /// [Allowed Roles: Learner / Public Guest]
+    /// Student API for browsing available subscription plans, subscribing to a plan, and viewing the virtual sessions wallet balance.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Learner.Packages.Base)]
@@ -23,8 +23,9 @@ namespace LMS.API.Controllers.V1
     public class LearnerPackagesController : BaseController
     {
         /// <summary>
-        /// Get the subscription package tiers configured by the admin (available for the landing page and mobile).
+        /// [Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.
         /// </summary>
+        [HttpGet(ApiRoutes.Learner.Packages.AvailablePlans)]
         [HttpGet(ApiRoutes.Learner.Packages.Catalog)]
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<PackageCatalogItemDto>>), StatusCodes.Status200OK)]
@@ -36,8 +37,9 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Subscribe to a package plan of sessions/hours. Requires learner login.
+        /// [Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).
         /// </summary>
+        [HttpPost(ApiRoutes.Learner.Packages.Subscribe)]
         [HttpPost(ApiRoutes.Learner.Packages.Purchase)]
         [Authorize]
         [RoleAuthorize(UserType.Learner)]
@@ -50,20 +52,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// View learner's active subscription package balances and remaining session credits. Requires learner login.
-        /// </summary>
-        [HttpGet(ApiRoutes.Learner.Packages.MyBalances)]
-        [Authorize]
-        [RoleAuthorize(UserType.Learner)]
-        [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<LearnerPackageDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetMyBalances([FromQuery] Guid? instructorId, CancellationToken cancellationToken)
-        {
-            var result = await Mediator.Send(new GetMyPackagesQuery { InstructorId = instructorId }, cancellationToken);
-            return FromResult(result);
-        }
-
-        /// <summary>
-        /// View learner's virtual sessions wallet: total plan sessions, remaining sessions, remaining full (50m) and half (25m) sessions, and free trial status.
+        /// [Student] View student's virtual sessions wallet: total plan sessions, remaining sessions, full (50m) and half (25m) session counts, and free trial status.
         /// </summary>
         [HttpGet(ApiRoutes.Learner.Packages.Wallet)]
         [Authorize]
@@ -72,6 +61,19 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> GetWallet(CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new GetLearnerWalletQuery(), cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// [Student] View student's detailed package subscription records and history. Requires student login.
+        /// </summary>
+        [HttpGet(ApiRoutes.Learner.Packages.MyBalances)]
+        [Authorize]
+        [RoleAuthorize(UserType.Learner)]
+        [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<LearnerPackageDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMyBalances([FromQuery] Guid? instructorId, CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(new GetMyPackagesQuery { InstructorId = instructorId }, cancellationToken);
             return FromResult(result);
         }
     }
