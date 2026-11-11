@@ -14,13 +14,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Review instructor applications: list, inspect, approve with initial pricing, reject, and set pricing.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorApplications.Base)]
     [Tags("Admin: Instructor Applications")]
-    [RoleAuthorize(UserType.Admin)]
     public class InstructorApplicationsController : BaseController
     {
         /// <summary>
@@ -30,6 +29,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
+        [RequirePermission(AdminPermission.InstructorApplicationsRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<InstructorApplicationDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -47,6 +47,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.InstructorApplications.GetById)]
+        [RequirePermission(AdminPermission.InstructorApplicationsRead)]
         [ProducesResponseType(typeof(ApiResponse<InstructorApplicationDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
@@ -64,6 +65,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.InstructorApplications.Approve)]
+        [RequirePermission(AdminPermission.InstructorApplicationsUpdate)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -82,6 +84,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.InstructorApplications.Reject)]
+        [RequirePermission(AdminPermission.InstructorApplicationsUpdate)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -97,6 +100,7 @@ namespace LMS.API.Controllers.V1
         /// Update teacher hourly rate and company commission rate (CCR) by Admin.
         /// </summary>
         [HttpPut(ApiRoutes.InstructorApplications.SetPricing)]
+        [RequirePermission(AdminPermission.InstructorPricingUpdate)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]

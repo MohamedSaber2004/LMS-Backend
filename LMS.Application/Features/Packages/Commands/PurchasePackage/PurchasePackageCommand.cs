@@ -15,7 +15,8 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
 {
     public class PurchasePackageCommand : IRequest<Result<LearnerPackageDto>>
     {
-        public Guid InstructorId { get; set; }
+        public Guid? InstructorId { get; set; }
+        public Guid? TierId { get; set; }
         public decimal TotalHours { get; set; }
     }
 
@@ -25,17 +26,29 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
             ILmsDbContext context,
             IStringLocalizer<Messages> localizer)
         {
-            RuleFor(x => x.InstructorId)
-                .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Packages.InstructorIdRequired].Value);
-
-            RuleFor(x => x.TotalHours)
-                .GreaterThan(0)
-                .WithMessage(localizer[LocalizationKeys.Packages.TierHoursMustBePositive].Value)
-                .CustomAsync(async (hours, validationContext, cancellationToken) =>
+            RuleFor(x => x)
+                .CustomAsync(async (command, validationContext, cancellationToken) =>
                 {
-                    if (hours <= 0)
+                    if (command.TierId.HasValue && command.TierId.Value != Guid.Empty)
                     {
+                        var tierExists = await context.PackageTiers
+                            .AsNoTracking()
+                            .AnyAsync(t => t.Id == command.TierId.Value, cancellationToken);
+
+                        if (!tierExists)
+                        {
+                            validationContext.AddFailure(
+                                nameof(command.TierId),
+                                localizer[LocalizationKeys.Packages.TiersUnavailable].Value);
+                        }
+                        return;
+                    }
+
+                    if (command.TotalHours <= 0)
+                    {
+                        validationContext.AddFailure(
+                            nameof(command.TotalHours),
+                            localizer[LocalizationKeys.Packages.TierHoursMustBePositive].Value);
                         return;
                     }
 
@@ -45,16 +58,15 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
                         .Select(tier => tier.TotalHours)
                         .ToListAsync(cancellationToken);
 
-                    if (availableHours.Contains(hours))
+                    if (!availableHours.Contains(command.TotalHours))
                     {
-                        return;
+                        validationContext.AddFailure(
+                            nameof(command.TotalHours),
+                            localizer[
+                                LocalizationKeys.Packages.TierNotFound,
+                                command.TotalHours.ToString("0.##"),
+                                string.Join(", ", availableHours.Select(hour => hour.ToString("0.##")))].Value);
                     }
-
-                    validationContext.AddFailure(
-                        localizer[
-                            LocalizationKeys.Packages.TierNotFound,
-                            hours.ToString("0.##"),
-                            string.Join(", ", availableHours.Select(hour => hour.ToString("0.##")))].Value);
                 });
         }
     }
@@ -83,28 +95,46 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
                     _context, _currentUserService.UserId, cancellationToken)
                 ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
 
-            var instructor = await _context.Instructors
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(i => i.Id == request.InstructorId, cancellationToken)
-                ?? throw new NotFoundException(LocalizationKeys.Availability.InstructorNotFound);
+            PackageTier? tier = null;
+            if (request.TierId.HasValue && request.TierId.Value != Guid.Empty)
+            {
+                tier = await _context.PackageTiers
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(t => t.Id == request.TierId.Value, cancellationToken);
+            }
+            else if (request.TotalHours > 0)
+            {
+                tier = await _context.PackageTiers
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(t => t.TotalHours == request.TotalHours, cancellationToken);
+            }
 
-            var tiers = await _context.PackageTiers
-                .AsNoTracking()
-                .OrderBy(t => t.DisplayOrder)
-                .ToListAsync(cancellationToken);
+            if (tier == null)
+            {
+                throw new NotFoundException(LocalizationKeys.Packages.TiersUnavailable);
+            }
 
-            var tier = tiers.FirstOrDefault(t => t.TotalHours == request.TotalHours)
-                ?? throw new NotFoundException(
-                    LocalizationKeys.Packages.TierNotFound,
-                    request.TotalHours.ToString("0.##"),
-                    string.Join(", ", tiers.Select(t => t.TotalHours.ToString("0.##"))));
+            decimal hourlyRate = 0m;
+            string? instructorFullName = null;
+
+            if (request.InstructorId.HasValue && request.InstructorId.Value != Guid.Empty)
+            {
+                var instructor = await _context.Instructors
+                    .Include(i => i.User)
+                    .FirstOrDefaultAsync(i => i.Id == request.InstructorId.Value, cancellationToken);
+                if (instructor != null)
+                {
+                    hourlyRate = instructor.HourlyRate;
+                    instructorFullName = instructor.User?.FullName;
+                }
+            }
 
             var package = LearnerPackage.Create(
                 learnerId,
-                instructor.Id,
                 tier.Name,
                 tier.TotalHours,
-                instructor.HourlyRate);
+                hourlyRate,
+                request.InstructorId);
 
             await _context.LearnerPackages.AddAsync(package, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -112,8 +142,8 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
             var dto = new LearnerPackageDto
             {
                 Id = package.Id,
-                InstructorId = instructor.Id,
-                InstructorFullName = instructor.User?.FullName ?? string.Empty,
+                InstructorId = package.InstructorId,
+                InstructorFullName = instructorFullName ?? "All Instructors",
                 PackageName = package.PackageName,
                 TotalHours = package.TotalHours,
                 RemainingHours = package.RemainingHours,

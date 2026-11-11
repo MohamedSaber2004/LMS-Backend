@@ -13,13 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Cross-instructor availability oversight and weekly slot management on behalf of any instructor.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorAvailability.Base)]
     [Tags("Admin: Availability")]
-    [RoleAuthorize(UserType.Admin)]
     public class InstructorAvailabilityAdminController : BaseController
     {
         /// <summary>
@@ -29,6 +28,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.InstructorAvailability.GetAllPagginated)]
+        [RequirePermission(AdminPermission.InstructorAvailabilityRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<InstructorAvailabilityRowDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -50,6 +50,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.InstructorAvailability.Slots)]
+        [RequirePermission(AdminPermission.InstructorAvailabilityAdd)]
         [ProducesResponseType(typeof(ApiResponse<AvailabilitySlotDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -72,6 +73,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.InstructorAvailability.SlotById)]
+        [RequirePermission(AdminPermission.InstructorAvailabilityUpdate)]
         [ProducesResponseType(typeof(ApiResponse<AvailabilitySlotDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -94,6 +96,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.InstructorAvailability.SlotById)]
+        [RequirePermission(AdminPermission.InstructorAvailabilityDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]

@@ -14,20 +14,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Admin directory of approved teachers: search and filter the roster, toggle a teacher active, and read a teacher wallet balance.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Admin.Teachers.Base)]
     [Tags("Admin: Teachers & Pricing")]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize]
     public class AdminTeachersController : BaseController
     {
         /// <summary>
         /// List approved instructors on the platform with search and status filters.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Teachers.GetAll)]
+        [RequirePermission(AdminPermission.TeachersRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<AdminTeacherListItemDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] GetAdminTeachersQuery query, CancellationToken cancellationToken)
         {
@@ -39,6 +39,7 @@ namespace LMS.API.Controllers.V1
         /// Activate or deactivate a teacher's account.
         /// </summary>
         [HttpPost(ApiRoutes.Admin.Teachers.ToggleStatus)]
+        [RequirePermission(AdminPermission.TeachersUpdate)]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ToggleStatus([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -51,6 +52,7 @@ namespace LMS.API.Controllers.V1
         /// View teacher wallet balance, pending balance, and total earnings.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Teachers.Wallet)]
+        [RequirePermission(AdminPermission.FinancesRead)]
         [ProducesResponseType(typeof(ApiResponse<TeacherWalletSummaryDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetTeacherWallet([FromRoute] Guid id, CancellationToken cancellationToken)

@@ -11,20 +11,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Financial and operational KPIs overview for platform administrators (turnover, CCR commission, liability).
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Admin.Finances.Base)]
     [Tags("Admin: Finances & Overview")]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize]
     public class AdminFinancesController : BaseController
     {
         /// <summary>
         /// Get high-level financial overview: gross turnover, platform commission collected, teacher balances, and liability.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Finances.Overview)]
+        [RequirePermission(AdminPermission.FinancesRead)]
         [ProducesResponseType(typeof(ApiResponse<AdminFinancialOverviewDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOverview(CancellationToken cancellationToken)
         {

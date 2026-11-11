@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 using LMS.API.Services;
+using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,22 @@ namespace LMS.Application.Features.Users.Commands.DeleteUser
             RuleFor(x => x.Id)
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Users.UserIdRequired].Value);
+
+            RuleFor(x => x)
+                .CustomAsync(async (command, validationContext, cancellationToken) =>
+                {
+                    if (command.Id == Guid.Empty || ActorOwnership.IsAdmin(_currentUserService))
+                    {
+                        return;
+                    }
+
+                    if (await SuperAdminAccountGuard.TargetsSuperAdminAccountAsync(_context, command.Id, cancellationToken))
+                    {
+                        validationContext.AddFailure(
+                            nameof(command.Id),
+                            localizer[LocalizationKeys.Users.CannotActOnSuperAdminAccount].Value);
+                    }
+                });
 
             RuleFor(x => x)
                 .CustomAsync(ValidateAsync);

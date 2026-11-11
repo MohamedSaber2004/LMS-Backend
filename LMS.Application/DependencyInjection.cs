@@ -3,6 +3,7 @@ using LMS.Application.Common.Behaviours;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
 using LMS.Application.Common.Services;
+using LMS.Application.Features.AdminPermissions.Commands.SetUserPermissions;
 using LMS.Application.Features.Attachment.Commands.DownloadAttachment;
 using LMS.Application.Features.Attachment.Commands.UpdateAttachment;
 using LMS.Application.Features.Attachment.Commands.UploadAttachment;
@@ -183,6 +184,7 @@ namespace LMS.Application
             services.AddTransient<IValidator<GetAllCountriesQuery>, GetAllCountriesQueryValidator>();
             services.AddTransient<IValidator<GetAllCountriesPagginatedQuery>, GetAllCountriesPagginatedQueryValidator>();
             services.AddTransient<IValidator<GetCountryByIdQuery>, GetCountryByIdQueryValidator>();
+            services.AddTransient<IValidator<SetUserPermissionsCommand>, SetUserPermissionsCommandValidator>();
             services.AddTransient<IValidator<AddUserCommand>, AddUserCommandValidator>();
             services.AddTransient<IValidator<UpdateUserCommand>, UpdateUserCommandValidator>();
             services.AddTransient<IValidator<DeleteUserCommand>, DeleteUserCommandValidator>();

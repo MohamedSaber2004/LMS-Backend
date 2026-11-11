@@ -92,6 +92,7 @@ namespace LMS.API.Routes.V1
             public const string Cancel = "{id:guid}/cancel";
             public const string ConfirmAttendance = "{id:guid}/confirm-attendance";
             public const string Reschedule = "{id:guid}/reschedule";
+            public const string Participants = "{id:guid}/participants";
         }
 
         public static class RescheduleRequests
@@ -162,6 +163,13 @@ namespace LMS.API.Routes.V1
             {
                 public const string Base = Admin.Base + "/finances";
                 public const string Overview = "overview";
+            }
+
+            public static class Permissions
+            {
+                public const string Base = Admin.Base;
+                public const string Catalog = "permissions";
+                public const string ForUser = "users/{id:guid}/permissions";
             }
         }
 

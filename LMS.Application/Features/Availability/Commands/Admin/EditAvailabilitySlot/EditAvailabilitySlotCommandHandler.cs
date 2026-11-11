@@ -1,6 +1,7 @@
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Helpers;
+using LMS.Domain.Enums;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Availability.DTOs;
@@ -40,7 +41,7 @@ namespace LMS.Application.Features.Availability.Commands.Admin.EditAvailabilityS
                 ?? throw new NotFoundException(LocalizationKeys.Availability.SlotNotFound);
 
             await ActorOwnership.EnsureCanWriteForAsync(
-                _context, _currentUserService, slot.InstructorId, cancellationToken);
+                _context, _currentUserService, slot.InstructorId, AdminPermission.InstructorAvailabilityUpdate, cancellationToken);
 
             slot.Update(request.Day, request.StartTime, request.EndTime);
             await _context.SaveChangesAsync(cancellationToken);

@@ -1,6 +1,8 @@
 using FluentValidation;
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
+using LMS.Application.Common.Helpers;
+using LMS.Domain.Enums;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
 using Microsoft.Extensions.Localization;
@@ -22,11 +24,14 @@ namespace LMS.Application.Features.Sessions.Queries.GetSessionById
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Sessions.SessionIdRequired].Value);
 
-            // Only the teacher of the session, or a learner holding a seat on it, may read it.
-            // Throwing keeps the answer a 403 instead of a field error.
             RuleFor(query => query)
                 .MustAsync(async (query, cancellationToken) =>
                 {
+                    if (ActorOwnership.HasAdminBoardAccess(currentUser, AdminPermission.SessionsRead))
+                    {
+                        return true;
+                    }
+
                     var userId = currentUser.UserId;
 
                     var allowed = await SessionsValidation.InstructorOwnsSessionAsync(

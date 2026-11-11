@@ -22,20 +22,20 @@ namespace LMS.API.Controllers.V1
     public class LearnerPackagesController : BaseController
     {
         /// <summary>
-        /// Get the package tiers configured by the admin, priced for one specific teacher (available for the landing page and mobile).
+        /// Get the subscription package tiers configured by the admin (available for the landing page and mobile).
         /// </summary>
         [HttpGet(ApiRoutes.Learner.Packages.Catalog)]
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<PackageCatalogItemDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCatalog([FromQuery] Guid instructorId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetCatalog([FromQuery] Guid? instructorId, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new GetPackageCatalogQuery { InstructorId = instructorId }, cancellationToken);
             return FromResult(result);
         }
 
         /// <summary>
-        /// Instantly activate a package of hours for a teacher. The hours must match a configured tier. Requires learner login.
+        /// Subscribe to a package plan of sessions/hours. Requires learner login.
         /// </summary>
         [HttpPost(ApiRoutes.Learner.Packages.Purchase)]
         [Authorize]
@@ -49,7 +49,7 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// View learner's active package balances and remaining session credits. Requires learner login.
+        /// View learner's active subscription package balances and remaining session credits. Requires learner login.
         /// </summary>
         [HttpGet(ApiRoutes.Learner.Packages.MyBalances)]
         [Authorize]

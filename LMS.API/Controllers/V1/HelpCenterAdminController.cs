@@ -18,13 +18,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Manage help center categories and articles, including visibility of already published content.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.HelpCenter.Base)]
     [Tags("Admin: Help Center")]
-    [RoleAuthorize(UserType.Admin)]
     public class HelpCenterAdminController : BaseController
     {
         /// <summary>
@@ -33,6 +32,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.HelpCenter.AdminCategories)]
+        [RequirePermission(AdminPermission.HelpCenterRead)]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<HelpCategoryDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
@@ -49,6 +49,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.HelpCenter.AdminCategories)]
+        [RequirePermission(AdminPermission.HelpCenterAdd)]
         [ProducesResponseType(typeof(ApiResponse<HelpCategoryDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -69,6 +70,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.HelpCenter.AdminCategoryById)]
+        [RequirePermission(AdminPermission.HelpCenterUpdate)]
         [ProducesResponseType(typeof(ApiResponse<HelpCategoryDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -91,6 +93,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.HelpCenter.AdminCategoryById)]
+        [RequirePermission(AdminPermission.HelpCenterDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -110,6 +113,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.HelpCenter.AdminArticles)]
+        [RequirePermission(AdminPermission.HelpCenterRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<HelpArticleDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -129,6 +133,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.HelpCenter.AdminArticles)]
+        [RequirePermission(AdminPermission.HelpCenterAdd)]
         [ProducesResponseType(typeof(ApiResponse<HelpArticleDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -150,6 +155,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.HelpCenter.AdminArticleById)]
+        [RequirePermission(AdminPermission.HelpCenterUpdate)]
         [ProducesResponseType(typeof(ApiResponse<HelpArticleDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -172,6 +178,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.HelpCenter.AdminArticleById)]
+        [RequirePermission(AdminPermission.HelpCenterDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using FluentValidation.Validators;
+using LMS.API.Services;
 using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
@@ -26,6 +27,7 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
         public UpdateUserCommandValidator(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
+            ICurrentUserService currentUserService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
@@ -68,6 +70,27 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
                 .Must(role => role.HasValue && Enum.IsDefined(typeof(UserType), role.Value))
                 .WithMessage(localizer[LocalizationKeys.Users.InvalidRole].Value)
                 .When(x => x.Role.HasValue);
+
+            RuleFor(x => x.Role)
+                .Must(role => role != UserType.Admin || ActorOwnership.IsAdmin(currentUserService))
+                .WithMessage(localizer[LocalizationKeys.Users.CannotAssignSuperAdminRole].Value)
+                .When(x => x.Role.HasValue);
+
+            RuleFor(x => x)
+                .CustomAsync(async (command, validationContext, cancellationToken) =>
+                {
+                    if (command.Id == Guid.Empty || ActorOwnership.IsAdmin(currentUserService))
+                    {
+                        return;
+                    }
+
+                    if (await SuperAdminAccountGuard.TargetsSuperAdminAccountAsync(_context, command.Id, cancellationToken))
+                    {
+                        validationContext.AddFailure(
+                            nameof(command.Id),
+                            localizer[LocalizationKeys.Users.CannotActOnSuperAdminAccount].Value);
+                    }
+                });
 
             RuleFor(x => x)
                 .Must(HasAtLeastOneField)

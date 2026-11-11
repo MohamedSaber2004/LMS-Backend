@@ -51,7 +51,7 @@ namespace LMS.Application.Features.Sessions.Commands.AdminCancelSession
                 {
                     var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
                     var package = await _context.LearnerPackages
-                        .Where(lp => lp.LearnerId == booking.LearnerId && lp.InstructorId == session.InstructorId)
+                        .Where(lp => lp.LearnerId == booking.LearnerId)
                         .OrderByDescending(lp => lp.CreatedAt)
                         .FirstOrDefaultAsync(cancellationToken);
 

@@ -1,7 +1,9 @@
 ﻿using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
+using LMS.Application.Common.Security;
 using LMS.Domain.Entities;
 using LMS.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,13 +15,20 @@ namespace LMS.Infrastructure.Services.Authentication
     public class JwtTokenService : IJwtTokenService
     {
         private readonly JwtSettings _settings;
+        private readonly ILmsDbContext _context;
 
-        public JwtTokenService(IOptions<JwtSettings> settings)
+        public JwtTokenService(
+            IOptions<JwtSettings> settings,
+            ILmsDbContext context)
         {
             _settings = settings.Value;
+            _context = context;
         }
 
-        public string GenerateAccessToken(ApplicationUser user, IList<string> roles)
+        public async Task<string> GenerateAccessToken(
+            ApplicationUser user,
+            IList<string> roles,
+            CancellationToken cancellationToken = default)
         {
             var claims = new List<Claim>
         {
@@ -29,11 +38,23 @@ namespace LMS.Infrastructure.Services.Authentication
             new Claim("FullName", user.FullName)
         };
 
-            var userTypesMask = roles
-                .Select(r => Enum.TryParse<UserType>(r, ignoreCase: true, out var ut) ? (int)ut : 0)
-                .Aggregate(0, (acc, val) => acc | val);
+            var userTypesMask = 0;
+            var hasKnownRole = false;
 
-            claims.Add(new Claim("UserTypes", userTypesMask.ToString()));
+            foreach (var role in roles)
+            {
+                if (Enum.TryParse<UserType>(role, ignoreCase: true, out var userType)
+                    && Enum.IsDefined(typeof(UserType), userType))
+                {
+                    hasKnownRole = true;
+                    userTypesMask |= (int)userType;
+                }
+            }
+
+            if (hasKnownRole)
+            {
+                claims.Add(new Claim("UserTypes", userTypesMask.ToString()));
+            }
 
             claims.Add(new Claim("TokenVersion", user.TokenVersion.ToString()));
 
@@ -42,6 +63,21 @@ namespace LMS.Infrastructure.Services.Authentication
                 claims.Add(new Claim("role", role));
             }
 
+            var isSuperAdmin = roles.Any(role => string.Equals(role, nameof(UserType.Admin), StringComparison.OrdinalIgnoreCase));
+
+            if (!isSuperAdmin)
+            {
+                var grantedPermissions = await _context.AdminPermissionGrants
+                    .AsNoTracking()
+                    .Where(grant => grant.UserId == user.Id)
+                    .Select(grant => grant.Permission)
+                    .ToListAsync(cancellationToken);
+
+                foreach (var permission in grantedPermissions)
+                {
+                    claims.Add(new Claim(PermissionCatalog.ClaimType, ((int)permission).ToString()));
+                }
+            }
 
             foreach (var audience in GetAudiences())
             {

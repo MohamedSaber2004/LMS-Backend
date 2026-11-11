@@ -13,20 +13,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Admin management and monitoring of all platform live and scheduled sessions, including force cancellations.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Admin.Sessions.Base)]
     [Tags("Admin: Sessions")]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize]
     public class AdminSessionsController : BaseController
     {
         /// <summary>
         /// List all platform sessions with status, teacher, learner, trial, and date filters.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Sessions.GetAll)]
+        [RequirePermission(AdminPermission.SessionsRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<AdminSessionListItemDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] GetAdminSessionsQuery query, CancellationToken cancellationToken)
         {
@@ -38,6 +38,7 @@ namespace LMS.API.Controllers.V1
         /// Get single session details and booking information.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Sessions.GetById)]
+        [RequirePermission(AdminPermission.SessionsRead)]
         [ProducesResponseType(typeof(ApiResponse<SessionDetailDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -50,6 +51,7 @@ namespace LMS.API.Controllers.V1
         /// Force cancel a session administratively (refunds package hour to student if regular session).
         /// </summary>
         [HttpPost(ApiRoutes.Admin.Sessions.Cancel)]
+        [RequirePermission(AdminPermission.SessionsUpdate)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]

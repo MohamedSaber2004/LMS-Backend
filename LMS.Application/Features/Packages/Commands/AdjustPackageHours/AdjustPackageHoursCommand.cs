@@ -86,7 +86,7 @@ namespace LMS.Application.Features.Packages.Commands.AdjustPackageHours
             CancellationToken cancellationToken)
         {
             var package = await _context.LearnerPackages
-                .Include(lp => lp.Instructor)
+                .Include(lp => lp.Instructor!)
                     .ThenInclude(i => i.User)
                 .FirstOrDefaultAsync(lp => lp.Id == request.PackageId, cancellationToken)
                 ?? throw new NotFoundException(nameof(LearnerPackage), request.PackageId);
@@ -107,7 +107,7 @@ namespace LMS.Application.Features.Packages.Commands.AdjustPackageHours
             {
                 Id = package.Id,
                 InstructorId = package.InstructorId,
-                InstructorFullName = package.Instructor.User?.FullName ?? string.Empty,
+                InstructorFullName = package.Instructor != null && package.Instructor.User != null ? package.Instructor.User.FullName : "All Instructors",
                 PackageName = package.PackageName,
                 TotalHours = package.TotalHours,
                 RemainingHours = package.RemainingHours,

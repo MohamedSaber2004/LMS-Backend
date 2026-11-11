@@ -1,6 +1,7 @@
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Helpers;
+using LMS.Domain.Enums;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.DTOs;
@@ -49,7 +50,7 @@ namespace LMS.Application.Features.Sessions.Queries.GetSessionById
 
             var isTeacher = ownInstructorId == session.InstructorId;
 
-            var seesAllBookings = isTeacher || ActorOwnership.IsAdmin(_currentUserService);
+            var seesAllBookings = isTeacher || ActorOwnership.HasAdminBoardAccess(_currentUserService, AdminPermission.SessionsRead);
 
             var ownLearnerId = await ActorOwnership.ResolveLearnerIdAsync(
                 _context, _currentUserService.UserId, cancellationToken);

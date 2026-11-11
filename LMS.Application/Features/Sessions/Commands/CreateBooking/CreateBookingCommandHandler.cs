@@ -62,7 +62,6 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 var requiredHours = durationMinutes == 25 ? 0.5m : 1.0m;
                 var package = await _context.LearnerPackages
                     .Where(lp => lp.LearnerId == learnerId
-                        && lp.InstructorId == request.InstructorId
                         && lp.IsActive
                         && lp.RemainingHours >= requiredHours)
                     .OrderBy(lp => lp.CreatedAt)

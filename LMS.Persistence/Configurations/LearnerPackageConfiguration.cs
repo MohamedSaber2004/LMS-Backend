@@ -32,6 +32,9 @@ namespace LMS.Persistence.Configurations
                 .HasPrecision(10, 2)
                 .IsRequired();
 
+            builder.Property(lp => lp.InstructorId)
+                .IsRequired(false);
+
             builder.Property(lp => lp.IsActive)
                 .IsRequired()
                 .HasDefaultValue(true);
@@ -44,7 +47,7 @@ namespace LMS.Persistence.Configurations
 
             builder.HasIndex(lp => lp.LearnerId);
             builder.HasIndex(lp => lp.InstructorId);
-            builder.HasIndex(lp => new { lp.LearnerId, lp.InstructorId, lp.IsActive });
+            builder.HasIndex(lp => new { lp.LearnerId, lp.IsActive });
             builder.HasIndex(lp => lp.IsDeleted);
 
             builder.HasOne(lp => lp.Learner)
@@ -55,7 +58,8 @@ namespace LMS.Persistence.Configurations
             builder.HasOne(lp => lp.Instructor)
                 .WithMany(i => i.LearnerPackages)
                 .HasForeignKey(lp => lp.InstructorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
 
             builder.HasQueryFilter(lp => !lp.IsDeleted);
         }

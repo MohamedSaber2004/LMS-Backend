@@ -3,8 +3,8 @@ namespace LMS.Application.Features.Packages.DTOs
     public class LearnerPackageDto
     {
         public Guid Id { get; set; }
-        public Guid InstructorId { get; set; }
-        public string InstructorFullName { get; set; } = string.Empty;
+        public Guid? InstructorId { get; set; }
+        public string? InstructorFullName { get; set; }
         public string PackageName { get; set; } = string.Empty;
         public decimal TotalHours { get; set; }
         public decimal RemainingHours { get; set; }

@@ -22,13 +22,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Admin management of courses, published/unpublished lessons, quiz questions, and teacher assignments.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Courses.Base)]
     [Tags("Admin: Courses")]
-    [RoleAuthorize(UserType.Admin)]
     public class CoursesAdminController : BaseController
     {
         /// <summary>
@@ -39,6 +38,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.Courses.AdminCourses)]
+        [RequirePermission(AdminPermission.CoursesRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<CourseListItemDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -59,6 +59,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.Courses.AdminCourseById)]
+        [RequirePermission(AdminPermission.CoursesRead)]
         [ProducesResponseType(typeof(ApiResponse<CourseAdminDetailDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -80,6 +81,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.Courses.AdminCourses)]
+        [RequirePermission(AdminPermission.CoursesAdd)]
         [Consumes("multipart/form-data")]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 4294967295L)]
@@ -104,6 +106,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Courses.AdminCourseById)]
+        [RequirePermission(AdminPermission.CoursesUpdate)]
         [Consumes("multipart/form-data")]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 4294967295L)]
@@ -130,6 +133,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.Courses.AdminCourseById)]
+        [RequirePermission(AdminPermission.CoursesDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -151,6 +155,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.Courses.AdminLessons)]
+        [RequirePermission(AdminPermission.CoursesAdd)]
         [Consumes("multipart/form-data")]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 4294967295L)]
@@ -177,6 +182,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Courses.AdminLessonById)]
+        [RequirePermission(AdminPermission.CoursesUpdate)]
         [Consumes("multipart/form-data")]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 4294967295L)]
@@ -203,6 +209,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.Courses.AdminLessonById)]
+        [RequirePermission(AdminPermission.CoursesDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -222,6 +229,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.Courses.AdminLessonSession)]
+        [RequirePermission(AdminPermission.CoursesUpdate)]
         [ProducesResponseType(typeof(ApiResponse<LessonAdminDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -245,6 +253,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.Courses.AdminQuizQuestions)]
+        [RequirePermission(AdminPermission.CoursesAdd)]
         [ProducesResponseType(typeof(ApiResponse<QuizQuestionAdminDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -266,6 +275,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Courses.AdminQuizQuestionById)]
+        [RequirePermission(AdminPermission.CoursesUpdate)]
         [ProducesResponseType(typeof(ApiResponse<QuizQuestionAdminDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -288,6 +298,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.Courses.AdminQuizQuestionById)]
+        [RequirePermission(AdminPermission.CoursesDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -308,6 +319,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Courses.AdminCourseInstructors)]
+        [RequirePermission(AdminPermission.CoursesUpdate)]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<InstructorRefDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -331,6 +343,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.Courses.AdminAssignableInstructors)]
+        [RequirePermission(AdminPermission.CoursesRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<InstructorRefDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]

@@ -22,6 +22,61 @@ namespace LMS.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("LMS.Domain.Entities.AdminPermissionGrant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Permission");
+
+                    b.HasIndex("UserId", "Permission")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("AdminPermissionGrants", (string)null);
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -967,7 +1022,7 @@ namespace LMS.Persistence.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<Guid>("InstructorId")
+                    b.Property<Guid?>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -1017,7 +1072,7 @@ namespace LMS.Persistence.Migrations
 
                     b.HasIndex("LearnerId");
 
-                    b.HasIndex("LearnerId", "InstructorId", "IsActive");
+                    b.HasIndex("LearnerId", "IsActive");
 
                     b.ToTable("LearnerPackages", (string)null);
                 });
@@ -2613,6 +2668,17 @@ namespace LMS.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.AdminPermissionGrant", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.ApplicationUser", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.Country", "Country")
@@ -2742,8 +2808,7 @@ namespace LMS.Persistence.Migrations
                     b.HasOne("LMS.Domain.Entities.Instructor", "Instructor")
                         .WithMany("LearnerPackages")
                         .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("LMS.Domain.Entities.Learner", "Learner")
                         .WithMany("Packages")

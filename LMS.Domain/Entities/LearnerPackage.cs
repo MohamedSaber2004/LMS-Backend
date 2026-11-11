@@ -7,8 +7,8 @@ namespace LMS.Domain.Entities
         public Guid LearnerId { get; private set; }
         public virtual Learner Learner { get; private set; } = null!;
 
-        public Guid InstructorId { get; private set; }
-        public virtual Instructor Instructor { get; private set; } = null!;
+        public Guid? InstructorId { get; private set; }
+        public virtual Instructor? Instructor { get; private set; }
 
         public string PackageName { get; private set; } = null!;
         public decimal TotalHours { get; private set; }
@@ -18,10 +18,11 @@ namespace LMS.Domain.Entities
 
         public static LearnerPackage Create(
             Guid learnerId,
-            Guid instructorId,
             string packageName,
             decimal totalHours,
-            decimal hourlyRateSnapshot)
+            decimal hourlyRateSnapshot = 0m,
+            Guid? instructorId = null,
+            decimal? totalPrice = null)
         {
             return new LearnerPackage
             {
@@ -31,8 +32,18 @@ namespace LMS.Domain.Entities
                 TotalHours = totalHours,
                 RemainingHours = totalHours,
                 HourlyRateSnapshot = hourlyRateSnapshot,
-                TotalPrice = Math.Round(totalHours * hourlyRateSnapshot, 2)
+                TotalPrice = totalPrice ?? Math.Round(totalHours * hourlyRateSnapshot, 2)
             };
+        }
+
+        public static LearnerPackage Create(
+            Guid learnerId,
+            Guid? instructorId,
+            string packageName,
+            decimal totalHours,
+            decimal hourlyRateSnapshot)
+        {
+            return Create(learnerId, packageName, totalHours, hourlyRateSnapshot, instructorId);
         }
 
         public void DeductHours(decimal hours)

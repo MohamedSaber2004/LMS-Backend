@@ -91,7 +91,6 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 var requiredHours = command.DurationMinutes == 25 ? 0.5m : 1.0m;
                 var hasBalance = await _context.LearnerPackages
                     .AnyAsync(lp => lp.LearnerId == learnerId
-                        && lp.InstructorId == command.InstructorId
                         && lp.IsActive
                         && lp.RemainingHours >= requiredHours,
                         cancellationToken);

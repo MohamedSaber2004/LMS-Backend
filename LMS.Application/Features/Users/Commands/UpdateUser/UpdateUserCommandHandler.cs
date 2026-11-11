@@ -18,17 +18,20 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Result<UserDto>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly ILmsDbContext _context;
         private readonly IUserAccountDeletionService _accountDeletionService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public UpdateUserCommandHandler(
             UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole<Guid>> roleManager,
             ILmsDbContext context,
             IUserAccountDeletionService accountDeletionService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
             _accountDeletionService = accountDeletionService;
             _localizer = localizer;
@@ -92,6 +95,7 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
             if (request.Role.HasValue)
             {
                 var roleName = request.Role.Value.ToString();
+                await IdentityRoleProvisioner.EnsureRoleAsync(_roleManager, roleName);
                 var currentRoles = await _userManager.GetRolesAsync(user);
                 var hasTargetRole = currentRoles.Any(role => string.Equals(role, roleName, StringComparison.OrdinalIgnoreCase));
                 roleChanged = !hasTargetRole || currentRoles.Count > 1;
@@ -117,6 +121,18 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
                         if (!removeResult.Succeeded)
                         {
                             return BuildIdentityFailure(removeResult);
+                        }
+                    }
+
+                    if (request.Role.Value != UserType.SubAdmin)
+                    {
+                        var staleGrants = await _context.AdminPermissionGrants
+                            .Where(grant => grant.UserId == user.Id)
+                            .ToListAsync(cancellationToken);
+
+                        if (staleGrants.Count > 0)
+                        {
+                            _context.AdminPermissionGrants.RemoveRange(staleGrants);
                         }
                     }
                 }

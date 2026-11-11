@@ -1,5 +1,6 @@
 using LMS.API.Services;
 using LMS.Application.Common.Helpers;
+using LMS.Domain.Enums;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Availability.DTOs;
@@ -36,7 +37,7 @@ namespace LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySl
             CancellationToken cancellationToken)
         {
             var instructorId = await ActorOwnership.ResolveWriteTargetAsync(
-                _context, _currentUserService, request.InstructorId, cancellationToken);
+                _context, _currentUserService, request.InstructorId, AdminPermission.InstructorAvailabilityAdd, cancellationToken);
 
             var slot = InstructorAvailabilitySlot.Create(
                 instructorId,

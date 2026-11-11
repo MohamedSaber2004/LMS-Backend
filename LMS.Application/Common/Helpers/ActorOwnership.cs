@@ -13,6 +13,9 @@ namespace LMS.Application.Common.Helpers
             => currentUser.UserTypes.HasValue
                && (currentUser.UserTypes.Value & (int)UserType.Admin) != 0;
 
+        public static bool HasAdminBoardAccess(ICurrentUserService currentUser, AdminPermission permission)
+            => IsAdmin(currentUser) || currentUser.PermissionCodes.Contains((int)permission);
+
         public static async Task<Guid?> ResolveInstructorIdAsync(
             ILmsDbContext context,
             Guid userId,
@@ -49,9 +52,10 @@ namespace LMS.Application.Common.Helpers
             ILmsDbContext context,
             ICurrentUserService currentUser,
             Guid requestedInstructorId,
+            AdminPermission adminBoardPermission,
             CancellationToken cancellationToken)
         {
-            if (IsAdmin(currentUser))
+            if (HasAdminBoardAccess(currentUser, adminBoardPermission))
             {
                 if (requestedInstructorId == Guid.Empty)
                 {
@@ -76,9 +80,10 @@ namespace LMS.Application.Common.Helpers
             ILmsDbContext context,
             ICurrentUserService currentUser,
             Guid ownerInstructorId,
+            AdminPermission adminBoardPermission,
             CancellationToken cancellationToken)
         {
-            if (IsAdmin(currentUser))
+            if (HasAdminBoardAccess(currentUser, adminBoardPermission))
             {
                 return;
             }

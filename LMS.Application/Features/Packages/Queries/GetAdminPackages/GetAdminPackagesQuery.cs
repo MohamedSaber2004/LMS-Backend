@@ -38,7 +38,7 @@ namespace LMS.Application.Features.Packages.Queries.GetAdminPackages
                 .AsNoTracking()
                 .Include(lp => lp.Learner)
                     .ThenInclude(l => l.User)
-                .Include(lp => lp.Instructor)
+                .Include(lp => lp.Instructor!)
                     .ThenInclude(i => i.User)
                 .AsQueryable();
 
@@ -73,7 +73,7 @@ namespace LMS.Application.Features.Packages.Queries.GetAdminPackages
                     LearnerFullName = lp.Learner.User.FullName,
                     LearnerEmail = lp.Learner.User.Email ?? string.Empty,
                     InstructorId = lp.InstructorId,
-                    InstructorFullName = lp.Instructor.User.FullName,
+                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : "All Instructors",
                     PackageName = lp.PackageName,
                     TotalHours = lp.TotalHours,
                     RemainingHours = lp.RemainingHours,

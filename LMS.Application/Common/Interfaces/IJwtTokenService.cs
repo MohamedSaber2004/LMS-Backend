@@ -4,7 +4,10 @@ namespace LMS.Application.Common.Interfaces
 {
     public interface IJwtTokenService
     {
-        string GenerateAccessToken(ApplicationUser user, IList<string> roles);
+        Task<string> GenerateAccessToken(
+            ApplicationUser user,
+            IList<string> roles,
+            CancellationToken cancellationToken = default);
 
         string GenerateRefreshToken(ApplicationUser user);
 

@@ -1,6 +1,7 @@
 using FluentValidation;
 using LMS.API.Services;
 using LMS.Application.Common.Helpers;
+using LMS.Domain.Enums;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
 using LMS.Application.Localization;
@@ -34,7 +35,7 @@ namespace LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySl
                 .MustAsync((instructorId, cancellationToken) =>
                     AvailabilityValidation.InstructorIsApprovedAsync(_context, instructorId, cancellationToken))
                 .WithMessage(localizer[LocalizationKeys.Availability.InstructorNotApproved].Value)
-                .When(command => ActorOwnership.IsAdmin(currentUser));
+                .When(command => ActorOwnership.HasAdminBoardAccess(currentUser, AdminPermission.InstructorAvailabilityAdd));
 
             RuleFor(command => command.Day)
                 .IsInEnum()
@@ -48,7 +49,7 @@ namespace LMS.Application.Features.Availability.Commands.Admin.AddAvailabilitySl
                 .MustAsync(async (command, cancellationToken) =>
                 {
                     var instructorId = await ActorOwnership.ResolveWriteTargetAsync(
-                        _context, currentUser, command.InstructorId, cancellationToken);
+                        _context, currentUser, command.InstructorId, AdminPermission.InstructorAvailabilityAdd, cancellationToken);
 
                     return await AvailabilityValidation.HasNoOverlapAsync(
                         _context,

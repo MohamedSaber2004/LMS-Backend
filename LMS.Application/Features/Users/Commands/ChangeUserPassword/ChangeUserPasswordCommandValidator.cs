@@ -1,6 +1,8 @@
 using FluentValidation;
 using FluentValidation.Validators;
+using LMS.API.Services;
 using LMS.Application.Common.Helpers;
+using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
 using LMS.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -13,14 +15,20 @@ namespace LMS.Application.Features.Users.Commands.ChangeUserPassword
     public class ChangeUserPasswordCommandValidator : AbstractValidator<ChangeUserPasswordCommand>
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILmsDbContext _context;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public ChangeUserPasswordCommandValidator(
             UserManager<ApplicationUser> userManager,
+            ILmsDbContext context,
+            ICurrentUserService currentUserService,
             IOptions<AppIdentityOptions> identityOptions,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
+            _context = context;
+            _currentUserService = currentUserService;
             _localizer = localizer;
 
             var requiredLength = identityOptions?.Value?.RequiredLength > 0
@@ -64,6 +72,15 @@ namespace LMS.Application.Features.Users.Commands.ChangeUserPassword
                 context.AddFailure(
                     nameof(ChangeUserPasswordCommand.UserId),
                     _localizer[LocalizationKeys.Users.UserNotFound].Value);
+                return;
+            }
+
+            if (!ActorOwnership.IsAdmin(_currentUserService)
+                && await SuperAdminAccountGuard.TargetsSuperAdminAccountAsync(_context, command.UserId, cancellationToken))
+            {
+                context.AddFailure(
+                    nameof(ChangeUserPasswordCommand.UserId),
+                    _localizer[LocalizationKeys.Users.CannotActOnSuperAdminAccount].Value);
                 return;
             }
 

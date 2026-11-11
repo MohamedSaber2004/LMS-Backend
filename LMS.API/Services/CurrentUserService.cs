@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using LMS.Application.Common.Security;
+using System.Net;
 using System.Security.Claims;
 
 namespace LMS.API.Services
@@ -121,6 +122,21 @@ namespace LMS.API.Services
             {
                 var userAgent = _httpContextAccessor.HttpContext?.Request.Headers["User-Agent"].ToString();
                 return ParseUserAgent(userAgent);
+            }
+        }
+
+        public IReadOnlyCollection<int> PermissionCodes
+        {
+            get
+            {
+                var claims = User?.FindAll(PermissionCatalog.ClaimType) ?? Enumerable.Empty<Claim>();
+
+                return claims
+                    .Select(claim => claim.Value)
+                    .Where(value => int.TryParse(value, out _))
+                    .Select(int.Parse)
+                    .Distinct()
+                    .ToArray();
             }
         }
 

@@ -11,7 +11,7 @@ namespace LMS.Application.Features.Packages.Queries.GetPackageCatalog
 {
     public class GetPackageCatalogQuery : IRequest<Result<IReadOnlyCollection<PackageCatalogItemDto>>>
     {
-        public Guid InstructorId { get; set; }
+        public Guid? InstructorId { get; set; }
     }
 
     public class GetPackageCatalogQueryHandler : IRequestHandler<GetPackageCatalogQuery, Result<IReadOnlyCollection<PackageCatalogItemDto>>>
@@ -31,12 +31,17 @@ namespace LMS.Application.Features.Packages.Queries.GetPackageCatalog
             GetPackageCatalogQuery request,
             CancellationToken cancellationToken)
         {
-            var instructor = await _context.Instructors
-                .AsNoTracking()
-                .FirstOrDefaultAsync(i => i.Id == request.InstructorId, cancellationToken)
-                ?? throw new NotFoundException(LocalizationKeys.Availability.InstructorNotFound);
-
-            var hourlyRate = instructor.HourlyRate;
+            decimal hourlyRate = 0m;
+            if (request.InstructorId.HasValue && request.InstructorId.Value != Guid.Empty)
+            {
+                var instructor = await _context.Instructors
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(i => i.Id == request.InstructorId.Value, cancellationToken);
+                if (instructor != null)
+                {
+                    hourlyRate = instructor.HourlyRate;
+                }
+            }
 
             var tiers = await _context.PackageTiers
                 .AsNoTracking()

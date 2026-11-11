@@ -13,6 +13,7 @@ using LMS.Application.Features.Sessions.Queries.GetBookableSlots;
 using LMS.Application.Features.Sessions.Queries.GetMyBookings;
 using LMS.Application.Features.Sessions.Queries.GetMySessions;
 using LMS.Application.Features.Sessions.Queries.GetSessionById;
+using LMS.Application.Features.Sessions.Queries.GetSessionParticipants;
 using LMS.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace LMS.API.Controllers.V1
     public class SessionsController : BaseController
     {
         /// <summary>
-        /// List the signed-in instructor's sessions.
+        /// List the signed-in user's sessions (for an instructor: teaching sessions; for a learner: booked sessions).
         /// </summary>
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>
@@ -46,6 +47,17 @@ namespace LMS.API.Controllers.V1
             [FromQuery] GetMySessionsQuery query,
             CancellationToken cancellationToken)
         {
+            if (User.IsInRole(UserType.Learner.ToString()) && !User.IsInRole(UserType.Instructor.ToString()))
+            {
+                var learnerResult = await Mediator.Send(new GetMyBookingsQuery
+                {
+                    PageNumber = query.PageNumber,
+                    PageSize = query.PageSize,
+                    Tab = query.Tab
+                }, cancellationToken);
+                return FromResult(learnerResult);
+            }
+
             var result = await Mediator.Send(query, cancellationToken);
             return FromResult(result);
         }
@@ -227,6 +239,23 @@ namespace LMS.API.Controllers.V1
         {
             command.Id = id;
             var result = await Mediator.Send(command, cancellationToken);
+            return FromResult(result);
+        }
+
+        /// <summary>
+        /// Get the participants list and attendance records for a session taught by the calling instructor.
+        /// </summary>
+        [HttpGet(ApiRoutes.Sessions.Participants)]
+        [RoleAuthorize(UserType.Instructor)]
+        [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<SessionParticipantDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetParticipants(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(new GetSessionParticipantsQuery { SessionId = id }, cancellationToken);
             return FromResult(result);
         }
     }

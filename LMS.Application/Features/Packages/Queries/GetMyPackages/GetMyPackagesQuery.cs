@@ -42,7 +42,7 @@ namespace LMS.Application.Features.Packages.Queries.GetMyPackages
 
             var query = _context.LearnerPackages
                 .AsNoTracking()
-                .Include(lp => lp.Instructor)
+                .Include(lp => lp.Instructor!)
                     .ThenInclude(i => i.User)
                 .Where(lp => lp.LearnerId == learnerId);
 
@@ -57,7 +57,7 @@ namespace LMS.Application.Features.Packages.Queries.GetMyPackages
                 {
                     Id = lp.Id,
                     InstructorId = lp.InstructorId,
-                    InstructorFullName = lp.Instructor.User.FullName,
+                    InstructorFullName = lp.Instructor != null && lp.Instructor.User != null ? lp.Instructor.User.FullName : "All Instructors",
                     PackageName = lp.PackageName,
                     TotalHours = lp.TotalHours,
                     RemainingHours = lp.RemainingHours,

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using FluentValidation.Validators;
+using LMS.API.Services;
 using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Localization;
@@ -28,6 +29,7 @@ namespace LMS.Application.Features.Users.Commands.AddUser
         public AddUserCommandValidator(
             UserManager<ApplicationUser> userManager,
             ILmsDbContext context,
+            ICurrentUserService currentUserService,
             IOptions<AppIdentityOptions> identityOptions,
             IStringLocalizer<Messages> localizer)
         {
@@ -72,6 +74,10 @@ namespace LMS.Application.Features.Users.Commands.AddUser
             RuleFor(x => x.Role)
                 .Must(role => Enum.IsDefined(typeof(UserType), role))
                 .WithMessage(localizer[LocalizationKeys.Users.InvalidRole].Value);
+
+            RuleFor(x => x.Role)
+                .Must(role => role != UserType.Admin || ActorOwnership.IsAdmin(currentUserService))
+                .WithMessage(localizer[LocalizationKeys.Users.CannotAssignSuperAdminRole].Value);
 
             RuleFor(x => x)
                 .CustomAsync(ValidateAsync);

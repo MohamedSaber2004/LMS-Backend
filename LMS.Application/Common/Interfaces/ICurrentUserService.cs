@@ -6,6 +6,7 @@
         bool IsAuthenticated { get; }
         string? IpAddress { get; }
         int? UserTypes { get; }
+        IReadOnlyCollection<int> PermissionCodes { get; }
         string CorrelationId { get; }
         string? Email { get; }
         string? FullName { get; }

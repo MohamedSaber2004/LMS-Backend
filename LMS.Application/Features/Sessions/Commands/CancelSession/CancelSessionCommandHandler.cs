@@ -69,7 +69,7 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                     {
                         var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
                         var package = await _context.LearnerPackages
-                            .Where(lp => lp.LearnerId == booking.LearnerId && lp.InstructorId == session.InstructorId)
+                            .Where(lp => lp.LearnerId == booking.LearnerId)
                             .OrderByDescending(lp => lp.CreatedAt)
                             .FirstOrDefaultAsync(cancellationToken);
                         package?.RefundHours(hoursToRefund);
@@ -99,7 +99,7 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 {
                     var hoursToRefund = session.DurationMinutes == 25 ? 0.5m : 1.0m;
                     var package = await _context.LearnerPackages
-                        .Where(lp => lp.LearnerId == learnerId && lp.InstructorId == session.InstructorId)
+                        .Where(lp => lp.LearnerId == learnerId)
                         .OrderByDescending(lp => lp.CreatedAt)
                         .FirstOrDefaultAsync(cancellationToken);
                     package?.RefundHours(hoursToRefund);

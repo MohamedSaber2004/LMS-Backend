@@ -45,7 +45,7 @@ namespace LMS.Application.Features.Authentication.Commands.Login
             await _userManager.ResetAccessFailedCountAsync(user);
 
             var roles = await _userManager.GetRolesAsync(user);
-            var accessToken = _jwtTokenService.GenerateAccessToken(user, roles);
+            var accessToken = await _jwtTokenService.GenerateAccessToken(user, roles, cancellationToken);
             var refreshToken = _jwtTokenService.GenerateRefreshToken(user);
 
             var refreshDays = _jwtSettings.RefreshTokenExpiryDays > 0 ? _jwtSettings.RefreshTokenExpiryDays : 30;

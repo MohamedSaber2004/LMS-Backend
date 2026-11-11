@@ -16,20 +16,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Admin management of the purchasable package tiers and of student hour packages across the system, including manual hour adjustments.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Admin.Packages.Base)]
     [Tags("Admin: Packages")]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize]
     public class AdminPackagesController : BaseController
     {
         /// <summary>
         /// List all student purchased packages across the platform.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Packages.GetAll)]
+        [RequirePermission(AdminPermission.PackagesRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<AdminPackageItemDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] GetAdminPackagesQuery query, CancellationToken cancellationToken)
         {
@@ -41,6 +41,7 @@ namespace LMS.API.Controllers.V1
         /// Adjust remaining hours of a learner's package (for administrative corrections or compensation).
         /// </summary>
         [HttpPost(ApiRoutes.Admin.Packages.AdjustHours)]
+        [RequirePermission(AdminPermission.PackagesUpdate)]
         [ProducesResponseType(typeof(ApiResponse<LearnerPackageDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
@@ -58,6 +59,7 @@ namespace LMS.API.Controllers.V1
         /// List the package tiers that learners can buy.
         /// </summary>
         [HttpGet(ApiRoutes.Admin.Packages.Tiers)]
+        [RequirePermission(AdminPermission.PackageTiersRead)]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<PackageTierDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTiers(CancellationToken cancellationToken)
         {
@@ -69,6 +71,7 @@ namespace LMS.API.Controllers.V1
         /// Add a package tier to the catalog.
         /// </summary>
         [HttpPost(ApiRoutes.Admin.Packages.Tiers)]
+        [RequirePermission(AdminPermission.PackageTiersAdd)]
         [ProducesResponseType(typeof(ApiResponse<PackageTierDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateTier(
@@ -83,6 +86,7 @@ namespace LMS.API.Controllers.V1
         /// Update a package tier. Existing learner packages keep the name and hours they were bought with.
         /// </summary>
         [HttpPut(ApiRoutes.Admin.Packages.TierById)]
+        [RequirePermission(AdminPermission.PackageTiersUpdate)]
         [ProducesResponseType(typeof(ApiResponse<PackageTierDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
@@ -100,6 +104,7 @@ namespace LMS.API.Controllers.V1
         /// Remove a package tier from the catalog.
         /// </summary>
         [HttpDelete(ApiRoutes.Admin.Packages.TierById)]
+        [RequirePermission(AdminPermission.PackageTiersDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteTier(

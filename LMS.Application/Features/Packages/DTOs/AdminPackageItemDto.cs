@@ -6,8 +6,8 @@ namespace LMS.Application.Features.Packages.DTOs
         public Guid LearnerId { get; set; }
         public string LearnerFullName { get; set; } = string.Empty;
         public string LearnerEmail { get; set; } = string.Empty;
-        public Guid InstructorId { get; set; }
-        public string InstructorFullName { get; set; } = string.Empty;
+        public Guid? InstructorId { get; set; }
+        public string? InstructorFullName { get; set; }
         public string PackageName { get; set; } = string.Empty;
         public decimal TotalHours { get; set; }
         public decimal RemainingHours { get; set; }

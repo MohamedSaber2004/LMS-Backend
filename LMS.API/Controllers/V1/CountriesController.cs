@@ -16,14 +16,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Public (list and by-id lookups) · Admin (paginated list, create, update, delete)]
+    /// [Allowed Roles: Public (list and by-id lookups) · Admin / SubAdmin per granted permission code (paginated list, create, update, delete)]
     /// Country reference data, including the time zone anchor every schedule is resolved against.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Countries.Base)]
     [Tags("Countries")]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize]
     public class CountriesController : BaseController
     {
         /// <summary>
@@ -47,6 +46,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.Countries.GetAllPagginated)]
+        [RequirePermission(AdminPermission.CountriesRead)]
         [ProducesResponseType(typeof(ApiResponse<PagginatedResult<CountryDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -83,6 +83,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost]
+        [RequirePermission(AdminPermission.CountriesAdd)]
         [ProducesResponseType(typeof(ApiResponse<CountryDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -100,6 +101,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Countries.Update)]
+        [RequirePermission(AdminPermission.CountriesUpdate)]
         [ProducesResponseType(typeof(ApiResponse<CountryDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -118,6 +120,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.Countries.GetById)]
+        [RequirePermission(AdminPermission.CountriesDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]

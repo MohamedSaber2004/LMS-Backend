@@ -17,14 +17,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers.V1
 {
     /// <summary>
-    /// [Allowed Roles: Admin]
+    /// [Allowed Roles: Admin · SubAdmin (per granted permission code)]
     /// Manage the learner onboarding question set and its answer options.
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Onboarding.Base)]
     [Tags("Admin: Onboarding")]
-    [Authorize]
-    [RoleAuthorize(UserType.Admin)]
+    [RoleAuthorize]
     public class OnboardingAdminController : BaseController
     {
         /// <summary>
@@ -33,6 +32,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet(ApiRoutes.Onboarding.AdminQuestions)]
+        [RequirePermission(AdminPermission.OnboardingRead)]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<OnboardingQuestionDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
@@ -49,6 +49,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.Onboarding.AdminQuestions)]
+        [RequirePermission(AdminPermission.OnboardingAdd)]
         [ProducesResponseType(typeof(ApiResponse<OnboardingQuestionDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -67,6 +68,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Onboarding.AdminQuestionById)]
+        [RequirePermission(AdminPermission.OnboardingUpdate)]
         [ProducesResponseType(typeof(ApiResponse<OnboardingQuestionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -89,6 +91,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.Onboarding.AdminQuestionById)]
+        [RequirePermission(AdminPermission.OnboardingDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
@@ -107,6 +110,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost(ApiRoutes.Onboarding.AdminQuestionOptions)]
+        [RequirePermission(AdminPermission.OnboardingAdd)]
         [ProducesResponseType(typeof(ApiResponse<OnboardingOptionDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -129,6 +133,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut(ApiRoutes.Onboarding.AdminOptionById)]
+        [RequirePermission(AdminPermission.OnboardingUpdate)]
         [ProducesResponseType(typeof(ApiResponse<OnboardingOptionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
@@ -151,6 +156,7 @@ namespace LMS.API.Controllers.V1
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpDelete(ApiRoutes.Onboarding.AdminOptionById)]
+        [RequirePermission(AdminPermission.OnboardingDelete)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]

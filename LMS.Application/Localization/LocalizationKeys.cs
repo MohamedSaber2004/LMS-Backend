@@ -413,6 +413,8 @@ namespace LMS.Application.Localization
             public const string UserIdRequired = "Users.UserIdRequired";
             public const string UserNotFound = "Users.UserNotFound";
             public const string InvalidRole = "Users.InvalidRole";
+            public const string CannotAssignSuperAdminRole = "Users.CannotAssignSuperAdminRole";
+            public const string CannotActOnSuperAdminAccount = "Users.CannotActOnSuperAdminAccount";
             public const string CannotDeleteSelf = "Users.CannotDeleteSelf";
             public const string SearchTooLong = "Users.SearchTooLong";
             public const string NoFieldsToUpdate = "Users.NoFieldsToUpdate";
@@ -530,6 +532,21 @@ namespace LMS.Application.Localization
             public const string HourlyRateMustBePositive = "Pricing.HourlyRateMustBePositive";
             public const string CommissionRateRange = "Pricing.CommissionRateRange";
             public const string PricingUpdatedSuccess = "Pricing.PricingUpdatedSuccess";
+        }
+
+        public static class Permissions
+        {
+            public const string FeaturePrefix = "Permissions.Features";
+            public const string ActionPrefix = "Permissions.Actions";
+            public const string UnknownPermissionCode = "Permissions.UnknownPermissionCode";
+            public const string DuplicatePermissionCode = "Permissions.DuplicatePermissionCode";
+            public const string TooManyPermissionCodes = "Permissions.TooManyPermissionCodes";
+            public const string CannotGrantPermissionYouDoNotHold = "Permissions.CannotGrantPermissionYouDoNotHold";
+            public const string GrantsRequireSubAdminRole = "Permissions.GrantsRequireSubAdminRole";
+            public const string CatalogRetrievedSuccess = "Permissions.CatalogRetrievedSuccess";
+            public const string GrantsRetrievedSuccess = "Permissions.GrantsRetrievedSuccess";
+            public const string GrantsUpdatedSuccess = "Permissions.GrantsUpdatedSuccess";
+            public const string ForbiddenMissingPermission = "Permissions.ForbiddenMissingPermission";
         }
     }
 }

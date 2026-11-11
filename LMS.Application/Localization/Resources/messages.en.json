@@ -261,7 +261,7 @@
     "RescheduleWithdrawnSuccess": "Reschedule request withdrawn successfully.",
     "DurationInvalid": "Session duration must be either 25 or 50 minutes.",
     "TrialAlreadyUsed": "You have already used your free trial lesson.",
-    "InsufficientPackageHours": "Insufficient hours balance with this teacher. Please purchase a package first.",
+    "InsufficientPackageHours": "Insufficient package session balance. Please subscribe to a package plan first.",
     "AttendanceAlreadyConfirmed": "Session attendance has already been confirmed.",
     "CannotConfirmCancelled": "Cannot confirm attendance for a cancelled session.",
     "AttendanceConfirmedSuccess": "Session attendance confirmed and teacher earnings credited successfully.",
@@ -388,6 +388,8 @@
     "UserIdRequired": "User identifier is required.",
     "UserNotFound": "User was not found.",
     "InvalidRole": "The selected role is invalid.",
+    "CannotAssignSuperAdminRole": "Only a super admin can assign the Admin role.",
+    "CannotActOnSuperAdminAccount": "Only a super admin can manage an account that holds the Admin role.",
     "CannotDeleteSelf": "You cannot delete your own account.",
     "SearchTooLong": "Search term cannot exceed {0} characters.",
     "NoFieldsToUpdate": "At least one field must be provided for update.",
@@ -489,5 +491,38 @@
     "HourlyRateMustBePositive": "Hourly rate must be greater than zero.",
     "CommissionRateRange": "Commission rate must be between 0% and 100%.",
     "PricingUpdatedSuccess": "Teacher hourly rate and platform commission updated successfully."
+  },
+  "Permissions": {
+    "ForbiddenMissingPermission": "You do not have permission to access this feature. Required permission: {0}.",
+    "UnknownPermissionCode": "The permission code {0} is not a recognized permission.",
+    "DuplicatePermissionCode": "The permission code {0} is listed more than once.",
+    "TooManyPermissionCodes": "A user cannot be granted more than {0} permissions.",
+    "CannotGrantPermissionYouDoNotHold": "You cannot grant the permission {0} because your own account does not hold it.",
+    "GrantsRequireSubAdminRole": "Permission codes can only be assigned to SubAdmin accounts. This account has the following role(s): {0}.",
+    "CatalogRetrievedSuccess": "Permission catalog retrieved successfully.",
+    "GrantsRetrievedSuccess": "User permissions retrieved successfully.",
+    "GrantsUpdatedSuccess": "User permissions updated successfully. The affected user must sign in again for the new permissions to take effect.",
+    "Features": {
+      "Users": "Platform users",
+      "Permissions": "Admin permission management",
+      "Courses": "Courses, lessons and quizzes",
+      "HelpCenter": "Help center",
+      "Onboarding": "Learner onboarding questions",
+      "Packages": "Learner packages and hour adjustments",
+      "PackageTiers": "Package tiers",
+      "Sessions": "Platform sessions",
+      "Teachers": "Teachers",
+      "InstructorApplications": "Instructor applications",
+      "InstructorPricing": "Instructor pricing",
+      "InstructorAvailability": "Teacher availability",
+      "Countries": "Countries",
+      "Finances": "Financial overview"
+    },
+    "Actions": {
+      "Read": "View",
+      "Add": "Add",
+      "Update": "Update",
+      "Delete": "Delete"
+    }
   }
 }

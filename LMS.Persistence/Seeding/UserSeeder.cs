@@ -1,4 +1,5 @@
-﻿using LMS.Domain.Entities;
+using LMS.Application.Common.Security;
+using LMS.Domain.Entities;
 using LMS.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
@@ -11,7 +12,7 @@ namespace LMS.Persistence.Seeding
             if (userManager == null || roleManager == null)
                 return;
 
-            string[] roles = { nameof(UserType.Admin), nameof(UserType.Learner), nameof(UserType.Instructor) };
+            string[] roles = { nameof(UserType.Admin), nameof(UserType.Learner), nameof(UserType.Instructor), PermissionCatalog.SubAdminRole };
 
             foreach (var role in roles)
             {
