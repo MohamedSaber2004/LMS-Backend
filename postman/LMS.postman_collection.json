@@ -41651,7 +41651,7 @@
           ]
         },
         {
-          "name": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+          "name": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
           "request": {
             "method": "POST",
             "header": [
@@ -41679,10 +41679,10 @@
               "query": [],
               "variable": []
             },
-            "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+            "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -41720,10 +41720,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -41771,10 +41771,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -41822,10 +41822,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -41873,10 +41873,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -41924,10 +41924,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -41975,10 +41975,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42026,10 +42026,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+                "description": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"string\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -43032,7 +43032,7 @@
           ]
         },
         {
-          "name": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+          "name": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
           "request": {
             "method": "POST",
             "header": [
@@ -43063,7 +43063,7 @@
                 }
               ]
             },
-            "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+            "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
             "body": null
           },
           "response": [
@@ -43099,7 +43099,7 @@
                     }
                   ]
                 },
-                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
                 "body": null
               },
               "status": "OK",
@@ -43145,7 +43145,7 @@
                     }
                   ]
                 },
-                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
                 "body": null
               },
               "status": "Bad Request",
@@ -43191,7 +43191,7 @@
                     }
                   ]
                 },
-                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
                 "body": null
               },
               "status": "Unauthorized",
@@ -43237,7 +43237,7 @@
                     }
                   ]
                 },
-                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
                 "body": null
               },
               "status": "Forbidden",
@@ -43283,7 +43283,7 @@
                     }
                   ]
                 },
-                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
                 "body": null
               },
               "status": "Not Found",
@@ -43329,635 +43329,7 @@
                     }
                   ]
                 },
-                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
-                "body": null
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "name": "Accept a pending booking as the instructor of that session.",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "sessions",
-                "{{id}}",
-                "confirm"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "00000000-0000-0000-0000-000000000000",
-                  "description": ""
-                }
-              ]
-            },
-            "description": "Accept a pending booking as the instructor of that session.",
-            "body": null
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "confirm"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Accept a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Bad Request - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "confirm"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Accept a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "confirm"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Accept a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "403 Forbidden",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "confirm"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Accept a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "404 Not Found",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "confirm"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Accept a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/confirm",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "confirm"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Accept a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "name": "Refuse a pending booking as the instructor of that session.",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "sessions",
-                "{{id}}",
-                "decline"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "00000000-0000-0000-0000-000000000000",
-                  "description": ""
-                }
-              ]
-            },
-            "description": "Refuse a pending booking as the instructor of that session.",
-            "body": null
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "decline"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Refuse a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Bad Request - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "decline"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Refuse a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "decline"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Refuse a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "403 Forbidden",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "decline"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Refuse a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "404 Not Found",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "decline"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Refuse a pending booking as the instructor of that session.",
-                "body": null
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/decline",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "sessions",
-                    "{{id}}",
-                    "decline"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ]
-                },
-                "description": "Refuse a pending booking as the instructor of that session.",
+                "description": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
                 "body": null
               },
               "status": "Server error",
@@ -44379,7 +43751,7 @@
           ]
         },
         {
-          "name": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+          "name": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
           "request": {
             "method": "POST",
             "header": [
@@ -44410,7 +43782,7 @@
                 }
               ]
             },
-            "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+            "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
             "body": null
           },
           "response": [
@@ -44446,7 +43818,7 @@
                     }
                   ]
                 },
-                "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+                "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
                 "body": null
               },
               "status": "OK",
@@ -44492,7 +43864,7 @@
                     }
                   ]
                 },
-                "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+                "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
                 "body": null
               },
               "status": "Bad Request",
@@ -44538,7 +43910,7 @@
                     }
                   ]
                 },
-                "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+                "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
                 "body": null
               },
               "status": "Unauthorized",
@@ -44584,7 +43956,7 @@
                     }
                   ]
                 },
-                "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+                "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
                 "body": null
               },
               "status": "Forbidden",
@@ -44630,7 +44002,7 @@
                     }
                   ]
                 },
-                "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+                "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
                 "body": null
               },
               "status": "Not Found",
@@ -44676,7 +44048,7 @@
                     }
                   ]
                 },
-                "description": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+                "description": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
                 "body": null
               },
               "status": "Server error",

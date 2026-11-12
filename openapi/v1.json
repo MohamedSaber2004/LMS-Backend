@@ -18849,7 +18849,7 @@
         "tags": [
           "Sessions"
         ],
-        "summary": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
+        "summary": "[Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested\r\nwindow sits inside that instructor's open availability for that day and clashes with nothing, snapshots\r\nits times onto the session, and books the seat straight away — the instructor is never asked to accept.\r\nThe backend also decides the billing: while the student has never taken a lesson this booking is the free\r\ntrial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already\r\nbe in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking\r\nreleases its slot the moment its start time passes.",
         "parameters": [
           {
             "name": "Accept-Language",
@@ -19455,285 +19455,7 @@
         "tags": [
           "Sessions"
         ],
-        "summary": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SessionDtoApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/sessions/{id}/confirm": {
-      "post": {
-        "tags": [
-          "Sessions"
-        ],
-        "summary": "Accept a pending booking as the instructor of that session.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SessionDtoApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/sessions/{id}/decline": {
-      "post": {
-        "tags": [
-          "Sessions"
-        ],
-        "summary": "Refuse a pending booking as the instructor of that session.",
+        "summary": "[Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the\r\nsession, and holds the instructor's net share plus the platform commission in the teacher wallet until\r\nthe session ends. Paying is what unlocks the live room for both sides.",
         "parameters": [
           {
             "name": "id",
@@ -20031,7 +19753,7 @@
         "tags": [
           "Sessions"
         ],
-        "summary": "Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.",
+        "summary": "Confirm attendance by the learner for a session that has happened. Money is no longer moved here:\r\nit was held at payment and is released to the teacher when the session ends.",
         "parameters": [
           {
             "name": "id",
@@ -24073,6 +23795,11 @@
           "date": {
             "type": "string",
             "format": "date"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
           },
           "durationMinutes": {
             "$ref": "#/components/schemas/AcademicSessionDuration"
@@ -30033,7 +29760,7 @@
     },
     {
       "name": "Teacher: Sessions",
-      "description": "Allowed Roles: [Instructor] — Teacher session calendar, confirm/decline bookings, >24h cancellation, reschedule requests, and attendee rosters."
+      "description": "Allowed Roles: [Instructor] — Teacher session calendar, >24h cancellation, reschedule requests, and attendee rosters."
     }
   ]
 }
