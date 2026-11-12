@@ -34,7 +34,8 @@ namespace LMS.Application.Features.Wallet.Queries.GetAdminFinancialsOverview
                 .SumAsync(lp => (decimal?)lp.TotalPrice, cancellationToken) ?? 0m;
 
             var platformCommission = await _context.TeacherWalletTransactions
-                .Where(t => t.Type == WalletTransactionType.SessionEarning)
+                .Where(t => t.Type == WalletTransactionType.SessionEarning
+                    && t.Status != WalletTransactionStatus.Reversed)
                 .SumAsync(t => (decimal?)t.CommissionAmount, cancellationToken) ?? 0m;
 
             var walletsAvailable = await _context.TeacherWallets

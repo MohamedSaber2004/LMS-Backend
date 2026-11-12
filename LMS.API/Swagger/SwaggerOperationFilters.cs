@@ -155,7 +155,7 @@ namespace LMS.API.Swagger
             ["Courses (Learner & Public)"] = "Allowed Roles: [Learner / Public Guest] — Browse published courses, lessons progress, and quiz submissions.",
 
             // Teacher / Instructors
-            ["Teacher: Sessions"] = "Allowed Roles: [Instructor] — Teacher session calendar, confirm/decline bookings, >24h cancellation, reschedule requests, and attendee rosters.",
+            ["Teacher: Sessions"] = "Allowed Roles: [Instructor] — Teacher session calendar, >24h cancellation, reschedule requests, and attendee rosters.",
             ["Teacher: Availability"] = "Allowed Roles: [Instructor] — Weekly recurring slots, timezone configuration, vacation mode, and specific date calendars.",
             ["Teacher: Wallet"] = "Allowed Roles: [Instructor] — Instant earnings ledger, CCR platform commission deduction, and payout withdrawal requests.",
             ["Teacher: Students"] = "Allowed Roles: [Instructor] — List and progress tracking of students who bought packages or took sessions with this teacher.",

@@ -5,6 +5,7 @@ using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Application.Localization;
+using LMS.Domain.Entities;
 using LMS.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -55,31 +56,66 @@ namespace LMS.Application.Features.Sessions.Commands.PaySession
                 throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
             }
 
-            if (session.Status != SessionStatus.Confirmed)
-            {
-                throw new BadRequestException(LocalizationKeys.Sessions.SessionMustBeConfirmedBeforePayment);
-            }
-
             if (session.IsPaid)
             {
                 throw new BadRequestException(LocalizationKeys.Sessions.PaymentAlreadyCompleted);
             }
 
-            if (!session.IsTrial)
+            if (session.Status != SessionStatus.Pending)
             {
-                var requiredHours = session.DurationMinutes == 25 ? 0.5m : 1.0m;
-                var package = await _context.LearnerPackages
-                    .Where(lp => lp.LearnerId == learnerId
-                        && lp.IsActive
-                        && lp.RemainingHours >= requiredHours)
-                    .OrderBy(lp => lp.CreatedAt)
-                    .FirstOrDefaultAsync(cancellationToken)
-                    ?? throw new BadRequestException(LocalizationKeys.Sessions.InsufficientPackageHours);
-
-                package.DeductHours(requiredHours);
+                throw new BadRequestException(
+                    LocalizationKeys.Sessions.SessionNotPayable, session.Status);
             }
 
+            if (session.StartsAtUtc <= DateTime.UtcNow)
+            {
+                throw new BadRequestException(
+                    LocalizationKeys.Sessions.PaymentWindowPassed,
+                    session.StartsAtUtc.ToString("yyyy-MM-dd HH:mm"));
+            }
+
+            var requiredHours = session.DurationMinutes == 25 ? 0.5m : 1.0m;
+            var package = await _context.LearnerPackages
+                .Where(lp => lp.LearnerId == learnerId
+                    && lp.IsActive
+                    && lp.RemainingHours >= requiredHours)
+                .OrderBy(lp => lp.CreatedAt)
+                .FirstOrDefaultAsync(cancellationToken)
+                ?? throw new BadRequestException(LocalizationKeys.Sessions.InsufficientPackageHours);
+
+            package.DeductHours(requiredHours);
+
+            session.Confirm();
+            booking.Confirm();
             session.MarkPaid(DateTime.UtcNow);
+
+            var grossAmount = session.Price > 0
+                ? session.Price
+                : Math.Round(session.HourlyRateSnapshot * requiredHours, 2);
+
+            if (grossAmount > 0)
+            {
+                var wallet = await _context.TeacherWallets
+                    .Include(w => w.Transactions)
+                    .FirstOrDefaultAsync(w => w.InstructorId == session.InstructorId, cancellationToken);
+
+                if (wallet == null)
+                {
+                    wallet = TeacherWallet.Create(session.InstructorId);
+                    await _context.TeacherWallets.AddAsync(wallet, cancellationToken);
+                }
+
+                var commissionRate = session.CommissionRateSnapshot > 0
+                    ? session.CommissionRateSnapshot
+                    : session.Instructor.CommissionRate;
+
+                wallet.HoldSessionEarnings(
+                    session.Id,
+                    grossAmount,
+                    commissionRate,
+                    $"Held earnings for session on {session.StartsAtUtc:yyyy-MM-dd HH:mm} UTC");
+            }
+
             await _context.SaveChangesAsync(cancellationToken);
 
             var dto = SessionMapper.ToDto(session, session.Instructor.User?.FullName ?? string.Empty, booking);
@@ -87,4 +123,3 @@ namespace LMS.Application.Features.Sessions.Commands.PaySession
         }
     }
 }
-

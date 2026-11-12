@@ -1,4 +1,5 @@
 using LMS.Domain.Entities;
+using LMS.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -30,6 +31,11 @@ namespace LMS.Persistence.Configurations
 
             builder.Property(t => t.Type)
                 .HasConversion<int>()
+                .IsRequired();
+
+            builder.Property(t => t.Status)
+                .HasConversion<int>()
+                .HasDefaultValue(WalletTransactionStatus.Released)
                 .IsRequired();
 
             builder.Property(t => t.Description)

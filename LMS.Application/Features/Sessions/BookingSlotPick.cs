@@ -5,12 +5,14 @@ namespace LMS.Application.Features.Sessions
         Bookable = 0,
         InstructorNotBookable = 1,
         NoWindowsOnDate = 2,
-        AllWindowsElapsed = 3,
-        NoWindowFitsDuration = 4,
-        AllWindowsBlocked = 5
+        TimezoneUnresolved = 3,
+        StartTimeNotInTimeZone = 4,
+        StartTimeElapsed = 5,
+        TimeOutsideAvailability = 6,
+        RequestedTimeBlocked = 7
     }
 
-    public sealed class BookingSlotPick
+    public sealed record BookingSlotPick
     {
         public BookingSlotStatus Status { get; init; }
 
@@ -21,5 +23,9 @@ namespace LMS.Application.Features.Sessions
         public DateTime StartsAtUtc { get; init; }
 
         public DateTime EndsAtUtc { get; init; }
+
+        public DateTime FirstWindowStartsAtUtc { get; init; }
+
+        public DateTime LastWindowEndsAtUtc { get; init; }
     }
 }

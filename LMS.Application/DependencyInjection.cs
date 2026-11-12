@@ -38,10 +38,8 @@ using LMS.Application.Features.Availability.Queries.GetInstructorAvailabilityPag
 using LMS.Application.Features.Availability.Queries.GetMyAvailabilityCalendar;
 using LMS.Application.Features.Sessions.Commands.ApproveReschedule;
 using LMS.Application.Features.Sessions.Commands.CancelSession;
-using LMS.Application.Features.Sessions.Commands.ConfirmSession;
 using LMS.Application.Features.Sessions.Commands.CreateBooking;
 using LMS.Application.Features.Sessions.Commands.DeclineReschedule;
-using LMS.Application.Features.Sessions.Commands.DeclineSession;
 using LMS.Application.Features.Sessions.Commands.RequestReschedule;
 using LMS.Application.Features.Sessions.Queries.GetBookableSlots;
 using LMS.Application.Features.Sessions.Queries.GetMyBookings;
@@ -163,8 +161,6 @@ namespace LMS.Application
             services.AddTransient<IValidator<GetSessionByIdQuery>, GetSessionByIdQueryValidator>();
             services.AddTransient<IValidator<GetBookableSlotsQuery>, GetBookableSlotsQueryValidator>();
             services.AddTransient<IValidator<CreateBookingCommand>, CreateBookingCommandValidator>();
-            services.AddTransient<IValidator<ConfirmSessionCommand>, ConfirmSessionCommandValidator>();
-            services.AddTransient<IValidator<DeclineSessionCommand>, DeclineSessionCommandValidator>();
             services.AddTransient<IValidator<CancelSessionCommand>, CancelSessionCommandValidator>();
             services.AddTransient<IValidator<RequestRescheduleCommand>, RequestRescheduleCommandValidator>();
             services.AddTransient<IValidator<ApproveRescheduleCommand>, ApproveRescheduleCommandValidator>();

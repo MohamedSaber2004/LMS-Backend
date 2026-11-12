@@ -241,11 +241,14 @@ namespace LMS.Application.Localization
             public const string SessionIdRequired = "Sessions.SessionIdRequired";
             public const string InstructorIdRequired = "Sessions.InstructorIdRequired";
             public const string DateRequired = "Sessions.DateRequired";
+            public const string StartTimeRequired = "Sessions.StartTimeRequired";
+            public const string StartTimeInvalid = "Sessions.StartTimeInvalid";
+            public const string StartTimeNotInTimeZone = "Sessions.StartTimeNotInTimeZone";
+            public const string StartTimeElapsed = "Sessions.StartTimeElapsed";
+            public const string TimeOutsideAvailability = "Sessions.TimeOutsideAvailability";
+            public const string RequestedTimeBlocked = "Sessions.RequestedTimeBlocked";
             public const string SlotNotFound = "Sessions.SlotNotFound";
             public const string NoAvailabilityOnDate = "Sessions.NoAvailabilityOnDate";
-            public const string AllAvailabilityElapsed = "Sessions.AllAvailabilityElapsed";
-            public const string NoWindowFitsDuration = "Sessions.NoWindowFitsDuration";
-            public const string AllAvailabilityOnDateTaken = "Sessions.AllAvailabilityOnDateTaken";
             public const string DateRangeRequired = "Sessions.DateRangeRequired";
             public const string DateRangeInvalid = "Sessions.DateRangeInvalid";
             public const string DateRangeTooLarge = "Sessions.DateRangeTooLarge";
@@ -256,7 +259,6 @@ namespace LMS.Application.Localization
             public const string LearnerBreakTooShort = "Sessions.LearnerBreakTooShort";
             public const string ReasonTooLong = "Sessions.ReasonTooLong";
             public const string SessionNotFound = "Sessions.SessionNotFound";
-            public const string SessionNotPending = "Sessions.SessionNotPending";
             public const string SessionNotCancellable = "Sessions.SessionNotCancellable";
             public const string SessionNotReschedulable = "Sessions.SessionNotReschedulable";
             public const string InstructorLockPassed = "Sessions.InstructorLockPassed";
@@ -278,8 +280,7 @@ namespace LMS.Application.Localization
             public const string SessionRetrieved = "Sessions.SessionRetrieved";
             public const string BookingsRetrieved = "Sessions.BookingsRetrieved";
             public const string BookingCreatedSuccess = "Sessions.BookingCreatedSuccess";
-            public const string SessionConfirmedSuccess = "Sessions.SessionConfirmedSuccess";
-            public const string SessionDeclinedSuccess = "Sessions.SessionDeclinedSuccess";
+            public const string BookingTrialReadySuccess = "Sessions.BookingTrialReadySuccess";
             public const string SessionCancelledSuccess = "Sessions.SessionCancelledSuccess";
             public const string RescheduleRequestedSuccess = "Sessions.RescheduleRequestedSuccess";
             public const string RescheduleApprovedSuccess = "Sessions.RescheduleApprovedSuccess";
@@ -289,7 +290,8 @@ namespace LMS.Application.Localization
             public const string AttendanceAlreadyConfirmed = "Sessions.AttendanceAlreadyConfirmed";
             public const string CannotConfirmCancelled = "Sessions.CannotConfirmCancelled";
             public const string AttendanceConfirmedSuccess = "Sessions.AttendanceConfirmedSuccess";
-            public const string SessionMustBeConfirmedBeforePayment = "Sessions.SessionMustBeConfirmedBeforePayment";
+            public const string SessionNotPayable = "Sessions.SessionNotPayable";
+            public const string PaymentWindowPassed = "Sessions.PaymentWindowPassed";
             public const string PaymentAlreadyCompleted = "Sessions.PaymentAlreadyCompleted";
             public const string PaymentSuccess = "Sessions.PaymentSuccess";
             public const string FreeTrialLessonTitle = "Sessions.FreeTrialLessonTitle";

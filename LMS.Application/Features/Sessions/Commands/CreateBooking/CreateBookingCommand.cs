@@ -11,6 +11,8 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
 
         public DateOnly Date { get; set; }
 
+        public TimeSpan? StartTime { get; set; }
+
         public AcademicSessionDuration DurationMinutes { get; set; } = AcademicSessionDuration.Session50Min;
     }
 }

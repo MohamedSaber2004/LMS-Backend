@@ -3,7 +3,6 @@ namespace LMS.Application.Features.Sessions
     public enum BookingBlocker
     {
         None = 0,
-        InstructorNotBookable = 1,
         InstructorConflict = 2,
         InstructorBreak = 3,
         LearnerConflict = 4,

@@ -204,7 +204,7 @@ await room.disconnect();
 
 1. **التوكن هو مصدر الحقيقة.** اسم الغرفة والهوية جايين من الـ `video` grant و`sub` — أي قيمة تكتبها في الواجهة (أو في صفحة الاختبار) للزينة فقط؛ لو خالفت التوكن هتاخد `cannot connect to room` أو تدخل غرفة تانية.
 2. **camelCase داخل `video`** — `roomJoin`/`canPublish`/`canPublishData`. سيرياليزر بـ snake_case أو كائن بيتحوّل لنص = رفض صامت.
-3. **`enabled: false` مش خطأ.** لو `Url`/`ApiKey`/`ApiSecret` فيهم فراغ: `/config` بيرجّع `enabled:false`، و`start`/`join` بيرجّعوا 400 بمفتاح `LiveStreaming`، و**`POST /sessions/{id}/confirm` بيرفض تأكيد الحصة** — نفس سلوك Agora قبل كده. ما تفتكرش إن الكود مكسور.
+3. **`enabled: false` مش خطأ.** لو `Url`/`ApiKey`/`ApiSecret` فيهم فراغ: `/config` بيرجّع `enabled:false`، و`start`/`join` بيرجّعوا 400 بمفتاح `LiveStreaming`. الحجز نفسه **بيفضل شغال** (الحصة اتحجزت والكلمة السر بتتولد وقت الدخول بس) — يعني لو شفت الحجز ناجح والدخول مرفوض، المشكلة في إعدادات LiveKit مش في الحجز. ما تفتكرش إن الكود مكسور.
 4. **قاعدة البيانات المشتركة مع الإنتاج.** التشغيل المحلي على `Development` بيفصل على نفس SQL الحي — أي `start/join` بتعمله وانت بتجرّب بيتسجل فيه participant حقيقي. جرّب على session تجريبية صريحة.
 5. **الـ CSP والـ Permissions-Policy لازم يتحدثوا.** في `appsettings`: `connect-src` يحتاج `https://*.livekit.cloud wss://*.livekit.cloud https://*.livekit.net wss://*.livekit.net`، و`script-src` يحتاج `https://cdn.jsdelivr.net` (لو بتستخدم الـ UMD زي صفحة الاختبار)، و`media-src` بقى `'self' data: blob:` (مفيش دواين ميديا تانية). و`PermissionsPolicy` لازم يفضل `camera=*, microphone=*` — من غيره الكاميرا مرفوضة على مستوى الهيدر مهما كان التوكن صح.
 6. **الاستضافة المشتركة ما بحدّثش `appsettings*.json` تلقائياً.** الـ deploy في [`.github/workflows/deploy-ftp.yml`](../../.github/workflows/deploy-ftp.yml) بيعمل mirror بيستثني `appsettings*.json` (`-x '(^|/)appsettings[^/]*\.json'`)، وبعدها خطوة `ensure-live-config.cjs` بتصلّح **`JwtSettings.Secret` و`EmailSettings` بس** على الملف الحي `appsettings.Test.json` (الـ `web.config` مثبّت البيئة على `Test`). يعني: **الحقول الجديدة والـ CSP لازم تتكتب على السيرفر بيدك** — التعديل في الريبو لوحدّه ما يوصلش.
@@ -251,7 +251,7 @@ await room.disconnect();
 | `LMS.Infrastructure/Services/LiveKit/LiveKitTokenService.cs` | بناء JWT + توليد الهوية |
 | `LMS.Application/Features/LiveClasses/DTOs/{LiveClassTokenDto,LiveClassDetailsDto,LiveClassConfigDto}.cs` | شكل الردود الجديد |
 | `LMS.Application/Features/LiveClasses/Queries/GetLiveClassConfig/*` | بديل `GetAgoraConfig` |
-| handlers الـ 5 (`Start/Join/Refresh/GetSession/ConfirmSession`) | بتستدعي `ILiveClassTokenService` |
+| handlers الـ 4 (`Start/Join/Refresh/GetSession`) | بتستدعي `ILiveClassTokenService`؛ إنشاء الـ `LiveRoom` اتنقل من `ConfirmSession` (اتشيل مع خطوة تأكيد المدرس) لـ `CreateBooking`، فالحجز نفسه بيخلق الغرفة |
 | `LMS.API/wwwroot/livekit-test.html` | صفحة اختبار يدوية زي `agora-test.html` |
 | `appsettings{,.Development,.Test,.Production}.json` | قسم `LiveKit` + CSP |
 | **اتمسح** `LMS.Infrastructure/Services/Agora/**` + `AgoraSettings.cs` + `IAgoraTokenService.cs` + `AgoraConfigDto.cs` + `GetAgoraConfig/**` | 12 ملف — كلها متتبّعة في git فمسترجعة |

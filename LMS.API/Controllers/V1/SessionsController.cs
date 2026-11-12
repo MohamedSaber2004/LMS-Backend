@@ -4,9 +4,7 @@ using LMS.API.Routes.V1;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Sessions.Commands.ApproveReschedule;
 using LMS.Application.Features.Sessions.Commands.CancelSession;
-using LMS.Application.Features.Sessions.Commands.ConfirmSession;
 using LMS.Application.Features.Sessions.Commands.CreateBooking;
-using LMS.Application.Features.Sessions.Commands.DeclineSession;
 using LMS.Application.Features.Sessions.Commands.PaySession;
 using LMS.Application.Features.Sessions.Commands.RequestReschedule;
 using LMS.Application.Features.Sessions.DTOs;
@@ -103,12 +101,13 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// [Student] Book a session by instructor and date only. The backend picks the first open availability
-        /// window of that day that fits the requested duration and clashes with nothing, and snapshots its times
-        /// onto the session, so a later change to the instructor's availability never moves an already booked
-        /// session. The backend also decides the billing: while the student has never taken a lesson, this booking
-        /// becomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours
-        /// (1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.
+        /// [Student] Book one instructor's chosen start time on a chosen date. The backend checks the requested
+        /// window sits inside that instructor's open availability for that day and clashes with nothing, snapshots
+        /// its times onto the session, and books the seat straight away — the instructor is never asked to accept.
+        /// The backend also decides the billing: while the student has never taken a lesson this booking is the free
+        /// trial and is ready to join immediately; otherwise the lesson hours (1.0 for 50m, 0.5 for 25m) must already
+        /// be in the student's active plan wallet and the booking stays unpaid until they pay, and an unpaid booking
+        /// releases its slot the moment its start time passes.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
@@ -146,7 +145,9 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// [Student] Complete payment/package deduction for a confirmed session before it starts.
+        /// [Student] Pay an unpaid booking: deducts the lesson hours from the active plan wallet, confirms the
+        /// session, and holds the instructor's net share plus the platform commission in the teacher wallet until
+        /// the session ends. Paying is what unlocks the live room for both sides.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"></param>
@@ -161,42 +162,6 @@ namespace LMS.API.Controllers.V1
         public async Task<IActionResult> Pay([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new PaySessionCommand { SessionId = id }, cancellationToken);
-            return FromResult(result);
-        }
-
-        /// <summary>
-        /// Accept a pending booking as the instructor of that session.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpPost(ApiRoutes.Sessions.Confirm)]
-        [ProducesResponseType(typeof(ApiResponse<SessionDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Confirm([FromRoute] Guid id, CancellationToken cancellationToken)
-        {
-            var result = await Mediator.Send(new ConfirmSessionCommand { Id = id }, cancellationToken);
-            return FromResult(result);
-        }
-
-        /// <summary>
-        /// Refuse a pending booking as the instructor of that session.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpPost(ApiRoutes.Sessions.Decline)]
-        [ProducesResponseType(typeof(ApiResponse<SessionDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Decline([FromRoute] Guid id, CancellationToken cancellationToken)
-        {
-            var result = await Mediator.Send(new DeclineSessionCommand { Id = id }, cancellationToken);
             return FromResult(result);
         }
 
@@ -225,7 +190,8 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// Confirm attendance by the learner for a completed session, releasing earnings instantly to the teacher's wallet.
+        /// Confirm attendance by the learner for a session that has happened. Money is no longer moved here:
+        /// it was held at payment and is released to the teacher when the session ends.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="cancellationToken"></param>

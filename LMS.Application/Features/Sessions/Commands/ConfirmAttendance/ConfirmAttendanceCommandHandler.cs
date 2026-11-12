@@ -66,36 +66,6 @@ namespace LMS.Application.Features.Sessions.Commands.ConfirmAttendance
             var now = DateTime.UtcNow;
             session.ConfirmAttendance(now);
 
-            if (!session.IsTrial)
-            {
-                var grossAmount = session.Price > 0
-                    ? session.Price
-                    : (session.DurationMinutes == 25 ? Math.Round(session.HourlyRateSnapshot * 0.5m, 2) : Math.Round(session.HourlyRateSnapshot * 1.0m, 2));
-
-                if (grossAmount > 0)
-                {
-                    var wallet = await _context.TeacherWallets
-                        .Include(w => w.Transactions)
-                        .FirstOrDefaultAsync(w => w.InstructorId == session.InstructorId, cancellationToken);
-
-                    if (wallet == null)
-                    {
-                        wallet = TeacherWallet.Create(session.InstructorId);
-                        await _context.TeacherWallets.AddAsync(wallet, cancellationToken);
-                    }
-
-                    var commissionRate = session.CommissionRateSnapshot > 0
-                        ? session.CommissionRateSnapshot
-                        : session.Instructor.CommissionRate;
-
-                    wallet.CreditSessionEarnings(
-                        session.Id,
-                        grossAmount,
-                        commissionRate,
-                        $"Earnings for session on {session.StartsAtUtc:yyyy-MM-dd HH:mm} UTC");
-                }
-            }
-
             await _context.SaveChangesAsync(cancellationToken);
 
             var dto = SessionMapper.ToDto(session, session.Instructor.User?.FullName ?? string.Empty, booking);

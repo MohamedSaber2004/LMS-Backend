@@ -40,6 +40,14 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Sessions.DateRequired].Value);
 
+            RuleFor(command => command.StartTime)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotNull()
+                .WithMessage(localizer[LocalizationKeys.Sessions.StartTimeRequired].Value)
+                .GreaterThanOrEqualTo(TimeSpan.Zero)
+                .LessThan(TimeSpan.FromHours(24))
+                .WithMessage(localizer[LocalizationKeys.Sessions.StartTimeInvalid].Value);
+
             RuleFor(command => command.DurationMinutes)
                 .IsInEnum()
                 .WithMessage(localizer[LocalizationKeys.Sessions.DurationInvalid].Value);
@@ -58,7 +66,7 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 ?? throw new ForbiddenException(
                     LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUser.UserId);
 
-            if (command.Date == default)
+            if (command.Date == default || command.StartTime is null)
             {
                 return;
             }
@@ -93,18 +101,21 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
             var date = command.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             var durationMinutes = SessionsValidation.ResolveDurationMinutes(command.DurationMinutes);
 
-            var pick = await SessionsValidation.PickBookableSlotOnDateAsync(
+            var pick = await SessionsValidation.ResolveRequestedWindowAsync(
                 _context,
                 command.InstructorId,
                 learnerId,
                 command.Date,
+                command.StartTime.Value,
                 durationMinutes,
                 _scheduling.MinimumBreakMinutes,
                 cancellationToken);
 
             if (pick.Status != BookingSlotStatus.Bookable)
             {
-                context.AddFailure(nameof(CreateBookingCommand.Date), UnavailableReason(pick, date, durationMinutes));
+                context.AddFailure(
+                    nameof(CreateBookingCommand.StartTime),
+                    UnavailableReason(pick, zone, date, command.StartTime.Value, durationMinutes));
                 return;
             }
 
@@ -128,8 +139,15 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
             }
         }
 
-        private string UnavailableReason(BookingSlotPick pick, string date, int durationMinutes)
+        private string UnavailableReason(
+            BookingSlotPick pick,
+            TimeZoneInfo zone,
+            string date,
+            TimeSpan requestedStartTime,
+            int durationMinutes)
         {
+            var requested = requestedStartTime.ToString(@"hh\:mm", CultureInfo.InvariantCulture);
+
             return pick.Status switch
             {
                 BookingSlotStatus.InstructorNotBookable
@@ -138,23 +156,36 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 BookingSlotStatus.NoWindowsOnDate
                     => _localizer[LocalizationKeys.Sessions.NoAvailabilityOnDate, date].Value,
 
-                BookingSlotStatus.AllWindowsElapsed
-                    => _localizer[LocalizationKeys.Sessions.AllAvailabilityElapsed, date].Value,
+                BookingSlotStatus.TimezoneUnresolved
+                    => _localizer[LocalizationKeys.Availability.TimezoneUnresolved].Value,
 
-                BookingSlotStatus.NoWindowFitsDuration
+                BookingSlotStatus.StartTimeNotInTimeZone
+                    => _localizer[LocalizationKeys.Sessions.StartTimeNotInTimeZone, requested, date].Value,
+
+                BookingSlotStatus.StartTimeElapsed
+                    => _localizer[LocalizationKeys.Sessions.StartTimeElapsed, requested, date].Value,
+
+                BookingSlotStatus.TimeOutsideAvailability
                     => _localizer[
-                        LocalizationKeys.Sessions.NoWindowFitsDuration,
-                        pick.WindowCount,
+                        LocalizationKeys.Sessions.TimeOutsideAvailability,
+                        requested,
                         date,
+                        LocalTime(pick.FirstWindowStartsAtUtc, zone),
+                        LocalTime(pick.LastWindowEndsAtUtc, zone),
                         durationMinutes].Value,
 
                 _ => _localizer[
-                    LocalizationKeys.Sessions.AllAvailabilityOnDateTaken,
-                    pick.WindowCount,
+                    LocalizationKeys.Sessions.RequestedTimeBlocked,
+                    requested,
                     date,
                     _localizer[BlockerKey(pick.Blocker), _scheduling.MinimumBreakMinutes].Value.TrimEnd('.')].Value
             };
         }
+
+        private static string LocalTime(DateTime utcInstant, TimeZoneInfo zone)
+            => TimeZoneInfo.ConvertTimeFromUtc(
+                    DateTime.SpecifyKind(utcInstant, DateTimeKind.Utc), zone)
+                .ToString("HH:mm", CultureInfo.InvariantCulture);
 
         private static string BlockerKey(BookingBlocker blocker) => blocker switch
         {

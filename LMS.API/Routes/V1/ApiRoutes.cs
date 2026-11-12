@@ -82,8 +82,6 @@ namespace LMS.API.Routes.V1
             public const string MyBookingsPagginated = "my-bookings";
             public const string BookableSlots = "bookable-slots";
             public const string GetById = "{id:guid}";
-            public const string Confirm = "{id:guid}/confirm";
-            public const string Decline = "{id:guid}/decline";
             public const string Cancel = "{id:guid}/cancel";
             public const string ConfirmAttendance = "{id:guid}/confirm-attendance";
             public const string Reschedule = "{id:guid}/reschedule";

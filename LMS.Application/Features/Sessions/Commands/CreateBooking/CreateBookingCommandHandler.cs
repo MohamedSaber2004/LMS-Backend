@@ -54,11 +54,12 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
 
             var durationMinutes = SessionsValidation.ResolveDurationMinutes(request.DurationMinutes);
 
-            var pick = await SessionsValidation.PickBookableSlotOnDateAsync(
+            var pick = await SessionsValidation.ResolveRequestedWindowAsync(
                 _context,
                 request.InstructorId,
                 learnerId,
                 request.Date,
+                request.StartTime!.Value,
                 durationMinutes,
                 _scheduling.MinimumBreakMinutes,
                 cancellationToken);
@@ -68,7 +69,6 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 throw new NotFoundException(LocalizationKeys.Sessions.SlotNotFound);
             }
 
-            var sessionEndsAtUtc = pick.StartsAtUtc.AddMinutes(durationMinutes);
             var isTrial = await SessionsValidation.HasFreeTrialAsync(
                 _context, learnerId, cancellationToken);
             decimal sessionPrice = 0m;
@@ -94,7 +94,7 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 request.InstructorId,
                 SessionType.OneToOne,
                 pick.StartsAtUtc,
-                sessionEndsAtUtc,
+                pick.EndsAtUtc,
                 sessionPrice,
                 title: isTrial ? _localizer[LocalizationKeys.Sessions.FreeTrialLessonTitle].Value : null,
                 seatCapacity: 1,
@@ -102,12 +102,27 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 durationMinutes: durationMinutes,
                 isTrial: isTrial,
                 hourlyRateSnapshot: instructor.HourlyRate,
-                commissionRateSnapshot: instructor.CommissionRate,
-                isPaid: isTrial);
+                commissionRateSnapshot: instructor.CommissionRate);
 
             var booking = SessionBooking.Create(session.Id, learnerId);
 
+            booking.Confirm();
+
+            if (isTrial)
+            {
+                session.Confirm();
+            }
+
             session.ReserveSeat();
+
+            var room = await _context.LiveRooms
+                .FirstOrDefaultAsync(item => item.SessionId == session.Id, cancellationToken);
+
+            if (room == null)
+            {
+                await _context.LiveRooms.AddAsync(
+                    LiveRoom.Create(session.Id, instructor.UserId), cancellationToken);
+            }
 
             await _context.Sessions.AddAsync(session, cancellationToken);
             await _context.SessionBookings.AddAsync(booking, cancellationToken);
@@ -115,7 +130,9 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
 
             return Result<SessionDto>.Success(
                 SessionMapper.ToDto(session, instructor.User?.FullName ?? string.Empty, booking),
-                _localizer[LocalizationKeys.Sessions.BookingCreatedSuccess].Value,
+                _localizer[isTrial
+                    ? LocalizationKeys.Sessions.BookingTrialReadySuccess
+                    : LocalizationKeys.Sessions.BookingCreatedSuccess].Value,
                 StatusCodes.Status201Created);
         }
     }

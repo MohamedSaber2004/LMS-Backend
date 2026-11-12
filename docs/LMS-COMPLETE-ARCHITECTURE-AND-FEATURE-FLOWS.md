@@ -58,10 +58,10 @@ graph TD
     Learner --> Onboarding[استبيان التأهيل Onboarding]
     Onboarding --> Matching[ترشيح أفضل المدرسين]
     
-    Learner -->|اختيار موعد متاح| Session[حجز حصة SessionBooking]
+    Learner -->|اختيار يوم ووقت من اليوم| Session[حجز حصة SessionBooking]
     Materialization -.-> Session
-    
-    Instructor -->|قبول الحجز Confirm| LiveRoom[إنشاء قاعة البث LiveRoom]
+    Session -->|سعر الحصة يُخصم من الباقة| Payment[تحول النسب في المحافظ]
+    Payment --> LiveRoom[قاعة البث LiveRoom منشورة مع الحجز]
     Session --> LiveRoom
     
     LiveRoom --> LiveKit[بث الفيديو الحي 1:1 LiveKit RTC]
@@ -87,12 +87,13 @@ graph TD
 4. **تحديد أوقات العمل والإتاحة (`Availability`):**
    * يحدد المدرس أيامه وساعاته المتاحة أسبوعياً عبر `POST /api/v1/my-availability/window`.
    * خدمة `AvailabilityMaterializationService` تقوم بحساب النوافذ الزمنية وتحويلها إلى فترات قابلة للحجز (`Bookable Slots`).
-5. **استقبال طلب الحجز وتأكيده:**
-   * عندما يحجز طالب موعداً معه، تظهر الحصة بحالة `Pending`.
-   * يقوم المدرس بتأكيد الحصة عبر `POST /api/v1/sessions/{id}/confirm`.
+5. **الحجز يصبح نافذًا بدون موافقة المدرس:**
+   * يحجز الطالب يومًا ووقتًا محدداً عبر `POST /api/v1/sessions` بحقول `instructorId` و `date` و `startTime` و `durationMinutes`؛ الباك إند يتحقق أن الفترة المطلوبة تقع داخل نافذة إتاحة مفتوحة للمدرس ذلك اليوم ولا تتعارض مع جلسته أو جلساته هو.
+   * المقعد يُحجز للطالب فورًا بحالة `Confirmed` على `SessionBooking`، بينما تبقى الحصة `Pending` أي "بانتظار الدفع" — لا يوجد أي دور للمدرس في قبول الحجز أو رفضه.
    * **ما يحدث خلف الكواليس:**
-     - تتغير حالة الحصة إلى `Confirmed`.
      - ينشئ النظام تلقائياً كيان `LiveRoom` مخصص لهذه الحصة مع قناة فريدة ثابتة `live-{sessionId:N}` وحالة `NotStarted`.
+     - إن لم يدفع الطالب قبل لحظة بداية الحصة، تلغى الحجز تلقائياً ويعود مقعد الإتاحة متاحًا.
+     - عند الدفع (`POST /api/v1/sessions/{id}/pay`) تُخصم ساعات الباقة، تتحول الحصة إلى `Confirmed`، وتُحفظ نسبة المدرس في `PendingBalance` ونسبة المنصة في `CommissionAmount` داخل نفس حركة المحفظة، ثم تُحرَّر إلى `AvailableBalance` عند انتهاء الحصة.
 6. **دخول الحصة وبدء البث الحي:**
    * قبل موعد الحصة بـ 15 دقيقة (أو أثناء وقتها)، يضغط المدرس على "بدء الحصة".
    * يستدعي المتصفح `POST /api/v1/live-classes/{sessionId}/start`.

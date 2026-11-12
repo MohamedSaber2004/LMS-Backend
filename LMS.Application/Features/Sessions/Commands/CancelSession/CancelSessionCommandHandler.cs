@@ -77,6 +77,7 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 }
 
                 session.Cancel(actorUserId, request.Reason);
+                await ReverseHeldEarningsAsync(session, cancellationToken);
             }
             else
             {
@@ -109,6 +110,7 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
                 if (!session.Bookings.Any(Held))
                 {
                     session.Cancel(actorUserId, request.Reason);
+                    await ReverseHeldEarningsAsync(session, cancellationToken);
                 }
             }
 
@@ -128,5 +130,19 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
 
         private static bool Held(SessionBooking booking)
             => booking.Status == BookingStatus.Pending || booking.Status == BookingStatus.Confirmed;
+
+        private async Task ReverseHeldEarningsAsync(Session session, CancellationToken cancellationToken)
+        {
+            if (!session.IsPaid)
+            {
+                return;
+            }
+
+            var wallet = await _context.TeacherWallets
+                .Include(w => w.Transactions)
+                .FirstOrDefaultAsync(w => w.InstructorId == session.InstructorId, cancellationToken);
+
+            wallet?.ReverseSessionEarnings(session.Id);
+        }
     }
 }

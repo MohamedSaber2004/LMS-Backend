@@ -24,27 +24,38 @@ namespace LMS.Infrastructure.Services.Scheduling
             var now = DateTime.UtcNow;
             var confirmedCutoff = now.AddMinutes(-_options.JoinTailMinutes);
 
+            // An unpaid booking loses its slot as soon as it was due to start; a paid one runs to its end.
             var elapsed = await _context.Sessions
-                .Where(session => (session.Status == SessionStatus.Pending && session.EndsAtUtc <= now)
+                .Where(session => (session.Status == SessionStatus.Pending && session.StartsAtUtc <= now)
                                 || (session.Status == SessionStatus.Confirmed && session.EndsAtUtc <= confirmedCutoff))
                 .OrderBy(session => session.EndsAtUtc)
                 .Take(BatchSize)
                 .ToListAsync(cancellationToken);
 
-            if (elapsed.Count == 0)
+            if (elapsed.Count > 0)
             {
-                return 0;
+                await CloseElapsedSessionsAsync(elapsed, cancellationToken);
             }
 
-            var unconfirmedIds = elapsed
+            await ReleaseSettledEarningsAsync(confirmedCutoff, cancellationToken);
+
+            await _context.SaveChangesAsync(cancellationToken);
+            return elapsed.Count;
+        }
+
+        private async Task CloseElapsedSessionsAsync(
+            List<Domain.Entities.Session> elapsed,
+            CancellationToken cancellationToken)
+        {
+            var unpaidIds = elapsed
                 .Where(session => session.Status == SessionStatus.Pending)
                 .Select(session => session.Id)
                 .ToList();
 
-            var heldSeats = unconfirmedIds.Count == 0
+            var heldSeats = unpaidIds.Count == 0
                 ? new List<Domain.Entities.SessionBooking>()
                 : await _context.SessionBookings
-                    .Where(booking => unconfirmedIds.Contains(booking.SessionId)
+                    .Where(booking => unpaidIds.Contains(booking.SessionId)
                         && (booking.Status == BookingStatus.Pending || booking.Status == BookingStatus.Confirmed))
                     .ToListAsync(cancellationToken);
 
@@ -70,9 +81,25 @@ namespace LMS.Infrastructure.Services.Scheduling
                     session.Cancel(null, null);
                 }
             }
+        }
 
-            await _context.SaveChangesAsync(cancellationToken);
-            return elapsed.Count;
+        private async Task ReleaseSettledEarningsAsync(DateTime cutoffUtc, CancellationToken cancellationToken)
+        {
+            var heldEarnings = await _context.TeacherWalletTransactions
+                .Include(t => t.Wallet)
+                    .ThenInclude(w => w.Transactions)
+                .Where(t => t.Type == WalletTransactionType.SessionEarning
+                         && t.Status == WalletTransactionStatus.Held
+                         && t.SessionId != null
+                         && t.Session!.Status != SessionStatus.Cancelled
+                         && t.Session.EndsAtUtc <= cutoffUtc)
+                .Take(BatchSize)
+                .ToListAsync(cancellationToken);
+
+            foreach (var earning in heldEarnings)
+            {
+                earning.Wallet.ReleaseSessionEarnings(earning.SessionId!.Value);
+            }
         }
 
         public async Task<int> CleanupOrphanedLiveRoomsAsync(CancellationToken cancellationToken = default)

@@ -38,8 +38,8 @@ namespace LMS.Application.Features.Sessions.Queries.GetBookableSlots
                     && instance.Date <= request.To
                     && instance.EndsAtUtc > now
                     && !_context.Sessions.Any(session => session.InstructorId == instance.InstructorId
-                        && (session.Status == SessionStatus.Pending || session.Status == SessionStatus.Confirmed)
-                        && session.EndsAtUtc > now
+                        && ((session.Status == SessionStatus.Confirmed && session.EndsAtUtc > now)
+                            || (session.Status == SessionStatus.Pending && session.StartsAtUtc > now))
                         && session.StartsAtUtc < instance.EndsAtUtc
                         && session.EndsAtUtc > instance.StartsAtUtc))
                 .OrderBy(instance => instance.StartsAtUtc)

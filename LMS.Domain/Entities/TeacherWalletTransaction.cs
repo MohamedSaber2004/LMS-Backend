@@ -16,6 +16,7 @@ namespace LMS.Domain.Entities
         public decimal CommissionAmount { get; private set; }
         public decimal CommissionRate { get; private set; }
         public WalletTransactionType Type { get; private set; } = WalletTransactionType.SessionEarning;
+        public WalletTransactionStatus Status { get; private set; }
         public string Description { get; private set; } = null!;
 
         public static TeacherWalletTransaction Create(
@@ -26,6 +27,7 @@ namespace LMS.Domain.Entities
             decimal commissionAmount,
             decimal commissionRate,
             WalletTransactionType type,
+            WalletTransactionStatus status,
             string description)
         {
             return new TeacherWalletTransaction
@@ -37,9 +39,13 @@ namespace LMS.Domain.Entities
                 CommissionAmount = commissionAmount,
                 CommissionRate = commissionRate,
                 Type = type,
+                Status = status,
                 Description = description
             };
         }
+
+        public void MarkReleased() => Status = WalletTransactionStatus.Released;
+
+        public void MarkReversed() => Status = WalletTransactionStatus.Reversed;
     }
 }
-
