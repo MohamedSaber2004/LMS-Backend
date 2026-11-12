@@ -20,6 +20,7 @@ namespace LMS.API.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.InstructorApplications.Base)]
     [Tags("Admin: Instructor Applications")]
+    [RoleAuthorize]
     public class InstructorApplicationsController : BaseController
     {
         /// <summary>
