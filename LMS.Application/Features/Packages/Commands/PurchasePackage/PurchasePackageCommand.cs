@@ -1,4 +1,5 @@
 using FluentValidation;
+using FluentValidation.Validators;
 using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Helpers;
@@ -20,10 +21,21 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
 
     public class PurchasePackageCommandValidator : AbstractValidator<PurchasePackageCommand>
     {
+        private const decimal ShortestLessonHours = 0.5m;
+
+        private readonly ILmsDbContext _context;
+        private readonly ICurrentUserService _currentUser;
+        private readonly IStringLocalizer<Messages> _localizer;
+
         public PurchasePackageCommandValidator(
             ILmsDbContext context,
+            ICurrentUserService currentUser,
             IStringLocalizer<Messages> localizer)
         {
+            _context = context;
+            _currentUser = currentUser;
+            _localizer = localizer;
+
             RuleFor(x => x.TierId)
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Packages.TiersUnavailable].Value)
@@ -34,6 +46,38 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
                         .AnyAsync(t => t.Id == tierId, cancellationToken);
                 })
                 .WithMessage(localizer[LocalizationKeys.Packages.TiersUnavailable].Value);
+
+            RuleFor(command => command)
+                .CustomAsync(ValidateAsync);
+        }
+
+        private async Task ValidateAsync(
+            PurchasePackageCommand command,
+            CustomContext context,
+            CancellationToken cancellationToken)
+        {
+            var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
+                    _context, _currentUser.UserId, cancellationToken)
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUser.UserId);
+
+            var planWithCredit = await _context.LearnerPackages
+                .Where(lp => lp.LearnerId == learnerId
+                    && lp.IsActive
+                    && lp.RemainingHours >= ShortestLessonHours)
+                .OrderBy(lp => lp.CreatedAt)
+                .Select(lp => new { lp.PackageName, lp.RemainingHours })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (planWithCredit is not null)
+            {
+                context.AddFailure(
+                    nameof(PurchasePackageCommand.TierId),
+                    _localizer[
+                        LocalizationKeys.Packages.ActivePlanCreditRemaining,
+                        planWithCredit.RemainingHours,
+                        planWithCredit.PackageName].Value);
+            }
         }
     }
 
@@ -59,7 +103,8 @@ namespace LMS.Application.Features.Packages.Commands.PurchasePackage
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                     _context, _currentUserService.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUserService.UserId);
 
             var tier = await _context.PackageTiers
                 .AsNoTracking()

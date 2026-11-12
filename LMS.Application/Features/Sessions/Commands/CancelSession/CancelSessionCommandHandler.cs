@@ -82,7 +82,8 @@ namespace LMS.Application.Features.Sessions.Commands.CancelSession
             {
                 var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                         _context, actorUserId, cancellationToken)
-                    ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                    ?? throw new ForbiddenException(
+                        LocalizationKeys.ExceptionMessages.LearnerProfileMissing, actorUserId);
 
                 var booking = session.Bookings.FirstOrDefault(item =>
                     item.LearnerId == learnerId && Held(item));

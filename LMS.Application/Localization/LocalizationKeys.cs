@@ -10,6 +10,7 @@ namespace LMS.Application.Localization
             public const string BadRequest = "ExceptionMessages.BadRequest";
             public const string Unauthorized = "ExceptionMessages.Unauthorized";
             public const string Forbidden = "ExceptionMessages.Forbidden";
+            public const string LearnerProfileMissing = "ExceptionMessages.LearnerProfileMissing";
             public const string Conflict = "ExceptionMessages.Conflict";
             public const string InternalServerError = "ExceptionMessages.InternalServerError";
             public const string UnknownException = "ExceptionMessages.UnknownException";
@@ -229,7 +230,6 @@ namespace LMS.Application.Localization
             public const string DateRangeInvalid = "Availability.DateRangeInvalid";
             public const string DateRangeTooLarge = "Availability.DateRangeTooLarge";
             public const string CalendarRetrieved = "Availability.CalendarRetrieved";
-            public const string DayHasSessions = "Availability.DayHasSessions";
             public const string VacationConflictsChecked = "Availability.VacationConflictsChecked";
         }
 
@@ -240,10 +240,12 @@ namespace LMS.Application.Localization
             public const string PageSizeInvalid = "Sessions.PageSizeInvalid";
             public const string SessionIdRequired = "Sessions.SessionIdRequired";
             public const string InstructorIdRequired = "Sessions.InstructorIdRequired";
-            public const string SlotIdRequired = "Sessions.SlotIdRequired";
+            public const string DateRequired = "Sessions.DateRequired";
             public const string SlotNotFound = "Sessions.SlotNotFound";
-            public const string SlotNotOpen = "Sessions.SlotNotOpen";
-            public const string SlotElapsed = "Sessions.SlotElapsed";
+            public const string NoAvailabilityOnDate = "Sessions.NoAvailabilityOnDate";
+            public const string AllAvailabilityElapsed = "Sessions.AllAvailabilityElapsed";
+            public const string NoWindowFitsDuration = "Sessions.NoWindowFitsDuration";
+            public const string AllAvailabilityOnDateTaken = "Sessions.AllAvailabilityOnDateTaken";
             public const string DateRangeRequired = "Sessions.DateRangeRequired";
             public const string DateRangeInvalid = "Sessions.DateRangeInvalid";
             public const string DateRangeTooLarge = "Sessions.DateRangeTooLarge";
@@ -283,7 +285,6 @@ namespace LMS.Application.Localization
             public const string RescheduleApprovedSuccess = "Sessions.RescheduleApprovedSuccess";
             public const string RescheduleDeclinedSuccess = "Sessions.RescheduleDeclinedSuccess";
             public const string DurationInvalid = "Sessions.DurationInvalid";
-            public const string TrialAlreadyUsed = "Sessions.TrialAlreadyUsed";
             public const string InsufficientPackageHours = "Sessions.InsufficientPackageHours";
             public const string AttendanceAlreadyConfirmed = "Sessions.AttendanceAlreadyConfirmed";
             public const string CannotConfirmCancelled = "Sessions.CannotConfirmCancelled";
@@ -472,6 +473,7 @@ namespace LMS.Application.Localization
             public const string InstructorIdRequired = "Packages.InstructorIdRequired";
             public const string AllInstructors = "Packages.AllInstructors";
             public const string PurchaseSuccess = "Packages.PurchaseSuccess";
+            public const string ActivePlanCreditRemaining = "Packages.ActivePlanCreditRemaining";
             public const string CatalogRetrieved = "Packages.CatalogRetrieved";
             public const string PackagesRetrieved = "Packages.PackagesRetrieved";
             public const string PackageHoursExceedTotal = "Packages.PackageHoursExceedTotal";

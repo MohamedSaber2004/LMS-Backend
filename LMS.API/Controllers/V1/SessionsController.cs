@@ -103,7 +103,12 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// [Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).
+        /// [Student] Book a session by instructor and date only. The backend picks the first open availability
+        /// window of that day that fits the requested duration and clashes with nothing, and snapshots its times
+        /// onto the session, so a later change to the instructor's availability never moves an already booked
+        /// session. The backend also decides the billing: while the student has never taken a lesson, this booking
+        /// becomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours
+        /// (1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>

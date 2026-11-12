@@ -17,7 +17,6 @@ namespace LMS.API.Controllers.V1
     /// </summary>
     [ApiVersion("1.0")]
     [Route(ApiRoutes.Teacher.Profile.Base)]
-    [Route(ApiRoutes.InstructorProfile.Base)]
     [Tags("Teacher: Profile")]
     [Authorize]
     [RoleAuthorize(UserType.Instructor)]

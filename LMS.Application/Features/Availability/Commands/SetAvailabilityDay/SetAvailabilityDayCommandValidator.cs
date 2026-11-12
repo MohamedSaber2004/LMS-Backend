@@ -73,16 +73,6 @@ namespace LMS.Application.Features.Availability.Commands.SetAvailabilityDay
                 context.AddFailure(
                     nameof(SetAvailabilityDayCommand.Date),
                     _localizer[LocalizationKeys.Availability.NoWindowsOnDay].Value);
-                return;
-            }
-
-            if (!command.Open
-                && !await AvailabilityValidation.HasNoLiveSessionsOnDayAsync(
-                    _context, instructorId.Value, command.Date, cancellationToken))
-            {
-                context.AddFailure(
-                    nameof(SetAvailabilityDayCommand.Date),
-                    _localizer[LocalizationKeys.Availability.DayHasSessions].Value);
             }
         }
     }

@@ -75,16 +75,6 @@ namespace LMS.Application.Features.Availability.Commands.SetAvailabilityWindow
                 context.AddFailure(
                     nameof(SetAvailabilityWindowCommand.Id),
                     _localizer[LocalizationKeys.Availability.DateInPast].Value);
-                return;
-            }
-
-            if (!command.Open
-                && !await AvailabilityValidation.HasNoLiveSessionsInWindowAsync(
-                    _context, instance.Id, cancellationToken))
-            {
-                context.AddFailure(
-                    nameof(SetAvailabilityWindowCommand.Id),
-                    _localizer[LocalizationKeys.Availability.SlotHasSessions].Value);
             }
         }
     }

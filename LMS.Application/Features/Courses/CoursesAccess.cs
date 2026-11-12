@@ -16,7 +16,8 @@ namespace LMS.Application.Features.Courses
             CancellationToken cancellationToken)
         {
             return await ActorOwnership.ResolveLearnerIdAsync(context, currentUser.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, currentUser.UserId);
         }
 
         public static async Task RequireLessonAccessAsync(

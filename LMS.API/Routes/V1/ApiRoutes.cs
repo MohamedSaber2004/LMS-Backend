@@ -43,11 +43,6 @@ namespace LMS.API.Routes.V1
             public const string Resubmit = "resubmit";
         }
 
-        public static class InstructorProfile
-        {
-            public const string Base = BaseRoutes.Base + "/instructor-profile";
-        }
-
         public static class Onboarding
         {
             public const string Base = BaseRoutes.Base + "/onboarding";
@@ -120,9 +115,7 @@ namespace LMS.API.Routes.V1
             {
                 public const string Base = Learner.Base + "/packages";
                 public const string AvailablePlans = "available-plans";
-                public const string Catalog = "catalog";
                 public const string Subscribe = "subscribe";
-                public const string Purchase = "purchase";
                 public const string MyBalances = "my-balances";
                 public const string Wallet = "wallet";
             }

@@ -4,11 +4,9 @@ namespace LMS.Application.Features.Sessions
     {
         None = 0,
         InstructorNotBookable = 1,
-        InstanceMissing = 2,
-        SlotElapsed = 3,
-        InstructorConflict = 4,
-        InstructorBreak = 5,
-        LearnerConflict = 6,
-        LearnerBreak = 7
+        InstructorConflict = 2,
+        InstructorBreak = 3,
+        LearnerConflict = 4,
+        LearnerBreak = 5
     }
 }

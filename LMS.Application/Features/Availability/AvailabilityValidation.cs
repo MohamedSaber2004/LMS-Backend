@@ -94,40 +94,5 @@ namespace LMS.Application.Features.Availability
                         && instance.EndsAtUtc > session.StartsAtUtc),
                 cancellationToken);
         }
-
-        public static async Task<bool> HasNoLiveSessionsInWindowAsync(
-            ILmsDbContext context,
-            Guid instanceId,
-            CancellationToken cancellationToken)
-        {
-            var now = DateTime.UtcNow;
-
-            return !await context.Sessions.AnyAsync(
-                session => (session.Status == SessionStatus.Pending || session.Status == SessionStatus.Confirmed)
-                    && session.EndsAtUtc > now
-                    && context.AvailabilityInstances.Any(instance => instance.Id == instanceId
-                        && instance.StartsAtUtc < session.EndsAtUtc
-                        && instance.EndsAtUtc > session.StartsAtUtc),
-                cancellationToken);
-        }
-
-        public static async Task<bool> HasNoLiveSessionsOnDayAsync(
-            ILmsDbContext context,
-            Guid instructorId,
-            DateOnly date,
-            CancellationToken cancellationToken)
-        {
-            var now = DateTime.UtcNow;
-
-            return !await context.Sessions.AnyAsync(
-                session => session.InstructorId == instructorId
-                    && (session.Status == SessionStatus.Pending || session.Status == SessionStatus.Confirmed)
-                    && session.EndsAtUtc > now
-                    && context.AvailabilityInstances.Any(instance => instance.InstructorId == instructorId
-                        && instance.Date == date
-                        && instance.StartsAtUtc < session.EndsAtUtc
-                        && instance.EndsAtUtc > session.StartsAtUtc),
-                cancellationToken);
-        }
     }
 }

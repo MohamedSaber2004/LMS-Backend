@@ -1,3 +1,4 @@
+using LMS.API.Services;
 using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Extensions;
 using LMS.Application.Common.Helpers;
@@ -21,6 +22,7 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly ILmsDbContext _context;
         private readonly IUserAccountDeletionService _accountDeletionService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IStringLocalizer<Messages> _localizer;
 
         public UpdateUserCommandHandler(
@@ -28,12 +30,14 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
             RoleManager<IdentityRole<Guid>> roleManager,
             ILmsDbContext context,
             IUserAccountDeletionService accountDeletionService,
+            ICurrentUserService currentUserService,
             IStringLocalizer<Messages> localizer)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _context = context;
             _accountDeletionService = accountDeletionService;
+            _currentUserService = currentUserService;
             _localizer = localizer;
         }
 
@@ -138,6 +142,8 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
                 }
             }
 
+            await EnsureProfileRowExistsAsync(user, request.Role, cancellationToken);
+
             if (roleChanged || deactivated || emailChanged)
             {
                 user.IncrementTokenVersion();
@@ -183,6 +189,57 @@ namespace LMS.Application.Features.Users.Commands.UpdateUser
             return Result<UserDto>.Success(
                 response,
                 _localizer[LocalizationKeys.Users.UserUpdatedSuccess].Value);
+        }
+
+        private async Task EnsureProfileRowExistsAsync(
+            ApplicationUser user,
+            UserType? requestedRole,
+            CancellationToken cancellationToken)
+        {
+            UserType? role = requestedRole;
+
+            if (role is null)
+            {
+                var currentRoles = await _userManager.GetRolesAsync(user);
+                if (Enum.TryParse<UserType>(currentRoles.FirstOrDefault(), ignoreCase: true, out var parsedRole))
+                {
+                    role = parsedRole;
+                }
+            }
+
+            switch (role)
+            {
+                case UserType.Learner:
+                    if (await _context.Learners.IgnoreQueryFilters()
+                            .AnyAsync(learner => learner.UserId == user.Id, cancellationToken))
+                    {
+                        return;
+                    }
+
+                    await _context.Learners.AddAsync(Learner.Create(user.Id), cancellationToken);
+                    break;
+
+                case UserType.Instructor:
+                    if (await _context.Instructors.IgnoreQueryFilters()
+                            .AnyAsync(instructor => instructor.UserId == user.Id, cancellationToken))
+                    {
+                        return;
+                    }
+
+                    var instructor = Instructor.Create(user.Id, string.Empty, string.Empty, 0, string.Empty, null, 0m);
+                    var application = InstructorApplication.Create(instructor.Id, 0m);
+                    application.Approve(_currentUserService.UserId, null);
+
+                    _context.Instructors.Add(instructor);
+                    _context.InstructorApplications.Add(application);
+                    _context.TeacherWallets.Add(TeacherWallet.Create(instructor.Id));
+                    break;
+
+                default:
+                    return;
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         private Result<UserDto> BuildIdentityFailure(IdentityResult identityResult)

@@ -36,7 +36,8 @@ namespace LMS.Application.Features.Sessions.Commands.ConfirmAttendance
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                     _context, _currentUserService.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUserService.UserId);
 
             var session = await _context.Sessions
                 .Include(s => s.Instructor)

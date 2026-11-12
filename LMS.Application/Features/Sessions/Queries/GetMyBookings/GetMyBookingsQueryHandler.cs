@@ -34,7 +34,8 @@ namespace LMS.Application.Features.Sessions.Queries.GetMyBookings
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                 _context, _currentUserService.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUserService.UserId);
 
             var query = SessionTabFilter.ApplyToBookings(
                 _context.SessionBookings

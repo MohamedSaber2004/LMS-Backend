@@ -14755,168 +14755,6 @@
         "summary": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
         "parameters": [
           {
-            "name": "instructorId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PackageCatalogItemDtoIReadOnlyCollectionApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/learner/packages/catalog": {
-      "get": {
-        "tags": [
-          "Learner: Packages"
-        ],
-        "summary": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-        "parameters": [
-          {
-            "name": "instructorId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
             "name": "Accept-Language",
             "in": "header",
             "description": "Response language En.",
@@ -15060,154 +14898,7 @@
         "tags": [
           "Learner: Packages"
         ],
-        "summary": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PurchasePackageCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PurchasePackageCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PurchasePackageCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LearnerPackageDtoApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/learner/packages/purchase": {
-      "post": {
-        "tags": [
-          "Learner: Packages"
-        ],
-        "summary": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+        "summary": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
         "parameters": [
           {
             "name": "Accept-Language",
@@ -19073,7 +18764,7 @@
         "tags": [
           "Sessions"
         ],
-        "summary": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+        "summary": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
         "parameters": [
           {
             "name": "Accept-Language",
@@ -19572,6 +19263,145 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SessionDetailDtoApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "data": {
+                      "nullable": true
+                    },
+                    "statusCode": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                },
+                "examples": {
+                  "application/json": {
+                    "summary": "Example",
+                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/sessions/{id}/pay": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Response language En.",
+            "schema": {
+              "enum": [
+                "En"
+              ],
+              "type": "string",
+              "default": "En"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDtoApiResponse"
                 },
                 "examples": {
                   "application/json": {
@@ -21070,298 +20900,6 @@
       }
     },
     "/api/v1/teacher/profile": {
-      "get": {
-        "tags": [
-          "Teacher: Profile"
-        ],
-        "summary": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InstructorProfileDtoApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "Teacher: Profile"
-        ],
-        "summary": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Response language En.",
-            "schema": {
-              "enum": [
-                "En"
-              ],
-              "type": "string",
-              "default": "En"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateInstructorProfileCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateInstructorProfileCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateInstructorProfileCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InstructorProfileDtoApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": true, \"message\": null, \"data\": {}, \"statusCode\": 200 }"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"The submitted data is invalid.\", \"data\": null, \"statusCode\": 400 }"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"Authentication is required.\", \"data\": null, \"statusCode\": 401 }"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StringApiResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "data": {
-                      "nullable": true
-                    },
-                    "statusCode": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
-                  }
-                },
-                "examples": {
-                  "application/json": {
-                    "summary": "Example",
-                    "value": "{ \"success\": false, \"message\": \"An unexpected error occurred.\", \"data\": null, \"statusCode\": 500 }"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/instructor-profile": {
       "get": {
         "tags": [
           "Teacher: Profile"
@@ -24439,8 +23977,7 @@
       "CreateBookingCommand": {
         "required": [
           "instructorId",
-          "availabilityInstanceId",
-          "isTrial"
+          "date"
         ],
         "type": "object",
         "properties": {
@@ -24448,15 +23985,12 @@
             "type": "string",
             "format": "uuid"
           },
-          "availabilityInstanceId": {
+          "date": {
             "type": "string",
-            "format": "uuid"
+            "format": "date"
           },
           "durationMinutes": {
             "$ref": "#/components/schemas/AcademicSessionDuration"
-          },
-          "isTrial": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -24467,6 +24001,7 @@
           "totalHours",
           "totalFullSessions",
           "totalHalfSessions",
+          "pricePerHour",
           "description",
           "displayOrder"
         ],
@@ -24486,6 +24021,15 @@
           "totalHalfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerHour": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "description": {
             "type": "string"
@@ -27354,6 +26898,8 @@
           "totalHours",
           "totalFullSessions",
           "totalHalfSessions",
+          "pricePerHour",
+          "totalPrice",
           "description",
           "displayOrder"
         ],
@@ -27377,6 +26923,14 @@
           "totalHalfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerHour": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
           },
           "description": {
             "type": "string"
@@ -27641,23 +27195,13 @@
       },
       "PurchasePackageCommand": {
         "required": [
-          "totalHours"
+          "tierId"
         ],
         "type": "object",
         "properties": {
-          "instructorId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
           "tierId": {
             "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "totalHours": {
-            "type": "number",
-            "format": "double"
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -28417,6 +27961,7 @@
           "price",
           "durationMinutes",
           "isTrial",
+          "isPaid",
           "isAttendanceConfirmed",
           "seatCapacity",
           "seatsBooked"
@@ -28462,6 +28007,14 @@
           },
           "isTrial": {
             "type": "boolean"
+          },
+          "isPaid": {
+            "type": "boolean"
+          },
+          "paidAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "isAttendanceConfirmed": {
             "type": "boolean"
@@ -29765,6 +29318,7 @@
           "totalHours",
           "totalFullSessions",
           "totalHalfSessions",
+          "pricePerHour",
           "description",
           "displayOrder"
         ],
@@ -29784,6 +29338,15 @@
           "totalHalfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "pricePerHour": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "description": {
             "type": "string"

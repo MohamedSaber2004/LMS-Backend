@@ -15842,7 +15842,7 @@
             "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+              "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -15885,7 +15885,7 @@
                 "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -15938,7 +15938,7 @@
                 "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -15991,7 +15991,7 @@
                 "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16044,7 +16044,7 @@
                 "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16092,7 +16092,7 @@
                 "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16145,7 +16145,7 @@
                 "description": "[Admin] Add a new subscription plan tier to the platform catalog (e.g. 6 sessions, 12 sessions).",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16207,7 +16207,7 @@
             "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+              "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -16257,7 +16257,7 @@
                 "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16317,7 +16317,7 @@
                 "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16377,7 +16377,7 @@
                 "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16437,7 +16437,7 @@
                 "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16497,7 +16497,7 @@
                 "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -16552,7 +16552,7 @@
                 "description": "[Admin] Update an existing subscription plan tier. Existing student subscriptions keep the name and sessions quota they were enrolled with.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
+                  "raw": "{\n  \"name\": \"string\",\n  \"totalHours\": 0,\n  \"totalFullSessions\": 0,\n  \"totalHalfSessions\": 0,\n  \"pricePerHour\": 0,\n  \"totalPrice\": 0,\n  \"description\": \"string\",\n  \"displayOrder\": 0\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -33824,13 +33824,7 @@
                 "packages",
                 "available-plans"
               ],
-              "query": [
-                {
-                  "key": "instructorId",
-                  "value": "00000000-0000-0000-0000-000000000000",
-                  "description": ""
-                }
-              ],
+              "query": [],
               "variable": []
             },
             "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
@@ -33860,13 +33854,7 @@
                     "packages",
                     "available-plans"
                   ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
@@ -33906,13 +33894,7 @@
                     "packages",
                     "available-plans"
                   ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
@@ -33952,13 +33934,7 @@
                     "packages",
                     "available-plans"
                   ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
@@ -33998,13 +33974,7 @@
                     "packages",
                     "available-plans"
                   ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
@@ -34044,13 +34014,7 @@
                     "packages",
                     "available-plans"
                   ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
+                  "query": [],
                   "variable": []
                 },
                 "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
@@ -34070,275 +34034,7 @@
           ]
         },
         {
-          "name": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/learner/packages/catalog",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "learner",
-                "packages",
-                "catalog"
-              ],
-              "query": [
-                {
-                  "key": "instructorId",
-                  "value": "00000000-0000-0000-0000-000000000000",
-                  "description": ""
-                }
-              ],
-              "variable": []
-            },
-            "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-            "body": null
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/catalog",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "catalog"
-                  ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
-                  "variable": []
-                },
-                "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-                "body": null
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "404 Not Found",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/catalog",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "catalog"
-                  ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
-                  "variable": []
-                },
-                "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-                "body": null
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Validation failed - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/catalog",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "catalog"
-                  ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
-                  "variable": []
-                },
-                "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-                "body": null
-              },
-              "status": "Validation failed",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/catalog",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "catalog"
-                  ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
-                  "variable": []
-                },
-                "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-                "body": null
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/catalog",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "catalog"
-                  ],
-                  "query": [
-                    {
-                      "key": "instructorId",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                      "description": ""
-                    }
-                  ],
-                  "variable": []
-                },
-                "description": "[Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.",
-                "body": null
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "name": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+          "name": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
           "request": {
             "method": "POST",
             "header": [
@@ -34368,10 +34064,10 @@
               "query": [],
               "variable": []
             },
-            "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+            "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+              "raw": "{\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -34411,10 +34107,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -34464,10 +34160,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -34517,10 +34213,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -34570,10 +34266,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -34618,315 +34314,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
+                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet\r\nwithout upfront charge). Only one plan carries credit at a time: while the student still has hours left\r\nin a current plan, a new subscription is rejected until those hours are used up.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "name": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": ""
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/learner/packages/purchase",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "learner",
-                "packages",
-                "purchase"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/purchase",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "purchase"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Bad Request - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/purchase",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "purchase"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/purchase",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "purchase"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "403 Forbidden",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/purchase",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "purchase"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [],
-              "body": "",
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/learner/packages/purchase",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "learner",
-                    "packages",
-                    "purchase"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "[Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\",\n  \"totalHours\": 0\n}",
+                  "raw": "{\n  \"tierId\": \"00000000-0000-0000-0000-000000000000\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42260,7 +41651,7 @@
           ]
         },
         {
-          "name": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+          "name": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
           "request": {
             "method": "POST",
             "header": [
@@ -42288,10 +41679,10 @@
               "query": [],
               "variable": []
             },
-            "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+            "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+              "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -42329,10 +41720,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42380,10 +41771,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42431,10 +41822,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42482,10 +41873,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42533,10 +41924,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42584,10 +41975,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -42635,10 +42026,10 @@
                   "query": [],
                   "variable": []
                 },
-                "description": "[Student] Book a session with chosen instructor and time slot (deducts 1.0 session for 50m or 0.5 session for 25m from student's active plan wallet; supports free trial).",
+                "description": "[Student] Book a session by instructor and date only. The backend picks the first open availability\r\nwindow of that day that fits the requested duration and clashes with nothing, and snapshots its times\r\nonto the session, so a later change to the instructor's availability never moves an already booked\r\nsession. The backend also decides the billing: while the student has never taken a lesson, this booking\r\nbecomes the free trial and needs no wallet hours; afterwards it is charged, and the lesson hours\r\n(1.0 for 50m, 0.5 for 25m) must already be in the student's active plan wallet to be deducted on payment.",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"availabilityInstanceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"durationMinutes\": 25,\n  \"isTrial\": false\n}",
+                  "raw": "{\n  \"instructorId\": \"00000000-0000-0000-0000-000000000000\",\n  \"date\": \"2026-01-01\",\n  \"durationMinutes\": 25\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -43625,6 +43016,320 @@
                   ]
                 },
                 "description": "Get one session with its roster and its reschedule requests.",
+                "body": null
+              },
+              "status": "Server error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "name": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "En",
+                "description": "Response language En."
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sessions",
+                "{{id}}",
+                "pay"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "00000000-0000-0000-0000-000000000000",
+                  "description": ""
+                }
+              ]
+            },
+            "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+            "body": null
+          },
+          "response": [
+            {
+              "name": "200 OK - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "pay"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "body": null
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 Bad Request - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "pay"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "body": null
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 Unauthorized - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "pay"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "body": null
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "pay"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "body": null
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "pay"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
+                "body": null
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "500 Server error - application/json",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept-Language",
+                    "value": "En",
+                    "description": "Response language En."
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/sessions/{{id}}/pay",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "sessions",
+                    "{{id}}",
+                    "pay"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "[Student] Complete payment/package deduction for a confirmed session before it starts.",
                 "body": null
               },
               "status": "Server error",
@@ -47528,613 +47233,6 @@
                     "v1",
                     "teacher",
                     "profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "name": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/instructor-profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "instructor-profile"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-            "body": null
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-                "body": null
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-                "body": null
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "403 Forbidden",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-                "body": null
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "404 Not Found",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-                "body": null
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Validation failed - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-                "body": null
-              },
-              "status": "Validation failed",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Read the calling instructor's own profile: instructor fields plus the base identity profile.",
-                "body": null
-              },
-              "status": "Server error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"An unexpected error occurred.\\\", \\\"data\\\": null, \\\"statusCode\\\": 500 }\"",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        },
-        {
-          "name": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "En",
-                "description": "Response language En."
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "description": ""
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/instructor-profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "instructor-profile"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "name": "200 OK - application/json",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": true, \\\"message\\\": null, \\\"data\\\": {}, \\\"statusCode\\\": 200 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "400 Bad Request - application/json",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"The submitted data is invalid.\\\", \\\"data\\\": null, \\\"statusCode\\\": 400 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "401 Unauthorized - application/json",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "\"{ \\\"success\\\": false, \\\"message\\\": \\\"Authentication is required.\\\", \\\"data\\\": null, \\\"statusCode\\\": 401 }\"",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "403 Forbidden",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "404 Not Found",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "description": "Update the instructor-managed profile fields, optionally together with the base identity fields.",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"fullName\": \"string\",\n  \"countryId\": \"00000000-0000-0000-0000-000000000000\",\n  \"language\": 1,\n  \"profilePictureUrl\": \"string\",\n  \"specialization\": \"string\",\n  \"bio\": \"string\",\n  \"yearsOfExperience\": 0,\n  \"education\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"hourlyRate\": 0\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "500 Server error - application/json",
-              "originalRequest": {
-                "method": "PUT",
-                "header": [
-                  {
-                    "key": "Accept-Language",
-                    "value": "En",
-                    "description": "Response language En."
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "description": ""
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/api/v1/instructor-profile",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "v1",
-                    "instructor-profile"
                   ],
                   "query": [],
                   "variable": []

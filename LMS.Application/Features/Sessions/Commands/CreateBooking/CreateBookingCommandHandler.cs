@@ -3,6 +3,7 @@ using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
+using LMS.Application.Common.Options;
 using LMS.Application.Features.Sessions.DTOs;
 using LMS.Application.Localization;
 using LMS.Domain.Entities;
@@ -11,6 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 namespace LMS.Application.Features.Sessions.Commands.CreateBooking
 {
@@ -20,15 +22,18 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
         private readonly ILmsDbContext _context;
         private readonly ICurrentUserService _currentUserService;
         private readonly IStringLocalizer<Messages> _localizer;
+        private readonly SchedulingOptions _scheduling;
 
         public CreateBookingCommandHandler(
             ILmsDbContext context,
             ICurrentUserService currentUserService,
+            IOptions<SchedulingOptions> options,
             IStringLocalizer<Messages> localizer)
         {
             _context = context;
             _currentUserService = currentUserService;
             _localizer = localizer;
+            _scheduling = options.Value;
         }
 
         public async Task<Result<SessionDto>> Handle(
@@ -37,7 +42,8 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                     _context, _currentUserService.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUserService.UserId);
 
             var instructor = await _context.Instructors
                 .AsNoTracking()
@@ -46,18 +52,28 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                     item => item.Id == request.InstructorId, cancellationToken)
                 ?? throw new NotFoundException(LocalizationKeys.Availability.InstructorNotFound);
 
-            var instance = await _context.AvailabilityInstances
-                .FirstOrDefaultAsync(
-                    item => item.Id == request.AvailabilityInstanceId
-                        && item.InstructorId == request.InstructorId,
-                    cancellationToken)
-                ?? throw new NotFoundException(LocalizationKeys.Sessions.SlotNotFound);
+            var durationMinutes = SessionsValidation.ResolveDurationMinutes(request.DurationMinutes);
 
-            var durationMinutes = (int)request.DurationMinutes is 25 or 50 ? (int)request.DurationMinutes : 50;
-            var sessionEndsAtUtc = instance.StartsAtUtc.AddMinutes(durationMinutes);
+            var pick = await SessionsValidation.PickBookableSlotOnDateAsync(
+                _context,
+                request.InstructorId,
+                learnerId,
+                request.Date,
+                durationMinutes,
+                _scheduling.MinimumBreakMinutes,
+                cancellationToken);
+
+            if (pick.Status != BookingSlotStatus.Bookable)
+            {
+                throw new NotFoundException(LocalizationKeys.Sessions.SlotNotFound);
+            }
+
+            var sessionEndsAtUtc = pick.StartsAtUtc.AddMinutes(durationMinutes);
+            var isTrial = await SessionsValidation.HasFreeTrialAsync(
+                _context, learnerId, cancellationToken);
             decimal sessionPrice = 0m;
 
-            if (!request.IsTrial)
+            if (!isTrial)
             {
                 var requiredHours = durationMinutes == 25 ? 0.5m : 1.0m;
                 var hasActivePackage = await _context.LearnerPackages
@@ -77,17 +93,17 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
             var session = Session.Create(
                 request.InstructorId,
                 SessionType.OneToOne,
-                instance.StartsAtUtc,
+                pick.StartsAtUtc,
                 sessionEndsAtUtc,
                 sessionPrice,
-                title: request.IsTrial ? _localizer[LocalizationKeys.Sessions.FreeTrialLessonTitle].Value : null,
+                title: isTrial ? _localizer[LocalizationKeys.Sessions.FreeTrialLessonTitle].Value : null,
                 seatCapacity: 1,
                 lessonId: null,
                 durationMinutes: durationMinutes,
-                isTrial: request.IsTrial,
+                isTrial: isTrial,
                 hourlyRateSnapshot: instructor.HourlyRate,
                 commissionRateSnapshot: instructor.CommissionRate,
-                isPaid: request.IsTrial);
+                isPaid: isTrial);
 
             var booking = SessionBooking.Create(session.Id, learnerId);
 

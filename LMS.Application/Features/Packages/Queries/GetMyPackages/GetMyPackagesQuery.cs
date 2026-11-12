@@ -38,7 +38,8 @@ namespace LMS.Application.Features.Packages.Queries.GetMyPackages
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                     _context, _currentUserService.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUserService.UserId);
 
             var query = _context.LearnerPackages
                 .AsNoTracking()

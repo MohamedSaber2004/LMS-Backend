@@ -1,3 +1,4 @@
+using System.Globalization;
 using FluentValidation;
 using FluentValidation.Validators;
 using LMS.API.Services;
@@ -5,6 +6,7 @@ using LMS.Application.Common.Exceptions;
 using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Options;
+using LMS.Application.Features.Availability;
 using LMS.Application.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -34,9 +36,9 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
                 .NotEmpty()
                 .WithMessage(localizer[LocalizationKeys.Sessions.InstructorIdRequired].Value);
 
-            RuleFor(command => command.AvailabilityInstanceId)
+            RuleFor(command => command.Date)
                 .NotEmpty()
-                .WithMessage(localizer[LocalizationKeys.Sessions.SlotIdRequired].Value);
+                .WithMessage(localizer[LocalizationKeys.Sessions.DateRequired].Value);
 
             RuleFor(command => command.DurationMinutes)
                 .IsInEnum()
@@ -53,62 +55,109 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                     _context, _currentUser.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUser.UserId);
 
-            var blocker = await SessionsValidation.FindBookingBlockerAsync(
-                _context,
-                command.InstructorId,
-                learnerId,
-                command.AvailabilityInstanceId,
-                _scheduling.MinimumBreakMinutes,
-                cancellationToken);
-
-            if (blocker != BookingBlocker.None)
+            if (command.Date == default)
             {
-                context.AddFailure(
-                    nameof(CreateBookingCommand.AvailabilityInstanceId),
-                    _localizer[BlockerKey(blocker), _scheduling.MinimumBreakMinutes].Value);
                 return;
             }
 
-            if (command.IsTrial)
+            if (!await AvailabilityValidation.InstructorExistsAsync(_context, command.InstructorId, cancellationToken))
             {
-                var hasTrial = await _context.Sessions
-                    .AnyAsync(s => s.Bookings.Any(b => b.LearnerId == learnerId)
-                        && s.IsTrial
-                        && s.Status != Domain.Enums.SessionStatus.Cancelled,
-                        cancellationToken);
-
-                if (hasTrial)
-                {
-                    context.AddFailure(
-                        nameof(CreateBookingCommand.IsTrial),
-                        _localizer[LocalizationKeys.Sessions.TrialAlreadyUsed].Value);
-                }
+                context.AddFailure(
+                    nameof(CreateBookingCommand.InstructorId),
+                    _localizer[LocalizationKeys.Availability.InstructorNotFound].Value);
+                return;
             }
-            else
+
+            var zone = await AvailabilityValidation.ResolveInstructorZoneAsync(
+                _context, command.InstructorId, cancellationToken);
+
+            if (zone is null)
             {
-                var requiredHours = command.DurationMinutes == Domain.Enums.AcademicSessionDuration.Session25Min ? 0.5m : 1.0m;
-                var hasBalance = await _context.LearnerPackages
-                    .AnyAsync(lp => lp.LearnerId == learnerId
-                        && lp.IsActive
-                        && lp.RemainingHours >= requiredHours,
-                        cancellationToken);
-
-                if (!hasBalance)
-                {
-                    context.AddFailure(
-                        nameof(CreateBookingCommand.DurationMinutes),
-                        _localizer[LocalizationKeys.Sessions.InsufficientPackageHours].Value);
-                }
+                context.AddFailure(
+                    nameof(CreateBookingCommand.InstructorId),
+                    _localizer[LocalizationKeys.Availability.TimezoneUnresolved].Value);
+                return;
             }
+
+            if (command.Date < TimezoneHelper.LocalToday(zone))
+            {
+                context.AddFailure(
+                    nameof(CreateBookingCommand.Date),
+                    _localizer[LocalizationKeys.Availability.DateInPast].Value);
+                return;
+            }
+
+            var date = command.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var durationMinutes = SessionsValidation.ResolveDurationMinutes(command.DurationMinutes);
+
+            var pick = await SessionsValidation.PickBookableSlotOnDateAsync(
+                _context,
+                command.InstructorId,
+                learnerId,
+                command.Date,
+                durationMinutes,
+                _scheduling.MinimumBreakMinutes,
+                cancellationToken);
+
+            if (pick.Status != BookingSlotStatus.Bookable)
+            {
+                context.AddFailure(nameof(CreateBookingCommand.Date), UnavailableReason(pick, date, durationMinutes));
+                return;
+            }
+
+            if (await SessionsValidation.HasFreeTrialAsync(_context, learnerId, cancellationToken))
+            {
+                return;
+            }
+
+            var requiredHours = durationMinutes == 25 ? 0.5m : 1.0m;
+            var hasBalance = await _context.LearnerPackages
+                .AnyAsync(lp => lp.LearnerId == learnerId
+                    && lp.IsActive
+                    && lp.RemainingHours >= requiredHours,
+                    cancellationToken);
+
+            if (!hasBalance)
+            {
+                context.AddFailure(
+                    nameof(CreateBookingCommand.DurationMinutes),
+                    _localizer[LocalizationKeys.Sessions.InsufficientPackageHours].Value);
+            }
+        }
+
+        private string UnavailableReason(BookingSlotPick pick, string date, int durationMinutes)
+        {
+            return pick.Status switch
+            {
+                BookingSlotStatus.InstructorNotBookable
+                    => _localizer[LocalizationKeys.Sessions.InstructorNotBookable].Value,
+
+                BookingSlotStatus.NoWindowsOnDate
+                    => _localizer[LocalizationKeys.Sessions.NoAvailabilityOnDate, date].Value,
+
+                BookingSlotStatus.AllWindowsElapsed
+                    => _localizer[LocalizationKeys.Sessions.AllAvailabilityElapsed, date].Value,
+
+                BookingSlotStatus.NoWindowFitsDuration
+                    => _localizer[
+                        LocalizationKeys.Sessions.NoWindowFitsDuration,
+                        pick.WindowCount,
+                        date,
+                        durationMinutes].Value,
+
+                _ => _localizer[
+                    LocalizationKeys.Sessions.AllAvailabilityOnDateTaken,
+                    pick.WindowCount,
+                    date,
+                    _localizer[BlockerKey(pick.Blocker), _scheduling.MinimumBreakMinutes].Value.TrimEnd('.')].Value
+            };
         }
 
         private static string BlockerKey(BookingBlocker blocker) => blocker switch
         {
-            BookingBlocker.InstructorNotBookable => LocalizationKeys.Sessions.InstructorNotBookable,
-            BookingBlocker.InstanceMissing => LocalizationKeys.Sessions.SlotNotOpen,
-            BookingBlocker.SlotElapsed => LocalizationKeys.Sessions.SlotElapsed,
             BookingBlocker.InstructorConflict => LocalizationKeys.Sessions.InstructorBusy,
             BookingBlocker.InstructorBreak => LocalizationKeys.Sessions.InstructorBreakTooShort,
             BookingBlocker.LearnerConflict => LocalizationKeys.Sessions.LearnerBusy,

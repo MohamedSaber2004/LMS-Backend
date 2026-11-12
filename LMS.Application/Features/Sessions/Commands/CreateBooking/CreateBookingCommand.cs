@@ -9,10 +9,8 @@ namespace LMS.Application.Features.Sessions.Commands.CreateBooking
     {
         public Guid InstructorId { get; set; }
 
-        public Guid AvailabilityInstanceId { get; set; }
+        public DateOnly Date { get; set; }
 
         public AcademicSessionDuration DurationMinutes { get; set; } = AcademicSessionDuration.Session50Min;
-
-        public bool IsTrial { get; set; } = false;
     }
 }

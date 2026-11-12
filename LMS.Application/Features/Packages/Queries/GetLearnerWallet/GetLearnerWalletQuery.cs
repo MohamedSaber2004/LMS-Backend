@@ -4,6 +4,7 @@ using LMS.Application.Common.Helpers;
 using LMS.Application.Common.Interfaces;
 using LMS.Application.Common.Models;
 using LMS.Application.Features.Packages.DTOs;
+using LMS.Application.Features.Sessions;
 using LMS.Application.Localization;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,8 @@ namespace LMS.Application.Features.Packages.Queries.GetLearnerWallet
         {
             var learnerId = await ActorOwnership.ResolveLearnerIdAsync(
                     _context, _currentUserService.UserId, cancellationToken)
-                ?? throw new ForbiddenException(LocalizationKeys.ExceptionMessages.Forbidden);
+                ?? throw new ForbiddenException(
+                    LocalizationKeys.ExceptionMessages.LearnerProfileMissing, _currentUserService.UserId);
 
             var defaultInstructorName = _localizer[LocalizationKeys.Packages.AllInstructors].Value;
 
@@ -62,11 +64,8 @@ namespace LMS.Application.Features.Packages.Queries.GetLearnerWallet
                 })
                 .ToListAsync(cancellationToken);
 
-            var hasUsedTrial = await _context.Sessions
-                .AnyAsync(s => s.Bookings.Any(b => b.LearnerId == learnerId)
-                    && s.IsTrial
-                    && s.Status != Domain.Enums.SessionStatus.Cancelled,
-                    cancellationToken);
+            var hasFreeTrial = await SessionsValidation.HasFreeTrialAsync(
+                _context, learnerId, cancellationToken);
 
             var activePackages = packages.Where(p => p.IsActive && p.RemainingHours > 0).ToList();
             var totalSessions = activePackages.Sum(p => p.TotalHours);
@@ -78,7 +77,7 @@ namespace LMS.Application.Features.Packages.Queries.GetLearnerWallet
                 TotalSessions = totalSessions,
                 RemainingSessions = remainingSessions,
                 ActivePlanName = activePlanName,
-                HasFreeTrialAvailable = !hasUsedTrial,
+                HasFreeTrialAvailable = hasFreeTrial,
                 Packages = packages
             };
 

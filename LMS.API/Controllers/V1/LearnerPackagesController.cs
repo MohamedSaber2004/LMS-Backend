@@ -26,7 +26,6 @@ namespace LMS.API.Controllers.V1
         /// [Public / Student] Browse available subscription plan tiers (e.g. 4, 8, 12, 16 sessions) configured by admin.
         /// </summary>
         [HttpGet(ApiRoutes.Learner.Packages.AvailablePlans)]
-        [HttpGet(ApiRoutes.Learner.Packages.Catalog)]
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<IReadOnlyCollection<PackageCatalogItemDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status404NotFound)]
@@ -37,10 +36,11 @@ namespace LMS.API.Controllers.V1
         }
 
         /// <summary>
-        /// [Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet without upfront charge).
+        /// [Student] Subscribe to a subscription plan (activates the fixed session quota in the student's wallet
+        /// without upfront charge). Only one plan carries credit at a time: while the student still has hours left
+        /// in a current plan, a new subscription is rejected until those hours are used up.
         /// </summary>
         [HttpPost(ApiRoutes.Learner.Packages.Subscribe)]
-        [HttpPost(ApiRoutes.Learner.Packages.Purchase)]
         [Authorize]
         [RoleAuthorize(UserType.Learner)]
         [ProducesResponseType(typeof(ApiResponse<LearnerPackageDto>), StatusCodes.Status200OK)]

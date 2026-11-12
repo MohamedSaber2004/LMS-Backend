@@ -7,38 +7,118 @@ namespace LMS.Application.Features.Sessions
 {
     internal static class SessionsValidation
     {
-        public static async Task<BookingBlocker> FindBookingBlockerAsync(
+        public static int ResolveDurationMinutes(AcademicSessionDuration duration)
+            => (int)duration is 25 or 50 ? (int)duration : 50;
+
+        public static async Task<bool> HasFreeTrialAsync(
+            ILmsDbContext context,
+            Guid learnerId,
+            CancellationToken cancellationToken)
+        {
+            return !await context.Sessions.AnyAsync(
+                session => session.Bookings.Any(booking => booking.LearnerId == learnerId)
+                    && session.IsTrial
+                    && session.Status != SessionStatus.Cancelled,
+                cancellationToken);
+        }
+
+        public static async Task<BookingSlotPick> PickBookableSlotOnDateAsync(
             ILmsDbContext context,
             Guid instructorId,
             Guid learnerId,
-            Guid availabilityInstanceId,
+            DateOnly date,
+            int durationMinutes,
             int breakMinutes,
             CancellationToken cancellationToken)
         {
-            var isBookable = await InstructorIsBookableAsync(context, instructorId, cancellationToken);
-
-            if (!isBookable)
+            if (!await InstructorIsBookableAsync(context, instructorId, cancellationToken))
             {
-                return BookingBlocker.InstructorNotBookable;
+                return new BookingSlotPick
+                {
+                    Status = BookingSlotStatus.InstructorNotBookable,
+                    Blocker = BookingBlocker.InstructorNotBookable
+                };
             }
 
-            var instance = await context.AvailabilityInstances.AsNoTracking()
-                .Where(row => row.Id == availabilityInstanceId && row.InstructorId == instructorId)
-                .Select(row => new { row.StartsAtUtc, row.EndsAtUtc, row.IsOpen })
-                .FirstOrDefaultAsync(cancellationToken);
+            var now = DateTime.UtcNow;
 
-            if (instance is null || !instance.IsOpen)
+            var openWindows = await context.AvailabilityInstances.AsNoTracking()
+                .Where(instance => instance.InstructorId == instructorId
+                    && instance.Date == date
+                    && instance.IsOpen)
+                .OrderBy(instance => instance.StartsAtUtc)
+                .Select(instance => new { instance.StartsAtUtc, instance.EndsAtUtc })
+                .ToListAsync(cancellationToken);
+
+            if (openWindows.Count == 0)
             {
-                return BookingBlocker.InstanceMissing;
+                return new BookingSlotPick { Status = BookingSlotStatus.NoWindowsOnDate };
             }
 
-            if (instance.EndsAtUtc <= DateTime.UtcNow)
+            var upcomingWindows = openWindows
+                .Where(window => window.StartsAtUtc > now)
+                .ToList();
+
+            if (upcomingWindows.Count == 0)
             {
-                return BookingBlocker.SlotElapsed;
+                return new BookingSlotPick
+                {
+                    Status = BookingSlotStatus.AllWindowsElapsed,
+                    WindowCount = openWindows.Count
+                };
             }
 
-            var startsAtUtc = instance.StartsAtUtc;
-            var endsAtUtc = instance.EndsAtUtc;
+            var fittingWindows = upcomingWindows
+                .Where(window => (window.EndsAtUtc - window.StartsAtUtc).TotalMinutes >= durationMinutes)
+                .ToList();
+
+            if (fittingWindows.Count == 0)
+            {
+                return new BookingSlotPick
+                {
+                    Status = BookingSlotStatus.NoWindowFitsDuration,
+                    WindowCount = upcomingWindows.Count
+                };
+            }
+
+            BookingBlocker? firstBlocker = null;
+
+            foreach (var window in fittingWindows)
+            {
+                var blocker = await FindWindowBlockerAsync(
+                    context, instructorId, learnerId, window.StartsAtUtc, window.EndsAtUtc, breakMinutes, cancellationToken);
+
+                if (blocker == BookingBlocker.None)
+                {
+                    return new BookingSlotPick
+                    {
+                        Status = BookingSlotStatus.Bookable,
+                        StartsAtUtc = window.StartsAtUtc,
+                        EndsAtUtc = window.EndsAtUtc,
+                        WindowCount = fittingWindows.Count
+                    };
+                }
+
+                firstBlocker ??= blocker;
+            }
+
+            return new BookingSlotPick
+            {
+                Status = BookingSlotStatus.AllWindowsBlocked,
+                Blocker = firstBlocker ?? BookingBlocker.None,
+                WindowCount = fittingWindows.Count
+            };
+        }
+
+        private static async Task<BookingBlocker> FindWindowBlockerAsync(
+            ILmsDbContext context,
+            Guid instructorId,
+            Guid learnerId,
+            DateTime startsAtUtc,
+            DateTime endsAtUtc,
+            int breakMinutes,
+            CancellationToken cancellationToken)
+        {
             var padded = TimeSpan.FromMinutes(breakMinutes);
 
             if (await HasInstructorOverlapAsync(context, instructorId, startsAtUtc, endsAtUtc, null, cancellationToken))
